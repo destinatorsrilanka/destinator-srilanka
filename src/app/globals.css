@@ -56,7 +56,19 @@ body {
   @apply inline-block whitespace-nowrap absolute left-4 top-1/2 -translate-y-1/2 bg-zinc-800 text-white rounded-full px-2.5 py-0.5 text-xs;
 }
 
-.pin.anuradhapura { top: 28%; left: 45%; }
-.pin.sigiriya { top: 35%; left: 52%; }
-.pin.kandy { top: 48%; left: 52%; }
-.pin.Galle { top: 85%; left: 42%; }
+.pin.anuradhapura {
+  top: 28%;
+  left: 45%;
+}
+.pin.sigiriya {
+  top: 35%;
+  left: 52%;
+}
+.pin.kandy {
+  top: 48%;
+  left: 52%;
+}
+.pin.Galle {
+  top: 85%;
+  left: 42%;
+}
