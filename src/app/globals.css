@@ -1,26 +1,62 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+    --radius: 0.5rem;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
+
+body {
+  @apply bg-destinator-black text-white font-montserrat overflow-x-hidden;
+}
+
+/* Custom Carousel Styles */
+.carousel .content-main {
+  @apply absolute top-1/4 pr-[30%] pl-24 text-white z-30;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+.carousel .list .item {
+  @apply w-full h-full absolute inset-0;
+}
+
+/* Map Pins */
+.pin {
+  @apply bg-main-red absolute w-2.5 h-2.5 rounded-full;
+}
+
+.pin span {
+  @apply inline-block whitespace-nowrap absolute left-4 top-1/2 -translate-y-1/2 bg-zinc-800 text-white rounded-full px-2.5 py-0.5 text-xs;
+}
+
+.pin.anuradhapura { top: 28%; left: 45%; }
+.pin.sigiriya { top: 35%; left: 52%; }
+.pin.kandy { top: 48%; left: 52%; }
+.pin.Galle { top: 85%; left: 42%; }
