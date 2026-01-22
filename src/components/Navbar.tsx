@@ -1,12 +1,21 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-import { Menu, X } from "lucide-react"; // Icons for mobile menu
-import { Button } from "./ui/button"; // Shadcn button
+import { useState, useEffect } from "react";
+import { Menu, X, Facebook, Instagram, Twitter } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const navLinks = [
     { name: "HOME", href: "#home" },
@@ -17,83 +26,115 @@ export default function Navbar() {
   ];
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 bg-black/70 backdrop-blur-md py-4 px-8 flex justify-between items-center shadow-lg">
-      {/* Logo */}
-      <Link href="/" className="flex items-center">
-        <Image
-          src="/logo.png"
-          alt="Destinator Logo"
-          width={100}
-          height={40}
-          className="home-logo"
-        />
+    <header
+      className={`fixed top-0 left-0 w-full z-[100] transition-all duration-500 ease-in-out px-6 md:px-16 flex justify-between items-center ${
+        scrolled
+          ? "bg-black/60 backdrop-blur-xl py-3 border-b border-white/10 shadow-2xl"
+          : "bg-transparent py-6"
+      }`}
+    >
+      {/* Logo Section - Adjusted size for better balance */}
+      <Link
+        href="/"
+        className="relative z-[110] transition-transform duration-300 hover:scale-105"
+      >
+        <div className="relative w-14 h-14 ">
+          <Image
+            src="/image/Logo.png"
+            alt="Destinator Logo"
+            fill
+            className="object-contain"
+            priority
+          />
+        </div>
       </Link>
 
-      {/* Desktop Navigation */}
-      <nav className="hidden md:flex flex-grow justify-center">
-        <ul className="flex space-x-8">
+      {/* Desktop Navigation - Modern styling with indicators */}
+      <nav className="hidden md:block">
+        <ul className="flex items-center gap-2">
           {navLinks.map((link) => (
             <li key={link.name}>
               <Link
                 href={link.href}
-                className="text-white text-sm font-semibold tracking-wider hover:bg-main-red rounded-full-rounded px-4 py-2 transition-all"
+                className="text-white/90 text-[12px] font-bold tracking-[0.15em] px-4 py-2 transition-all duration-300 hover:text-destinator-orange relative group"
               >
                 {link.name}
+                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-destinator-orange transition-all duration-300 group-hover:w-full"></span>
               </Link>
             </li>
           ))}
         </ul>
       </nav>
 
-      {/* Social Icons & Contact Button */}
-      <div className="flex items-center gap-4">
-        <div className="hidden lg:flex social-icons-nav gap-2">
-          {["facebook", "instagram", "tiktok"].map((icon) => (
+      {/* Right Side Actions */}
+      <div className="flex items-center gap-8">
+        {/* Social Icons with subtle glow */}
+        <div className="hidden lg:flex items-center gap-5 text-white/80">
+          {[
+            { Icon: Facebook, href: "#" },
+            { Icon: Instagram, href: "#" },
+            { Icon: Twitter, href: "#" },
+          ].map(({ Icon, href }, idx) => (
             <Link
-              key={icon}
-              href="#"
-              className="bg-white rounded-full p-1 w-8 h-8 flex items-center justify-center hover:scale-110 transition-transform"
+              key={idx}
+              href={href}
+              className="hover:text-destinator-orange transition-all duration-300 transform hover:-translate-y-1 hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]"
             >
-              <Image
-                src={`/image/${icon}.png`}
-                alt={icon}
-                width={20}
-                height={20}
-              />
+              <Icon size={18} />
             </Link>
           ))}
         </div>
-        <Button className="button-nav bg-main-red hover:bg-white hover:text-main-red text-white font-poppins font-medium text-xs px-4 py-2 rounded-lg tracking-wider">
+
+        {/* Action Button - Balanced sizing */}
+        <Button className="hidden sm:flex bg-destinator-orange hover:bg-white hover:text-black text-white font-extrabold text-[11px] px-8 py-6 rounded-full transition-all duration-500 uppercase tracking-widest shadow-[0_10px_20px_rgba(0,0,0,0.3)]">
           BOOK NOW
         </Button>
 
-        {/* Mobile Menu Icon */}
+        {/* Mobile Toggle */}
         <button
-          className="md:hidden text-main-red text-2xl"
+          className="md:hidden relative z-[110] text-white p-2"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          {isMenuOpen ? (
+            <X size={32} className="animate-in spin-in-90" />
+          ) : (
+            <Menu size={32} />
+          )}
         </button>
       </div>
 
-      {/* Mobile Menu */}
-      {isMenuOpen && (
-        <div className="absolute top-[72px] left-0 w-full bg-black/90 flex flex-col items-center py-4 md:hidden">
-          <ul className="flex flex-col space-y-4">
-            {navLinks.map((link) => (
-              <li key={link.name}>
-                <Link
-                  href={link.href}
-                  className="text-white text-base font-semibold tracking-wider hover:bg-main-red rounded-full-rounded px-4 py-2 transition-all block text-center"
-                  onClick={() => setIsMenuOpen(false)} // Close menu on click
-                >
-                  {link.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
+      {/* Modern Mobile Overlay - Full screen with blur */}
+      <div
+        className={`fixed inset-0 bg-black/90 backdrop-blur-2xl z-[105] flex flex-col items-center justify-center transition-all duration-700 ease-in-out md:hidden ${
+          isMenuOpen
+            ? "opacity-100 translate-x-0"
+            : "opacity-0 translate-x-full"
+        }`}
+      >
+        <ul className="flex flex-col space-y-10 text-center">
+          {navLinks.map((link, i) => (
+            <li
+              key={link.name}
+              style={{ transitionDelay: `${i * 100}ms` }}
+              className={`transition-all duration-500 ${isMenuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+            >
+              <Link
+                href={link.href}
+                className="text-white text-3xl font-black tracking-tighter hover:text-destinator-orange transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {link.name}
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-16 flex gap-10 text-white/50">
+          <Facebook size={28} className="hover:text-white transition-colors" />
+          <Instagram size={28} className="hover:text-white transition-colors" />
+          <Twitter size={28} className="hover:text-white transition-colors" />
         </div>
-      )}
+      </div>
     </header>
   );
 }

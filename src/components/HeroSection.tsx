@@ -18,6 +18,11 @@ const carouselImages = [
     description:
       "Encounter majestic elephants, elusive leopards, and diverse birdlife in their natural habitats.",
   },
+  {
+    src: "/image/sildenew.png",
+    description:
+      "Encounter majestic elephants, elusive leopards, and diverse birdlife in their natural habitats.",
+  },
 ];
 
 export default function HeroSection() {
@@ -64,7 +69,7 @@ export default function HeroSection() {
       <div className="absolute top-[30%] left-12 md:left-24 z-30 max-w-xl">
         <div className="animate-showContent">
           <Image
-            src="/image/logo.jpeg"
+            src="/image/Logo.png"
             alt="Sri Lanka Time Logo"
             width={250}
             height={150}
