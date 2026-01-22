@@ -79,7 +79,7 @@ export default function HeroSection() {
         ))}
       </div>
 
-      {/* --- Main Content Layout --- */}
+      {/* --- Main Content Area --- */}
       <div className="relative z-30 flex flex-col justify-center min-h-screen px-6 md:px-12 lg:px-24">
         <div className="max-w-4xl">
           {/* French Priority Tag */}
@@ -109,7 +109,7 @@ export default function HeroSection() {
           </p>
 
           {/* Action Buttons */}
-          <div className="flex flex-wrap gap-4 items-center animate-fade-in-up mb-12 lg:mb-0">
+          <div className="flex flex-wrap gap-4 items-center animate-fade-in-up">
             <button className="bg-destinator-orange hover:bg-white text-white hover:text-black px-8 md:px-10 py-3 md:py-4 rounded-full font-black transition-all duration-300 flex items-center gap-3 shadow-lg group text-sm md:text-base">
               EXPLORE NOW{" "}
               <ArrowRight
@@ -128,10 +128,11 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* --- Desktop: Bottom Right Aligned (Thumbnails + Arrows) --- */}
-      <div className="absolute bottom-10 right-10 lg:right-24 z-40 flex flex-col items-center gap-4">
-        {/* Thumbnails Area - Visible only on Desktop */}
-        <div className="hidden lg:flex gap-4 p-3 bg-black/30 backdrop-blur-xl rounded-[2.5rem] border border-white/10 shadow-2xl">
+      {/* --- Thumbnails and Arrows Container --- */}
+      {/* 1160px ට අඩු වන විට හයිඩ් වේ (hidden), 1161px සිට පෙන්වයි (min-[1161px]:flex) */}
+      <div className="absolute bottom-10 right-10 lg:right-24 z-40 hidden min-[1161px]:flex flex-col items-center gap-4">
+        {/* Thumbnails Area */}
+        <div className="flex gap-4 p-3 bg-black/30 backdrop-blur-xl rounded-[2.5rem] border border-white/10 shadow-2xl">
           {carouselImages.map((item, index) => (
             <button
               key={index}
@@ -147,7 +148,7 @@ export default function HeroSection() {
           ))}
         </div>
 
-        {/* Navigation Arrows - Centered under Thumbnails on Desktop, Visible on Mobile */}
+        {/* Navigation Arrows - Centered under Thumbnails */}
         <div className="flex gap-4">
           <button
             onClick={handlePrev}
@@ -170,8 +171,8 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* Mobile Dot Indicators (Mobile Only) */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 lg:hidden z-40">
+      {/* Mobile Dot Indicators (1160px ට අඩු වූ විට පෙන්වයි) */}
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-2 min-[1161px]:hidden z-40">
         {carouselImages.map((_, i) => (
           <div
             key={i}
