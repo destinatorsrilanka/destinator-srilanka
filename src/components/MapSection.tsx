@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   motion,
   AnimatePresence,
@@ -7,20 +7,21 @@ import {
   useSpring,
   useTransform,
 } from "framer-motion";
-import { MapPin, ArrowUpRight, MousePointer2, Globe2 } from "lucide-react";
-import Image from "next/image";
+import { MapPin, ArrowRight, Wind, Calendar, Zap } from "lucide-react";
+
+const SLOW_TRANSITION = { stiffness: 40, damping: 20 };
+const LOGO_COLOR = "#EAB308";
 
 const destinations = [
   {
     id: "sigiriya",
     name: "SIGIRIYA",
     tagline: "The Lion Rock",
-    coords: { top: "35%", left: "52%" },
+    coords: { top: "32%", left: "55%" },
     description:
-      "Witness the eighth wonder of the world. A celestial palace carved into a monolithic rock, surrounded by emerald gardens.",
-    image: "/image/sigiriya.jpg",
-    accent: "#F59E0B",
-    stats: { altitude: "349m", period: "5th Century" },
+      "An ancient rock fortress rising 200m from the jungle, featuring mirror walls and celestial frescoes.",
+    image: "image/k.png",
+    stats: { altitude: "349m", period: "5th Century", climate: "Humid" },
   },
   {
     id: "kandy",
@@ -29,9 +30,8 @@ const destinations = [
     coords: { top: "48%", left: "50%" },
     description:
       "The spiritual heart of the island. Walk through the mist-covered hills and ancient heritage of the hill capital.",
-    image: "/image/kandy.jpg",
-    accent: "#10B981",
-    stats: { altitude: "500m", period: "15th Century" },
+    image: "image/clucture.png",
+    stats: { altitude: "500m", period: "15th Century", climate: "Cool" },
   },
   {
     id: "ella",
@@ -40,229 +40,240 @@ const destinations = [
     coords: { top: "62%", left: "58%" },
     description:
       "A backpacker's paradise where the tea trails meet the sky. Home to the legendary Nine Arch Bridge.",
-    image: "/image/ella.jpg",
-    accent: "#3B82F6",
-    stats: { altitude: "1041m", period: "Scenic Era" },
-  },
-  {
-    id: "galle",
-    name: "GALLE",
-    tagline: "Ocean Bastion",
-    coords: { top: "82%", left: "45%" },
-    description:
-      "Where history meets the tide. A colonial fortress frozen in time, overlooking the vast turquoise Indian Ocean.",
-    image: "/image/galle.jpg",
-    accent: "#EC4899",
-    stats: { altitude: "Sea Level", period: "16th Century" },
+    image: "image/sildenew.png",
+    stats: { altitude: "1041m", period: "Scenic Era", climate: "Cold" },
   },
 ];
 
-export default function HeroThreeDMap() {
-  const [selectedId, setSelectedId] = useState(destinations[0].id);
-  const active =
-    destinations.find((d) => d.id === selectedId) || destinations[0];
+export default function SriLankaInteractiveMap() {
+  const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  const active = destinations.find((d) => d.id === hoveredId);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-
-  // smooth 3D movement
-  const mouseXSpring = useSpring(x, { stiffness: 150, damping: 30 });
-  const mouseYSpring = useSpring(y, { stiffness: 150, damping: 30 });
-
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["15deg", "-15deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-20deg", "20deg"]);
+  const mouseXSpring = useSpring(x, SLOW_TRANSITION);
+  const mouseYSpring = useSpring(y, SLOW_TRANSITION);
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["7deg", "-7deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"]);
 
   const handleMouseMove = (e: React.MouseEvent) => {
+    if (isMobile) return;
     const rect = e.currentTarget.getBoundingClientRect();
     x.set((e.clientX - rect.left) / rect.width - 0.5);
     y.set((e.clientY - rect.top) / rect.height - 0.5);
   };
 
   return (
-    <section
-      className="relative min-h-screen w-full bg-white overflow-hidden flex flex-col justify-center items-center py-10 lg:py-0"
-      onMouseMove={handleMouseMove}
-    >
-      {/* Background Watermark */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0">
-        <motion.h1
-          key={active.name + "bg"}
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 0.04, scale: 1 }}
-          transition={{ duration: 1 }}
-          className="text-[25vw] font-black tracking-tighter text-black leading-none"
-        >
-          {active.name}
-        </motion.h1>
-      </div>
-
-      {/* Header */}
-      <div className="absolute top-6 left-6 md:top-10 md:left-12 z-50">
-        <div className="flex items-center gap-3 mb-2">
-          <Globe2 className="text-black" size={20} />
-          <span className="text-[10px] font-black tracking-[0.5em] uppercase text-gray-400">
-            Discover the Pearl
-          </span>
-        </div>
-        <h2 className="text-xl md:text-2xl font-bold tracking-tight text-black">
-          SRI LANKA <span className="text-gray-300 font-light">360°</span>
-        </h2>
-      </div>
-
-      <div className="relative z-10 w-full max-w-screen-2xl mx-auto px-6 md:px-12 lg:px-24 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pt-20 lg:pt-0">
-        {/* LEFT PANEL */}
-        <div className="order-2 lg:order-1 lg:col-span-4 space-y-6">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={active.id}
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 20 }}
-              transition={{ duration: 0.5 }}
-            >
-              <div className="inline-block px-3 py-1 rounded-full bg-gray-100 text-[10px] font-black tracking-widest text-gray-500 uppercase mb-4">
-                {active.tagline}
-              </div>
-
-              <h3 className="text-5xl md:text-7xl xl:text-8xl font-black text-black leading-[0.9] mb-6 tracking-tighter">
-                {active.name}
-              </h3>
-
-              <p className="text-gray-500 text-base md:text-lg leading-relaxed max-w-sm mb-8 font-medium italic border-l-2 border-black pl-4">
-                "{active.description}"
-              </p>
-
-              <div className="grid grid-cols-2 gap-4 mb-8 max-w-sm">
-                <div className="p-4 bg-gray-50 rounded-2xl border border-gray-100">
-                  <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1">
-                    Elevation
-                  </p>
-                  <p className="text-lg font-bold text-black">
-                    {active.stats.altitude}
-                  </p>
-                </div>
-                <div className="p-4 bg-gray-50 rounded-2xl border border-gray-100">
-                  <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1">
-                    History
-                  </p>
-                  <p className="text-lg font-bold text-black">
-                    {active.stats.period}
-                  </p>
-                </div>
-              </div>
-
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                className="group flex items-center gap-6 bg-black text-white px-8 py-4 rounded-full font-black text-xs uppercase tracking-[0.2em] shadow-xl"
+    <div className="min-h-screen w-full bg-[#f8f8f8] flex items-center justify-center p-0 sm:p-4 lg:p-10 overflow-hidden">
+      <motion.section
+        onMouseMove={handleMouseMove}
+        animate={{
+          backgroundColor: active ? "#050505" : "#ffffff",
+          borderColor: active ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.08)",
+        }}
+        className="relative w-full max-w-[1400px] h-[100vh] sm:h-[90vh] overflow-hidden sm:rounded-[4rem] border-0 sm:border shadow-2xl flex flex-col items-center justify-center transition-colors duration-1000"
+      >
+        {/* --- HEADER CONTENT --- */}
+        <div className="absolute top-10 sm:top-12 left-8 lg:left-16 z-20 pointer-events-none">
+          <AnimatePresence>
+            {!active && (
+              <motion.div
+                key="main-header"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.6 }}
               >
-                Plan Your Journey
-                <ArrowUpRight
-                  size={18}
-                  className="group-hover:rotate-45 transition-transform"
-                />
-              </motion.button>
-            </motion.div>
+                <h3 className="text-[10px] font-bold tracking-[0.5em] uppercase mb-2 text-gray-400">
+                  Explore Sri Lanka
+                </h3>
+                <div className="relative inline-block mb-3">
+                  <h1 className="text-4xl lg:text-6xl font-black tracking-tighter leading-none text-black">
+                    DISCOVER THE <br /> PEARL
+                  </h1>
+                  <motion.div
+                    initial={{ width: 0 }}
+                    whileInView={{ width: "100%" }}
+                    transition={{ delay: 0.3, duration: 0.8 }}
+                    className="h-[4px] lg:h-[6px] mt-2 rounded-full"
+                    style={{ backgroundColor: LOGO_COLOR }}
+                  />
+                </div>
+                <p className="max-w-[220px] sm:max-w-[280px] text-[10px] sm:text-xs leading-relaxed text-black/40">
+                  Unveil the ancient mysteries and breathtaking landscapes. Tap
+                  the markers below.
+                </p>
+              </motion.div>
+            )}
           </AnimatePresence>
         </div>
 
-        {/* CENTER 3D MAP */}
-        <div className="order-1 lg:order-2 lg:col-span-8 relative h-[450px] md:h-[650px] lg:h-[800px] flex items-center justify-center [perspective:1500px]">
-          <motion.div
-            style={{
-              rotateX,
-              rotateY,
-              transformStyle: "preserve-3d",
-            }}
-            className="relative w-full max-w-[500px] aspect-[3/4] flex items-center justify-center"
-          >
-            {/* Map Image Layer */}
-            <div
-              className="relative w-full h-full flex items-center justify-center"
-              style={{ transform: "translateZ(0px)" }}
+        {/* --- BACKGROUND IMAGE --- */}
+        <AnimatePresence mode="wait">
+          {active && (
+            <motion.div
+              key={active.id}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.2 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.8 }}
+              className="absolute inset-0 z-0"
             >
-              <Image
-                src="/image/lk.svg"
-                alt="Sri Lanka Map"
-                width={700}
-                height={900}
-                priority
-                className="w-full h-full object-contain drop-shadow-[0_40px_100px_rgba(0,0,0,0.1)] pointer-events-none"
+              <img
+                src={active.image}
+                alt="bg"
+                className="w-full h-full object-cover grayscale"
               />
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/90" />
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-              {/* Interactive Pins - High translateZ to make them clickable and popping out */}
-              {destinations.map((loc) => (
-                <div
-                  key={loc.id}
-                  className="absolute"
-                  style={{
-                    top: loc.coords.top,
-                    left: loc.coords.left,
-                    transformStyle: "preserve-3d",
-                    zIndex: 50,
-                  }}
+        {/* --- WATERMARK --- */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-[1]">
+          <motion.h1
+            className="text-[30vw] lg:text-[18vw] font-black tracking-tighter uppercase leading-none opacity-[0.05]"
+            animate={{
+              color: active ? "rgba(255,255,255,1)" : "rgba(0,0,0,1)",
+              scale: active ? 1.1 : 1,
+            }}
+          >
+            {active ? active.name : "CEYLON"}
+          </motion.h1>
+        </div>
+
+        {/* --- MAP CONTAINER (Fixed Overlap for Mobile) --- */}
+        <motion.div
+          style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+          animate={{
+            x: active ? (isMobile ? 0 : "22%") : "0%",
+            // Mobile වලදී සිතියම මඳක් පහළට ගන්නා ලදී (Initial: 5%, Active: 12%)
+            y: isMobile ? (active ? "12%" : "5%") : "0%",
+            scale: isMobile ? (active ? 0.8 : 1.1) : 1,
+          }}
+          transition={SLOW_TRANSITION}
+          className="relative w-full max-w-[310px] sm:max-w-[480px] lg:max-w-[650px] aspect-[4/5] flex items-center justify-center z-10"
+        >
+          <div
+            className="relative w-full h-full"
+            onMouseLeave={() => setHoveredId(null)}
+          >
+            <img
+              src="/image/lk.svg"
+              alt="Sri Lanka Map"
+              className={`w-full h-full object-contain transition-all duration-1000 ${
+                active
+                  ? "brightness-125 opacity-100"
+                  : "brightness-100 opacity-90"
+              }`}
+            />
+
+            {/* PINS */}
+            {destinations.map((loc) => (
+              <div
+                key={loc.id}
+                className="absolute"
+                style={{ top: loc.coords.top, left: loc.coords.left }}
+              >
+                <motion.div
+                  onMouseEnter={() => setHoveredId(loc.id)}
+                  onClick={() => setHoveredId(loc.id)}
+                  className={`cursor-pointer w-9 h-9 sm:w-11 sm:h-11 rounded-2xl flex items-center justify-center border-2 transition-all ${
+                    hoveredId === loc.id
+                      ? "bg-yellow-500 border-yellow-300 shadow-2xl scale-125"
+                      : "bg-white/70 border-black/10 backdrop-blur-md"
+                  }`}
                 >
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setSelectedId(loc.id);
-                    }}
-                    className="group relative flex flex-col items-center -translate-x-1/2 -translate-y-1/2 cursor-pointer"
-                    style={{ transform: "translateZ(100px)" }} // This makes pins pop out and clickable
-                  >
-                    <motion.div
-                      animate={
-                        selectedId === loc.id
-                          ? { scale: 1.25, y: -5 }
-                          : { scale: 1 }
-                      }
-                      className={`w-10 h-10 md:w-11 md:h-11 rounded-2xl flex items-center justify-center transition-all duration-300 shadow-2xl border-2
-                        ${selectedId === loc.id ? "bg-black border-black text-white" : "bg-white/95 backdrop-blur-md border-white text-gray-400 hover:text-black"}`}
-                    >
-                      <MapPin size={20} />
-                      {selectedId === loc.id && (
-                        <span className="absolute -inset-2 rounded-3xl bg-black/5 animate-pulse" />
-                      )}
-                    </motion.div>
+                  <MapPin
+                    size={20}
+                    className={
+                      hoveredId === loc.id ? "text-black" : "text-black/60"
+                    }
+                    fill={hoveredId === loc.id ? "black" : "none"}
+                  />
+                </motion.div>
+              </div>
+            ))}
+          </div>
 
-                    <div
-                      className={`mt-2 px-2 py-1 bg-black text-white text-[8px] font-black uppercase rounded shadow-lg transition-all duration-300 
-                      ${selectedId === loc.id ? "opacity-100 scale-100" : "opacity-0 scale-90"}`}
-                    >
-                      {loc.name}
-                    </div>
+          {/* --- POP-UP CARD --- */}
+          <AnimatePresence>
+            {active && (
+              <motion.div
+                initial={{ opacity: 0, y: 100, scale: 0.9 }}
+                animate={{
+                  opacity: 1,
+                  x: isMobile ? 0 : -420,
+                  y: isMobile ? "75%" : 0,
+                  scale: 1,
+                }}
+                exit={{ opacity: 0, y: 100, scale: 0.9 }}
+                transition={SLOW_TRANSITION}
+                className="absolute z-[100] w-[92vw] max-w-[380px] bg-white/10 backdrop-blur-3xl border border-white/20 p-6 sm:p-8 rounded-[2.5rem] lg:rounded-[3.5rem] shadow-2xl pointer-events-auto text-white"
+              >
+                <div className="relative">
+                  <span className="text-yellow-500 font-bold text-[9px] sm:text-[10px] tracking-[0.4em] uppercase mb-2 block italic">
+                    {active.tagline}
+                  </span>
+                  <h2 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tighter mb-4 uppercase leading-none">
+                    {active.name}
+                  </h2>
+                  <p className="text-gray-200 text-[11px] sm:text-xs lg:text-sm leading-relaxed mb-6 border-l-2 border-yellow-500 pl-4 opacity-90">
+                    "{active.description}"
+                  </p>
+
+                  <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-6 sm:mb-8">
+                    {[
+                      { Icon: Wind, label: active.stats.climate },
+                      { Icon: Zap, label: active.stats.altitude },
+                      { Icon: Calendar, label: active.stats.period },
+                    ].map((item, i) => (
+                      <div
+                        key={i}
+                        className="bg-white/5 p-2 rounded-xl text-center border border-white/10"
+                      >
+                        <item.Icon
+                          size={12}
+                          className="mx-auto text-yellow-500/70 mb-1"
+                        />
+                        <p className="text-[7px] sm:text-[8px] text-gray-300 uppercase font-bold">
+                          {item.label}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <button className="w-full bg-white text-black py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-yellow-500 transition-all active:scale-95">
+                    EXPLORE NOW <ArrowRight size={14} />
                   </button>
                 </div>
-              ))}
-            </div>
-
-            {/* Floating Preview Card */}
-            <AnimatePresence>
-              <motion.div
-                key={active.id + "card"}
-                initial={{ opacity: 0, scale: 0.8, z: 50 }}
-                animate={{ opacity: 1, scale: 1, z: 150 }}
-                exit={{ opacity: 0, scale: 0.8, z: 50 }}
-                className="absolute right-[-5%] bottom-[15%] hidden xl:block w-44 h-56 rounded-[2rem] overflow-hidden border-[6px] border-white shadow-2xl pointer-events-none"
-                style={{ transform: "translateZ(180px)" }}
-              >
-                <Image
-                  src={active.image}
-                  alt="Preview"
-                  fill
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
               </motion.div>
-            </AnimatePresence>
-          </motion.div>
-        </div>
-      </div>
+            )}
+          </AnimatePresence>
+        </motion.div>
 
-      <style jsx>{`
-        .preserve-3d {
-          transform-style: preserve-3d;
-        }
-      `}</style>
-    </section>
+        {/* HUD UI */}
+        <div className="absolute bottom-6 left-8 z-[100] flex items-center gap-3">
+          <div
+            className={`w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center font-black text-[10px] ${active ? "bg-yellow-500 text-black" : "bg-black text-white"}`}
+          >
+            SL
+          </div>
+          <p
+            className={`text-[8px] sm:text-[9px] font-black tracking-[0.3em] uppercase ${active ? "text-white/40" : "text-black/20"}`}
+          >
+            Paradise Guide v6
+          </p>
+        </div>
+      </motion.section>
+    </div>
   );
 }
