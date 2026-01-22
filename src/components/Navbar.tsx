@@ -11,11 +11,19 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 10);
+      setScrolled(window.scrollY > 20);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [isMenuOpen]);
 
   const navLinks = [
     { name: "HOME", href: "#home" },
@@ -27,112 +35,126 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full z-[100] transition-all duration-500 ease-in-out px-6 md:px-16 flex justify-between items-center ${
-        scrolled
-          ? "bg-black/60 backdrop-blur-xl py-3 border-b border-white/10 shadow-2xl"
-          : "bg-transparent py-6"
+      className={`fixed top-0 left-0 w-full z-[150] transition-all duration-500 ease-in-out ${
+        isMenuOpen
+          ? "bg-black"
+          : scrolled
+            ? "bg-black/95 backdrop-blur-2xl border-b border-white/10 py-2 md:py-3"
+            : "bg-white/5 backdrop-blur-md border-b border-white/10 py-4 md:py-6"
       }`}
     >
-      {/* Logo Section - Adjusted size for better balance */}
-      <Link
-        href="/"
-        className="relative z-[110] transition-transform duration-300 hover:scale-105"
-      >
-        <div className="relative w-14 h-14 ">
-          <Image
-            src="/image/Logo.png"
-            alt="Destinator Logo"
-            fill
-            className="object-contain"
-            priority
-          />
+      <div className="max-w-7xl mx-auto px-6 lg:px-20 flex justify-between items-center w-full relative z-[160]">
+        {/* --- LOGO --- */}
+        <Link href="/" className="relative flex items-center shrink-0">
+          <div className="relative w-28 h-10 sm:w-36 sm:h-12 md:w-52 md:h-14 overflow-hidden rounded-sm">
+            <Image
+              src="/image/Logo.jpeg"
+              alt="Destinator Logo"
+              fill
+              className="object-contain object-left"
+              priority
+            />
+          </div>
+        </Link>
+
+        {/* --- DESKTOP NAVIGATION --- */}
+        <nav className="hidden xl:block">
+          <ul className="flex items-center gap-1">
+            {navLinks.map((link) => (
+              <li key={link.name}>
+                <Link
+                  href={link.href}
+                  className="text-white text-[11px] font-black tracking-[0.15em] px-4 py-2 transition-all duration-300 hover:text-[#EAB308] relative group whitespace-nowrap"
+                >
+                  {link.name}
+                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-[#EAB308] transition-all duration-300 group-hover:w-full"></span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        {/* --- RIGHT ACTIONS --- */}
+        <div className="flex items-center gap-3 sm:gap-6">
+          <Button
+            className={`hidden sm:flex bg-[#EAB308] hover:bg-white hover:text-black text-black font-black text-[10px] px-8 py-5 h-10 md:h-12 rounded-full transition-all duration-500 uppercase tracking-widest ${isMenuOpen ? "opacity-0 invisible scale-90" : "opacity-100 visible scale-100"}`}
+          >
+            BOOK NOW
+          </Button>
+
+          {/* --- MOBILE TOGGLE BUTTON --- */}
+          <button
+            className="xl:hidden relative text-white p-2 focus:outline-none z-[170]"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            <div className="relative w-8 h-8 flex items-center justify-center">
+              {/* මෙනු අයිකන මාරුවීමේදී සිදුවන කුඩා ඇනිමේෂන් එකක් */}
+              <X
+                size={32}
+                className={`absolute transition-all duration-500 text-[#EAB308] ${isMenuOpen ? "scale-100 rotate-0 opacity-100" : "scale-0 rotate-90 opacity-0"}`}
+              />
+              <Menu
+                size={32}
+                className={`absolute transition-all duration-500 ${isMenuOpen ? "scale-0 -rotate-90 opacity-0" : "scale-100 rotate-0 opacity-100"}`}
+              />
+            </div>
+          </button>
         </div>
-      </Link>
-
-      {/* Desktop Navigation - Modern styling with indicators */}
-      <nav className="hidden md:block">
-        <ul className="flex items-center gap-2">
-          {navLinks.map((link) => (
-            <li key={link.name}>
-              <Link
-                href={link.href}
-                className="text-white/90 text-[12px] font-bold tracking-[0.15em] px-4 py-2 transition-all duration-300 hover:text-destinator-orange relative group"
-              >
-                {link.name}
-                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-destinator-orange transition-all duration-300 group-hover:w-full"></span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
-
-      {/* Right Side Actions */}
-      <div className="flex items-center gap-8">
-        {/* Social Icons with subtle glow */}
-        <div className="hidden lg:flex items-center gap-5 text-white/80">
-          {[
-            { Icon: Facebook, href: "#" },
-            { Icon: Instagram, href: "#" },
-            { Icon: Twitter, href: "#" },
-          ].map(({ Icon, href }, idx) => (
-            <Link
-              key={idx}
-              href={href}
-              className="hover:text-destinator-orange transition-all duration-300 transform hover:-translate-y-1 hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]"
-            >
-              <Icon size={18} />
-            </Link>
-          ))}
-        </div>
-
-        {/* Action Button - Balanced sizing */}
-        <Button className="hidden sm:flex bg-destinator-orange hover:bg-white hover:text-black text-white font-extrabold text-[11px] px-8 py-6 rounded-full transition-all duration-500 uppercase tracking-widest shadow-[0_10px_20px_rgba(0,0,0,0.3)]">
-          BOOK NOW
-        </Button>
-
-        {/* Mobile Toggle */}
-        <button
-          className="md:hidden relative z-[110] text-white p-2"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-        >
-          {isMenuOpen ? (
-            <X size={32} className="animate-in spin-in-90" />
-          ) : (
-            <Menu size={32} />
-          )}
-        </button>
       </div>
 
-      {/* Modern Mobile Overlay - Full screen with blur */}
+      {/* --- MOBILE OVERLAY (RE-ENGINEERED ANIMATION) --- */}
       <div
-        className={`fixed inset-0 bg-black/90 backdrop-blur-2xl z-[105] flex flex-col items-center justify-center transition-all duration-700 ease-in-out md:hidden ${
-          isMenuOpen
-            ? "opacity-100 translate-x-0"
-            : "opacity-0 translate-x-full"
+        className={`fixed inset-0 bg-black transition-transform duration-700 ease-[cubic-bezier(0.77,0,0.175,1)] xl:hidden ${
+          isMenuOpen ? "translate-y-0" : "-translate-y-full"
         }`}
+        style={{ zIndex: 140 }}
       >
-        <ul className="flex flex-col space-y-10 text-center">
-          {navLinks.map((link, i) => (
-            <li
-              key={link.name}
-              style={{ transitionDelay: `${i * 100}ms` }}
-              className={`transition-all duration-500 ${isMenuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
-            >
-              <Link
-                href={link.href}
-                className="text-white text-3xl font-black tracking-tighter hover:text-destinator-orange transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {link.name}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <div className="h-full flex flex-col justify-center items-center">
+          <nav>
+            <ul className="flex flex-col space-y-6 text-center">
+              {navLinks.map((link, index) => (
+                <li
+                  key={link.name}
+                  className={`overflow-hidden transition-all duration-700 ${
+                    isMenuOpen
+                      ? "translate-y-0 opacity-100"
+                      : "translate-y-20 opacity-0"
+                  }`}
+                  style={{
+                    transitionDelay: isMenuOpen
+                      ? `${index * 100 + 300}ms`
+                      : "0ms",
+                  }}
+                >
+                  <Link
+                    href={link.href}
+                    className="text-white text-4xl sm:text-5xl font-black tracking-tighter uppercase transition-all duration-300 hover:text-[#EAB308] hover:tracking-normal active:scale-95 block"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
 
-        <div className="mt-16 flex gap-10 text-white/50">
-          <Facebook size={28} className="hover:text-white transition-colors" />
-          <Instagram size={28} className="hover:text-white transition-colors" />
-          <Twitter size={28} className="hover:text-white transition-colors" />
+          {/* Social Icons with fade-in */}
+          <div
+            className={`flex gap-8 mt-16 transition-all duration-1000 delay-[800ms] ${isMenuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+          >
+            <Facebook
+              size={26}
+              className="text-white/40 hover:text-[#EAB308] cursor-pointer"
+            />
+            <Instagram
+              size={26}
+              className="text-white/40 hover:text-[#EAB308] cursor-pointer"
+            />
+            <Twitter
+              size={26}
+              className="text-white/40 hover:text-[#EAB308] cursor-pointer"
+            />
+          </div>
         </div>
       </div>
     </header>
