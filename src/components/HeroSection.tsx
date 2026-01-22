@@ -1,27 +1,36 @@
 "use client";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import { ArrowRight, ChevronLeft, ChevronRight, Languages } from "lucide-react";
 
 const carouselImages = [
   {
     src: "/image/sildenew.png",
+    enTitle: "Experience Sri Lanka",
+    frTitle: "Vivez l'expérience du Sri Lanka",
     description:
-      "Sri Lanka is a unique island where several climatic conditions exist 365 days a year & can be reached in less than 3 hours",
+      "Discover a unique island where diverse climates coexist 365 days a year. | Découvrez une île unique aux climats diversifiés.",
   },
   {
     src: "/image/clucture.png",
+    enTitle: "Timeless Heritage",
+    frTitle: "Héritage Intemporel",
     description:
-      "Discover ancient cities, vibrant traditions, and spiritual sites that have shaped the island's rich history.",
+      "Explore ancient cities and vibrant traditions of our rich history. | Explorez les cités anciennes et les traditions vibrantes.",
   },
   {
     src: "/image/k.png",
+    enTitle: "Wild Adventures",
+    frTitle: "Aventures Sauvages",
     description:
-      "Encounter majestic elephants, elusive leopards, and diverse birdlife in their natural habitats.",
+      "Encounter majestic wildlife in their pristine natural habitats. | Rencontrez une faune majestueuse dans son habitat naturel.",
   },
   {
     src: "/image/slidenew1.png",
+    enTitle: "Golden Beaches",
+    frTitle: "Plages Dorées",
     description:
-      "Encounter majestic elephants, elusive leopards, and diverse birdlife in their natural habitats.",
+      "Relax on the sun-kissed shores and crystal clear waters. | Détendez-vous sur les rivages ensoleillés.",
   },
 ];
 
@@ -39,92 +48,178 @@ export default function HeroSection() {
   };
 
   useEffect(() => {
-    const timer = setInterval(handleNext, 7000);
+    const timer = setInterval(handleNext, 8000);
     return () => clearInterval(timer);
   }, []);
 
   return (
-    <section className="relative h-screen w-full overflow-hidden bg-black font-montserrat">
-      {/* Background Images */}
-      <div className="absolute inset-0">
+    <section className="relative min-h-screen w-full overflow-hidden bg-black font-montserrat">
+      {/* --- Background Slider --- */}
+      <div className="absolute inset-0 z-0">
         {carouselImages.map((item, index) => (
           <div
             key={index}
-            className={`absolute inset-0 transition-opacity duration-1000 ${
-              index === currentIndex ? "opacity-100" : "opacity-0"
+            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+              index === currentIndex
+                ? "opacity-100 scale-110"
+                : "opacity-0 scale-100"
             }`}
+            style={{
+              transition: "opacity 1.5s ease-in-out, transform 10s linear",
+            }}
           >
             <Image
               src={item.src}
-              alt="Background"
+              alt="Sri Lanka Travel"
               fill
-              className="object-cover brightness-[0.6]"
+              className="object-cover brightness-[0.45]"
               priority
             />
           </div>
         ))}
       </div>
 
-      {/* Left Content Area (Logo, Text, Button) */}
-      <div className="absolute top-[30%] left-12 md:left-24 z-30 max-w-xl">
-        <div className="animate-showContent">
-          <Image
-            src="/image/Logo.png"
-            alt="Sri Lanka Time Logo"
-            width={250}
-            height={150}
-            className="object-contain"
-          />
+      {/* --- Main Content Layout --- */}
+      <div className="relative z-30 flex flex-col justify-center min-h-screen px-6 md:px-12 lg:px-24">
+        <div className="max-w-4xl">
+          {/* French Priority Tag */}
+          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-lg border border-white/20 px-4 py-2 rounded-full mb-6 animate-fade-in shadow-xl w-fit">
+            <div className="flex gap-1 shrink-0">
+              <span className="w-2 h-4 bg-[#002395]"></span>
+              <span className="w-2 h-4 bg-white"></span>
+              <span className="w-2 h-4 bg-[#ED2939]"></span>
+            </div>
+            <p className="text-white text-[10px] md:text-xs font-bold tracking-widest uppercase">
+              Spécialiste des Circuits Francophones
+            </p>
+          </div>
+
+          {/* Titles */}
+          <div className="space-y-2 mb-6">
+            <h2 className="text-destinator-orange text-lg md:text-2xl font-bold tracking-tight animate-slide-up italic">
+              {carouselImages[currentIndex]?.frTitle}
+            </h2>
+            <h1 className="text-white text-4xl md:text-6xl lg:text-8xl font-black tracking-tighter leading-[1.1] animate-slide-up">
+              {carouselImages[currentIndex]?.enTitle}
+            </h1>
+          </div>
+
+          <p className="text-gray-300 text-sm md:text-lg leading-relaxed max-w-2xl mb-10 animate-fade-in-up">
+            {carouselImages[currentIndex]?.description}
+          </p>
+
+          {/* Action Buttons */}
+          <div className="flex flex-wrap gap-4 items-center animate-fade-in-up mb-12 lg:mb-0">
+            <button className="bg-destinator-orange hover:bg-white text-white hover:text-black px-8 md:px-10 py-3 md:py-4 rounded-full font-black transition-all duration-300 flex items-center gap-3 shadow-lg group text-sm md:text-base">
+              EXPLORE NOW{" "}
+              <ArrowRight
+                size={20}
+                className="group-hover:translate-x-2 transition-transform"
+              />
+            </button>
+
+            <div className="flex items-center gap-3 px-4 py-2 border border-white/20 rounded-xl bg-white/5 backdrop-blur-sm">
+              <Languages size={18} className="text-blue-400 shrink-0" />
+              <span className="text-white text-[10px] md:text-xs font-medium uppercase tracking-wider italic">
+                Guide Francophone
+              </span>
+            </div>
+          </div>
         </div>
-        <p className="text-white text-lg mt-6 leading-relaxed font-medium animate-showContent [animation-delay:0.2s] text-shadow-md">
-          {carouselImages[currentIndex].description}
-        </p>
-        <button className="mt-8 bg-white text-black px-10 py-3 rounded-xl font-bold hover:bg-destinator-orange hover:text-white transition-all uppercase tracking-widest animate-showContent [animation-delay:0.4s] shadow-lg">
-          See More
-        </button>
       </div>
 
-      {/* Bottom Area: Thumbnails with Arrows Centered Underneath */}
-      <div className="absolute bottom-10 right-12 md:right-24 z-40 flex flex-col items-center gap-4">
-        {/* Thumbnails Row */}
-        <div className="flex gap-4">
+      {/* --- Desktop: Bottom Right Aligned (Thumbnails + Arrows) --- */}
+      <div className="absolute bottom-10 right-10 lg:right-24 z-40 flex flex-col items-center gap-4">
+        {/* Thumbnails Area - Visible only on Desktop */}
+        <div className="hidden lg:flex gap-4 p-3 bg-black/30 backdrop-blur-xl rounded-[2.5rem] border border-white/10 shadow-2xl">
           {carouselImages.map((item, index) => (
-            <div
+            <button
               key={index}
               onClick={() => setCurrentIndex(index)}
-              className={`relative w-24 h-32 md:w-40 md:h-24 cursor-pointer rounded-2xl overflow-hidden border-2 transition-all duration-300 ${
+              className={`relative w-24 h-14 xl:w-28 xl:h-16 rounded-2xl overflow-hidden transition-all duration-500 border-2 ${
                 index === currentIndex
-                  ? "border-white scale-105 shadow-2xl"
-                  : "border-transparent opacity-50"
+                  ? "border-destinator-orange scale-105"
+                  : "border-transparent opacity-40 hover:opacity-100"
               }`}
             >
-              <Image
-                src={item.src}
-                alt="thumbnail"
-                fill
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-black/20 hover:bg-transparent transition-colors"></div>
-            </div>
+              <Image src={item.src} alt="nav" fill className="object-cover" />
+            </button>
           ))}
         </div>
 
-        {/* Arrows Row - හරියටම Thumbnails වලට යටින් මැද්දට */}
+        {/* Navigation Arrows - Centered under Thumbnails on Desktop, Visible on Mobile */}
         <div className="flex gap-4">
           <button
             onClick={handlePrev}
-            className="w-11 h-11 rounded-full bg-white/20 hover:bg-white hover:text-black text-white flex items-center justify-center backdrop-blur-md transition-all border border-white/30"
+            className="p-3 md:p-4 rounded-full border border-white/20 bg-black/50 hover:bg-destinator-orange text-white transition-all backdrop-blur-md group"
           >
-            <span className="text-xl">❮</span>
+            <ChevronLeft
+              size={24}
+              className="group-hover:-translate-x-1 transition-transform"
+            />
           </button>
           <button
             onClick={handleNext}
-            className="w-11 h-11 rounded-full bg-white/20 hover:bg-white hover:text-black text-white flex items-center justify-center backdrop-blur-md transition-all border border-white/30"
+            className="p-3 md:p-4 rounded-full border border-white/20 bg-black/50 hover:bg-destinator-orange text-white transition-all backdrop-blur-md group"
           >
-            <span className="text-xl">❯</span>
+            <ChevronRight
+              size={24}
+              className="group-hover:translate-x-1 transition-transform"
+            />
           </button>
         </div>
       </div>
+
+      {/* Mobile Dot Indicators (Mobile Only) */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 lg:hidden z-40">
+        {carouselImages.map((_, i) => (
+          <div
+            key={i}
+            className={`h-1.5 w-6 rounded-full transition-all ${i === currentIndex ? "bg-destinator-orange w-10" : "bg-white/30"}`}
+          />
+        ))}
+      </div>
+
+      <style jsx>{`
+        @keyframes slide-up {
+          from {
+            transform: translateY(30px);
+            opacity: 0;
+          }
+          to {
+            transform: translateY(0);
+            opacity: 1;
+          }
+        }
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .animate-slide-up {
+          animation: slide-up 0.8s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+        }
+        .animate-fade-in {
+          animation: fadeIn 1.5s ease-out forwards;
+        }
+        .animate-fade-in-up {
+          animation: fadeInUp 1s ease-out 0.4s forwards;
+          opacity: 0;
+        }
+      `}</style>
     </section>
   );
 }
