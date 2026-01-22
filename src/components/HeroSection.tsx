@@ -19,7 +19,7 @@ const carouselImages = [
       "Encounter majestic elephants, elusive leopards, and diverse birdlife in their natural habitats.",
   },
   {
-    src: "/image/sildenew.png",
+    src: "/image/slidenew1.png",
     description:
       "Encounter majestic elephants, elusive leopards, and diverse birdlife in their natural habitats.",
   },
