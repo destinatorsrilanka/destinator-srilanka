@@ -26,7 +26,7 @@ export default function CreativeAboutUs() {
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: false, amount: 0.3 }}
               transition={{ duration: 0.8 }}
             >
               <h3 className="text-yellow-500 font-bold text-[9px] tracking-[0.5em] uppercase mb-4">
@@ -34,7 +34,6 @@ export default function CreativeAboutUs() {
               </h3>
 
               <div className="relative inline-block mb-8">
-                {/* මම මෙහිදී Title එකේ Size එක 'lg:text-7xl' දක්වා මඳක් අඩු කළා */}
                 <h2 className="text-4xl lg:text-7xl font-black tracking-tighter leading-[0.9] text-white">
                   CRAFTING ELITE <br />
                   <span className="text-white/30 text-3xl lg:text-6xl uppercase tracking-widest">
@@ -42,13 +41,17 @@ export default function CreativeAboutUs() {
                   </span>
                 </h2>
 
-                {/* Animated Underline */}
+                {/* --- ANIMATED UNDERLINE (DRAWS IN AND OUT ON SCROLL) --- */}
                 <motion.div
                   initial={{ width: 0 }}
                   whileInView={{ width: "100%" }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.5, duration: 1 }}
-                  className="h-[3px] lg:h-[5px] mt-3 rounded-full"
+                  viewport={{ once: false, amount: 0.5 }}
+                  transition={{
+                    delay: 0.2,
+                    duration: 1,
+                    ease: [0.45, 0, 0.55, 1],
+                  }}
+                  className="h-[3px] lg:h-[5px] mt-3 rounded-full origin-left"
                   style={{ backgroundColor: LOGO_COLOR }}
                 />
               </div>
@@ -87,13 +90,14 @@ export default function CreativeAboutUs() {
 
           {/* --- RIGHT CONTENT: MINI STATS & IMAGE --- */}
           <div className="lg:col-span-5 relative">
-            {/* Stats Grid - Cards are made smaller and cleaner */}
+            {/* Stats Grid */}
             <div className="grid grid-cols-2 gap-3 mb-8">
               {stats.map((stat, index) => (
                 <motion.div
                   key={stat.id}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: false }}
                   transition={{ delay: index * 0.1 }}
                   whileHover={{
                     y: -3,
@@ -115,10 +119,11 @@ export default function CreativeAboutUs() {
               ))}
             </div>
 
-            {/* Featured Image with darker overlay */}
+            {/* Featured Image Block */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: false }}
               transition={{ duration: 0.8 }}
               className="relative rounded-[2rem] overflow-hidden group border border-white/10 shadow-2xl"
             >
