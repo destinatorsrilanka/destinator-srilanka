@@ -88,10 +88,10 @@ export default function HeroSection() {
       {/* --- Main Content Area --- */}
       <div className="relative z-30 flex flex-col justify-center min-h-screen px-6 md:px-12 lg:px-24 pt-20 md:pt-0">
         <div className="max-w-5xl">
-          {/* --- LOGO & SLOGAN GROUP (Positioned closer to the tag below) --- */}
-          <div className="mb-4 animate-slide-up">
+          {/* --- LOGO & SLOGAN GROUP (Centered Together) --- */}
+          <div className="mb-8 animate-slide-up w-fit flex flex-col items-center group">
             {/* --- ANIMATED TEXT LOGO --- */}
-            <div className="relative group w-fit mb-3">
+            <div className="relative mb-2">
               <div className="relative px-6 py-3 bg-white/5 backdrop-blur-md border border-white/10 overflow-hidden rounded-xl shadow-2xl">
                 <span className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-destinator-orange to-transparent -translate-x-full animate-border-top-new"></span>
                 <span className="absolute top-0 right-0 w-[2px] h-full bg-gradient-to-b from-transparent via-destinator-orange to-transparent -translate-y-full animate-border-right-new"></span>
@@ -110,20 +110,20 @@ export default function HeroSection() {
               </div>
             </div>
 
-            {/* --- SLOGAN (Nature Culture Adventure) --- */}
+            {/* --- SLOGAN (Centered directly under Logo) --- */}
             <div
-              className="flex items-center gap-3 px-2 opacity-0 animate-fade-in-up"
-              style={{ animationDelay: "0.2s" }}
+              className="flex items-center justify-center gap-3 w-full opacity-0 animate-fade-in-up"
+              style={{ animationDelay: "0.3s" }}
             >
-              <span className="text-white/80 text-[10px] md:text-xs lg:text-sm font-bold tracking-[0.3em] uppercase">
+              <span className="text-white/90 text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase">
                 Nature
               </span>
-              <span className="w-1.5 h-1.5 bg-destinator-orange rounded-full"></span>
-              <span className="text-white/80 text-[10px] md:text-xs lg:text-sm font-bold tracking-[0.3em] uppercase">
+              <span className="w-1 h-1 bg-destinator-orange rounded-full"></span>
+              <span className="text-white/90 text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase">
                 Culture
               </span>
-              <span className="w-1.5 h-1.5 bg-destinator-orange rounded-full"></span>
-              <span className="text-white/80 text-[10px] md:text-xs lg:text-sm font-bold tracking-[0.3em] uppercase">
+              <span className="w-1 h-1 bg-destinator-orange rounded-full"></span>
+              <span className="text-white/90 text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase">
                 Adventure
               </span>
             </div>
@@ -213,7 +213,9 @@ export default function HeroSection() {
         {carouselImages.map((_, i) => (
           <div
             key={i}
-            className={`h-1.5 w-6 rounded-full transition-all ${i === currentIndex ? "bg-destinator-orange w-10" : "bg-white/30"}`}
+            className={`h-1.5 w-6 rounded-full transition-all ${
+              i === currentIndex ? "bg-destinator-orange w-10" : "bg-white/30"
+            }`}
           />
         ))}
       </div>

@@ -1,6 +1,6 @@
 "use client";
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Users,
   Globe,
@@ -12,6 +12,30 @@ import {
 
 const LOGO_COLOR = "#EAB308";
 
+// මාරු වීමට අවශ්‍ය පින්තූර පෙළ
+const aboutImages = [
+  {
+    src: "image/about.png",
+    title: "The Hill Kingdom",
+    subtitle: "Authentic Heritage",
+  },
+  {
+    src: "/image/clucture.png",
+    title: "Cultural Wonders",
+    subtitle: "Ancient Traditions",
+  },
+  {
+    src: "/image/k.png",
+    title: "Wild Safari",
+    subtitle: "Untamed Nature",
+  },
+  {
+    src: "/image/slidenew1.png",
+    title: "Golden Shores",
+    subtitle: "Coastal Bliss",
+  },
+];
+
 const stats = [
   { id: 1, label: "Travelers", value: "50K+", icon: Users },
   { id: 2, label: "Destinations", value: "120+", icon: Globe },
@@ -20,8 +44,18 @@ const stats = [
 ];
 
 export default function CreativeAboutUs() {
+  const [currentImage, setCurrentImage] = useState(0);
+
+  // රූප ස්වයංක්‍රීයව මාරු වීමට (සෑම තත්පර 5කට වරක්)
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentImage((prev) => (prev + 1) % aboutImages.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
-    <section className="relative w-full min-h-screen bg-[#0a0a0a] overflow-hidden py-20 px-6 lg:px-20 text-white flex items-center">
+    <section className="relative w-full min-h-screen bg-[#0a0a0a] overflow-hidden py-20 px-6 lg:px-20 text-white flex items-center font-montserrat">
       {/* --- BACKGROUND DECORATION --- */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-yellow-500/5 rounded-full blur-[120px] -z-10" />
       <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-white/5 rounded-full blur-[100px] -z-10" />
@@ -33,7 +67,7 @@ export default function CreativeAboutUs() {
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: false, amount: 0.3 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.8 }}
             >
               <h3 className="text-yellow-500 font-bold text-[9px] tracking-[0.5em] uppercase mb-4">
@@ -51,7 +85,7 @@ export default function CreativeAboutUs() {
                 <motion.div
                   initial={{ width: 0 }}
                   whileInView={{ width: "100%" }}
-                  viewport={{ once: false, amount: 0.5 }}
+                  viewport={{ once: true }}
                   transition={{
                     delay: 0.2,
                     duration: 1,
@@ -71,20 +105,17 @@ export default function CreativeAboutUs() {
                 </p>
                 <p className="text-gray-500 text-xs lg:text-sm leading-relaxed border-l-2 border-yellow-500/40 pl-5 italic font-medium">
                   "At the core of our service is 'Atithi Devo Bhava'—the ancient
-                  belief that every guest is a reflection of God. We take pride
-                  in showing you not just the places on a map, but the heart of
-                  our culture."
+                  belief that every guest is a reflection of God."
                 </p>
                 <p className="text-gray-400 text-sm lg:text-base leading-relaxed">
                   With over 15 years of deep-rooted expertise, we specialize in
-                  luxury, sustainable, and tailor-made travel. Whether it's the
-                  mist-covered mountains or the golden southern shores, your
-                  safety and wonder are our priority.
+                  luxury, sustainable, and tailor-made travel. Your safety and
+                  wonder are our priority.
                 </p>
               </div>
 
               <div className="flex flex-wrap gap-4 mt-10">
-                <button className="px-7 py-3.5 bg-white text-black rounded-xl font-black text-[9px] tracking-widest uppercase hover:bg-yellow-500 transition-all flex items-center gap-3 active:scale-95 shadow-lg shadow-white/5">
+                <button className="px-7 py-3.5 bg-white text-black rounded-xl font-black text-[9px] tracking-widest uppercase hover:bg-yellow-500 transition-all flex items-center gap-3 active:scale-95 shadow-lg">
                   Explore Heritage <ArrowUpRight size={14} />
                 </button>
                 <button className="px-7 py-3.5 bg-white/5 border border-white/10 text-white rounded-xl font-black text-[9px] tracking-widest uppercase hover:bg-white/10 transition-all active:scale-95">
@@ -94,7 +125,7 @@ export default function CreativeAboutUs() {
             </motion.div>
           </div>
 
-          {/* --- RIGHT CONTENT: MINI STATS & IMAGE --- */}
+          {/* --- RIGHT CONTENT: STATS & IMAGE SLIDER --- */}
           <div className="lg:col-span-5 relative">
             {/* Stats Grid */}
             <div className="grid grid-cols-2 gap-3 mb-8">
@@ -103,13 +134,9 @@ export default function CreativeAboutUs() {
                   key={stat.id}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: false }}
+                  viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  whileHover={{
-                    y: -3,
-                    backgroundColor: "rgba(255,255,255,0.04)",
-                  }}
-                  className="p-4 bg-white/[0.02] border border-white/5 rounded-2xl backdrop-blur-md transition-all text-center lg:text-left"
+                  className="p-4 bg-white/[0.02] border border-white/5 rounded-2xl backdrop-blur-md text-center lg:text-left"
                 >
                   <stat.icon
                     size={16}
@@ -125,36 +152,55 @@ export default function CreativeAboutUs() {
               ))}
             </div>
 
-            {/* Featured Image Block with Highlighted Text */}
+            {/* --- IMAGE SLIDER BLOCK (Updated to Slider) --- */}
             <div className="relative">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: false }}
-                transition={{ duration: 0.8 }}
-                className="relative rounded-[2rem] overflow-hidden group border border-white/10 shadow-2xl"
-              >
-                <img
-                  src="image/about.png"
-                  alt="Elite Experience"
-                  className="w-full h-[320px] lg:h-[400px] object-cover group-hover:scale-105 transition-transform duration-1000 brightness-75 group-hover:brightness-90"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent opacity-80" />
+              <div className="relative rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl h-[320px] lg:h-[400px]">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentImage}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 1 }}
+                    className="absolute inset-0"
+                  >
+                    <img
+                      src={aboutImages[currentImage].src}
+                      alt={aboutImages[currentImage].title}
+                      className="w-full h-full object-cover brightness-75 transition-transform duration-[5000ms] scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent opacity-80" />
 
-                <div className="absolute bottom-5 left-6">
-                  <span className="bg-yellow-500 text-black text-[7px] font-black px-2 py-1 rounded uppercase mb-2 inline-block">
-                    Featured
-                  </span>
-                  <p className="text-white font-black text-xs tracking-[0.2em] uppercase">
-                    The Hill Kingdom
-                  </p>
-                  <p className="text-white/40 text-[9px] uppercase tracking-tighter">
-                    Authentic Heritage
-                  </p>
-                </div>
-              </motion.div>
+                    <div className="absolute bottom-5 left-6">
+                      <span className="bg-yellow-500 text-black text-[7px] font-black px-2 py-1 rounded uppercase mb-2 inline-block">
+                        Featured
+                      </span>
+                      <p className="text-white font-black text-xs tracking-[0.2em] uppercase">
+                        {aboutImages[currentImage].title}
+                      </p>
+                      <p className="text-white/40 text-[9px] uppercase tracking-tighter">
+                        {aboutImages[currentImage].subtitle}
+                      </p>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
 
-              {/* --- NEW HIGHLIGHTED BADGE ON IMAGE --- */}
+              {/* Slider Dots (Navigation Indicator) */}
+              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-30">
+                {aboutImages.map((_, i) => (
+                  <div
+                    key={i}
+                    className={`h-1 rounded-full transition-all duration-300 ${
+                      i === currentImage
+                        ? "w-6 bg-yellow-500"
+                        : "w-2 bg-white/20"
+                    }`}
+                  />
+                ))}
+              </div>
+
+              {/* Floating Badge */}
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -174,7 +220,7 @@ export default function CreativeAboutUs() {
                       Specialist in
                     </p>
                     <p className="text-xs lg:text-sm text-white font-bold leading-tight">
-                      Pristine Central Highlands
+                      Pristine Destinations
                     </p>
                   </div>
                 </div>

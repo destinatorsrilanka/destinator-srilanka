@@ -13,47 +13,46 @@ export async function POST(req: Request) {
       },
     });
 
+    // විස්තරාත්මක ඊමේල් පණිවිඩය
+    const emailBody = `
+      <h3>🚀 New Trip Inquiry</h3>
+      <p><b>Name:</b> ${data.name}</p>
+      <p><b>Email:</b> ${data.email}</p>
+      <hr>
+      <p><b>Arrival Date:</b> ${data.arrivalDate}</p>
+      <p><b>Departure Date:</b> ${data.departureDate}</p>
+      <p><b>Guests:</b> ${data.guests} | <b>Kids:</b> ${data.kids || 0} (${data.kidsAge || "N/A"})</p>
+      <p><b>Country:</b> ${data.country}</p>
+      <p><b>Preferred Transport:</b> ${data.transport}</p>
+      <p><b>Visiting Location:</b> ${data.location}</p>
+    `;
+
     const adminMailOptions = {
       from: process.env.EMAIL_USER,
       to: process.env.INQUIRY_RECEIVER,
       subject: `🚀 New Inquiry from ${data.name}`,
-      html: `<p>Name: ${data.name}</p><p>Email: ${data.email}</p><p>Location: ${data.location}</p>`,
+      html: emailBody,
     };
 
     const customerMailOptions = {
       from: process.env.EMAIL_USER,
       to: data.email,
       subject: "Thank You - Destinator Lanka",
-      html: `<p>Hi ${data.name}, We received your inquiry for ${data.location}.</p>`,
+      html: `<p>Hi ${data.name},</p><p>We received your inquiry for ${data.location}. Our team will contact you shortly.</p>`,
     };
 
-    // ඊමේල් යැවීම තහවුරු කරගන්න
     await transporter.sendMail(adminMailOptions);
     await transporter.sendMail(customerMailOptions);
 
-    // --- මෙන්න මේ කොටස ඉතා වැදගත් ---
-    // සාර්ථක බව UI එකට දැන්වීමට මෙම response එකම භාවිතා කරන්න
-    return new Response(
-      JSON.stringify({
-        success: true,
-        message: "Inquiry sent successfully!",
-      }),
-      {
-        status: 200,
-        headers: { "Content-Type": "application/json" },
-      },
+    return NextResponse.json(
+      { success: true, message: "Inquiry sent successfully!" },
+      { status: 200 },
     );
   } catch (error: any) {
     console.error("Mail Error:", error);
-    return new Response(
-      JSON.stringify({
-        success: false,
-        message: error.message || "Server Error",
-      }),
-      {
-        status: 500,
-        headers: { "Content-Type": "application/json" },
-      },
+    return NextResponse.json(
+      { success: false, message: error.message || "Server Error" },
+      { status: 500 },
     );
   }
 }

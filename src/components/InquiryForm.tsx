@@ -36,21 +36,13 @@ export default function InquiryForm() {
           message:
             "Your inquiry has been sent! Check your email for confirmation.",
         });
-        const form = e.target as HTMLFormElement;
-        form.reset();
+        (e.target as HTMLFormElement).reset();
       } else {
-        const result = await res.json().catch(() => ({}));
-        setStatus({
-          type: "error",
-          message: result.message || "Something went wrong on the server.",
-        });
+        const result = await res.json();
+        setStatus({ type: "error", message: result.message || "Server Error" });
       }
     } catch (error) {
-      console.error("Fetch error:", error);
-      setStatus({
-        type: "error",
-        message: "Successfully sent, but UI failed to sync.",
-      });
+      setStatus({ type: "error", message: "Failed to connect to the server." });
     } finally {
       setLoading(false);
     }
@@ -59,16 +51,16 @@ export default function InquiryForm() {
   const socials = [
     { Icon: Facebook, href: "#", color: "hover:bg-blue-600" },
     { Icon: Instagram, href: "#", color: "hover:bg-pink-600" },
-    { Icon: MessageCircle, href: "#", color: "hover:bg-green-600" }, // WhatsApp
+    { Icon: MessageCircle, href: "#", color: "hover:bg-green-600" },
     { Icon: Twitter, href: "#", color: "hover:bg-sky-500" },
   ];
 
   return (
     <section id="contact" className="py-24 bg-white px-6">
-      <div className="max-w-5xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+      <div className="max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
           {/* --- LEFT SIDE: TEXT & SOCIALS --- */}
-          <div className="lg:col-span-5">
+          <div className="lg:col-span-5 lg:sticky lg:top-24">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -80,7 +72,7 @@ export default function InquiryForm() {
                   Get in Touch
                 </h3>
               </div>
-              <h2 className="text-4xl md:text-5xl font-black text-black leading-tight mb-6">
+              <h2 className="text-4xl md:text-5xl font-black text-black leading-tight mb-6 uppercase">
                 PLAN YOUR <br />
                 <span className="text-gray-300">DREAM JOURNEY.</span>
               </h2>
@@ -90,7 +82,7 @@ export default function InquiryForm() {
                 just for you.
               </p>
 
-              {/* Social Media Icons Section */}
+              {/* Social Media Icons */}
               <div className="flex items-center gap-4 mb-10">
                 {socials.map((social, index) => (
                   <motion.a
@@ -116,14 +108,16 @@ export default function InquiryForm() {
             </motion.div>
           </div>
 
-          {/* --- RIGHT SIDE: THE FORM --- */}
+          {/* --- RIGHT SIDE: THE FORM (Balanced & Responsive) --- */}
           <div className="lg:col-span-7">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              className="bg-white p-8 md:p-12 rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-gray-50"
+              viewport={{ once: true }}
+              className="bg-white p-8 md:p-10 rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-gray-50"
             >
               <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Row 1: Name & Email */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="flex flex-col">
                     <label className="text-black font-bold text-[10px] uppercase tracking-widest mb-2 ml-1">
@@ -149,21 +143,112 @@ export default function InquiryForm() {
                     />
                   </div>
                 </div>
-                <div className="flex flex-col">
-                  <label className="text-black font-bold text-[10px] uppercase tracking-widest mb-2 ml-1">
-                    Where do you want to visit?
-                  </label>
-                  <input
-                    name="location"
-                    placeholder="E.g. Ella, Sigiriya, Mirissa..."
-                    required
-                    className="p-4 rounded-xl bg-gray-50 text-black border border-gray-100 focus:outline-none focus:border-yellow-500 focus:bg-white transition-all text-sm"
-                  />
+
+                {/* Row 2: Dates */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="flex flex-col">
+                    <label className="text-black font-bold text-[10px] uppercase tracking-widest mb-2 ml-1">
+                      Arrival Date
+                    </label>
+                    <input
+                      name="arrivalDate"
+                      type="date"
+                      required
+                      className="p-4 rounded-xl bg-gray-50 text-black border border-gray-100 focus:outline-none focus:border-yellow-500 focus:bg-white transition-all text-sm"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-black font-bold text-[10px] uppercase tracking-widest mb-2 ml-1">
+                      Departure Date
+                    </label>
+                    <input
+                      name="departureDate"
+                      type="date"
+                      required
+                      className="p-4 rounded-xl bg-gray-50 text-black border border-gray-100 focus:outline-none focus:border-yellow-500 focus:bg-white transition-all text-sm"
+                    />
+                  </div>
                 </div>
+
+                {/* Row 3: Guests & Kids */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="flex flex-col">
+                    <label className="text-black font-bold text-[10px] uppercase tracking-widest mb-2 ml-1">
+                      Guests
+                    </label>
+                    <input
+                      name="guests"
+                      type="number"
+                      placeholder="0"
+                      required
+                      className="p-4 rounded-xl bg-gray-50 text-black border border-gray-100 focus:outline-none focus:border-yellow-500 focus:bg-white transition-all text-sm"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-black font-bold text-[10px] uppercase tracking-widest mb-2 ml-1">
+                      Kids
+                    </label>
+                    <input
+                      name="kids"
+                      type="number"
+                      placeholder="0"
+                      className="p-4 rounded-xl bg-gray-50 text-black border border-gray-100 focus:outline-none focus:border-yellow-500 focus:bg-white transition-all text-sm"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-black font-bold text-[10px] uppercase tracking-widest mb-2 ml-1">
+                      Country
+                    </label>
+                    <input
+                      name="country"
+                      placeholder="Your Country"
+                      required
+                      className="p-4 rounded-xl bg-gray-50 text-black border border-gray-100 focus:outline-none focus:border-yellow-500 focus:bg-white transition-all text-sm"
+                    />
+                  </div>
+                </div>
+
+                {/* Row 4: Transport & Location */}
+                <div className="space-y-4">
+                  <div className="flex flex-col">
+                    <label className="text-black font-bold text-[10px] uppercase tracking-widest mb-2 ml-1">
+                      Preferred Transport
+                    </label>
+                    <div className="flex flex-wrap gap-4 px-2">
+                      {["Car", "Van", "Bus"].map((mode) => (
+                        <label
+                          key={mode}
+                          className="flex items-center gap-2 text-xs font-bold text-gray-600 cursor-pointer"
+                        >
+                          <input
+                            type="radio"
+                            name="transport"
+                            value={mode}
+                            required
+                            className="accent-yellow-500"
+                          />{" "}
+                          {mode}
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-black font-bold text-[10px] uppercase tracking-widest mb-2 ml-1">
+                      Where do you want to visit?
+                    </label>
+                    <input
+                      name="location"
+                      placeholder="E.g. Ella, Sigiriya, Mirissa..."
+                      required
+                      className="p-4 rounded-xl bg-gray-50 text-black border border-gray-100 focus:outline-none focus:border-yellow-500 focus:bg-white transition-all text-sm"
+                    />
+                  </div>
+                </div>
+
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-black hover:bg-yellow-500 text-white hover:text-black py-5 rounded-2xl font-black text-[10px] tracking-[0.3em] uppercase transition-all flex items-center justify-center gap-3 disabled:opacity-50 group shadow-lg shadow-black/10"
+                  className="w-full bg-black hover:bg-yellow-500 text-white hover:text-black py-5 rounded-2xl font-black text-[10px] tracking-[0.3em] uppercase transition-all flex items-center justify-center gap-3 disabled:opacity-50 group shadow-lg"
                 >
                   {loading ? (
                     "Processing..."
