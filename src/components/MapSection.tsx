@@ -137,16 +137,16 @@ export default function SriLankaInteractiveMap() {
           )}
         </AnimatePresence>
 
-        {/* --- WATERMARK --- */}
+        {/* --- WATERMARK (NEW SAYING) --- */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-[1]">
           <motion.h1
-            className="text-[30vw] lg:text-[18vw] font-black tracking-tighter uppercase leading-none opacity-[0.05]"
+            className="text-[10vw] lg:text-[6vw] font-black tracking-tighter uppercase leading-none opacity-[0.05] text-center px-10"
             animate={{
               color: active ? "rgba(255,255,255,1)" : "rgba(0,0,0,1)",
-              scale: active ? 1.1 : 1,
+              scale: active ? 1.05 : 1,
             }}
           >
-            {active ? active.name : "CEYLON"}
+            {active ? active.name : "A JOURNEY AROUND CEYLON WITH DESTINATOR"}
           </motion.h1>
         </div>
 
@@ -155,7 +155,6 @@ export default function SriLankaInteractiveMap() {
           style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
           animate={{
             x: active ? (isMobile ? 0 : "22%") : "0%",
-            // Mobile වලදී සිතියම මඳක් පහළට ගන්නා ලදී (Initial: 5%, Active: 12%)
             y: isMobile ? (active ? "12%" : "5%") : "0%",
             scale: isMobile ? (active ? 0.8 : 1.1) : 1,
           }}
@@ -263,12 +262,16 @@ export default function SriLankaInteractiveMap() {
         {/* HUD UI */}
         <div className="absolute bottom-6 left-8 z-[100] flex items-center gap-3">
           <div
-            className={`w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center font-black text-[10px] ${active ? "bg-yellow-500 text-black" : "bg-black text-white"}`}
+            className={`w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center font-black text-[10px] ${
+              active ? "bg-yellow-500 text-black" : "bg-black text-white"
+            }`}
           >
             SL
           </div>
           <p
-            className={`text-[8px] sm:text-[9px] font-black tracking-[0.3em] uppercase ${active ? "text-white/40" : "text-black/20"}`}
+            className={`text-[8px] sm:text-[9px] font-black tracking-[0.3em] uppercase ${
+              active ? "text-white/40" : "text-black/20"
+            }`}
           >
             Paradise Guide v6
           </p>
