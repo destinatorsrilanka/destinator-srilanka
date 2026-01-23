@@ -48,7 +48,7 @@ export default function Navbar() {
         <Link href="/" className="relative flex items-center shrink-0">
           <div className="relative w-28 h-10 sm:w-36 sm:h-12 md:w-52 md:h-14 overflow-hidden rounded-sm">
             <Image
-              src="/image/Logo.jpeg"
+              src="/image/Logo.png"
               alt="Destinator Logo"
               fill
               className="object-contain object-left"
