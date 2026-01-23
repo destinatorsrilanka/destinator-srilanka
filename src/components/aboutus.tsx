@@ -1,7 +1,14 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import { Users, Globe, Award, ShieldCheck, ArrowUpRight } from "lucide-react";
+import {
+  Users,
+  Globe,
+  Award,
+  ShieldCheck,
+  ArrowUpRight,
+  MapPin,
+} from "lucide-react";
 
 const LOGO_COLOR = "#EAB308";
 
@@ -41,7 +48,6 @@ export default function CreativeAboutUs() {
                   </span>
                 </h2>
 
-                {/* --- ANIMATED UNDERLINE (DRAWS IN AND OUT ON SCROLL) --- */}
                 <motion.div
                   initial={{ width: 0 }}
                   whileInView={{ width: "100%" }}
@@ -119,32 +125,61 @@ export default function CreativeAboutUs() {
               ))}
             </div>
 
-            {/* Featured Image Block */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: false }}
-              transition={{ duration: 0.8 }}
-              className="relative rounded-[2rem] overflow-hidden group border border-white/10 shadow-2xl"
-            >
-              <img
-                src="image/clucture.png"
-                alt="Elite Experience"
-                className="w-full h-[320px] lg:h-[400px] object-cover group-hover:scale-105 transition-transform duration-1000 brightness-75 group-hover:brightness-100"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent opacity-80" />
-              <div className="absolute bottom-5 left-6">
-                <span className="bg-yellow-500 text-black text-[7px] font-black px-2 py-1 rounded uppercase mb-2 inline-block">
-                  Featured
-                </span>
-                <p className="text-white font-black text-xs tracking-[0.2em] uppercase">
-                  The Hill Kingdom
-                </p>
-                <p className="text-white/40 text-[9px] uppercase tracking-tighter">
-                  Authentic Heritage
-                </p>
-              </div>
-            </motion.div>
+            {/* Featured Image Block with Highlighted Text */}
+            <div className="relative">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: false }}
+                transition={{ duration: 0.8 }}
+                className="relative rounded-[2rem] overflow-hidden group border border-white/10 shadow-2xl"
+              >
+                <img
+                  src="image/about.png"
+                  alt="Elite Experience"
+                  className="w-full h-[320px] lg:h-[400px] object-cover group-hover:scale-105 transition-transform duration-1000 brightness-75 group-hover:brightness-90"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent opacity-80" />
+
+                <div className="absolute bottom-5 left-6">
+                  <span className="bg-yellow-500 text-black text-[7px] font-black px-2 py-1 rounded uppercase mb-2 inline-block">
+                    Featured
+                  </span>
+                  <p className="text-white font-black text-xs tracking-[0.2em] uppercase">
+                    The Hill Kingdom
+                  </p>
+                  <p className="text-white/40 text-[9px] uppercase tracking-tighter">
+                    Authentic Heritage
+                  </p>
+                </div>
+              </motion.div>
+
+              {/* --- NEW HIGHLIGHTED BADGE ON IMAGE --- */}
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                animate={{ y: [0, -10, 0] }}
+                transition={{
+                  opacity: { duration: 0.5, delay: 0.5 },
+                  y: { duration: 3, repeat: Infinity, ease: "easeInOut" },
+                }}
+                className="absolute -top-4 -left-4 lg:-left-10 z-20"
+              >
+                <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-4 rounded-2xl shadow-2xl flex items-center gap-4 max-w-[200px] lg:max-w-[240px]">
+                  <div className="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(234,179,8,0.4)]">
+                    <MapPin size={20} className="text-black" />
+                  </div>
+                  <div>
+                    <p className="text-[10px] text-yellow-500 font-black uppercase tracking-widest leading-none mb-1">
+                      Specialist in
+                    </p>
+                    <p className="text-xs lg:text-sm text-white font-bold leading-tight">
+                      Pristine Central Highlands
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
           </div>
         </div>
       </div>

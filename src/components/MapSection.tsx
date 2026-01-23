@@ -137,10 +137,10 @@ export default function SriLankaInteractiveMap() {
           )}
         </AnimatePresence>
 
-        {/* --- WATERMARK (NEW SAYING) --- */}
+        {/* --- WATERMARK (STAYS BEHIND BUT VISIBLE) --- */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-[1]">
           <motion.h1
-            className="text-[10vw] lg:text-[6vw] font-black tracking-tighter uppercase leading-none opacity-[0.05] text-center px-10"
+            className="text-[10vw] lg:text-[6vw] font-black tracking-tighter uppercase leading-none opacity-[0.08] text-center px-10"
             animate={{
               color: active ? "rgba(255,255,255,1)" : "rgba(0,0,0,1)",
               scale: active ? 1.05 : 1,
@@ -150,9 +150,14 @@ export default function SriLankaInteractiveMap() {
           </motion.h1>
         </div>
 
-        {/* --- MAP CONTAINER (Fixed Overlap for Mobile) --- */}
+        {/* --- MAP CONTAINER (USING BLEND MODE SOLUTION) --- */}
         <motion.div
-          style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+          style={{
+            rotateX,
+            rotateY,
+            transformStyle: "preserve-3d",
+            mixBlendMode: active ? "normal" : "multiply", // සිතියම යටින් අකුරු පෙනීමට මෙය උදව් වේ
+          }}
           animate={{
             x: active ? (isMobile ? 0 : "22%") : "0%",
             y: isMobile ? (active ? "12%" : "5%") : "0%",
@@ -175,11 +180,11 @@ export default function SriLankaInteractiveMap() {
               }`}
             />
 
-            {/* PINS */}
+            {/* PINS - Z-INDEX IS HIGH TO STAY ON TOP */}
             {destinations.map((loc) => (
               <div
                 key={loc.id}
-                className="absolute"
+                className="absolute z-[50]"
                 style={{ top: loc.coords.top, left: loc.coords.left }}
               >
                 <motion.div

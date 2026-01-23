@@ -88,28 +88,49 @@ export default function HeroSection() {
       {/* --- Main Content Area --- */}
       <div className="relative z-30 flex flex-col justify-center min-h-screen px-6 md:px-12 lg:px-24 pt-20 md:pt-0">
         <div className="max-w-5xl">
-          {/* --- ANIMATED TEXT LOGO WITH GLASS EFFECT --- */}
-          <div className="relative mb-8 md:mb-12 group w-fit animate-slide-up">
-            <div className="relative px-6 py-3 bg-white/5 backdrop-blur-md border border-white/10 overflow-hidden rounded-xl shadow-2xl">
-              <span className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-destinator-orange to-transparent -translate-x-full animate-border-top-new"></span>
-              <span className="absolute top-0 right-0 w-[2px] h-full bg-gradient-to-b from-transparent via-destinator-orange to-transparent -translate-y-full animate-border-right-new"></span>
-              <span className="absolute bottom-0 right-0 w-full h-[2px] bg-gradient-to-l from-transparent via-destinator-orange to-transparent translate-x-full animate-border-bottom-new"></span>
-              <span className="absolute bottom-0 left-0 w-[2px] h-full bg-gradient-to-t from-transparent via-destinator-orange to-transparent translate-y-full animate-border-left-new"></span>
+          {/* --- LOGO & SLOGAN GROUP (Positioned closer to the tag below) --- */}
+          <div className="mb-4 animate-slide-up">
+            {/* --- ANIMATED TEXT LOGO --- */}
+            <div className="relative group w-fit mb-3">
+              <div className="relative px-6 py-3 bg-white/5 backdrop-blur-md border border-white/10 overflow-hidden rounded-xl shadow-2xl">
+                <span className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-destinator-orange to-transparent -translate-x-full animate-border-top-new"></span>
+                <span className="absolute top-0 right-0 w-[2px] h-full bg-gradient-to-b from-transparent via-destinator-orange to-transparent -translate-y-full animate-border-right-new"></span>
+                <span className="absolute bottom-0 right-0 w-full h-[2px] bg-gradient-to-l from-transparent via-destinator-orange to-transparent translate-x-full animate-border-bottom-new"></span>
+                <span className="absolute bottom-0 left-0 w-[2px] h-full bg-gradient-to-t from-transparent via-destinator-orange to-transparent translate-y-full animate-border-left-new"></span>
 
-              <h3 className="text-destinator-orange text-2xl md:text-4xl lg:text-5xl font-black tracking-[0.15em] md:tracking-[0.2em] uppercase italic flex items-center gap-0">
-                DESTINAT
-                <span className="relative inline-flex items-center justify-center mx-1">
-                  <span className="opacity-0">O</span>
-                  <Compass className="absolute w-7 h-7 md:w-11 md:h-11 animate-compass-rotate drop-shadow-[0_0_8px_rgba(234,179,8,0.5)]" />
-                </span>
-                R
-                <span className="ml-3 w-2 h-2 md:w-3 md:h-3 bg-destinator-orange rounded-full animate-pulse shadow-[0_0_15px_#EAB308]"></span>
-              </h3>
+                <h3 className="text-destinator-orange text-2xl md:text-4xl lg:text-5xl font-black tracking-[0.15em] md:tracking-[0.2em] uppercase italic flex items-center gap-0">
+                  DESTINAT
+                  <span className="relative inline-flex items-center justify-center mx-1">
+                    <span className="opacity-0">O</span>
+                    <Compass className="absolute w-7 h-7 md:w-11 md:h-11 animate-compass-rotate drop-shadow-[0_0_8px_rgba(234,179,8,0.5)]" />
+                  </span>
+                  R
+                  <span className="ml-3 w-2 h-2 md:w-3 md:h-3 bg-destinator-orange rounded-full animate-pulse shadow-[0_0_15px_#EAB308]"></span>
+                </h3>
+              </div>
+            </div>
+
+            {/* --- SLOGAN (Nature Culture Adventure) --- */}
+            <div
+              className="flex items-center gap-3 px-2 opacity-0 animate-fade-in-up"
+              style={{ animationDelay: "0.2s" }}
+            >
+              <span className="text-white/80 text-[10px] md:text-xs lg:text-sm font-bold tracking-[0.3em] uppercase">
+                Nature
+              </span>
+              <span className="w-1.5 h-1.5 bg-destinator-orange rounded-full"></span>
+              <span className="text-white/80 text-[10px] md:text-xs lg:text-sm font-bold tracking-[0.3em] uppercase">
+                Culture
+              </span>
+              <span className="w-1.5 h-1.5 bg-destinator-orange rounded-full"></span>
+              <span className="text-white/80 text-[10px] md:text-xs lg:text-sm font-bold tracking-[0.3em] uppercase">
+                Adventure
+              </span>
             </div>
           </div>
 
           {/* French Priority Tag */}
-          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-lg border border-white/20 px-4 py-2 rounded-full mb-6 animate-fade-in shadow-xl w-fit">
+          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-lg border border-white/20 px-4 py-2 rounded-full mb-8 animate-fade-in shadow-xl w-fit">
             <div className="flex gap-1 shrink-0">
               <span className="w-2 h-4 bg-[#002395]"></span>
               <span className="w-2 h-4 bg-white"></span>
@@ -120,7 +141,7 @@ export default function HeroSection() {
             </p>
           </div>
 
-          {/* Titles - Fixed to Single Line */}
+          {/* Titles */}
           <div className="space-y-1 md:space-y-2 mb-6 overflow-visible">
             <h2 className="text-destinator-orange text-base md:text-xl lg:text-2xl font-bold tracking-tight animate-slide-up italic">
               {carouselImages[currentIndex]?.frTitle}
@@ -187,6 +208,7 @@ export default function HeroSection() {
         </div>
       </div>
 
+      {/* Mobile Pagination */}
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-2 min-[1161px]:hidden z-40">
         {carouselImages.map((_, i) => (
           <div
@@ -241,6 +263,7 @@ export default function HeroSection() {
         .animate-border-left-new {
           animation: border-left-new 3s infinite linear 2.25s;
         }
+
         @keyframes compass-rotate {
           0%,
           100% {
@@ -256,6 +279,7 @@ export default function HeroSection() {
         .animate-compass-rotate {
           animation: compass-rotate 6s infinite ease-in-out;
         }
+
         @keyframes slide-up {
           from {
             transform: translateY(30px);
@@ -291,8 +315,7 @@ export default function HeroSection() {
           animation: fadeIn 1.5s ease-out forwards;
         }
         .animate-fade-in-up {
-          animation: fadeInUp 1s ease-out 0.4s forwards;
-          opacity: 0;
+          animation: fadeInUp 1s ease-out forwards;
         }
       `}</style>
     </section>
