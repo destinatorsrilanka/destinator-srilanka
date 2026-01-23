@@ -16,27 +16,44 @@ export async function POST(req: Request) {
     const adminMailOptions = {
       from: process.env.EMAIL_USER,
       to: process.env.INQUIRY_RECEIVER,
-      subject: "New Inquiry - Destinator Lanka",
-      html: `
-        <div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #F58220;">
-          <h2 style="color: #F58220;">New Trip Plan Received</h2>
-          <p><strong>Name:</strong> ${data.name}</p>
-          <p><strong>Email:</strong> ${data.email}</p>
-          <p><strong>Location:</strong> ${data.location}</p>
-        </div>
-      `,
+      subject: `🚀 New Inquiry from ${data.name}`,
+      html: `<p>Name: ${data.name}</p><p>Email: ${data.email}</p><p>Location: ${data.location}</p>`,
     };
 
+    const customerMailOptions = {
+      from: process.env.EMAIL_USER,
+      to: data.email,
+      subject: "Thank You - Destinator Lanka",
+      html: `<p>Hi ${data.name}, We received your inquiry for ${data.location}.</p>`,
+    };
+
+    // ඊමේල් යැවීම තහවුරු කරගන්න
     await transporter.sendMail(adminMailOptions);
-    return NextResponse.json(
-      { message: "Inquiry sent successfully!" },
-      { status: 200 },
+    await transporter.sendMail(customerMailOptions);
+
+    // --- මෙන්න මේ කොටස ඉතා වැදගත් ---
+    // සාර්ථක බව UI එකට දැන්වීමට මෙම response එකම භාවිතා කරන්න
+    return new Response(
+      JSON.stringify({
+        success: true,
+        message: "Inquiry sent successfully!",
+      }),
+      {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      },
     );
-  } catch (error) {
+  } catch (error: any) {
     console.error("Mail Error:", error);
-    return NextResponse.json(
-      { message: "Error sending email." },
-      { status: 500 },
+    return new Response(
+      JSON.stringify({
+        success: false,
+        message: error.message || "Server Error",
+      }),
+      {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      },
     );
   }
 }

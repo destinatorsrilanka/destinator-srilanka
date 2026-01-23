@@ -5,6 +5,7 @@ import MapSection from "@/components/MapSection";
 import InquiryForm from "@/components/InquiryForm";
 import Footer from "@/components/Footer";
 import Aboutus from "@/components/aboutus";
+import InfinitePhotoStrip from "@/components/InfinitePhotoStrip";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
 
       <MapSection />
       <Aboutus />
+      <InfinitePhotoStrip />
       <InquiryForm />
       <Footer />
     </>
