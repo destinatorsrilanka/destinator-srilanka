@@ -12,7 +12,6 @@ export default function Home() {
     <>
       <Navbar />
       <HeroSection />
-
       <MapSection />
       <Aboutus />
       <InfinitePhotoStrip />
