@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Menu, X, Facebook, Instagram, Twitter } from "lucide-react";
@@ -35,74 +34,71 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full z-[150] transition-all duration-500 ease-in-out ${
-        isMenuOpen
-          ? "bg-black"
-          : scrolled
-            ? "bg-black/95 backdrop-blur-2xl border-b border-white/10 py-2 md:py-3"
-            : "bg-white/5 backdrop-blur-md border-b border-white/10 py-4 md:py-6"
+      className={`fixed top-0 left-0 w-full z-[150] transition-all duration-500 ease-in-out bg-black border-b border-white/10 ${
+        scrolled || isMenuOpen ? "py-3 shadow-2xl" : "py-5"
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-20 flex justify-between items-center w-full relative z-[160]">
-        {/* --- LOGO --- */}
-        <Link href="/" className="relative flex items-center shrink-0">
-          <div className="relative w-28 h-10 sm:w-36 sm:h-12 md:w-52 md:h-14 overflow-hidden rounded-sm">
-            <Image
-              src="/image/Logo1.png"
-              alt="Destinator Logo"
-              fill
-              className="object-contain object-left"
-              priority
-            />
-          </div>
-        </Link>
-
-        {/* --- DESKTOP NAVIGATION --- */}
-        <nav className="hidden xl:block">
-          <ul className="flex items-center gap-1">
-            {navLinks.map((link) => (
-              <li key={link.name}>
-                <Link
-                  href={link.href}
-                  className="text-white text-[11px] font-black tracking-[0.15em] px-4 py-2 transition-all duration-300 hover:text-[#EAB308] relative group whitespace-nowrap"
-                >
-                  {link.name}
-                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-[#EAB308] transition-all duration-300 group-hover:w-full"></span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-
-        {/* --- RIGHT ACTIONS --- */}
-        <div className="flex items-center gap-3 sm:gap-6">
-          <Button
-            className={`hidden sm:flex bg-[#EAB308] hover:bg-white hover:text-black text-black font-black text-[10px] px-8 py-5 h-10 md:h-12 rounded-full transition-all duration-500 uppercase tracking-widest ${isMenuOpen ? "opacity-0 invisible scale-90" : "opacity-100 visible scale-100"}`}
-          >
-            BOOK NOW
-          </Button>
-
-          {/* --- MOBILE TOGGLE BUTTON --- */}
+        {/* --- MOBILE: MENU ICON (Left Aligned) | DESKTOP: NAV LINKS (Left Aligned) --- */}
+        <div className="flex items-center">
+          {/* Mobile Toggle - දැන් මෙය වම් පැත්තේ ඇත */}
           <button
-            className="xl:hidden relative text-white p-2 focus:outline-none z-[170]"
+            className="xl:hidden relative text-white p-2 -ml-2 focus:outline-none z-[170]"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             <div className="relative w-8 h-8 flex items-center justify-center">
-              {/* මෙනු අයිකන මාරුවීමේදී සිදුවන කුඩා ඇනිමේෂන් එකක් */}
               <X
-                size={32}
-                className={`absolute transition-all duration-500 text-[#EAB308] ${isMenuOpen ? "scale-100 rotate-0 opacity-100" : "scale-0 rotate-90 opacity-0"}`}
+                size={30}
+                className={`absolute transition-all duration-500 text-[#EAB308] ${
+                  isMenuOpen
+                    ? "scale-100 rotate-0 opacity-100"
+                    : "scale-0 rotate-90 opacity-0"
+                }`}
               />
               <Menu
-                size={32}
-                className={`absolute transition-all duration-500 ${isMenuOpen ? "scale-0 -rotate-90 opacity-0" : "scale-100 rotate-0 opacity-100"}`}
+                size={30}
+                className={`absolute transition-all duration-500 ${
+                  isMenuOpen
+                    ? "scale-0 -rotate-90 opacity-0"
+                    : "scale-100 rotate-0 opacity-100"
+                }`}
               />
             </div>
           </button>
+
+          {/* Desktop Links - වම් පැත්තේ සිට ආරම්භ වේ */}
+          <nav className="hidden xl:block">
+            <ul className="flex items-center gap-2">
+              {navLinks.map((link) => (
+                <li key={link.name}>
+                  <Link
+                    href={link.href}
+                    className="text-white text-[12px] font-bold tracking-[0.2em] px-4 py-2 transition-all duration-300 hover:text-[#EAB308] relative group whitespace-nowrap uppercase"
+                  >
+                    {link.name}
+                    <span className="absolute bottom-0 left-4 w-0 h-[2px] bg-[#EAB308] transition-all duration-300 group-hover:w-[calc(100%-32px)]"></span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
+
+        {/* --- RIGHT ACTIONS (Book Now Button) --- */}
+        <div className="flex items-center">
+          <Button
+            className={`bg-[#EAB308] hover:bg-white hover:text-black text-black font-black text-[10px] sm:text-[11px] px-6 sm:px-8 py-4 sm:py-5 h-9 sm:h-11 rounded-full transition-all duration-500 uppercase tracking-widest shadow-lg ${
+              isMenuOpen
+                ? "opacity-0 invisible translate-x-5"
+                : "opacity-100 visible translate-x-0"
+            }`}
+          >
+            BOOK NOW
+          </Button>
         </div>
       </div>
 
-      {/* --- MOBILE OVERLAY (RE-ENGINEERED ANIMATION) --- */}
+      {/* --- MOBILE OVERLAY (PURE BLACK) --- */}
       <div
         className={`fixed inset-0 bg-black transition-transform duration-700 ease-[cubic-bezier(0.77,0,0.175,1)] xl:hidden ${
           isMenuOpen ? "translate-y-0" : "-translate-y-full"
@@ -111,7 +107,7 @@ export default function Navbar() {
       >
         <div className="h-full flex flex-col justify-center items-center">
           <nav>
-            <ul className="flex flex-col space-y-6 text-center">
+            <ul className="flex flex-col space-y-8 text-center">
               {navLinks.map((link, index) => (
                 <li
                   key={link.name}
@@ -128,7 +124,7 @@ export default function Navbar() {
                 >
                   <Link
                     href={link.href}
-                    className="text-white text-4xl sm:text-5xl font-black tracking-tighter uppercase transition-all duration-300 hover:text-[#EAB308] hover:tracking-normal active:scale-95 block"
+                    className="text-white text-4xl sm:text-5xl font-black tracking-tighter uppercase transition-all duration-300 hover:text-[#EAB308] block"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {link.name}
@@ -138,9 +134,13 @@ export default function Navbar() {
             </ul>
           </nav>
 
-          {/* Social Icons with fade-in */}
+          {/* Social Icons */}
           <div
-            className={`flex gap-8 mt-16 transition-all duration-1000 delay-[800ms] ${isMenuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+            className={`flex gap-8 mt-16 transition-all duration-1000 delay-[800ms] ${
+              isMenuOpen
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-10"
+            }`}
           >
             <Facebook
               size={26}
