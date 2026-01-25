@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 const visualHighlights = [
   { src: "/image/slide1.jpeg", title: "Budupatuna" },
   { src: "/image/slide2.jpeg", title: "Gal Vihara" },
-  { src: "/image/slide3.png", title: "Sapria Himalayana" },
+  { src: "/image/slide3.PNG", title: "Sapria Himalayana" },
   { src: "/image/slide4.jpeg", title: "Secret Beach" },
   { src: "/image/slide5.jpeg", title: "Flora of LK" },
   { src: "/image/slide6.jpeg", title: "Rumassala Hill" },
