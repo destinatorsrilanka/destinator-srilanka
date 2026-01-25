@@ -31,7 +31,7 @@ export default function Navbar() {
     { name: "HOME", href: "#home" },
     { name: "HERITAGE MAP", href: "#heritage" },
     { name: "OUR LEGACY", href: "#about" },
-    { name: "SERVICES", href: "#services" },
+
     { name: "CONTACT US", href: "#contact" },
   ];
 
