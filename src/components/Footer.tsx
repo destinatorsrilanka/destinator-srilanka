@@ -44,8 +44,8 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
           {/* --- COLUMN 1: BRAND --- */}
           <div className="space-y-4">
-            <h3 className="text-xl font-black tracking-tighter italic">
-              destinator<span className="text-yellow-500">.lk</span>
+            <h3 className="text-xl font-black tracking-tighter italic text-yellow-500">
+              destinator.lk
             </h3>
             <p className="text-gray-400 text-xs leading-relaxed max-w-xs">
               Your premier gateway to the wonders of Sri Lanka. We craft

@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Smooth Scrolling එකතු කිරීම */
+html {
+  scroll-behavior: smooth;
+}
+
 @layer base {
   :root {
     --background: 0 0% 3.9%;
@@ -34,6 +39,7 @@
 }
 
 body {
+  /* overflow-x-hidden එක තබා ගන්න, නමුත් sections ඇතුළත කාඩ්ස් කැපී නොයන ලෙස බලාගන්න */
   @apply bg-destinator-black text-white font-montserrat overflow-x-hidden;
 }
 
@@ -45,30 +51,4 @@ body {
 
 .carousel .list .item {
   @apply w-full h-full absolute inset-0;
-}
-
-/* Map Pins */
-.pin {
-  @apply bg-main-red absolute w-2.5 h-2.5 rounded-full;
-}
-
-.pin span {
-  @apply inline-block whitespace-nowrap absolute left-4 top-1/2 -translate-y-1/2 bg-zinc-800 text-white rounded-full px-2.5 py-0.5 text-xs;
-}
-
-.pin.anuradhapura {
-  top: 28%;
-  left: 45%;
-}
-.pin.sigiriya {
-  top: 35%;
-  left: 52%;
-}
-.pin.kandy {
-  top: 48%;
-  left: 52%;
-}
-.pin.Galle {
-  top: 85%;
-  left: 42%;
 }

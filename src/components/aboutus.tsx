@@ -8,31 +8,50 @@ import {
   ShieldCheck,
   ArrowUpRight,
   MapPin,
+  Instagram,
+  Twitter,
+  Linkedin,
+  Phone,
 } from "lucide-react";
 
 const LOGO_COLOR = "#EAB308";
 
-// මාරු වීමට අවශ්‍ය පින්තූර පෙළ
+// පින්තූර පෙළ සහ කඳුකරයට ගැලපෙන විස්තර පමණක් වෙනස් කර ඇත
 const aboutImages = [
   {
     src: "image/about.png",
-    title: "The Hill Kingdom",
-    subtitle: "Authentic Heritage",
+    title: "The Highland Master", // සයිට් එකේ අයිතිකරු සඳහා
+    subtitle: "Expert Expedition Leader",
   },
   {
-    src: "/image/clucture.png",
-    title: "Cultural Wonders",
-    subtitle: "Ancient Traditions",
+    src: "/image/kadu1.jpeg",
+    title: "Sri Pada", // සිරි පාදය
+    subtitle: "The Sacred Peak",
   },
   {
-    src: "/image/k.png",
-    title: "Wild Safari",
-    subtitle: "Untamed Nature",
+    src: "/image/kadu2.jpeg",
+    title: "Round Mountain", // දැරණියගල රවුම් කන්ද
+    subtitle: "Deraniyagala Wilderness",
   },
   {
-    src: "/image/slidenew1.png",
-    title: "Golden Shores",
-    subtitle: "Coastal Bliss",
+    src: "/image/kadu3.jpeg",
+    title: "Lakegala Rock", // ලකේගල කන්ද
+    subtitle: "The Matterhorn of SL",
+  },
+  {
+    src: "/image/kadu4.jpeg",
+    title: "Seven Virgins", // සප්ත කන්‍යා කන්ද
+    subtitle: "Saptha Kanya Range",
+  },
+  {
+    src: "/image/kadu5.jpeg",
+    title: "Lakegala Summit", // ලකේගල ඈතට පෙනෙන සම්පූර්ණ දසුන
+    subtitle: "Majestic Pyramid View",
+  },
+  {
+    src: "/image/kadu7.jpeg",
+    title: "Hunnasgiriya", // හුන්නස්ගිරිය
+    subtitle: "Mist-Clad Knuckles Edge",
   },
 ];
 
@@ -46,7 +65,7 @@ const stats = [
 export default function CreativeAboutUs() {
   const [currentImage, setCurrentImage] = useState(0);
 
-  // රූප ස්වයංක්‍රීයව මාරු වීමට (සෑම තත්පර 5කට වරක්)
+  // රූප ස්වයංක්‍රීයව මාරු වීමට
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentImage((prev) => (prev + 1) % aboutImages.length);
@@ -114,20 +133,71 @@ export default function CreativeAboutUs() {
                 </p>
               </div>
 
-              <div className="flex flex-wrap gap-4 mt-10">
-                <button className="px-7 py-3.5 bg-white text-black rounded-xl font-black text-[9px] tracking-widest uppercase hover:bg-yellow-500 transition-all flex items-center gap-3 active:scale-95 shadow-lg">
-                  Explore Heritage <ArrowUpRight size={14} />
-                </button>
-                <button className="px-7 py-3.5 bg-white/5 border border-white/10 text-white rounded-xl font-black text-[9px] tracking-widest uppercase hover:bg-white/10 transition-all active:scale-95">
-                  View Gallery
-                </button>
+              {/* --- TRUST BADGE & CONTACT INFO --- */}
+              <div className="mt-12 flex flex-col sm:flex-row items-start sm:items-center gap-8 lg:gap-16 border-t border-white/5 pt-10">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-full border border-yellow-500/30 flex items-center justify-center relative">
+                    <ShieldCheck size={22} className="text-yellow-500" />
+                    <motion.div
+                      animate={{ rotate: 360 }}
+                      transition={{
+                        duration: 8,
+                        repeat: Infinity,
+                        ease: "linear",
+                      }}
+                      className="absolute inset-0 border-t border-yellow-500/60 rounded-full"
+                    />
+                  </div>
+                  <div>
+                    <p className="text-[10px] uppercase tracking-[0.3em] text-white font-black leading-none mb-1.5">
+                      Authorized Guide
+                    </p>
+                    <p className="text-[9px] text-gray-500 uppercase tracking-widest font-medium">
+                      SLTDA Registered v2.0
+                    </p>
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <p className="text-[9px] uppercase tracking-[0.4em] text-yellow-500/80 font-bold">
+                    Inquiries & Support
+                  </p>
+                  <div className="flex items-center gap-6">
+                    <a
+                      href="tel:+94112345678"
+                      className="flex items-center gap-2 group"
+                    >
+                      <div className="p-1.5 bg-white/5 rounded-md group-hover:bg-yellow-500 transition-colors">
+                        <Phone
+                          size={12}
+                          className="text-white group-hover:text-black"
+                        />
+                      </div>
+                      <p className="text-xs lg:text-sm text-white font-bold tracking-tight">
+                        +94 112 345 678
+                      </p>
+                    </a>
+
+                    <div className="flex gap-4 border-l border-white/10 pl-6">
+                      {[Instagram, Twitter, Linkedin].map((Icon, idx) => (
+                        <motion.a
+                          key={idx}
+                          href="#"
+                          whileHover={{ scale: 1.1, color: LOGO_COLOR }}
+                          className="text-gray-500 transition-colors"
+                        >
+                          <Icon size={16} />
+                        </motion.a>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
             </motion.div>
           </div>
 
           {/* --- RIGHT CONTENT: STATS & IMAGE SLIDER --- */}
           <div className="lg:col-span-5 relative">
-            {/* Stats Grid */}
             <div className="grid grid-cols-2 gap-3 mb-8">
               {stats.map((stat, index) => (
                 <motion.div
@@ -152,7 +222,6 @@ export default function CreativeAboutUs() {
               ))}
             </div>
 
-            {/* --- IMAGE SLIDER BLOCK (Updated to Slider) --- */}
             <div className="relative">
               <div className="relative rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl h-[320px] lg:h-[400px]">
                 <AnimatePresence mode="wait">
@@ -186,7 +255,6 @@ export default function CreativeAboutUs() {
                 </AnimatePresence>
               </div>
 
-              {/* Slider Dots (Navigation Indicator) */}
               <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-30">
                 {aboutImages.map((_, i) => (
                   <div
@@ -200,7 +268,6 @@ export default function CreativeAboutUs() {
                 ))}
               </div>
 
-              {/* Floating Badge */}
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}

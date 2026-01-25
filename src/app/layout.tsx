@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import "./globals.css"; // Global styles import
+import "./globals.css";
 import { Montserrat, Lora, Poppins } from "next/font/google";
+import PreLoader from "@/components/PreLoader"; // PreLoader එක ඇති තැන නිවැරදිව දෙන්න
 
-// Define font variables
 const montserrat = Montserrat({
   subsets: ["latin"],
   variable: "--font-montserrat",
@@ -16,15 +16,18 @@ const lora = Lora({
 });
 
 const poppins = Poppins({
-  weight: ["400", "500", "600", "700"], // ඔබගේ CSS හි තිබූ weights
+  weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
   variable: "--font-poppins",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Destinator Sri Lanka",
+  title: "Destinator",
   description: "Explore the beauty of Sri Lanka with us.",
+  icons: {
+    icon: "/image/Logo2.png", // ඔබේ ලොගෝ එකේ path එක මෙතැනට දෙන්න
+  },
 };
 
 export default function RootLayout({
@@ -37,7 +40,10 @@ export default function RootLayout({
       lang="en"
       className={`${montserrat.variable} ${lora.variable} ${poppins.variable}`}
     >
-      <body>{children}</body>
+      <body className="antialiased">
+        <PreLoader />
+        {children}
+      </body>
     </html>
   );
 }

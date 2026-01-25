@@ -7,41 +7,118 @@ import {
   useSpring,
   useTransform,
 } from "framer-motion";
-import { MapPin, ArrowRight, Wind, Calendar, Zap } from "lucide-react";
+import {
+  MapPin,
+  ArrowRight,
+  Wind,
+  Calendar,
+  Zap,
+  Landmark,
+  Trees,
+  Anchor,
+  Mountain,
+  Compass,
+} from "lucide-react";
 
-const SLOW_TRANSITION = { stiffness: 40, damping: 20 };
+const SLOW_TRANSITION = { type: "spring", stiffness: 40, damping: 20 };
 const LOGO_COLOR = "#EAB308";
 
 const destinations = [
   {
+    id: "anuradhapura",
+    name: "ANURADHAPURA",
+    tagline: "Sacred Ancient City",
+    coords: { top: "38%", left: "42%" },
+    description:
+      "The first capital of ancient Sri Lanka, a UNESCO site home to grand stupas and the sacred Bodhi tree.",
+    image: "image/anuradhapura.jpeg",
+    stats: { altitude: "81m", period: "4th Century BC", climate: "Dry" },
+    iconType: "landmark",
+    geo: "8.3114° N, 80.4037° E",
+  },
+  {
+    id: "polonnaruwa",
+    name: "POLONNARUWA",
+    tagline: "Medieval Capital",
+    coords: { top: "46%", left: "56%" },
+    description:
+      "The second capital of Sri Lanka, known for its well-preserved ruins and spectacular Gal Vihara rock statues.",
+    image: "image/polonnaruva.jpeg",
+    stats: { altitude: "55m", period: "11th Century", climate: "Dry" },
+    iconType: "landmark",
+    geo: "7.9403° N, 81.0188° E",
+  },
+  {
     id: "sigiriya",
     name: "SIGIRIYA",
     tagline: "The Lion Rock",
-    coords: { top: "32%", left: "55%" },
+    coords: { top: "48%", left: "48%" },
     description:
       "An ancient rock fortress rising 200m from the jungle, featuring mirror walls and celestial frescoes.",
-    image: "image/k.png",
+    image: "image/sigiriya.WEBP",
     stats: { altitude: "349m", period: "5th Century", climate: "Humid" },
+    iconType: "mountain",
+    geo: "7.9570° N, 80.7603° E",
+  },
+  {
+    id: "dambulla",
+    name: "DAMBULLA",
+    tagline: "Golden Cave Temple",
+    coords: { top: "55%", left: "45%" },
+    description:
+      "The largest cave temple complex in Sri Lanka with 157 statues and extensive sacred murals.",
+    image: "image/dabulla.jpg",
+    stats: { altitude: "340m", period: "1st Century BC", climate: "Hot" },
+    iconType: "landmark",
+    geo: "7.8608° N, 80.6516° E",
   },
   {
     id: "kandy",
     name: "KANDY",
-    tagline: "Sacred Kingdom",
-    coords: { top: "48%", left: "50%" },
+    tagline: "Sacred Hill Capital",
+    coords: { top: "62%", left: "45%" },
     description:
-      "The spiritual heart of the island. Walk through the mist-covered hills and ancient heritage of the hill capital.",
-    image: "image/clucture.png",
+      "The last royal stronghold and home to the Temple of the Sacred Tooth Relic.",
+    image: "image/kandy.jpg",
     stats: { altitude: "500m", period: "15th Century", climate: "Cool" },
+    iconType: "landmark",
+    geo: "7.2906° N, 80.6337° E",
   },
   {
-    id: "ella",
-    name: "ELLA",
-    tagline: "Mountain Mist",
-    coords: { top: "62%", left: "58%" },
+    id: "galle",
+    name: "GALLE",
+    tagline: "Old Town & Fort",
+    coords: { top: "80%", left: "36%" },
     description:
-      "A backpacker's paradise where the tea trails meet the sky. Home to the legendary Nine Arch Bridge.",
-    image: "image/sildenew.png",
-    stats: { altitude: "1041m", period: "Scenic Era", climate: "Cold" },
+      "A coastal fortress built by Europeans, showcasing a blend of colonial and South Asian architecture.",
+    image: "image/galle.jpg",
+    stats: { altitude: "0m", period: "16th Century", climate: "Humid" },
+    iconType: "anchor",
+    geo: "6.0329° N, 80.2168° E",
+  },
+  {
+    id: "sinharaja",
+    name: "SINHARAJA",
+    tagline: "Natural Rain Forest",
+    coords: { top: "70%", left: "40%" },
+    description:
+      "A primary tropical rainforest and a UNESCO site, rich in endemic flora and fauna.",
+    image: "image/sinharaja.jpg",
+    stats: { altitude: "1170m", period: "Natural Heritage", climate: "Rainy" },
+    iconType: "trees",
+    geo: "6.3833° N, 80.4167° E",
+  },
+  {
+    id: "highlands",
+    name: "CENTRAL HIGHLANDS",
+    tagline: "Wilderness Peaks",
+    coords: { top: "58%", left: "52%" },
+    description:
+      "Includes Horton Plains and Adam's Peak, known for biodiversity and scenic beauty.",
+    image: "image/centralHighland.jpeg",
+    stats: { altitude: "2100m", period: "Natural Heritage", climate: "Cold" },
+    iconType: "mountain",
+    geo: "6.8096° N, 80.8144° E",
   },
 ];
 
@@ -51,7 +128,8 @@ export default function SriLankaInteractiveMap() {
   const active = destinations.find((d) => d.id === hoveredId);
 
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+    const checkMobile = () =>
+      setIsMobile(window.matchMedia("(max-width: 1024px)").matches);
     checkMobile();
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
@@ -71,8 +149,27 @@ export default function SriLankaInteractiveMap() {
     y.set((e.clientY - rect.top) / rect.height - 0.5);
   };
 
+  const renderIcon = (type: string, isActive: boolean) => {
+    const props = {
+      size: isMobile ? 12 : 20,
+      className: isActive ? "text-white" : "text-black/60",
+    };
+    switch (type) {
+      case "landmark":
+        return <Landmark {...props} />;
+      case "trees":
+        return <Trees {...props} />;
+      case "anchor":
+        return <Anchor {...props} />;
+      case "mountain":
+        return <Mountain {...props} />;
+      default:
+        return <MapPin {...props} />;
+    }
+  };
+
   return (
-    <div className="min-h-screen w-full bg-[#f8f8f8] flex items-center justify-center p-0 sm:p-4 lg:p-10 overflow-hidden">
+    <div className="min-h-screen w-full bg-[#f8f8f8] flex items-center justify-center p-0 sm:p-4 lg:p-10 overflow-hidden select-none font-sans">
       <motion.section
         onMouseMove={handleMouseMove}
         animate={{
@@ -81,7 +178,7 @@ export default function SriLankaInteractiveMap() {
         }}
         className="relative w-full max-w-[1400px] h-[100vh] sm:h-[90vh] overflow-hidden sm:rounded-[4rem] border-0 sm:border shadow-2xl flex flex-col items-center justify-center transition-colors duration-1000"
       >
-        {/* --- HEADER CONTENT --- */}
+        {/* HEADER CONTENT */}
         <div className="absolute top-10 sm:top-12 left-8 lg:left-16 z-20 pointer-events-none">
           <AnimatePresence>
             {!active && (
@@ -93,11 +190,11 @@ export default function SriLankaInteractiveMap() {
                 transition={{ duration: 0.6 }}
               >
                 <h3 className="text-[10px] font-bold tracking-[0.5em] uppercase mb-2 text-gray-400">
-                  Explore Sri Lanka
+                  Sri Lanka Expedition
                 </h3>
                 <div className="relative inline-block mb-3">
                   <h1 className="text-4xl lg:text-6xl font-black tracking-tighter leading-none text-black">
-                    DISCOVER THE <br /> PEARL
+                    THE CEYLON <br /> CHRONICLES
                   </h1>
                   <motion.div
                     initial={{ width: 0 }}
@@ -108,154 +205,158 @@ export default function SriLankaInteractiveMap() {
                   />
                 </div>
                 <p className="max-w-[220px] sm:max-w-[280px] text-[10px] sm:text-xs leading-relaxed text-black/40">
-                  Unveil the ancient mysteries and breathtaking landscapes. Tap
-                  the markers below.
+                  Embark on a voyage through time to explore the majestic
+                  heritage and untouched wonders of the island.
                 </p>
               </motion.div>
             )}
           </AnimatePresence>
         </div>
 
-        {/* --- BACKGROUND IMAGE --- */}
+        {/* ENHANCED BACKGROUND IMAGE SECTION */}
         <AnimatePresence mode="wait">
           {active && (
             <motion.div
               key={active.id}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.2 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.8 }}
-              className="absolute inset-0 z-0"
+              initial={{ opacity: 0, scale: 1.15 }}
+              animate={{ opacity: 0.35, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.1 }}
+              transition={{ duration: 1.2, ease: "easeOut" }}
+              className="absolute inset-0 z-0 overflow-hidden"
             >
               <img
                 src={active.image}
                 alt="bg"
-                className="w-full h-full object-cover grayscale"
+                className="w-full h-full object-cover grayscale brightness-75 contrast-125"
               />
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/90" />
+              {/* Cinematic Vignette and Overlays */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/40" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.6)_100%)]" />
             </motion.div>
           )}
         </AnimatePresence>
 
-        {/* --- WATERMARK (STAYS BEHIND BUT VISIBLE) --- */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-[1]">
+        {/* WATERMARK */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-[15]">
           <motion.h1
             className="text-[10vw] lg:text-[6vw] font-black tracking-tighter uppercase leading-none opacity-[0.08] text-center px-10"
             animate={{
               color: active ? "rgba(255,255,255,1)" : "rgba(0,0,0,1)",
-              scale: active ? 1.05 : 1,
             }}
           >
-            {active ? active.name : "A JOURNEY AROUND CEYLON WITH DESTINATOR"}
+            {active ? active.name : "EXPLORE WITH DESTINATOR"}
           </motion.h1>
         </div>
 
-        {/* --- MAP CONTAINER (USING BLEND MODE SOLUTION) --- */}
+        {/* MAP CONTAINER */}
         <motion.div
-          style={{
-            rotateX,
-            rotateY,
-            transformStyle: "preserve-3d",
-            mixBlendMode: active ? "normal" : "multiply", // සිතියම යටින් අකුරු පෙනීමට මෙය උදව් වේ
-          }}
+          style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
           animate={{
             x: active ? (isMobile ? 0 : "22%") : "0%",
-            y: isMobile ? (active ? "12%" : "5%") : "0%",
-            scale: isMobile ? (active ? 0.8 : 1.1) : 1,
+            y: isMobile ? (active ? "8%" : "5%") : "0%",
+            scale: isMobile ? (active ? 0.75 : 1.1) : 1,
           }}
           transition={SLOW_TRANSITION}
-          className="relative w-full max-w-[310px] sm:max-w-[480px] lg:max-w-[650px] aspect-[4/5] flex items-center justify-center z-10"
+          className="relative w-full max-w-[310px] sm:max-w-[480px] lg:max-w-[650px] aspect-[4/5] z-10 flex items-center justify-center"
         >
           <div
             className="relative w-full h-full"
-            onMouseLeave={() => setHoveredId(null)}
+            onMouseLeave={() => !isMobile && setHoveredId(null)}
+            onClick={() => isMobile && setHoveredId(null)}
           >
             <img
               src="/image/lk.svg"
-              alt="Sri Lanka Map"
+              alt="Map"
               className={`w-full h-full object-contain transition-all duration-1000 ${
-                active
-                  ? "brightness-125 opacity-100"
-                  : "brightness-100 opacity-90"
+                active ? "opacity-30 blur-[1px]" : "opacity-90"
               }`}
             />
 
-            {/* PINS - Z-INDEX IS HIGH TO STAY ON TOP */}
+            {/* PINS */}
             {destinations.map((loc) => (
               <div
                 key={loc.id}
-                className="absolute z-[50]"
-                style={{ top: loc.coords.top, left: loc.coords.left }}
+                className="absolute"
+                style={{
+                  top: loc.coords.top,
+                  left: loc.coords.left,
+                  transform: "translate(-50%, -50%)",
+                  zIndex: hoveredId === loc.id ? 200 : 100,
+                  pointerEvents: "auto",
+                }}
               >
-                <motion.div
-                  onMouseEnter={() => setHoveredId(loc.id)}
-                  onClick={() => setHoveredId(loc.id)}
-                  className={`cursor-pointer w-9 h-9 sm:w-11 sm:h-11 rounded-2xl flex items-center justify-center border-2 transition-all ${
-                    hoveredId === loc.id
-                      ? "bg-yellow-500 border-yellow-300 shadow-2xl scale-125"
-                      : "bg-white/70 border-black/10 backdrop-blur-md"
-                  }`}
+                <div
+                  className="relative p-3 cursor-pointer"
+                  onMouseEnter={() => !isMobile && setHoveredId(loc.id)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setHoveredId(hoveredId === loc.id ? null : loc.id);
+                  }}
                 >
-                  <MapPin
-                    size={20}
-                    className={
-                      hoveredId === loc.id ? "text-black" : "text-black/60"
-                    }
-                    fill={hoveredId === loc.id ? "black" : "none"}
-                  />
-                </motion.div>
+                  <motion.div
+                    className={`flex items-center justify-center border transition-all shadow-xl ${
+                      hoveredId === loc.id
+                        ? "w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-yellow-500 border-white scale-125 rotate-12 rounded-lg sm:rounded-2xl"
+                        : "w-5 h-5 sm:w-8 sm:h-8 lg:w-10 lg:h-10 bg-white border-transparent rounded-md sm:rounded-xl"
+                    }`}
+                  >
+                    {renderIcon(loc.iconType || "", hoveredId === loc.id)}
+                  </motion.div>
+                </div>
               </div>
             ))}
           </div>
 
-          {/* --- POP-UP CARD --- */}
+          {/* POP-UP CARD */}
           <AnimatePresence>
             {active && (
               <motion.div
-                initial={{ opacity: 0, y: 100, scale: 0.9 }}
+                key={active.id}
+                initial={{ opacity: 0, y: 30, scale: 0.9 }}
                 animate={{
                   opacity: 1,
-                  x: isMobile ? 0 : -420,
-                  y: isMobile ? "75%" : 0,
+                  x: isMobile ? 0 : -450,
                   scale: 1,
+                  y: isMobile ? 220 : 0,
                 }}
-                exit={{ opacity: 0, y: 100, scale: 0.9 }}
-                transition={SLOW_TRANSITION}
-                className="absolute z-[100] w-[92vw] max-w-[380px] bg-white/10 backdrop-blur-3xl border border-white/20 p-6 sm:p-8 rounded-[2.5rem] lg:rounded-[3.5rem] shadow-2xl pointer-events-auto text-white"
+                exit={{ opacity: 0, y: 20, scale: 0.9 }}
+                transition={{ duration: 0.4 }}
+                className="absolute z-[1000] w-[92vw] max-w-[380px] bg-white/10 backdrop-blur-3xl border border-white/20 p-6 sm:p-8 rounded-[2rem] shadow-2xl text-white pointer-events-auto"
+                onClick={(e) => e.stopPropagation()}
               >
-                <div className="relative">
-                  <span className="text-yellow-500 font-bold text-[9px] sm:text-[10px] tracking-[0.4em] uppercase mb-2 block italic">
-                    {active.tagline}
-                  </span>
-                  <h2 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tighter mb-4 uppercase leading-none">
+                <div className="space-y-4 sm:space-y-6">
+                  <div className="flex items-center gap-2">
+                    <Compass size={14} className="text-yellow-500" />
+                    <span className="text-yellow-500 font-bold text-[10px] tracking-widest uppercase italic">
+                      {active.tagline}
+                    </span>
+                  </div>
+                  <h2 className="text-3xl sm:text-4xl font-black tracking-tighter uppercase leading-none">
                     {active.name}
                   </h2>
-                  <p className="text-gray-200 text-[11px] sm:text-xs lg:text-sm leading-relaxed mb-6 border-l-2 border-yellow-500 pl-4 opacity-90">
-                    "{active.description}"
+                  <p className="text-gray-200 text-xs sm:text-sm leading-relaxed font-light">
+                    {active.description}
                   </p>
 
-                  <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-6 sm:mb-8">
+                  <div className="grid grid-cols-3 gap-2">
                     {[
-                      { Icon: Wind, label: active.stats.climate },
-                      { Icon: Zap, label: active.stats.altitude },
-                      { Icon: Calendar, label: active.stats.period },
-                    ].map((item, i) => (
+                      { i: Wind, l: active.stats.climate },
+                      { i: Zap, l: active.stats.altitude },
+                      { i: Calendar, l: active.stats.period },
+                    ].map((stat, idx) => (
                       <div
-                        key={i}
-                        className="bg-white/5 p-2 rounded-xl text-center border border-white/10"
+                        key={idx}
+                        className="bg-white/10 p-2 rounded-xl border border-white/5 flex flex-col items-center"
                       >
-                        <item.Icon
-                          size={12}
-                          className="mx-auto text-yellow-500/70 mb-1"
-                        />
-                        <p className="text-[7px] sm:text-[8px] text-gray-300 uppercase font-bold">
-                          {item.label}
-                        </p>
+                        <stat.i size={12} className="text-yellow-500 mb-1" />
+                        <span className="text-[7px] sm:text-[8px] uppercase font-bold text-gray-300 text-center">
+                          {stat.l}
+                        </span>
                       </div>
                     ))}
                   </div>
 
-                  <button className="w-full bg-white text-black py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-yellow-500 transition-all active:scale-95">
+                  <button className="w-full bg-white text-black py-3 sm:py-4 rounded-xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-yellow-500 transition-all">
                     EXPLORE NOW <ArrowRight size={14} />
                   </button>
                 </div>
@@ -267,18 +368,18 @@ export default function SriLankaInteractiveMap() {
         {/* HUD UI */}
         <div className="absolute bottom-6 left-8 z-[100] flex items-center gap-3">
           <div
-            className={`w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center font-black text-[10px] ${
+            className={`w-7 h-7 rounded-lg flex items-center justify-center font-black text-[10px] ${
               active ? "bg-yellow-500 text-black" : "bg-black text-white"
             }`}
           >
             SL
           </div>
           <p
-            className={`text-[8px] sm:text-[9px] font-black tracking-[0.3em] uppercase ${
+            className={`text-[8px] font-black tracking-[0.3em] uppercase ${
               active ? "text-white/40" : "text-black/20"
             }`}
           >
-            Paradise Guide v6
+            Heritage Archive v6
           </p>
         </div>
       </motion.section>
