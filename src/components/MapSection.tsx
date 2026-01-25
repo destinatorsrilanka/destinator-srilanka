@@ -18,9 +18,9 @@ import {
   Anchor,
   Mountain,
   Compass,
+  Globe,
 } from "lucide-react";
 
-// ✅ මෙතැන 'as const' එක් කිරීමෙන් TypeScript දෝෂය ඉවත් වේ
 const SLOW_TRANSITION = {
   type: "spring",
   stiffness: 40,
@@ -175,7 +175,10 @@ export default function SriLankaInteractiveMap() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-[#f8f8f8] flex items-center justify-center p-0 sm:p-4 lg:p-10 overflow-hidden select-none font-sans">
+    <div
+      className="min-h-screen w-full bg-[#f8f8f8] flex items-center justify-center p-0 sm:p-4 lg:p-10 overflow-hidden select-none font-sans"
+      onClick={() => isMobile && setHoveredId(null)} // මොබයිල් වලදී ඕනෑම තැනක් ක්ලික් කළ විට කාඩ් එක වැසේ
+    >
       <motion.section
         onMouseMove={handleMouseMove}
         animate={{
@@ -231,7 +234,7 @@ export default function SriLankaInteractiveMap() {
               className="absolute inset-0 z-0 overflow-hidden"
             >
               <img
-                src={`/${active.image}`} // Root path සදහා '/' එක් කළා
+                src={`/${active.image}`}
                 alt={active.name}
                 className="w-full h-full object-cover grayscale brightness-75 contrast-125"
               />
@@ -267,7 +270,7 @@ export default function SriLankaInteractiveMap() {
           <div
             className="relative w-full h-full"
             onMouseLeave={() => !isMobile && setHoveredId(null)}
-            onClick={() => isMobile && setHoveredId(null)}
+            // onClick හසුරුවන්නා මෙතැනින් ඉවත් කර ප්‍රධාන div එකට දැම්මා
           >
             <img
               src="/image/lk.svg"
@@ -294,7 +297,7 @@ export default function SriLankaInteractiveMap() {
                   className="relative p-3 cursor-pointer"
                   onMouseEnter={() => !isMobile && setHoveredId(loc.id)}
                   onClick={(e) => {
-                    e.stopPropagation();
+                    e.stopPropagation(); // මැප් එක ක්ලික් වීම වැළැක්වීමට
                     setHoveredId(hoveredId === loc.id ? null : loc.id);
                   }}
                 >
@@ -327,7 +330,7 @@ export default function SriLankaInteractiveMap() {
                 exit={{ opacity: 0, y: 20, scale: 0.9 }}
                 transition={{ duration: 0.4 }}
                 className="absolute z-[1000] w-[92vw] max-w-[380px] bg-white/10 backdrop-blur-3xl border border-white/20 p-6 sm:p-8 rounded-[2rem] shadow-2xl text-white pointer-events-auto"
-                onClick={(e) => e.stopPropagation()}
+                onClick={(e) => e.stopPropagation()} // කාඩ් එක ක්ලික් කළ විට එය වැසීම වැළැක්වීමට
               >
                 <div className="space-y-4 sm:space-y-6">
                   <div className="flex items-center gap-2">
@@ -361,9 +364,27 @@ export default function SriLankaInteractiveMap() {
                     ))}
                   </div>
 
-                  <button className="w-full bg-white text-black py-3 sm:py-4 rounded-xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-yellow-500 transition-all">
-                    EXPLORE NOW <ArrowRight size={14} />
-                  </button>
+                  {/* නව COORDINATES කොටස (බටන් එක වෙනුවට) */}
+                  <div className="pt-2">
+                    <div className="flex items-center justify-between bg-black/20 backdrop-blur-md p-4 rounded-2xl border border-white/5">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-full bg-yellow-500/20 flex items-center justify-center">
+                          <Globe size={14} className="text-yellow-500" />
+                        </div>
+                        <div>
+                          <p className="text-[8px] uppercase font-bold text-gray-400 tracking-wider">
+                            Coordinates
+                          </p>
+                          <p className="text-[10px] font-mono font-medium text-white">
+                            {active.geo}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="text-[10px] font-bold text-yellow-500 bg-yellow-500/10 px-2 py-1 rounded-md uppercase">
+                        Active
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </motion.div>
             )}
