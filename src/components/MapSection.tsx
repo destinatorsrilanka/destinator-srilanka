@@ -20,7 +20,13 @@ import {
   Compass,
 } from "lucide-react";
 
-const SLOW_TRANSITION = { type: "spring", stiffness: 40, damping: 20 };
+// ✅ මෙතැන 'as const' එක් කිරීමෙන් TypeScript දෝෂය ඉවත් වේ
+const SLOW_TRANSITION = {
+  type: "spring",
+  stiffness: 40,
+  damping: 20,
+} as const;
+
 const LOGO_COLOR = "#EAB308";
 
 const destinations = [
@@ -150,21 +156,21 @@ export default function SriLankaInteractiveMap() {
   };
 
   const renderIcon = (type: string, isActive: boolean) => {
-    const props = {
+    const iconProps = {
       size: isMobile ? 12 : 20,
       className: isActive ? "text-white" : "text-black/60",
     };
     switch (type) {
       case "landmark":
-        return <Landmark {...props} />;
+        return <Landmark {...iconProps} />;
       case "trees":
-        return <Trees {...props} />;
+        return <Trees {...iconProps} />;
       case "anchor":
-        return <Anchor {...props} />;
+        return <Anchor {...iconProps} />;
       case "mountain":
-        return <Mountain {...props} />;
+        return <Mountain {...iconProps} />;
       default:
-        return <MapPin {...props} />;
+        return <MapPin {...iconProps} />;
     }
   };
 
@@ -213,7 +219,7 @@ export default function SriLankaInteractiveMap() {
           </AnimatePresence>
         </div>
 
-        {/* ENHANCED BACKGROUND IMAGE SECTION */}
+        {/* BACKGROUND IMAGE SECTION */}
         <AnimatePresence mode="wait">
           {active && (
             <motion.div
@@ -225,11 +231,10 @@ export default function SriLankaInteractiveMap() {
               className="absolute inset-0 z-0 overflow-hidden"
             >
               <img
-                src={active.image}
-                alt="bg"
+                src={`/${active.image}`} // Root path සදහා '/' එක් කළා
+                alt={active.name}
                 className="w-full h-full object-cover grayscale brightness-75 contrast-125"
               />
-              {/* Cinematic Vignette and Overlays */}
               <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/40" />
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.6)_100%)]" />
             </motion.div>
@@ -266,7 +271,7 @@ export default function SriLankaInteractiveMap() {
           >
             <img
               src="/image/lk.svg"
-              alt="Map"
+              alt="Sri Lanka Map"
               className={`w-full h-full object-contain transition-all duration-1000 ${
                 active ? "opacity-30 blur-[1px]" : "opacity-90"
               }`}
@@ -340,17 +345,17 @@ export default function SriLankaInteractiveMap() {
 
                   <div className="grid grid-cols-3 gap-2">
                     {[
-                      { i: Wind, l: active.stats.climate },
-                      { i: Zap, l: active.stats.altitude },
-                      { i: Calendar, l: active.stats.period },
+                      { icon: Wind, label: active.stats.climate },
+                      { icon: Zap, label: active.stats.altitude },
+                      { icon: Calendar, label: active.stats.period },
                     ].map((stat, idx) => (
                       <div
                         key={idx}
                         className="bg-white/10 p-2 rounded-xl border border-white/5 flex flex-col items-center"
                       >
-                        <stat.i size={12} className="text-yellow-500 mb-1" />
+                        <stat.icon size={12} className="text-yellow-500 mb-1" />
                         <span className="text-[7px] sm:text-[8px] uppercase font-bold text-gray-300 text-center">
-                          {stat.l}
+                          {stat.label}
                         </span>
                       </div>
                     ))}
