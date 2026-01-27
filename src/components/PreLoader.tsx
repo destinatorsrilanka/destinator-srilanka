@@ -1,15 +1,14 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
-import Image from "next/image";
 
 export default function PreLoader() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const handleLoad = () => {
-      // පිටුව load වී අවසන් වූ පසු තත්පර 2.5 කින් loader එක ඉවත් වේ
-      setTimeout(() => setLoading(false), 2500);
+      // පිටුව load වී අවසන් වූ පසු තත්පර 2.8 කින් loader එක ඉවත් වේ
+      setTimeout(() => setLoading(false), 2800);
     };
 
     if (document.readyState === "complete") {
@@ -28,92 +27,76 @@ export default function PreLoader() {
           initial={{ opacity: 1 }}
           exit={{
             y: "-100%",
-            transition: { duration: 1, ease: [0.7, 0, 0.3, 1] },
+            transition: { duration: 1.2, ease: [0.7, 0, 0.3, 1] },
           }}
-          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#080808]"
+          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#050505]"
         >
           <div className="relative flex flex-col items-center">
-            {/* Logo Animation */}
-            <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{
-                scale: [0.8, 1.05, 1],
-                opacity: 1,
-              }}
-              transition={{
-                duration: 1.2,
-                ease: "easeOut",
-              }}
-              className="mb-8"
-            >
-              <div className="relative w-28 h-28 md:w-36 md:h-36">
-                <Image
-                  src="/image/Logo1.png" // මෙතැන '/' ලකුණ එක් කර නිවැරදි කරන ලදී
-                  alt="Destinator.lk Logo"
-                  fill
-                  style={{ objectFit: "contain" }} // Next.js 13+ සඳහා නිර්දේශිත ක්‍රමය
-                  className="filter drop-shadow-[0_0_15px_rgba(249,115,22,0.3)]"
-                  priority
-                />
-                {/* Logo එක වටා ඇති Pulse effect එක */}
-                <motion.div
-                  animate={{ scale: [1, 1.4], opacity: [0.4, 0] }}
-                  transition={{
-                    repeat: Infinity,
-                    duration: 2,
-                    ease: "easeOut",
-                  }}
-                  className="absolute inset-0 rounded-full border-2 border-[#f97316]/40"
-                />
-              </div>
-            </motion.div>
-
             {/* Brand Name Animation */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.8 }}
+              initial={{ opacity: 0, filter: "blur(10px)" }}
+              animate={{
+                opacity: 1,
+                filter: "blur(0px)",
+                transition: { duration: 1.5, ease: "easeOut" },
+              }}
               className="text-center"
             >
-              <h2 className="text-[#f97316] text-xl md:text-2xl font-black lowercase tracking-[0.3em] mb-4">
-                destinator.lk
-              </h2>
+              <motion.h2
+                initial={{ letterSpacing: "0.1em" }}
+                animate={{ letterSpacing: "0.5em" }}
+                transition={{ duration: 2, ease: "easeOut" }}
+                className="text-[#f97316] text-3xl md:text-5xl font-black uppercase mb-6"
+              >
+                destinator
+              </motion.h2>
 
-              {/* Progress Bar Container */}
-              <div className="w-56 h-[3px] bg-white/10 relative overflow-hidden rounded-full mx-auto">
+              {/* Minimal Progress Line */}
+              <div className="w-48 h-[1px] bg-white/5 relative overflow-hidden mx-auto">
                 <motion.div
                   initial={{ x: "-100%" }}
-                  animate={{ x: "0%" }}
+                  animate={{ x: "100%" }}
                   transition={{
-                    duration: 2.2,
-                    ease: "easeInOut",
+                    duration: 2.5,
+                    repeat: Infinity,
+                    ease: "linear",
                   }}
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-[#f97316] to-transparent w-full shadow-[0_0_10px_#f97316]"
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-[#f97316] to-transparent w-full"
                 />
               </div>
 
-              {/* Tagline */}
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.2 }}
-                className="text-white/40 text-[10px] uppercase tracking-[0.5em] mt-5 font-bold"
+              {/* Description Tagline */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8, duration: 1 }}
+                className="mt-6 flex flex-col gap-2"
               >
-                Journey through paradise
-              </motion.p>
+                <p className="text-white/60 text-[10px] md:text-[12px] uppercase tracking-[0.6em] font-medium">
+                  Uncover the Island&apos;s Soul
+                </p>
+                <div className="flex justify-center gap-4">
+                  <span className="w-1 h-1 bg-[#f97316] rounded-full animate-pulse" />
+                  <span className="w-1 h-1 bg-[#f97316]/50 rounded-full animate-pulse delay-75" />
+                  <span className="w-1 h-1 bg-[#f97316]/20 rounded-full animate-pulse delay-150" />
+                </div>
+              </motion.div>
             </motion.div>
           </div>
 
-          {/* Background Decorative Pattern */}
+          {/* Background Decorative Pattern - Subtle Grid */}
           <motion.div
             initial={{ opacity: 0 }}
-            animate={{ opacity: 0.05 }}
-            className="absolute inset-0 pointer-events-none overflow-hidden opacity-5"
+            animate={{ opacity: 0.15 }}
+            className="absolute inset-0 pointer-events-none overflow-hidden"
             style={{
-              backgroundImage: `radial-gradient(#f97316 0.5px, transparent 0.5px)`,
-              backgroundSize: "30px 30px",
+              backgroundImage: `linear-gradient(to right, #111 1px, transparent 1px), linear-gradient(to bottom, #111 1px, transparent 1px)`,
+              backgroundSize: "60px 60px",
             }}
           />
+
+          {/* Ambient Glow */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#f97316]/5 rounded-full blur-[120px] pointer-events-none" />
         </motion.div>
       )}
     </AnimatePresence>

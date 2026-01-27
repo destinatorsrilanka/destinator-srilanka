@@ -6,7 +6,6 @@ import {
   Globe,
   Award,
   ShieldCheck,
-  ArrowUpRight,
   MapPin,
   Instagram,
   Twitter,
@@ -16,41 +15,36 @@ import {
 
 const LOGO_COLOR = "#EAB308";
 
-// පින්තූර පෙළ සහ කඳුකරයට ගැලපෙන විස්තර පමණක් වෙනස් කර ඇත
 const aboutImages = [
   {
     src: "image/about.png",
-    title: "The Highland Master", // සයිට් එකේ අයිතිකරු සඳහා
+    title: "The Highland Master",
     subtitle: "Expert Expedition Leader",
   },
-  {
-    src: "/image/kadu1.jpeg",
-    title: "Sri Pada", // සිරි පාදය
-    subtitle: "The Sacred Peak",
-  },
+  { src: "/image/kadu1.jpeg", title: "Sri Pada", subtitle: "The Sacred Peak" },
   {
     src: "/image/kadu2.jpeg",
-    title: "Round Mountain", // දැරණියගල රවුම් කන්ද
+    title: "Round Mountain",
     subtitle: "Deraniyagala Wilderness",
   },
   {
     src: "/image/kadu3.jpeg",
-    title: "Lakegala Rock", // ලකේගල කන්ද
+    title: "Lakegala Rock",
     subtitle: "The Matterhorn of SL",
   },
   {
     src: "/image/kadu4.jpeg",
-    title: "Seven Virgins", // සප්ත කන්‍යා කන්ද
+    title: "Seven Virgins",
     subtitle: "Saptha Kanya Range",
   },
   {
     src: "/image/kadu5.jpeg",
-    title: "Lakegala Summit", // ලකේගල ඈතට පෙනෙන සම්පූර්ණ දසුන
+    title: "Lakegala Summit",
     subtitle: "Majestic Pyramid View",
   },
   {
     src: "/image/kadu7.jpeg",
-    title: "Hunnasgiriya", // හුන්නස්ගිරිය
+    title: "Hunnasgiriya",
     subtitle: "Mist-Clad Knuckles Edge",
   },
 ];
@@ -65,7 +59,6 @@ const stats = [
 export default function CreativeAboutUs() {
   const [currentImage, setCurrentImage] = useState(0);
 
-  // රූප ස්වයංක්‍රීයව මාරු වීමට
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentImage((prev) => (prev + 1) % aboutImages.length);
@@ -75,28 +68,31 @@ export default function CreativeAboutUs() {
 
   return (
     <section className="relative w-full min-h-screen bg-[#0a0a0a] overflow-hidden py-20 px-6 lg:px-20 text-white flex items-center font-montserrat">
-      {/* --- BACKGROUND DECORATION --- */}
+      {/* Background decoration */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-yellow-500/5 rounded-full blur-[120px] -z-10" />
       <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-white/5 rounded-full blur-[100px] -z-10" />
 
       <div className="max-w-7xl mx-auto w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
-          {/* --- LEFT CONTENT: TEXT & STORY --- */}
+          {/* --- LEFT CONTENT --- */}
           <div className="lg:col-span-7">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
+              className="flex flex-col items-start"
             >
-              <h3 className="text-yellow-500 font-bold text-[9px] tracking-[0.5em] uppercase mb-4">
+              {/* කරපු වෙනස: ml-[-0.5em] මගින් tracking නිසා දකුණට යන එක වමට ඇදලා align කර ඇත */}
+              <h3 className="text-yellow-500 font-bold text-[9px] tracking-[0.5em] uppercase mb-4 leading-none ml-[-0.5em]">
                 Our Vision & Story
               </h3>
 
-              <div className="relative inline-block mb-8">
+              {/* Main Title Container */}
+              <div className="relative mb-8 text-left w-full">
                 <h2 className="text-4xl lg:text-7xl font-black tracking-tighter leading-[0.9] text-white">
                   CRAFTING ELITE <br />
-                  <span className="text-white/30 text-3xl lg:text-6xl uppercase tracking-widest">
+                  <span className="text-white/30 text-3xl lg:text-6xl uppercase tracking-widest block mt-1">
                     Experiences.
                   </span>
                 </h2>
@@ -115,14 +111,15 @@ export default function CreativeAboutUs() {
                 />
               </div>
 
-              <div className="space-y-6 max-w-xl">
+              {/* Story Details */}
+              <div className="space-y-6 max-w-xl text-left">
                 <p className="text-gray-400 text-sm lg:text-base leading-relaxed">
                   Our journey began with a simple passion: to unveil the untold
                   stories and hidden paradises of Sri Lanka to the world. We
                   don't just organize tours; we curate immersive journeys that
                   connect you with the soul of our island.
                 </p>
-                <p className="text-gray-500 text-xs lg:text-sm leading-relaxed border-l-2 border-yellow-500/40 pl-5 italic font-medium">
+                <p className="text-gray-500 text-xs lg:text-sm leading-relaxed border-l-2 border-yellow-500/40 pl-5 italic font-medium text-left">
                   "At the core of our service is 'Atithi Devo Bhava'—the ancient
                   belief that every guest is a reflection of God."
                 </p>
@@ -133,8 +130,8 @@ export default function CreativeAboutUs() {
                 </p>
               </div>
 
-              {/* --- TRUST BADGE & CONTACT INFO --- */}
-              <div className="mt-12 flex flex-col sm:flex-row items-start sm:items-center gap-8 lg:gap-16 border-t border-white/5 pt-10">
+              {/* Contact & Trust Badges */}
+              <div className="mt-12 flex flex-col sm:flex-row items-start sm:items-center gap-8 lg:gap-16 border-t border-white/5 pt-10 w-full">
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-full border border-yellow-500/30 flex items-center justify-center relative">
                     <ShieldCheck size={22} className="text-yellow-500" />
@@ -177,7 +174,6 @@ export default function CreativeAboutUs() {
                         +94 112 345 678
                       </p>
                     </a>
-
                     <div className="flex gap-4 border-l border-white/10 pl-6">
                       {[Instagram, Twitter, Linkedin].map((Icon, idx) => (
                         <motion.a
@@ -239,15 +235,14 @@ export default function CreativeAboutUs() {
                       className="w-full h-full object-cover brightness-75 transition-transform duration-[5000ms] scale-110"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent opacity-80" />
-
                     <div className="absolute bottom-5 left-6">
                       <span className="bg-yellow-500 text-black text-[7px] font-black px-2 py-1 rounded uppercase mb-2 inline-block">
                         Featured
                       </span>
-                      <p className="text-white font-black text-xs tracking-[0.2em] uppercase">
+                      <p className="text-white font-black text-xs tracking-[0.2em] uppercase text-left">
                         {aboutImages[currentImage].title}
                       </p>
-                      <p className="text-white/40 text-[9px] uppercase tracking-tighter">
+                      <p className="text-white/40 text-[9px] uppercase tracking-tighter text-left">
                         {aboutImages[currentImage].subtitle}
                       </p>
                     </div>
@@ -255,6 +250,7 @@ export default function CreativeAboutUs() {
                 </AnimatePresence>
               </div>
 
+              {/* Slider Dots */}
               <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-30">
                 {aboutImages.map((_, i) => (
                   <div
@@ -268,6 +264,7 @@ export default function CreativeAboutUs() {
                 ))}
               </div>
 
+              {/* Floating Specialist Badge */}
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}

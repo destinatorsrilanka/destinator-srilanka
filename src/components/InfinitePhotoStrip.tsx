@@ -26,63 +26,68 @@ export default function CompactPhotoStrip() {
   return (
     <section className="py-10 bg-[#080808] overflow-hidden">
       {/* Header */}
-      <div className="max-w-[1400px] mx-auto px-6 mb-6 flex items-center justify-between">
+      <div className="max-w-[1400px] mx-auto px-6 mb-8 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <span className="w-10 h-[1px] bg-yellow-500"></span>
-          <h2 className="text-white text-xs md:text-sm font-black uppercase tracking-[0.3em]">
+          <span className="w-10 h-[1.5px] bg-yellow-500 shadow-[0_0_8px_#eab308]"></span>
+          <h2 className="text-white text-xs md:text-sm font-black uppercase tracking-[0.4em]">
             Visual Highlights
           </h2>
         </div>
-        <p className="text-gray-500 text-[10px] uppercase tracking-widest hidden md:block">
-          Discover paradise in every frame
-        </p>
       </div>
 
       {/* The Strip Container */}
       <div className="relative">
-        <div className="absolute inset-y-0 left-0 w-16 md:w-32 bg-gradient-to-r from-[#080808] to-transparent z-10 pointer-events-none" />
-        <div className="absolute inset-y-0 right-0 w-16 md:w-32 bg-gradient-to-l from-[#080808] to-transparent z-10 pointer-events-none" />
+        {/* Side Fades for smooth entry/exit */}
+        <div className="absolute inset-y-0 left-0 w-20 md:w-40 bg-gradient-to-r from-[#080808] via-[#080808]/80 to-transparent z-10 pointer-events-none" />
+        <div className="absolute inset-y-0 right-0 w-20 md:w-40 bg-gradient-to-l from-[#080808] via-[#080808]/80 to-transparent z-10 pointer-events-none" />
 
         <motion.div
-          className="flex gap-6 py-4"
-          animate={{
-            x: ["0%", "-33.33%"],
-          }}
-          transition={{
-            duration: 40,
-            ease: "linear",
-            repeat: Infinity,
-          }}
+          className="flex gap-5 py-4"
+          animate={{ x: ["0%", "-33.33%"] }}
+          transition={{ duration: 45, ease: "linear", repeat: Infinity }}
           style={{ width: "max-content" }}
-          whileHover={{ animationPlayState: "paused" }}
         >
           {fullList.map((item, index) => (
-            <motion.div
+            <div
               key={index}
-              // මෙහිදී w-[auto] සහ h-[150px/220px] ලෙස වෙනස් කිරීමෙන් පින්තූරයේ හැඩය අනුව රාමුව සැකසේ
-              className="relative shrink-0 h-[150px] md:h-[220px] rounded-xl overflow-hidden border border-white/10 group/item bg-white/5"
+              className="relative shrink-0 h-[180px] md:h-[260px] rounded-[1.5rem] overflow-hidden border border-white/10 bg-[#111]"
             >
+              {/* Image */}
               <img
                 src={item.src}
                 alt={item.title}
-                // 'object-contain' මඟින් පින්තූරය කැපීම වළක්වයි
-                className="h-full w-auto object-contain group-hover/item:scale-105 transition-transform duration-700"
+                className="h-full w-auto object-contain transition-transform duration-1000 group-hover:scale-110"
               />
 
-              {/* Hover Overlay */}
-              <div className="absolute inset-0 bg-black/80 opacity-0 group-hover/item:opacity-100 transition-opacity duration-300 flex items-end justify-center p-4">
-                <p className="text-white text-[9px] md:text-xs font-bold uppercase tracking-[0.2em] text-center border-b border-yellow-500 pb-1 mb-2">
-                  {item.title}
-                </p>
+              {/* පින්තූරය යටින් තියෙන සියුම් අඳුරු සෙවනැල්ල (Tag එක කැපී පෙනෙන්න) */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+
+              {/* Premium Tag Design */}
+              <div className="absolute bottom-4 left-4 right-4 flex justify-start">
+                <div className="flex items-center gap-2.5 bg-white/5 backdrop-blur-xl border border-white/20 px-3.5 py-2 rounded-2xl shadow-2xl">
+                  {/* Glowing Dot */}
+                  <div className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-yellow-500 shadow-[0_0_10px_#eab308]"></span>
+                  </div>
+
+                  {/* Text */}
+                  <span className="text-white text-[10px] md:text-[11px] font-bold uppercase tracking-[0.15em] whitespace-nowrap">
+                    {item.title}
+                  </span>
+                </div>
               </div>
-            </motion.div>
+
+              {/* Corner Accent: සියුම් රන්වන් ඉරක් ටැග් එකට උඩින් */}
+              <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-yellow-500/40 via-transparent to-transparent" />
+            </div>
           ))}
         </motion.div>
       </div>
 
       {/* Bottom accent line */}
-      <div className="mt-8 opacity-20">
-        <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-yellow-500 to-transparent" />
+      <div className="mt-10 opacity-30">
+        <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-yellow-500 to-transparent shadow-[0_0_15px_rgba(234,179,8,0.5)]" />
       </div>
     </section>
   );
