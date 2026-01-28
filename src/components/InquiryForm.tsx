@@ -99,10 +99,10 @@ export default function InquiryForm() {
 
               <div className="p-6 bg-gray-50 rounded-2xl border border-gray-100">
                 <p className="text-black font-bold text-sm mb-1 italic">
-                  "Atithi Devo Bhava"
+                  "Rejoignez-nous pour un Voyage à Haut Rendement."
                 </p>
                 <p className="text-gray-400 text-xs uppercase tracking-widest">
-                  Our Guest is Our God
+                  Join Us for a High-Yield Journey.
                 </p>
               </div>
             </motion.div>
