@@ -1,53 +1,49 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sprout, ShieldCheck, ChevronRight, ExternalLink } from "lucide-react";
 
 export default function GreenRibbonPremiumStrip() {
   const [isHovered, setIsHovered] = useState(false);
+  const [isWide, setIsWide] = useState(false);
 
   const trees = [
-    {
-      name: "Kumbuk",
-      scientific: "Terminalia arjuna",
-      img: "/image/kumbuk.jpg",
-    },
-    { name: "Mee", scientific: "Madhuca longifolia", img: "/image/mee.jpg" },
+    { name: "Kumbuk", img: "/image/kumbuk.jpg" },
+    { name: "Mee", img: "/image/mee.jpg" },
   ];
 
+  // Hover එක අයින් කළ සැනින් Content එක hide කරයි
+  useEffect(() => {
+    if (!isHovered) {
+      setIsWide(false);
+    }
+  }, [isHovered]);
+
   return (
-    <div className="relative w-full py-12 md:py-20 flex justify-center items-center overflow-visible bg-transparent px-4">
-      {/* ප්‍රධාන පටිය */}
+    <div className="relative w-full py-12 md:py-20 flex justify-center items-center bg-transparent px-4 overflow-visible">
       <motion.div
-        layout // ස්මූත් ඇනිමේෂන් එකක් සඳහා
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onClick={() => setIsHovered(!isHovered)}
-        initial={{ width: "fit-content", minWidth: "320px", opacity: 0 }}
-        whileInView={{ width: isHovered ? "100%" : "fit-content", opacity: 1 }}
         animate={{
-          // ජංගම දුරකථන වල උස සහ පිහිටීම නිවැරදි කිරීම
-          height: isHovered ? "auto" : "80px",
-          minHeight: isHovered
-            ? typeof window !== "undefined" && window.innerWidth < 768
-              ? "580px"
-              : "220px"
-            : "80px",
+          // Hover අයින් කරන විට Width එක පියවෙන්න පරක්කු කරයි (Delay)
+          width: isHovered ? "100%" : "fit-content",
+          // Hover අයින් කරන විට Height එක ඉක්මනින් 85px වෙයි
+          height: isHovered && isWide ? "auto" : "85px",
+        }}
+        onAnimationComplete={() => {
+          if (isHovered) setIsWide(true);
         }}
         transition={{
-          layout: { type: "spring", stiffness: 100, damping: 20 },
-          height: { type: "spring", stiffness: 100, damping: 20 },
-          width: { type: "spring", stiffness: 100, damping: 20 },
+          type: "spring",
+          stiffness: 150,
+          damping: 25,
+          // Width එක වැසෙන එක පමා කිරීම මෙහි රහසයි
+          width: { delay: isHovered ? 0 : 0.2, duration: 0.3 },
+          height: { duration: 0.2 },
         }}
-        className="relative z-50 flex flex-col md:flex-row items-center bg-gradient-to-br from-[#064e3b] via-[#065f46] to-[#022c22] rounded-[3rem] md:rounded-[4rem] shadow-[0_40px_80px_-15px_rgba(0,0,0,0.5)] border border-green-400/25 overflow-hidden cursor-pointer max-w-[1300px] py-4 md:py-0 self-center"
+        className="relative z-50 flex flex-col md:flex-row items-center bg-gradient-to-br from-[#064e3b] via-[#065f46] to-[#022c22] rounded-[2.5rem] md:rounded-[5rem] shadow-[0_40px_80px_-15px_rgba(0,0,0,0.5)] border border-green-400/25 max-w-[1300px] cursor-pointer overflow-hidden min-w-fit"
       >
-        {/* පාවෙන ඇනිමේෂන් එක වෙනම ලබා දීම (Y axis movement) */}
-        <motion.div
-          className="absolute inset-0 -z-10"
-          animate={{ y: [0, -4, 0] }}
-          transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-        />
-
         <AnimatePresence>
           {isHovered && (
             <motion.div
@@ -59,124 +55,95 @@ export default function GreenRibbonPremiumStrip() {
           )}
         </AnimatePresence>
 
-        {/* --- වම්පස: ශීර්ෂය (Title Section) --- */}
-        <motion.div
-          layout
-          className={`flex items-center px-8 md:px-14 gap-5 md:gap-8 shrink-0 z-10 transition-all duration-500 ${
-            isHovered ? "mb-8 md:mb-0 scale-100" : ""
-          }`}
-        >
-          <div className="relative flex-shrink-0">
-            <div className="p-3.5 md:p-5 bg-green-400/15 rounded-full backdrop-blur-2xl border border-green-400/40 shadow-inner">
-              <Sprout className="text-green-400 w-7 h-7 md:w-10 md:h-10" />
+        {/* --- Header Section --- */}
+        <div className="flex items-center px-8 md:px-12 py-5 gap-6 shrink-0 justify-between md:justify-start">
+          <div className="flex items-center gap-5">
+            <div className="p-3 bg-green-400/15 rounded-full backdrop-blur-md border border-green-400/30 shrink-0">
+              <Sprout className="text-green-400 w-6 h-6 md:w-8 md:h-8" />
             </div>
-            <motion.div
-              animate={{ scale: [1, 1.4, 1], opacity: [0.3, 0.5, 0.3] }}
-              transition={{ repeat: Infinity, duration: 2.5 }}
-              className="absolute inset-0 bg-green-400/50 rounded-full blur-3xl -z-10"
-            />
-          </div>
-
-          <div className="flex flex-col gap-1 flex-shrink-0 min-w-[160px] md:min-w-[220px]">
-            <span className="text-white font-black uppercase tracking-[0.15em] md:tracking-[0.45em] text-[18px] md:text-[24px] whitespace-nowrap leading-none block">
-              Green Carpet
-            </span>
-            <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-green-500 shadow-[0_0_12px_#22c55e] animate-pulse flex-shrink-0" />
-              <span className="text-green-300/70 text-[10px] md:text-[12px] uppercase font-extrabold tracking-[0.15em] whitespace-nowrap">
+            <div className="flex flex-col">
+              <span className="text-white font-black uppercase tracking-widest text-lg md:text-xl whitespace-nowrap leading-none">
+                Green Carpet
+              </span>
+              <span className="text-green-300/60 text-[10px] uppercase font-bold tracking-widest mt-1 whitespace-nowrap">
                 Heritage Forest
               </span>
             </div>
           </div>
-        </motion.div>
 
-        {/* --- මැද/ව්‍යාප්ත අංග: Content --- */}
-        <AnimatePresence mode="wait">
-          {isHovered && (
+          {!isHovered && (
             <motion.div
-              layout
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 15 }}
-              transition={{ duration: 0.4 }}
-              className="flex flex-col md:flex-row items-center flex-1 justify-between px-10 md:px-14 z-10 gap-10 md:gap-8 w-full"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ delay: 0.2 }}
+              className="flex items-center gap-3 ml-6 md:ml-10"
             >
-              <div className="h-20 w-[1px] bg-gradient-to-b from-transparent via-white/20 to-transparent hidden md:block" />
-
-              {/* ගස් වල පින්තූර */}
-              <div className="flex gap-10 md:gap-16 shrink-0">
-                {trees.map((tree, idx) => (
-                  <motion.div
-                    key={idx}
-                    whileHover={{ scale: 1.08 }}
-                    className="group relative flex flex-col items-center"
-                  >
-                    <div className="relative w-24 h-24 md:w-36 md:h-36 rounded-full border-[3px] border-green-400/30 p-1.5 group-hover:border-green-400 transition-all duration-500 shadow-2xl overflow-hidden">
-                      <img
-                        src={tree.img}
-                        className="w-full h-full rounded-full object-cover grayscale-[15%] group-hover:grayscale-0 transition-all duration-700"
-                        alt={tree.name}
-                      />
-                      <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-green-500 text-green-950 text-[9px] md:text-[11px] font-black px-4 py-1.5 rounded-full whitespace-nowrap shadow-xl">
-                        {tree.name}
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* Description */}
-              <div className="flex flex-col gap-3 max-w-[280px] md:max-w-[360px] text-center md:text-left">
-                <div className="flex items-center justify-center md:justify-start gap-2.5 text-green-400">
-                  <ShieldCheck size={18} strokeWidth={2.5} />
-                  <span className="text-[11px] md:text-[12px] font-black uppercase tracking-widest">
-                    Conservation Mission
-                  </span>
-                </div>
-                <p className="text-white/80 text-[13px] md:text-[14px] leading-relaxed font-medium italic">
-                  "Protecting Sri Lanka's legendary giants. Join our journey to
-                  preserve the island's endemic biodiversity for a sustainable
-                  future."
-                </p>
-              </div>
-
-              {/* Action Button */}
-              <motion.button
-                whileHover={{ scale: 1.05, backgroundColor: "#4ade80" }}
-                whileTap={{ scale: 0.95 }}
-                className="w-full md:w-auto px-10 md:px-12 py-3.5 md:py-4.5 bg-green-500 text-[#022c22] font-black uppercase text-[11px] md:text-[12px] tracking-widest rounded-full shadow-lg flex items-center justify-center gap-3"
-              >
-                Grow Impact
-                <ExternalLink size={16} strokeWidth={3} />
-              </motion.button>
+              <span className="text-green-400/40 text-xs font-bold uppercase tracking-widest hidden sm:block whitespace-nowrap">
+                Explore
+              </span>
+              <ChevronRight className="text-green-400 w-6 h-6" />
             </motion.div>
           )}
-        </AnimatePresence>
+        </div>
 
-        {/* --- දකුණුපස: Arrow (Only when collapsed) --- */}
-        {!isHovered && (
-          <motion.div
-            layout
-            className="ml-auto pr-8 md:pr-14 z-10 flex items-center gap-4 shrink-0"
-          >
-            <span className="text-green-300/40 text-[11px] md:text-[13px] font-black uppercase tracking-widest hidden sm:block">
-              Explore
-            </span>
-            <motion.div
-              animate={{ x: [0, 5, 0] }}
-              transition={{ repeat: Infinity, duration: 2 }}
-            >
-              <ChevronRight
-                className="text-green-400 w-8 h-8 md:w-10 md:h-10"
-                strokeWidth={3}
-              />
-            </motion.div>
-          </motion.div>
-        )}
+        {/* --- Expanding Content Section --- */}
+        <div className="flex-1 w-full overflow-hidden">
+          <AnimatePresence>
+            {isHovered && isWide && (
+              <motion.div
+                key="content"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                // Exit වෙනකොට ඉතා වේගයෙන් මැකී යන්න සැලැස්සුවා
+                exit={{ opacity: 0, x: 10, transition: { duration: 0.1 } }}
+                transition={{ duration: 0.3 }}
+                className="flex flex-col md:flex-row items-center justify-between px-8 md:px-12 py-8 md:py-8 gap-8 w-full"
+              >
+                <div className="flex gap-6 shrink-0">
+                  {trees?.map((tree, idx) => (
+                    <div
+                      key={idx}
+                      className="group relative flex flex-col items-center"
+                    >
+                      <div className="relative w-16 h-16 md:w-24 md:h-24 rounded-full border-2 border-green-400/30 p-1 overflow-hidden shadow-2xl">
+                        <img
+                          src={tree.img}
+                          className="w-full h-full object-cover rounded-full"
+                          alt={tree.name}
+                        />
+                      </div>
+                      <span className="mt-2 text-[9px] text-green-300 font-bold uppercase">
+                        {tree.name}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="flex flex-col gap-2 max-w-[320px] text-center md:text-left">
+                  <div className="flex items-center justify-center md:justify-start gap-2 text-green-400">
+                    <ShieldCheck size={16} />
+                    <span className="text-[10px] font-black uppercase tracking-widest">
+                      Our Mission
+                    </span>
+                  </div>
+                  <p className="text-white/80 text-[13px] md:text-sm italic leading-relaxed">
+                    "Protecting Sri Lanka's legendary giants for a sustainable
+                    future."
+                  </p>
+                </div>
+
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  className="shrink-0 px-10 py-4 bg-green-500 text-[#022c22] font-black uppercase text-[11px] tracking-widest rounded-full shadow-lg flex items-center gap-2 mb-4 md:mb-0"
+                >
+                  Grow Impact <ExternalLink size={14} />
+                </motion.button>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </motion.div>
-
-      {/* Decor Line */}
-      <div className="absolute left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-green-500/10 to-transparent top-1/2 -z-10" />
     </div>
   );
 }

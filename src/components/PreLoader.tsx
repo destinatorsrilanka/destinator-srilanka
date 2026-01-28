@@ -73,7 +73,8 @@ export default function PreLoader() {
                 className="mt-6 flex flex-col gap-2"
               >
                 <p className="text-white/60 text-[10px] md:text-[12px] uppercase tracking-[0.6em] font-medium">
-                  Uncover the Island&apos;s Soul
+                  The real voyage of discovery consists not in seeking new
+                  landscapes _ but in having new eyes
                 </p>
                 <div className="flex justify-center gap-4">
                   <span className="w-1 h-1 bg-[#f97316] rounded-full animate-pulse" />
