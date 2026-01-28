@@ -3,224 +3,323 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Car,
-  Thermometer,
   CloudRain,
   Sun,
   CloudSun,
   Flame,
-  Compass,
+  Navigation,
+  ArrowRight,
   Wind,
-  MapPin,
 } from "lucide-react";
 
 const climateZones = [
   {
     id: "wet-zone",
     name: "Wet Zone",
-    temp: "25°C - 30°C",
+    temp: "25-30°C",
     color: "#059669",
     icon: <CloudRain size={24} />,
-    description:
-      "Covers the South-West. Characterized by high humidity and heavy rainfall from the monsoons. Features lush tropical rainforests.",
-    transport: "Luxury Sedans, SUVs, Coaches",
-    position: { top: "75%", left: "35%" }, // Colombo/Galle area
+    x: 35,
+    y: 75,
+    description: "South-West. High humidity and heavy monsoon rainfall.",
+    transport: "Luxury Sedans, SUVs",
   },
   {
     id: "intermediate-zone",
     name: "Intermediate Zone",
-    temp: "24°C - 28°C",
+    temp: "24-28°C",
     color: "#10B981",
     icon: <CloudSun size={24} />,
-    description:
-      "The transition belt between wet and dry. Includes the central hills like Kandy, offering a mild and pleasant tropical climate.",
-    transport: "Standard Cars, SUVs, Vans",
-    position: { top: "58%", left: "52%" }, // Kandy/Kurunegala area
+    x: 52,
+    y: 58,
+    description: "Central hills. Mild and pleasant tropical climate.",
+    transport: "Standard Cars, Vans",
   },
   {
     id: "dry-zone",
     name: "Dry Zone",
-    temp: "28°C - 34°C",
+    temp: "28-34°C",
     color: "#F59E0B",
     icon: <Sun size={24} />,
-    description:
-      "The largest zone (North & East). Known for historic reservoirs, golden plains, and distinct dry seasons with bright sunshine.",
-    transport: "4x4 Jeeps, SUVs, Vans",
-    position: { top: "35%", left: "65%" }, // Cultural Triangle/Anuradhapura
+    x: 65,
+    y: 35,
+    description: "North & East. Golden plains and bright sunshine.",
+    transport: "4x4 Jeeps, SUVs",
   },
   {
-    id: "arid-zone",
-    name: "Arid Zone",
-    temp: "32°C - 36°C",
+    id: "arid-north",
+    name: "Arid Zone (North)",
+    temp: "32-36°C",
     color: "#EF4444",
     icon: <Flame size={24} />,
-    description:
-      "Found in the far North (Mannar) and South-East (Yala). Unique semi-desert landscapes with high sun exposure and low rainfall.",
-    transport: "Off-road 4x4, AC SUVs",
-    position: { top: "18%", left: "48%" }, // Jaffna/Mannar area
+    x: 48,
+    y: 18,
+    description: "Mannar/Jaffna. Intense heat and minimal rainfall.",
+    transport: "Off-road 4x4",
+  },
+  {
+    id: "arid-south",
+    name: "Arid Zone (South)",
+    temp: "32-36°C",
+    color: "#EF4444",
+    x: 68,
+    y: 78,
+    description: "Hambantota/Yala. Scrublands and wildlife safaris.",
+    transport: "Safari Jeeps",
   },
 ];
 
 export default function SriLankaClimateSection() {
-  const [hoveredZone, setHoveredZone] = useState<any>(null);
+  const [startPoint, setStartPoint] = useState<string>("");
+  const [endPoint, setEndPoint] = useState<string>("");
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  const startZone = climateZones.find((z) => z.id === startPoint);
+  const endZone = climateZones.find((z) => z.id === endPoint);
+
+  const calculateDistance = () => {
+    if (!startZone || !endZone) return 0;
+    const dist = Math.sqrt(
+      Math.pow(endZone.x - startZone.x, 2) +
+        Math.pow(endZone.y - startZone.y, 2),
+    );
+    return Math.round(dist * 6.8);
+  };
+
+  const handleGo = () => {
+    setIsAnimating(false);
+    setTimeout(() => setIsAnimating(true), 100);
+  };
 
   return (
-    <section className="bg-white relative">
-      <div className="bg-[#050505] py-12 px-6 font-sans overflow-hidden flex flex-col items-center relative min-h-[700px]">
-        {/* Header */}
-        <div className="text-center mb-8 space-y-2">
-          <div className="flex items-center justify-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-yellow-500 animate-pulse" />
-            <span className="text-yellow-500 font-bold uppercase tracking-[0.3em] text-[9px]">
-              Climate Intelligence
-            </span>
-          </div>
-          <h2 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tighter">
-            Climatic{" "}
-            <span className="italic font-light text-yellow-500/80">
-              Ecosystems
-            </span>
-          </h2>
+    <section className="bg-[#050505] py-16 px-6 relative overflow-hidden flex flex-col items-center min-h-[750px] justify-center">
+      {/* --- Dynamic Background Blobs --- */}
+      <motion.div
+        animate={{
+          x: [0, 40, 0],
+          y: [0, -30, 0],
+          scale: [1, 1.1, 1],
+        }}
+        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+        className="absolute top-10 left-1/4 w-[400px] h-[400px] bg-yellow-500/10 blur-[100px] rounded-full pointer-events-none z-0"
+      />
+      <motion.div
+        animate={{
+          x: [0, -50, 0],
+          y: [0, 40, 0],
+          scale: [1, 1.2, 1],
+        }}
+        transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+        className="absolute bottom-10 right-1/4 w-[350px] h-[350px] bg-green-500/5 blur-[100px] rounded-full pointer-events-none z-0"
+      />
+
+      <div className="text-center mb-10 z-10">
+        <div className="flex items-center justify-center gap-2 mb-1">
+          <span className="w-1.5 h-1.5 rounded-full bg-yellow-500 animate-pulse" />
+          <span className="text-yellow-500 font-bold uppercase tracking-[0.3em] text-[10px]">
+            Climate Intelligence
+          </span>
         </div>
+        <h2 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tighter leading-none">
+          Climatic{" "}
+          <span className="italic font-light text-yellow-500/80">
+            Conditions
+          </span>
+        </h2>
+      </div>
 
-        <div className="max-w-[1200px] mx-auto w-full grid lg:grid-cols-12 gap-6 items-center">
-          {/* LEFT: INFO */}
-          <div className="lg:col-span-4 space-y-5 order-2 lg:order-1">
-            <p className="text-gray-400 text-sm leading-relaxed border-l border-yellow-500/30 pl-4">
-              Explore Sri Lanka's unique micro-climates, from misty highlands to
-              sun-drenched coastal plains.
-            </p>
-
+      <div className="max-w-[1300px] mx-auto w-full grid lg:grid-cols-12 gap-8 items-center relative z-20">
+        {/* LEFT: PLANNER */}
+        <div className="lg:col-span-4 flex flex-col gap-5">
+          <div className="bg-white/[0.03] border border-white/10 p-6 rounded-[2.5rem] backdrop-blur-md shadow-2xl">
+            <h4 className="text-white font-bold text-[10px] uppercase mb-5 flex items-center gap-2 tracking-widest">
+              <Navigation size={14} className="text-yellow-500" /> Route Planner
+            </h4>
             <div className="space-y-3">
-              <div className="bg-white/5 p-3 rounded-xl border border-white/10 flex items-center gap-3">
-                <Compass className="text-yellow-500" size={18} />
-                <span className="text-white text-[10px] font-bold uppercase tracking-wider">
-                  Diverse Terrains
-                </span>
-              </div>
-              <div className="bg-white/5 p-3 rounded-xl border border-white/10 flex items-center gap-3">
-                <Wind className="text-yellow-500" size={18} />
-                <span className="text-white text-[10px] font-bold uppercase tracking-wider">
-                  Monsoon Shifts
-                </span>
-              </div>
+              <select
+                value={startPoint}
+                onChange={(e) => {
+                  setStartPoint(e.target.value);
+                  setIsAnimating(false);
+                }}
+                className="w-full bg-black/60 border border-white/10 text-white p-4 rounded-2xl text-xs outline-none focus:border-yellow-500 appearance-none transition-all"
+              >
+                <option value="">Starting Point</option>
+                {climateZones.map((z) => (
+                  <option key={z.id} value={z.id}>
+                    {z.name}
+                  </option>
+                ))}
+              </select>
+              <select
+                value={endPoint}
+                onChange={(e) => {
+                  setEndPoint(e.target.value);
+                  setIsAnimating(false);
+                }}
+                className="w-full bg-black/60 border border-white/10 text-white p-4 rounded-2xl text-xs outline-none focus:border-yellow-500 appearance-none transition-all"
+              >
+                <option value="">Destination</option>
+                {climateZones.map((z) => (
+                  <option key={z.id} value={z.id}>
+                    {z.name}
+                  </option>
+                ))}
+              </select>
+              <button
+                onClick={handleGo}
+                disabled={!startPoint || !endPoint || startPoint === endPoint}
+                className="w-full bg-yellow-500 hover:bg-yellow-400 disabled:bg-neutral-800 text-black font-black uppercase text-[10px] py-4 rounded-2xl transition-all flex items-center justify-center gap-2 shadow-lg"
+              >
+                Start Journey <ArrowRight size={16} />
+              </button>
             </div>
           </div>
 
-          {/* CENTER: INTERACTIVE MAP */}
-          <div className="lg:col-span-8 relative flex justify-center order-1 lg:order-2 h-[500px] items-center">
-            <div className="relative w-full max-w-[480px] aspect-square flex items-center justify-center">
-              {/* Animated Background Ring */}
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-0 rounded-full border border-dashed border-white/10 scale-110"
-              />
-              <motion.div
-                animate={{ rotate: -360 }}
-                transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-0 rounded-full border border-yellow-500/10 scale-105"
-              />
-
-              {/* Map Image */}
-              <motion.img
-                src="/image/climet.png"
-                alt="Sri Lanka Map"
-                className={`w-full h-full object-contain transition-all duration-700 pointer-events-none ${hoveredZone ? "opacity-10 scale-90 blur-md" : "opacity-40 scale-100"}`}
-              />
-
-              {/* Pins */}
-              {climateZones.map((zone) => (
-                <div
-                  key={zone.id}
-                  className="absolute"
-                  style={{
-                    top: zone.position.top,
-                    left: zone.position.left,
-                    transform: "translate(-50%, -50%)",
-                  }}
+          <div className="min-h-[180px]">
+            <AnimatePresence mode="wait">
+              {endZone ? (
+                <motion.div
+                  key={endZone.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="bg-white/[0.03] border border-white/10 p-6 rounded-[2.5rem]"
                 >
-                  <motion.div
-                    onMouseEnter={() => setHoveredZone(zone)}
-                    onMouseLeave={() => setHoveredZone(null)}
-                    whileHover={{ scale: 1.3 }}
-                    className="cursor-pointer relative z-20 group"
-                  >
-                    {/* Ripple Effect */}
-                    <motion.div
-                      animate={{ scale: [1, 1.8], opacity: [0.5, 0] }}
-                      transition={{ duration: 2, repeat: Infinity }}
-                      className="absolute inset-0 rounded-full"
-                      style={{ backgroundColor: zone.color }}
-                    />
-                    <div
-                      className="w-8 h-8 rounded-full bg-black border-2 flex items-center justify-center shadow-lg transition-colors"
-                      style={{ borderColor: zone.color }}
-                    >
-                      <MapPin
-                        size={16}
-                        style={{ color: zone.color }}
-                        fill={zone.color}
-                        fillOpacity={0.2}
-                      />
-                    </div>
-                  </motion.div>
-                </div>
-              ))}
-
-              {/* Center Overlay Card */}
-              <AnimatePresence>
-                {hoveredZone && (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.9, y: 10 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.9, y: 10 }}
-                    className="absolute z-50 w-full max-w-[340px] px-4 pointer-events-none"
-                  >
-                    <div className="bg-white rounded-[1.5rem] p-6 shadow-[0_25px_60px_rgba(0,0,0,0.7)] border border-yellow-500/20">
-                      <div className="flex justify-between items-start mb-4">
-                        <div
-                          className="p-3 rounded-xl text-white shadow-lg shadow-black/20"
-                          style={{ backgroundColor: hoveredZone.color }}
-                        >
-                          {hoveredZone.icon}
-                        </div>
-                        <div className="text-right">
-                          <span className="block text-[8px] font-black uppercase text-gray-400">
-                            Average Temp
-                          </span>
-                          <span className="text-xl font-black text-black">
-                            {hoveredZone.temp}
-                          </span>
-                        </div>
-                      </div>
-
-                      <h3 className="text-lg font-black text-black uppercase mb-2 tracking-tight">
-                        {hoveredZone.name}
-                      </h3>
-
-                      <p className="text-gray-600 text-[11px] leading-relaxed mb-4 font-medium">
-                        {hoveredZone.description}
+                  <h3 className="text-white text-xl font-black uppercase mb-2">
+                    {endZone.name}
+                  </h3>
+                  <p className="text-gray-400 text-[11px] leading-relaxed mb-4">
+                    {endZone.description}
+                  </p>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="bg-black/40 p-3 rounded-2xl border border-white/5">
+                      <Wind size={14} className="text-yellow-500 mb-1" />
+                      <p className="text-white text-[11px] font-bold">
+                        {endZone.temp}
                       </p>
-
-                      <div className="pt-4 border-t border-gray-100 flex items-center gap-2">
-                        <Car size={12} className="text-yellow-600" />
-                        <span className="text-[9px] font-bold text-gray-400 uppercase">
-                          Recommended:
-                        </span>
-                        <span className="text-[9px] font-black text-black">
-                          {hoveredZone.transport}
-                        </span>
-                      </div>
                     </div>
-                  </motion.div>
+                    <div className="bg-black/40 p-3 rounded-2xl border border-white/5">
+                      <Car size={14} className="text-yellow-500 mb-1" />
+                      <p className="text-white text-[9px] font-bold truncate">
+                        {endZone.transport}
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+              ) : (
+                <div className="h-[180px] border border-dashed border-white/10 rounded-[2.5rem] flex items-center justify-center text-gray-600 text-[10px] uppercase font-bold tracking-widest">
+                  Select destination
+                </div>
+              )}
+            </AnimatePresence>
+          </div>
+        </div>
+
+        {/* RIGHT: MAP */}
+        <div className="lg:col-span-8 relative flex justify-center items-center h-full">
+          <div className="relative w-full max-w-[500px] aspect-square rounded-full border border-white/15 shadow-[0_0_50px_rgba(255,255,255,0.03)] flex items-center justify-center overflow-visible bg-white/[0.01]">
+            <img
+              src="/image/climet.png"
+              alt="Sri Lanka Map"
+              className="w-full h-full scale-[1.15] object-contain opacity-30 pointer-events-none z-10"
+            />
+
+            <svg
+              viewBox="0 0 100 100"
+              className="absolute inset-0 w-full h-full overflow-visible z-30 pointer-events-none"
+            >
+              <AnimatePresence>
+                {isAnimating && startZone && endZone && (
+                  <g>
+                    <motion.line
+                      x1={startZone.x}
+                      y1={startZone.y}
+                      x2={endZone.x}
+                      y2={endZone.y}
+                      stroke="#EAB308"
+                      strokeWidth="0.4"
+                      strokeDasharray="1,1"
+                      initial={{ pathLength: 0 }}
+                      animate={{ pathLength: 1 }}
+                    />
+                    <motion.g
+                      initial={{ x: startZone.x, y: startZone.y }}
+                      animate={{ x: endZone.x, y: endZone.y }}
+                      transition={{ duration: 3, ease: "easeInOut" }}
+                    >
+                      {/* KM POPUP */}
+                      <foreignObject
+                        x="-15"
+                        y="-18"
+                        width="30"
+                        height="15"
+                        className="overflow-visible"
+                      >
+                        <div className="flex flex-col items-center">
+                          <div className="bg-yellow-500 px-1.5 py-0.5 rounded-sm shadow-xl">
+                            <p className="text-black font-black text-[3.5px] whitespace-nowrap uppercase">
+                              {calculateDistance()} KM
+                            </p>
+                          </div>
+                          <div className="w-0 h-0 border-l-[1.5px] border-l-transparent border-r-[1.5px] border-r-transparent border-t-[2.5px] border-t-yellow-500" />
+                        </div>
+                      </foreignObject>
+
+                      {/* IMPROVED CAR ICON DESIGN */}
+                      <circle
+                        r="3.5"
+                        fill="white"
+                        style={{
+                          filter:
+                            "drop-shadow(0px 0px 2px rgba(255,255,255,0.8))",
+                        }}
+                      />
+                      <foreignObject x="-2.5" y="-2.5" width="5" height="5">
+                        <div className="flex items-center justify-center w-full h-full bg-white rounded-full shadow-inner">
+                          <Car
+                            size={3.5}
+                            strokeWidth={3}
+                            className="text-black"
+                          />
+                        </div>
+                      </foreignObject>
+                    </motion.g>
+                  </g>
                 )}
               </AnimatePresence>
-            </div>
+
+              {climateZones.map((zone) => (
+                <g key={zone.id}>
+                  <circle cx={zone.x} cy={zone.y} r="1.5" fill={zone.color} />
+                  <circle
+                    cx={zone.x}
+                    cy={zone.y}
+                    r="1.8"
+                    fill="none"
+                    stroke="white"
+                    strokeWidth="0.2"
+                    className="opacity-40"
+                  />
+                </g>
+              ))}
+            </svg>
           </div>
         </div>
+      </div>
 
-        {/* Gold Fade Line */}
-        <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-yellow-500/40 to-transparent" />
+      <div className="flex flex-wrap justify-center gap-6 mt-12 opacity-30">
+        {climateZones.map((z) => (
+          <div key={z.id} className="flex items-center gap-2">
+            <div
+              className="w-2 h-2 rounded-full"
+              style={{ backgroundColor: z.color }}
+            />
+            <span className="text-[9px] text-white font-bold uppercase tracking-widest">
+              {z.name}
+            </span>
+          </div>
+        ))}
       </div>
     </section>
   );

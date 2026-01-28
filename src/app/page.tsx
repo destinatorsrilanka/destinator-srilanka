@@ -22,6 +22,7 @@ export default function Home() {
         <MapSection />
       </section>
       <ClimateMap />
+      <GreenCarpetWidget />
 
       <section id="about">
         <Aboutus />
@@ -33,7 +34,7 @@ export default function Home() {
       <section id="contact">
         <InquiryForm />
       </section>
-      <GreenCarpetWidget />
+
       <Footer />
     </>
   );

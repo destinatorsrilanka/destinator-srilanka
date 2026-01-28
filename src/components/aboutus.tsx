@@ -18,8 +18,8 @@ const LOGO_COLOR = "#EAB308";
 const aboutImages = [
   {
     src: "image/about.png",
-    title: "The Highland Master",
-    subtitle: "Expert Expedition Leader",
+    title: "",
+    subtitle: "",
   },
   { src: "/image/kadu1.jpeg", title: "Sri Pada", subtitle: "The Sacred Peak" },
   {

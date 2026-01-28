@@ -9,6 +9,7 @@ import {
   Phone,
   Mail,
   Clock,
+  Compass,
 } from "lucide-react";
 
 export default function Footer() {
@@ -39,24 +40,44 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className="bg-black text-white pt-12 pb-6 px-6">
+    <footer className="bg-black text-white pt-12 pb-6 px-6 font-montserrat">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
           {/* --- COLUMN 1: BRAND --- */}
           <div className="space-y-4">
-            <h3 className="text-xl font-black tracking-tighter italic text-yellow-500">
-              destinator.lk
+            {/* Destinator Logo Style */}
+            <h3 className="text-destinator-orange text-2xl font-black tracking-[0.15em] uppercase italic flex items-center gap-0 leading-none">
+              DESTINAT
+              <span className="relative inline-flex items-center justify-center mx-0.5">
+                <span className="opacity-0">O</span>
+                <Compass className="absolute w-5 h-5 animate-[spin_10s_linear_infinite]" />
+              </span>
+              R
             </h3>
-            <p className="text-gray-400 text-xs leading-relaxed max-w-xs">
+
+            {/* French Flag & Guide Francophone Label */}
+            <div className="flex items-center gap-2">
+              <div className="flex gap-0.5 shrink-0 border border-white/10 p-0.5 rounded-sm">
+                <span className="w-2 h-3 bg-[#002395]"></span>
+                <span className="w-2 h-3 bg-white"></span>
+                <span className="w-2 h-3 bg-[#ED2939]"></span>
+              </div>
+              <span className="text-[10px] font-bold uppercase tracking-wider text-gray-300">
+                Guide Francophone
+              </span>
+            </div>
+
+            <p className="text-gray-400 text-xs leading-relaxed max-w-xs pt-2">
               Your premier gateway to the wonders of Sri Lanka. We craft
               memories that last a lifetime.
             </p>
+
             <div className="flex items-center gap-3">
               {[Facebook, Instagram, Twitter].map((Icon, i) => (
                 <Link
                   key={i}
                   href="#"
-                  className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:text-yellow-500 hover:border-yellow-500 transition-all"
+                  className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:text-destinator-orange hover:border-destinator-orange transition-all"
                 >
                   <Icon size={16} />
                 </Link>
@@ -66,7 +87,7 @@ export default function Footer() {
 
           {/* --- COLUMN 2: QUICK LINKS --- */}
           <div>
-            <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-yellow-500 mb-4">
+            <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-destinator-orange mb-4">
               Links
             </h4>
             <ul className="space-y-2 text-xs">
@@ -85,29 +106,29 @@ export default function Footer() {
 
           {/* --- COLUMN 3: CONTACT INFO --- */}
           <div>
-            <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-yellow-500 mb-4">
+            <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-destinator-orange mb-4">
               Contact
             </h4>
             <ul className="space-y-2 text-xs text-gray-400">
               <li className="flex items-center gap-2">
-                <MapPin size={14} className="text-yellow-500" />
+                <MapPin size={14} className="text-destinator-orange" />
                 <span>Colombo, Sri Lanka</span>
               </li>
               <li className="flex items-center gap-2">
-                <Phone size={14} className="text-yellow-500" />
+                <Phone size={14} className="text-destinator-orange" />
                 <span>+94 77 123 4567</span>
               </li>
               <li className="flex items-center gap-2">
-                <Mail size={14} className="text-yellow-500" />
+                <Mail size={14} className="text-destinator-orange" />
                 <span>hello@destinator.lk</span>
               </li>
             </ul>
           </div>
 
-          {/* --- COLUMN 4: LOCAL TIME CARD (Height Reduced) --- */}
+          {/* --- COLUMN 4: LOCAL TIME CARD --- */}
           <div>
             <div className="bg-white/5 border border-white/10 rounded-xl p-4 flex items-center gap-4">
-              <div className="bg-yellow-500/10 p-2 rounded-lg text-yellow-500">
+              <div className="bg-destinator-orange/10 p-2 rounded-lg text-destinator-orange">
                 <Clock size={20} />
               </div>
               <div>

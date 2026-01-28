@@ -1,73 +1,109 @@
 "use client";
-import React from "react";
-import { motion } from "framer-motion";
-import { MessageCircle, Landmark, ArrowRight } from "lucide-react";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  MessageCircle,
+  Landmark,
+  ArrowRight,
+  ShieldCheck,
+  TrendingUp,
+} from "lucide-react";
 
-export default function InvestInviteStrip() {
+export default function FixedInvestInvite() {
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
-    <section className="relative overflow-hidden">
-      {/* Top Border */}
-      <div className="h-[1px] w-full bg-white/5" />
-
-      {/* Main Gold Bar */}
-      <div className="bg-gradient-to-r from-[#B8860B] via-[#FFD700] to-[#DAA520] py-3 shadow-[0_10px_30px_rgba(218,165,32,0.3)]">
-        <div className="max-w-[1400px] mx-auto px-6">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            {/* Left Side: Text Content */}
-            <div className="flex items-center gap-4">
-              <div className="bg-black/10 p-2 rounded-full hidden sm:block">
-                <Landmark size={20} className="text-black/80" />
+    <div className="fixed bottom-8 right-8 z-[9999] flex flex-col items-end">
+      <AnimatePresence>
+        {isHovered && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            className="mb-4 w-72 bg-gradient-to-br from-[#1a1a1a] to-[#0a0a0a] border border-[#FFD700]/30 rounded-[2rem] p-6 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-xl"
+          >
+            <div className="flex items-center gap-3 mb-4">
+              <div className="p-2 bg-[#FFD700]/10 rounded-lg">
+                <ShieldCheck size={18} className="text-[#FFD700]" />
               </div>
-              <div className="text-center md:text-left">
-                <h3 className="text-black text-[13px] md:text-[15px] font-black uppercase tracking-[0.2em] leading-none">
-                  Exclusive Investment Invitation
-                </h3>
-                <p className="text-black/60 text-[9px] md:text-[10px] font-bold uppercase tracking-widest mt-1">
-                  Secure your stake in luxury island ventures
-                </p>
-              </div>
+              <span className="text-white font-black text-[10px] uppercase tracking-widest">
+                Verified Asset
+              </span>
             </div>
 
-            {/* Right Side: Clean WhatsApp Link (No Box) */}
-            <motion.a
-              href="https://wa.me/yournumber"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-3 group cursor-pointer"
-              whileHover={{ x: 5 }}
-            >
-              {/* Animated WhatsApp Icon */}
-              <div className="relative">
-                <div className="absolute inset-0 bg-black/20 rounded-full blur-md group-hover:bg-green-600/20 transition-all" />
-                <div className="relative bg-black text-white p-2.5 rounded-full shadow-xl group-hover:bg-green-600 transition-colors duration-300">
-                  <MessageCircle size={20} fill="currentColor" />
-                </div>
-                {/* Ping Animation */}
-                <span className="absolute -top-1 -right-1 flex h-3 w-3">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-3 w-3 bg-red-600 border border-[#FFD700]"></span>
+            <h4 className="text-white text-[15px] font-black uppercase tracking-tight mb-2">
+              Premium Island Ventures
+            </h4>
+            <p className="text-white/60 text-[11px] leading-relaxed mb-5">
+              Secure high-yield stakes in Sri Lanka's most exclusive luxury real
+              estate and hospitality projects.
+            </p>
+
+            <div className="flex items-center gap-4 border-t border-white/10 pt-4">
+              <div className="flex flex-col">
+                <span className="text-[#FFD700] font-black text-[12px]">
+                  12.5%
+                </span>
+                <span className="text-white/40 text-[8px] uppercase font-bold">
+                  Proj. ROI
                 </span>
               </div>
-
-              {/* Text Link */}
-              <div className="flex flex-col items-start">
-                <span className="text-black text-[11px] font-black uppercase tracking-wider group-hover:text-black/70 transition-colors">
-                  Chat with an Expert
+              <div className="flex flex-col border-l border-white/10 pl-4">
+                <span className="text-[#FFD700] font-black text-[12px]">
+                  USD
                 </span>
-                <div className="h-[1.5px] w-0 group-hover:w-full bg-black transition-all duration-300" />
+                <span className="text-white/40 text-[8px] uppercase font-bold">
+                  Currency
+                </span>
               </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-              <ArrowRight
-                size={14}
-                className="text-black opacity-40 group-hover:opacity-100 group-hover:translate-x-1 transition-all"
-              />
-            </motion.a>
+      {/* Main Action Bar */}
+      <motion.div
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        layout
+        className="flex items-center gap-4 bg-gradient-to-r from-[#B8860B] via-[#FFD700] to-[#DAA520] p-1.5 rounded-full shadow-[0_15px_40px_rgba(218,165,32,0.4)] cursor-pointer overflow-hidden border border-white/20"
+      >
+        <motion.a
+          href="https://wa.me/yournumber"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-3 pr-6"
+        >
+          {/* WhatsApp Icon */}
+          <div className="relative">
+            <div className="bg-black text-white p-3.5 rounded-full shadow-2xl">
+              <MessageCircle size={22} fill="currentColor" />
+            </div>
+            {/* Online Pulse */}
+            <span className="absolute -top-1 -right-1 flex h-4 w-4">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-4 w-4 bg-red-600 border-2 border-[#FFD700]"></span>
+            </span>
           </div>
-        </div>
-      </div>
 
-      {/* Subtle bottom glow */}
-      <div className="h-[5px] bg-gradient-to-b from-[#DAA520]/20 to-transparent" />
-    </section>
+          <div className="flex flex-col">
+            <span className="text-black text-[12px] font-black uppercase tracking-[0.15em] leading-none">
+              Consult Investment
+            </span>
+            <span className="text-black/60 text-[9px] font-bold uppercase tracking-widest mt-1">
+              Expert Guidance
+            </span>
+          </div>
+
+          <motion.div
+            animate={{ x: [0, 5, 0] }}
+            transition={{ repeat: Infinity, duration: 1.5 }}
+            className="ml-2"
+          >
+            <ArrowRight size={16} className="text-black" />
+          </motion.div>
+        </motion.a>
+      </motion.div>
+    </div>
   );
 }
