@@ -17,8 +17,7 @@ import {
   Anchor,
   Mountain,
   Compass,
-  Globe,
-} from "lucide-react"; // නිවැරදි පැකේජය lucide-react වේ
+} from "lucide-react";
 
 // --- Types & Interfaces ---
 interface Destination {
@@ -182,7 +181,7 @@ export default function SriLankaInteractiveMap() {
     customColor?: string,
   ) => {
     const iconProps = {
-      size: isMobile ? 12 : 20,
+      size: isMobile ? (isActive ? 12 : 10) : 20, // Mobile එකේදී Icon එක තවත් කුඩා කළා
       style: { color: isActive ? "#fff" : customColor || "#000" },
       className: isActive ? "" : "opacity-80",
     };
@@ -239,16 +238,12 @@ export default function SriLankaInteractiveMap() {
                     style={{ backgroundColor: LOGO_COLOR }}
                   />
                 </div>
-                <p className="max-w-[220px] sm:max-w-[280px] text-[10px] sm:text-xs leading-relaxed text-black/40">
-                  Embark on a voyage through time to explore the majestic
-                  heritage and untouched wonders of the island.
-                </p>
               </motion.div>
             )}
           </AnimatePresence>
         </div>
 
-        {/* BACKGROUND IMAGE ON ACTIVE */}
+        {/* BACKGROUND IMAGE */}
         <AnimatePresence mode="wait">
           {active && (
             <motion.div
@@ -269,22 +264,13 @@ export default function SriLankaInteractiveMap() {
           )}
         </AnimatePresence>
 
-        {/* WATERMARK */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-[15]">
-          <motion.h1
-            className="text-[10vw] lg:text-[6vw] font-black tracking-tighter uppercase leading-none opacity-[0.08] text-center px-10"
-            animate={{ color: active ? active.color : "rgba(0,0,0,1)" }}
-          >
-            {active ? active.name : "EXPLORE WITH DESTINATOR"}
-          </motion.h1>
-        </div>
-
         {/* MAP CONTAINER */}
         <motion.div
           style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
           animate={{
             x: active ? (isMobile ? 0 : "22%") : "0%",
-            scale: isMobile ? (active ? 0.75 : 1.1) : 1,
+            scale: isMobile ? (active ? 0.85 : 1.3) : 1, // සිතියම ලොකු වෙන ප්‍රමාණය
+            y: isMobile && active ? -60 : 0,
           }}
           transition={SLOW_TRANSITION}
           className="relative w-full max-w-[310px] sm:max-w-[480px] lg:max-w-[650px] aspect-[4/5] z-10 flex items-center justify-center"
@@ -293,34 +279,6 @@ export default function SriLankaInteractiveMap() {
             className="relative w-full h-full"
             onMouseLeave={() => !isMobile && setHoveredId(null)}
           >
-            {/* --- OCEAN VISUALS ONLY (NO SHIPS) --- */}
-            <div className="absolute inset-0 flex items-center justify-center z-0 pointer-events-none">
-              {/* Deep Sea Ripple Layers */}
-              {[...Array(4)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  animate={{
-                    scale: [1, 1.5, 2],
-                    opacity: [0, 0.4, 0],
-                  }}
-                  transition={{
-                    duration: 12,
-                    repeat: Infinity,
-                    delay: i * 3,
-                    ease: "easeInOut",
-                  }}
-                  className="absolute w-full h-full rounded-full border-[1.5px] border-blue-500/20 blur-[1px]"
-                />
-              ))}
-
-              {/* Coastal Glow */}
-              <motion.div
-                animate={{ opacity: [0.3, 0.5, 0.3] }}
-                transition={{ duration: 5, repeat: Infinity }}
-                className="absolute w-[90%] h-[95%] rounded-full bg-blue-400/10 blur-[100px]"
-              />
-            </div>
-
             <img
               src="/image/lk.svg"
               alt="Sri Lanka Map"
@@ -341,11 +299,13 @@ export default function SriLankaInteractiveMap() {
                   left: loc.coords.left,
                   transform: "translate(-50%, -50%)",
                   zIndex: hoveredId === loc.id ? 200 : 100,
-                  pointerEvents: "auto",
+                  pointerEvents:
+                    active && hoveredId !== loc.id ? "none" : "auto",
                 }}
               >
+                {/* Touch Area */}
                 <div
-                  className="relative p-3 cursor-pointer group"
+                  className="relative p-4 cursor-pointer group"
                   onMouseEnter={() => !isMobile && setHoveredId(loc.id)}
                   onClick={(e) => {
                     e.stopPropagation();
@@ -367,27 +327,30 @@ export default function SriLankaInteractiveMap() {
                       />
                     )}
                   </AnimatePresence>
+
                   <motion.div
                     animate={{
-                      y: hoveredId === loc.id ? -10 : 0,
-                      scale: hoveredId === loc.id ? 1.25 : 1,
-                      rotate: hoveredId === loc.id ? 12 : 0,
+                      y: hoveredId === loc.id ? -8 : 0,
+                      scale: hoveredId === loc.id ? 1.2 : 1,
                       backgroundColor:
                         hoveredId === loc.id ? loc.color : "#FFFFFF",
-                      boxShadow:
-                        hoveredId === loc.id
-                          ? `0 20px 40px -10px ${loc.color}66, 0 0 20px ${loc.color}33`
-                          : "0 4px 10px rgba(0,0,0,0.1)",
+                      opacity: active && hoveredId !== loc.id ? 0.2 : 1,
                     }}
                     transition={{
                       y: { type: "spring", stiffness: 300 },
-                      backgroundColor: { duration: 0.3 },
+                      duration: 0.3,
                     }}
                     style={{
                       borderColor:
                         hoveredId === loc.id ? "white" : `${loc.color}33`,
                     }}
-                    className={`relative flex items-center justify-center border transition-all ${hoveredId === loc.id ? "w-8 h-8 sm:w-12 sm:h-12 border-2 rounded-lg sm:rounded-2xl" : "w-6 h-6 sm:w-9 sm:h-9 border rounded-md sm:rounded-xl"}`}
+                    className={`relative flex items-center justify-center border transition-all 
+                      ${
+                        hoveredId === loc.id
+                          ? "w-7 h-7 sm:w-12 sm:h-12 border-2 rounded-lg sm:rounded-2xl shadow-xl"
+                          : "w-5 h-5 sm:w-9 sm:h-9 border rounded-md sm:rounded-xl"
+                      }`}
+                    /* ↑ මෙතන w-5 h-5 මගින් මොබයිල් පින් එක කුඩා කළා */
                   >
                     {renderIcon(loc.iconType, hoveredId === loc.id, loc.color)}
                   </motion.div>
@@ -409,27 +372,27 @@ export default function SriLankaInteractiveMap() {
                   y: isMobile ? 220 : 0,
                 }}
                 exit={{ opacity: 0, y: 20, scale: 0.9 }}
-                transition={{ duration: 0.4 }}
-                className="absolute z-[1000] w-[92vw] max-w-[380px] bg-white/10 backdrop-blur-3xl border border-white/20 p-6 sm:p-8 rounded-[2rem] shadow-2xl text-white pointer-events-auto"
+                className="absolute z-[1000] w-[88vw] max-w-[360px] bg-white/10 backdrop-blur-3xl border border-white/20 p-5 rounded-[2rem] shadow-2xl text-white pointer-events-auto"
                 onClick={(e) => e.stopPropagation()}
               >
-                <div className="space-y-4 sm:space-y-6">
+                <div className="space-y-3">
                   <div className="flex items-center gap-2">
-                    <Compass size={14} style={{ color: active.color }} />
+                    <Compass size={12} style={{ color: active.color }} />
                     <span
                       style={{ color: active.color }}
-                      className="font-bold text-[10px] tracking-widest uppercase italic"
+                      className="font-bold text-[9px] tracking-widest uppercase italic"
                     >
                       {active.tagline}
                     </span>
                   </div>
-                  <h2 className="text-3xl sm:text-4xl font-black tracking-tighter uppercase leading-none">
+                  <h2 className="text-2xl font-black tracking-tighter uppercase leading-none">
                     {active.name}
                   </h2>
-                  <p className="text-gray-200 text-xs sm:text-sm leading-relaxed font-light">
+                  <p className="text-gray-200 text-[11px] leading-relaxed font-light">
                     {active.description}
                   </p>
-                  <div className="grid grid-cols-3 gap-2">
+
+                  <div className="grid grid-cols-3 gap-2 pt-1">
                     {[
                       { icon: Wind, label: active.stats.climate },
                       { icon: Zap, label: active.stats.altitude },
@@ -437,14 +400,14 @@ export default function SriLankaInteractiveMap() {
                     ].map((stat, idx) => (
                       <div
                         key={idx}
-                        className="bg-white/10 p-2 rounded-xl border border-white/5 flex flex-col items-center"
+                        className="bg-white/10 p-1.5 rounded-xl border border-white/5 flex flex-col items-center"
                       >
                         <stat.icon
-                          size={12}
+                          size={10}
                           style={{ color: active.color }}
                           className="mb-1"
                         />
-                        <span className="text-[7px] sm:text-[8px] uppercase font-bold text-gray-300 text-center">
+                        <span className="text-[7px] uppercase font-bold text-gray-300 text-center">
                           {stat.label}
                         </span>
                       </div>
