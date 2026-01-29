@@ -1,13 +1,13 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
+import { Compass } from "lucide-react"; // Compass icon එක import කරගන්න
 
 export default function PreLoader() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const handleLoad = () => {
-      // පිටුව load වී අවසන් වූ පසු තත්පර 2.8 කින් loader එක ඉවත් වේ
       setTimeout(() => setLoading(false), 2800);
     };
 
@@ -32,7 +32,7 @@ export default function PreLoader() {
           className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#050505]"
         >
           <div className="relative flex flex-col items-center">
-            {/* Brand Name Animation */}
+            {/* Brand Name Animation with Rotating Compass */}
             <motion.div
               initial={{ opacity: 0, filter: "blur(10px)" }}
               animate={{
@@ -44,11 +44,19 @@ export default function PreLoader() {
             >
               <motion.h2
                 initial={{ letterSpacing: "0.1em" }}
-                animate={{ letterSpacing: "0.5em" }}
+                animate={{ letterSpacing: "0.2em" }}
                 transition={{ duration: 2, ease: "easeOut" }}
-                className="text-[#f97316] text-3xl md:text-5xl font-black uppercase mb-6"
+                className="text-[#f97316] text-4xl md:text-6xl font-black uppercase mb-6 flex items-center justify-center"
               >
-                destinator
+                destinat
+                <motion.span
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                  className="inline-block mx-1"
+                >
+                  <Compass className="w-8 h-8 md:w-12 md:h-12 stroke-[3px]" />
+                </motion.span>
+                r
               </motion.h2>
 
               {/* Minimal Progress Line */}
@@ -65,16 +73,18 @@ export default function PreLoader() {
                 />
               </div>
 
-              {/* Description Tagline */}
+              {/* Description Tagline - Fixed for Mobile & Wrapped */}
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8, duration: 1 }}
-                className="mt-6 flex flex-col gap-2"
+                className="mt-8 flex flex-col gap-4 px-6 max-w-[320px] md:max-w-none mx-auto"
               >
-                <p className="text-white/60 text-[10px] md:text-[12px] uppercase tracking-[0.6em] font-medium">
-                  The real voyage of discovery consists not in seeking new
-                  landscapes _ but in having new eyes
+                <p className="text-white/60 text-[10px] md:text-[12px] uppercase tracking-[0.4em] md:tracking-[0.6em] font-medium leading-relaxed">
+                  The real voyage of discovery consists{" "}
+                  <br className="hidden md:block" />
+                  not in seeking new landscapes _ <br />
+                  but in having new eyes
                 </p>
                 <div className="flex justify-center gap-4">
                   <span className="w-1 h-1 bg-[#f97316] rounded-full animate-pulse" />
@@ -85,7 +95,7 @@ export default function PreLoader() {
             </motion.div>
           </div>
 
-          {/* Background Decorative Pattern - Subtle Grid */}
+          {/* Background Decorative Pattern */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.15 }}
@@ -97,7 +107,7 @@ export default function PreLoader() {
           />
 
           {/* Ambient Glow */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#f97316]/5 rounded-full blur-[120px] pointer-events-none" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-[#f97316]/5 rounded-full blur-[100px] md:blur-[120px] pointer-events-none" />
         </motion.div>
       )}
     </AnimatePresence>
