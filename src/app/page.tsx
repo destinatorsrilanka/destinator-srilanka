@@ -8,6 +8,7 @@ import InfinitePhotoStrip from "@/components/InfinitePhotoStrip";
 import ClimateMap from "@/components/ClimateMap";
 import InvestInviteStrip from "@/components/InvestInviteStrip";
 import GreenCarpetWidget from "@/components/GreenCarpetWidget";
+import InquiryModal from "@/components/InquiryModal";
 
 export default function Home() {
   return (
@@ -21,7 +22,10 @@ export default function Home() {
       <section id="heritage">
         <MapSection />
       </section>
-      <ClimateMap />
+      <section id="climate">
+        <ClimateMap />
+      </section>
+
       <GreenCarpetWidget />
 
       <section id="about">

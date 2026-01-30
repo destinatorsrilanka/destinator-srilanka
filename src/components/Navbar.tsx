@@ -30,6 +30,7 @@ export default function Navbar() {
   const navLinks = [
     { name: "HOME", href: "#home" },
     { name: "HERITAGE MAP", href: "#heritage" },
+    { name: "SL CLIMATE", href: "#climate" },
     { name: "OUR LEGACY", href: "#about" },
 
     { name: "CONTACT US", href: "#contact" },

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Send,
@@ -7,8 +7,8 @@ import {
   AlertCircle,
   Facebook,
   Instagram,
-  Twitter,
-  MessageCircle,
+  MessageCircle, // WhatsApp සඳහා
+  Music2, // TikTok සඳහා
   X,
 } from "lucide-react";
 
@@ -21,16 +21,29 @@ export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
   const [status, setStatus] = useState({ type: "", message: "" });
   const [loading, setLoading] = useState(false);
 
+  // Checkbox States
+  const [plantChecked, setPlantChecked] = useState(false);
+  const [investChecked, setInvestChecked] = useState(false);
+
+  const checkParams = useCallback(() => {
+    const params = new URLSearchParams(window.location.search);
+    setPlantChecked(params.get("plant") === "true");
+    setInvestChecked(params.get("invest") === "true");
+  }, []);
+
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
+      checkParams();
     } else {
       document.body.style.overflow = "unset";
     }
+
+    window.addEventListener("urlchange", checkParams);
     return () => {
-      document.body.style.overflow = "unset";
+      window.removeEventListener("urlchange", checkParams);
     };
-  }, [isOpen]);
+  }, [isOpen, checkParams]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -38,6 +51,9 @@ export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
     setStatus({ type: "", message: "" });
 
     const formData = new FormData(e.currentTarget);
+    formData.set("interest_plant", plantChecked ? "Yes" : "No");
+    formData.set("interest_invest", investChecked ? "Yes" : "No");
+
     const data = Object.fromEntries(formData);
 
     try {
@@ -48,10 +64,7 @@ export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
       });
 
       if (res.ok) {
-        setStatus({
-          type: "success",
-          message: "Inquiry sent successfully!",
-        });
+        setStatus({ type: "success", message: "Inquiry sent successfully!" });
         setTimeout(() => {
           onClose();
           setStatus({ type: "", message: "" });
@@ -67,6 +80,30 @@ export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
     }
   };
 
+  // යාවත්කාලීන කරන ලද Social Media දත්ත
+  const socials = [
+    {
+      Icon: Facebook,
+      href: "https://www.facebook.com/share/17dR9DX9c8/?mibextid=wwXIfr",
+      color: "hover:bg-[#1877F2]",
+    },
+    {
+      Icon: Instagram,
+      href: "https://www.instagram.com/destinatorlk?igsh=aGxwbzNpaHF3NmNo&utm_source=qr",
+      color: "hover:bg-[#E4405F]",
+    },
+    {
+      Icon: Music2,
+      href: "#", // TikTok link එක මෙතැනට
+      color: "hover:bg-black",
+    },
+    {
+      Icon: MessageCircle,
+      href: "https://wa.me/94777112434",
+      color: "hover:bg-[#25D366]",
+    },
+  ];
+
   return (
     <AnimatePresence mode="wait">
       {isOpen ? (
@@ -74,7 +111,6 @@ export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
           key="modal-overlay"
           className="fixed inset-0 z-[999] flex items-center justify-center p-4 md:p-6 overflow-hidden"
         >
-          {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -83,7 +119,6 @@ export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
             className="absolute inset-0 bg-black/90 backdrop-blur-sm"
           />
 
-          {/* Modal Content */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -109,21 +144,47 @@ export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
                   PLAN YOUR <br />{" "}
                   <span className="text-gray-300">DREAM JOURNEY.</span>
                 </h2>
-                <p className="text-gray-500 text-sm mb-8">
-                  Ready to explore? Fill out the form and we will contact you.
-                </p>
 
+                <div className="space-y-2 mb-8">
+                  <div
+                    onClick={() => setPlantChecked(!plantChecked)}
+                    className={`text-[10px] font-bold p-2 rounded-lg border transition-all cursor-pointer select-none ${
+                      plantChecked
+                        ? "bg-green-50 border-green-200 text-green-700"
+                        : "bg-gray-50 border-gray-100 text-gray-400"
+                    }`}
+                  >
+                    {plantChecked
+                      ? "✓ INTERESTED IN PLANTING"
+                      : "PLANTING NOT SELECTED"}
+                  </div>
+                  <div
+                    onClick={() => setInvestChecked(!investChecked)}
+                    className={`text-[10px] font-bold p-2 rounded-lg border transition-all cursor-pointer select-none ${
+                      investChecked
+                        ? "bg-yellow-50 border-yellow-200 text-yellow-700"
+                        : "bg-gray-50 border-gray-100 text-gray-400"
+                    }`}
+                  >
+                    {investChecked
+                      ? "✓ INTERESTED IN INVESTMENT"
+                      : "INVESTMENT NOT SELECTED"}
+                  </div>
+                </div>
+
+                {/* යාවත්කාලීන කරන ලද Social Icons Section */}
                 <div className="flex gap-4 mb-8">
-                  {[Facebook, Instagram, MessageCircle, Twitter].map(
-                    (Icon, i) => (
-                      <div
-                        key={i}
-                        className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-yellow-500 hover:text-white transition-all cursor-pointer"
-                      >
-                        <Icon size={18} />
-                      </div>
-                    ),
-                  )}
+                  {socials.map(({ Icon, href, color }, i) => (
+                    <a
+                      key={i}
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 ${color} hover:text-white transition-all cursor-pointer`}
+                    >
+                      <Icon size={18} />
+                    </a>
+                  ))}
                 </div>
               </div>
 
@@ -144,6 +205,7 @@ export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
                       className="w-full p-4 rounded-xl bg-gray-50 border border-gray-100 text-black text-sm outline-none focus:border-yellow-500"
                     />
                   </div>
+
                   <div className="grid grid-cols-2 gap-4">
                     <input
                       name="arrivalDate"
@@ -198,13 +260,17 @@ export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
 
                 {status.message && (
                   <div
-                    className={`mt-4 p-4 rounded-xl text-xs flex items-center gap-2 ${status.type === "success" ? "bg-green-50 text-green-600" : "bg-red-50 text-red-600"}`}
+                    className={`mt-4 p-4 rounded-xl text-xs flex items-center gap-2 ${
+                      status.type === "success"
+                        ? "bg-green-50 text-green-600"
+                        : "bg-red-50 text-red-600"
+                    }`}
                   >
                     {status.type === "success" ? (
                       <CheckCircle2 size={16} />
                     ) : (
                       <AlertCircle size={16} />
-                    )}
+                    )}{" "}
                     {status.message}
                   </div>
                 )}

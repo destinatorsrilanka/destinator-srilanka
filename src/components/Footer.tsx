@@ -4,7 +4,8 @@ import Link from "next/link";
 import {
   Facebook,
   Instagram,
-  Twitter,
+  Music2, // TikTok සඳහා
+  MessageCircle, // WhatsApp සඳහා
   MapPin,
   Phone,
   Mail,
@@ -39,6 +40,20 @@ export default function Footer() {
     return () => clearInterval(timer);
   }, []);
 
+  // Social Media Links mapping
+  const socialLinks = [
+    {
+      Icon: Facebook,
+      href: "https://www.facebook.com/share/17dR9DX9c8/?mibextid=wwXIfr",
+    },
+    {
+      Icon: Instagram,
+      href: "https://www.instagram.com/destinatorlk?igsh=aGxwbzNpaHF3NmNo&utm_source=qr",
+    },
+    { Icon: Music2, href: "#" }, // TikTok සඳහා ලින්ක් එකක් ඇත්නම් මෙතැනට එක් කරන්න
+    { Icon: MessageCircle, href: "#" }, // WhatsApp සඳහා ලින්ක් එකක් ඇත්නම් මෙතැනට එක් කරන්න
+  ];
+
   return (
     <footer className="bg-black text-white pt-12 pb-6 px-6 font-montserrat">
       <div className="max-w-7xl mx-auto">
@@ -72,11 +87,14 @@ export default function Footer() {
               memories that last a lifetime.
             </p>
 
+            {/* යාවත්කාලීන කරන ලද Social Media අයිකන සහ ලින්ක් */}
             <div className="flex items-center gap-3">
-              {[Facebook, Instagram, Twitter].map((Icon, i) => (
+              {socialLinks.map(({ Icon, href }, i) => (
                 <Link
                   key={i}
-                  href="#"
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:text-destinator-orange hover:border-destinator-orange transition-all"
                 >
                   <Icon size={16} />
@@ -116,11 +134,11 @@ export default function Footer() {
               </li>
               <li className="flex items-center gap-2">
                 <Phone size={14} className="text-destinator-orange" />
-                <span>+94 77 123 4567</span>
+                <span>+94 77 711 2434</span>
               </li>
               <li className="flex items-center gap-2">
                 <Mail size={14} className="text-destinator-orange" />
-                <span>hello@destinator.lk</span>
+                <span>destinatorlk@gmail.com</span>
               </li>
             </ul>
           </div>

@@ -8,8 +8,8 @@ import {
   ShieldCheck,
   MapPin,
   Instagram,
-  Twitter,
-  Linkedin,
+  Facebook,
+  Music2, // TikTok සඳහා
   Phone,
 } from "lucide-react";
 
@@ -66,6 +66,22 @@ export default function CreativeAboutUs() {
     return () => clearInterval(timer);
   }, []);
 
+  // Social Media Links
+  const socialLinks = [
+    {
+      Icon: Facebook,
+      href: "https://www.facebook.com/share/17dR9DX9c8/?mibextid=wwXIfr",
+    },
+    {
+      Icon: Instagram,
+      href: "https://www.instagram.com/destinatorlk?igsh=aGxwbzNpaHF3NmNo&utm_source=qr",
+    },
+    {
+      Icon: Music2,
+      href: "#", // TikTok ලින්ක් එක මෙතැනට එක් කරන්න
+    },
+  ];
+
   return (
     <section className="relative w-full min-h-screen bg-[#0a0a0a] overflow-hidden py-20 px-6 lg:px-20 text-white flex items-center font-montserrat">
       {/* Background decoration */}
@@ -83,7 +99,6 @@ export default function CreativeAboutUs() {
               transition={{ duration: 0.8 }}
               className="flex flex-col items-start"
             >
-              {/* කරපු වෙනස: ml-[-0.5em] මගින් tracking නිසා දකුණට යන එක වමට ඇදලා align කර ඇත */}
               <h3 className="text-yellow-500 font-bold text-[9px] tracking-[0.5em] uppercase mb-4 leading-none ml-[-0.5em]">
                 Our Vision & Story
               </h3>
@@ -147,10 +162,10 @@ export default function CreativeAboutUs() {
                   </div>
                   <div>
                     <p className="text-[10px] uppercase tracking-[0.3em] text-white font-black leading-none mb-1.5">
-                      Authorized Guide
+                      Authorized Guidence
                     </p>
                     <p className="text-[9px] text-gray-500 uppercase tracking-widest font-medium">
-                      SLTDA Registered v2.0
+                      SLTDA/SLITHM
                     </p>
                   </div>
                 </div>
@@ -161,7 +176,7 @@ export default function CreativeAboutUs() {
                   </p>
                   <div className="flex items-center gap-6">
                     <a
-                      href="tel:+94112345678"
+                      href="tel:+94777112434"
                       className="flex items-center gap-2 group"
                     >
                       <div className="p-1.5 bg-white/5 rounded-md group-hover:bg-yellow-500 transition-colors">
@@ -171,14 +186,18 @@ export default function CreativeAboutUs() {
                         />
                       </div>
                       <p className="text-xs lg:text-sm text-white font-bold tracking-tight">
-                        +94 112 345 678
+                        +94 77 711 2434
                       </p>
                     </a>
+
+                    {/* --- යාවත්කාලීන කරන ලද Social Media අංශය --- */}
                     <div className="flex gap-4 border-l border-white/10 pl-6">
-                      {[Instagram, Twitter, Linkedin].map((Icon, idx) => (
+                      {socialLinks.map(({ Icon, href }, idx) => (
                         <motion.a
                           key={idx}
-                          href="#"
+                          href={href}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           whileHover={{ scale: 1.1, color: LOGO_COLOR }}
                           className="text-gray-500 transition-colors"
                         >
