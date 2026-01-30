@@ -18,6 +18,7 @@ const visualHighlights = [
   { src: "/image/Snorkeling.jpg", title: "Scuba Diving . Snorkelling 🤿" },
   { src: "/image/Cinnamon.jpg", title: "Pure Cinnamon" },
   { src: "/image/gems.webp", title: "Ceylon Sapphires" },
+  { src: "/image/slide3.PNG", title: "Forest Jewel" },
 ];
 
 const fullList = [
