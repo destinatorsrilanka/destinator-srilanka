@@ -62,7 +62,7 @@ export async function POST(req: Request) {
       html: `
         <div style="font-family: sans-serif; padding: 20px; text-align: center;">
           <h1 style="color: #064e3b;">Ayubowan ${name}!</h1>
-          <p>Thank you for reaching out to Heritage Forest Sri Lanka.</p>
+          <p>Thank you for reaching out to Destinator.lk.</p>
           <p>We have received your inquiry about your journey on <strong>${arrivalDate}</strong>.</p>
           <p>Our team will review your details and get back to you within 24 hours.</p>
           <br />
