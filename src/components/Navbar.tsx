@@ -1,15 +1,18 @@
 "use client";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { Menu, X, Facebook, Instagram, Twitter } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import InquiryModal from "./InquiryModal"; // Path එක නිවැරදි බව පරීක්ෂා කරන්න
+import InquiryModal from "./InquiryModal";
 
 export default function Navbar() {
+  const searchParams = useSearchParams();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isInquiryOpen, setIsInquiryOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
+  // Scroll logic
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
@@ -18,7 +21,7 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Modal එක හෝ Menu එක ඇරී ඇති විට scroll lock කිරීම
+  // Modal හෝ Menu එක ඇරී ඇති විට scroll lock කිරීම
   useEffect(() => {
     if (isMenuOpen || isInquiryOpen) {
       document.body.style.overflow = "hidden";
@@ -32,7 +35,6 @@ export default function Navbar() {
     { name: "HERITAGE MAP", href: "#heritage" },
     { name: "SL CLIMATE", href: "#climate" },
     { name: "OUR LEGACY", href: "#about" },
-
     { name: "CONTACT US", href: "#contact" },
   ];
 
@@ -138,7 +140,11 @@ export default function Navbar() {
               </ul>
             </nav>
             <div
-              className={`flex gap-8 mt-16 transition-all duration-1000 delay-[800ms] ${isMenuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+              className={`flex gap-8 mt-16 transition-all duration-1000 delay-[800ms] ${
+                isMenuOpen
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-10"
+              }`}
             >
               <Facebook
                 size={26}
@@ -157,10 +163,12 @@ export default function Navbar() {
         </div>
       </header>
 
-      {/* MODAL (Header එකට පිටින් තබා ඇත) */}
+      {/* MODAL - මෙතනදී URL එක බලන්නේ බටන් එක එබුවොත් විතරයි */}
       <InquiryModal
         isOpen={isInquiryOpen}
         onClose={() => setIsInquiryOpen(false)}
+        initialPlant={searchParams.get("plant") === "true"}
+        initialInvest={searchParams.get("invest") === "true"}
       />
     </>
   );

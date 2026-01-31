@@ -1,5 +1,6 @@
 "use client";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation"; // URL එක කියවන්න මේක අනිවාර්යයි
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Send,
@@ -7,8 +8,8 @@ import {
   AlertCircle,
   Facebook,
   Instagram,
-  MessageCircle, // WhatsApp සඳහා
-  Music2, // TikTok සඳහා
+  MessageCircle,
+  Music2,
   X,
 } from "lucide-react";
 
@@ -18,6 +19,7 @@ interface InquiryModalProps {
 }
 
 export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
+  const searchParams = useSearchParams();
   const [status, setStatus] = useState({ type: "", message: "" });
   const [loading, setLoading] = useState(false);
 
@@ -25,25 +27,21 @@ export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
   const [plantChecked, setPlantChecked] = useState(false);
   const [investChecked, setInvestChecked] = useState(false);
 
-  const checkParams = useCallback(() => {
-    const params = new URLSearchParams(window.location.search);
-    setPlantChecked(params.get("plant") === "true");
-    setInvestChecked(params.get("invest") === "true");
-  }, []);
-
+  // --- මේ කොටස තමයි ටික් එක දාන්නේ ---
   useEffect(() => {
     if (isOpen) {
+      const plant = searchParams.get("plant") === "true";
+      const invest = searchParams.get("invest") === "true";
+
+      if (plant) setPlantChecked(true);
+      if (invest) setInvestChecked(true);
+
       document.body.style.overflow = "hidden";
-      checkParams();
     } else {
       document.body.style.overflow = "unset";
     }
-
-    window.addEventListener("urlchange", checkParams);
-    return () => {
-      window.removeEventListener("urlchange", checkParams);
-    };
-  }, [isOpen, checkParams]);
+  }, [isOpen, searchParams]);
+  // ------------------------------------
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -51,10 +49,18 @@ export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
     setStatus({ type: "", message: "" });
 
     const formData = new FormData(e.currentTarget);
-    formData.set("interest_plant", plantChecked ? "Yes" : "No");
-    formData.set("interest_invest", investChecked ? "Yes" : "No");
-
-    const data = Object.fromEntries(formData);
+    const data = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      arrivalDate: formData.get("arrivalDate"),
+      departureDate: formData.get("departureDate"),
+      guests: formData.get("guests"),
+      kids: formData.get("kids"),
+      country: formData.get("country"),
+      location: formData.get("location"),
+      interest_plant: plantChecked ? "Yes" : "No",
+      interest_invest: investChecked ? "Yes" : "No",
+    };
 
     try {
       const res = await fetch("/api/inquiry", {
@@ -68,10 +74,11 @@ export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
         setTimeout(() => {
           onClose();
           setStatus({ type: "", message: "" });
-        }, 3000);
+          setPlantChecked(false);
+          setInvestChecked(false);
+        }, 2000);
       } else {
-        const result = await res.json();
-        setStatus({ type: "error", message: result.message || "Server Error" });
+        setStatus({ type: "error", message: "Server Error" });
       }
     } catch (error) {
       setStatus({ type: "error", message: "Connection failed." });
@@ -80,7 +87,6 @@ export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
     }
   };
 
-  // යාවත්කාලීන කරන ලද Social Media දත්ත
   const socials = [
     {
       Icon: Facebook,
@@ -94,23 +100,20 @@ export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
     },
     {
       Icon: Music2,
-      href: "#", // TikTok link එක මෙතැනට
+      href: "https://www.tiktok.com/@destinator.lk",
       color: "hover:bg-black",
     },
     {
       Icon: MessageCircle,
-      href: "https://wa.me/94777112434",
+      href: "https://wa.me/message/L7DQU2A2QGEMJ1",
       color: "hover:bg-[#25D366]",
     },
   ];
 
   return (
-    <AnimatePresence mode="wait">
-      {isOpen ? (
-        <div
-          key="modal-overlay"
-          className="fixed inset-0 z-[999] flex items-center justify-center p-4 md:p-6 overflow-hidden"
-        >
+    <AnimatePresence>
+      {isOpen && (
+        <div className="fixed inset-0 z-[999] flex items-center justify-center p-4 md:p-6">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -148,11 +151,7 @@ export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
                 <div className="space-y-2 mb-8">
                   <div
                     onClick={() => setPlantChecked(!plantChecked)}
-                    className={`text-[10px] font-bold p-2 rounded-lg border transition-all cursor-pointer select-none ${
-                      plantChecked
-                        ? "bg-green-50 border-green-200 text-green-700"
-                        : "bg-gray-50 border-gray-100 text-gray-400"
-                    }`}
+                    className={`text-[10px] font-bold p-2 rounded-lg border transition-all cursor-pointer select-none ${plantChecked ? "bg-green-50 border-green-200 text-green-700" : "bg-gray-50 border-gray-100 text-gray-400"}`}
                   >
                     {plantChecked
                       ? "✓ INTERESTED IN PLANTING"
@@ -160,11 +159,7 @@ export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
                   </div>
                   <div
                     onClick={() => setInvestChecked(!investChecked)}
-                    className={`text-[10px] font-bold p-2 rounded-lg border transition-all cursor-pointer select-none ${
-                      investChecked
-                        ? "bg-yellow-50 border-yellow-200 text-yellow-700"
-                        : "bg-gray-50 border-gray-100 text-gray-400"
-                    }`}
+                    className={`text-[10px] font-bold p-2 rounded-lg border transition-all cursor-pointer select-none ${investChecked ? "bg-yellow-50 border-yellow-200 text-yellow-700" : "bg-gray-50 border-gray-100 text-gray-400"}`}
                   >
                     {investChecked
                       ? "✓ INTERESTED IN INVESTMENT"
@@ -172,7 +167,6 @@ export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
                   </div>
                 </div>
 
-                {/* යාවත්කාලීන කරන ලද Social Icons Section */}
                 <div className="flex gap-4 mb-8">
                   {socials.map(({ Icon, href, color }, i) => (
                     <a
@@ -205,7 +199,6 @@ export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
                       className="w-full p-4 rounded-xl bg-gray-50 border border-gray-100 text-black text-sm outline-none focus:border-yellow-500"
                     />
                   </div>
-
                   <div className="grid grid-cols-2 gap-4">
                     <input
                       name="arrivalDate"
@@ -260,11 +253,7 @@ export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
 
                 {status.message && (
                   <div
-                    className={`mt-4 p-4 rounded-xl text-xs flex items-center gap-2 ${
-                      status.type === "success"
-                        ? "bg-green-50 text-green-600"
-                        : "bg-red-50 text-red-600"
-                    }`}
+                    className={`mt-4 p-4 rounded-xl text-xs flex items-center gap-2 ${status.type === "success" ? "bg-green-50 text-green-600" : "bg-red-50 text-red-600"}`}
                   >
                     {status.type === "success" ? (
                       <CheckCircle2 size={16} />
@@ -278,7 +267,7 @@ export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
             </div>
           </motion.div>
         </div>
-      ) : null}
+      )}
     </AnimatePresence>
   );
 }
