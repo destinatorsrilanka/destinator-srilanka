@@ -1,18 +1,18 @@
 "use client";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react"; // Suspense එකතු කළා
 import { useSearchParams } from "next/navigation";
 import { Menu, X, Facebook, Instagram, Twitter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import InquiryModal from "./InquiryModal";
 
-export default function Navbar() {
+// 1. Search Params කියවන කොටස වෙනම Component එකකට ගත්තා
+function NavbarContent() {
   const searchParams = useSearchParams();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isInquiryOpen, setIsInquiryOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  // Scroll logic
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
@@ -21,7 +21,6 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Modal හෝ Menu එක ඇරී ඇති විට scroll lock කිරීම
   useEffect(() => {
     if (isMenuOpen || isInquiryOpen) {
       document.body.style.overflow = "hidden";
@@ -46,7 +45,6 @@ export default function Navbar() {
         } border-b border-white/10`}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-20 flex justify-between items-center w-full relative z-[160]">
-          {/* LEFT: MENU & LINKS */}
           <div className="flex items-center">
             <button
               className="xl:hidden relative text-white p-2 -ml-2 focus:outline-none z-[170]"
@@ -55,19 +53,11 @@ export default function Navbar() {
               <div className="relative w-8 h-8 flex items-center justify-center">
                 <X
                   size={30}
-                  className={`absolute transition-all duration-500 text-[#EAB308] ${
-                    isMenuOpen
-                      ? "scale-100 rotate-0 opacity-100"
-                      : "scale-0 rotate-90 opacity-0"
-                  }`}
+                  className={`absolute transition-all duration-500 text-[#EAB308] ${isMenuOpen ? "scale-100 rotate-0 opacity-100" : "scale-0 rotate-90 opacity-0"}`}
                 />
                 <Menu
                   size={30}
-                  className={`absolute transition-all duration-500 ${
-                    isMenuOpen
-                      ? "scale-0 -rotate-90 opacity-0"
-                      : "scale-100 rotate-0 opacity-100"
-                  }`}
+                  className={`absolute transition-all duration-500 ${isMenuOpen ? "scale-0 -rotate-90 opacity-0" : "scale-100 rotate-0 opacity-100"}`}
                 />
               </div>
             </button>
@@ -89,48 +79,29 @@ export default function Navbar() {
             </nav>
           </div>
 
-          {/* RIGHT: BOOK NOW */}
           <div className="flex items-center">
             <Button
               onClick={() => setIsInquiryOpen(true)}
-              className={`bg-[#EAB308] hover:bg-white hover:text-black text-black font-black text-[10px] sm:text-[11px] px-6 sm:px-8 py-4 sm:py-5 h-9 sm:h-11 rounded-full transition-all duration-500 uppercase tracking-widest shadow-lg ${
-                isMenuOpen
-                  ? "opacity-0 invisible translate-x-5"
-                  : "opacity-100 visible translate-x-0"
-              }`}
+              className={`bg-[#EAB308] hover:bg-white hover:text-black text-black font-black text-[10px] sm:text-[11px] px-6 sm:px-8 py-4 sm:py-5 h-9 sm:h-11 rounded-full transition-all duration-500 uppercase tracking-widest shadow-lg ${isMenuOpen ? "opacity-0 invisible translate-x-5" : "opacity-100 visible translate-x-0"}`}
             >
               BOOK NOW
             </Button>
           </div>
         </div>
 
-        {/* MOBILE OVERLAY */}
+        {/* Mobile Overlay */}
         <div
-          className={`fixed inset-0 bg-black transition-transform duration-700 ease-[cubic-bezier(0.77,0,0.175,1)] xl:hidden ${
-            isMenuOpen ? "translate-y-0" : "-translate-y-full"
-          }`}
+          className={`fixed inset-0 bg-black transition-transform duration-700 ease-[cubic-bezier(0.77,0,0.175,1)] xl:hidden ${isMenuOpen ? "translate-y-0" : "-translate-y-full"}`}
           style={{ zIndex: 140 }}
         >
           <div className="h-full flex flex-col justify-center items-center">
             <nav>
               <ul className="flex flex-col space-y-8 text-center">
-                {navLinks.map((link, index) => (
-                  <li
-                    key={link.name}
-                    className={`overflow-hidden transition-all duration-700 ${
-                      isMenuOpen
-                        ? "translate-y-0 opacity-100"
-                        : "translate-y-20 opacity-0"
-                    }`}
-                    style={{
-                      transitionDelay: isMenuOpen
-                        ? `${index * 100 + 300}ms`
-                        : "0ms",
-                    }}
-                  >
+                {navLinks.map((link) => (
+                  <li key={link.name}>
                     <Link
                       href={link.href}
-                      className="text-white text-4xl sm:text-5xl font-black tracking-tighter uppercase transition-all duration-300 hover:text-[#EAB308] block"
+                      className="text-white text-4xl sm:text-5xl font-black tracking-tighter uppercase block"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       {link.name}
@@ -139,31 +110,10 @@ export default function Navbar() {
                 ))}
               </ul>
             </nav>
-            <div
-              className={`flex gap-8 mt-16 transition-all duration-1000 delay-[800ms] ${
-                isMenuOpen
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-10"
-              }`}
-            >
-              <Facebook
-                size={26}
-                className="text-white/40 hover:text-[#EAB308] cursor-pointer"
-              />
-              <Instagram
-                size={26}
-                className="text-white/40 hover:text-[#EAB308] cursor-pointer"
-              />
-              <Twitter
-                size={26}
-                className="text-white/40 hover:text-[#EAB308] cursor-pointer"
-              />
-            </div>
           </div>
         </div>
       </header>
 
-      {/* MODAL - මෙතනදී URL එක බලන්නේ බටන් එක එබුවොත් විතරයි */}
       <InquiryModal
         isOpen={isInquiryOpen}
         onClose={() => setIsInquiryOpen(false)}
@@ -171,5 +121,14 @@ export default function Navbar() {
         initialInvest={searchParams.get("invest") === "true"}
       />
     </>
+  );
+}
+
+// 2. ප්‍රධාන Component එකෙන් NavbarContent එක Suspense ඇතුළේ රෙන්ඩර් කරනවා
+export default function Navbar() {
+  return (
+    <Suspense fallback={<div className="h-20 bg-black w-full" />}>
+      <NavbarContent />
+    </Suspense>
   );
 }

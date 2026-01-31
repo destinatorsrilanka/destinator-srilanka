@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation"; // URL එක කියවන්න මේක අනිවාර්යයි
+import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Send,
@@ -13,12 +13,20 @@ import {
   X,
 } from "lucide-react";
 
+// 1. Interface එකට අලුත් Props දෙක එකතු කළා
 interface InquiryModalProps {
   isOpen: boolean;
   onClose: () => void;
+  initialPlant?: boolean; // මෙතන '?' දැම්මේ මේවා optional නිසා
+  initialInvest?: boolean;
 }
 
-export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
+export default function InquiryModal({
+  isOpen,
+  onClose,
+  initialPlant = false, // Default value එක false ලෙස ගත්තා
+  initialInvest = false,
+}: InquiryModalProps) {
   const searchParams = useSearchParams();
   const [status, setStatus] = useState({ type: "", message: "" });
   const [loading, setLoading] = useState(false);
@@ -27,21 +35,23 @@ export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
   const [plantChecked, setPlantChecked] = useState(false);
   const [investChecked, setInvestChecked] = useState(false);
 
-  // --- මේ කොටස තමයි ටික් එක දාන්නේ ---
+  // 2. Props වලින් එන අගයන් අනුව ටික් එක වැටෙන ලොජික් එක
   useEffect(() => {
     if (isOpen) {
-      const plant = searchParams.get("plant") === "true";
-      const invest = searchParams.get("invest") === "true";
+      // Navbar එකෙන් එවන props හෝ URL එකෙන් එන දත්ත පරීක්ෂා කිරීම
+      const plant = initialPlant || searchParams.get("plant") === "true";
+      const invest = initialInvest || searchParams.get("invest") === "true";
 
-      if (plant) setPlantChecked(true);
-      if (invest) setInvestChecked(true);
+      setPlantChecked(plant);
+      setInvestChecked(invest);
 
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
+      // Modal එක වහද්දී status reset කරන්න (Optional)
+      setStatus({ type: "", message: "" });
     }
-  }, [isOpen, searchParams]);
-  // ------------------------------------
+  }, [isOpen, searchParams, initialPlant, initialInvest]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -73,7 +83,6 @@ export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
         setStatus({ type: "success", message: "Inquiry sent successfully!" });
         setTimeout(() => {
           onClose();
-          setStatus({ type: "", message: "" });
           setPlantChecked(false);
           setInvestChecked(false);
         }, 2000);
@@ -259,7 +268,7 @@ export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
                       <CheckCircle2 size={16} />
                     ) : (
                       <AlertCircle size={16} />
-                    )}{" "}
+                    )}
                     {status.message}
                   </div>
                 )}
