@@ -150,10 +150,10 @@ export default function FixedInvestInvite() {
           </div>
           <div className="flex flex-col text-left">
             <span className="text-black text-[9px] md:text-[12px] font-black uppercase tracking-[0.05em] md:tracking-[0.15em] leading-none">
-              Want to Invest?
+              Your Partner in Sri Lanka
             </span>
             <span className="text-black/60 text-[7px] md:text-[9px] font-bold uppercase tracking-widest mt-0.5 md:mt-1">
-              Trusted Partnership
+              Interested in parntership programs
             </span>
           </div>
           <motion.div

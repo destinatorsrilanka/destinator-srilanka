@@ -98,12 +98,12 @@ export default function InquiryForm() {
     },
     {
       Icon: Music2,
-      href: "#", // TikTok ලින්ක් එක මෙතැනට එක් කරන්න
+      href: "https://www.tiktok.com/@destinator.lk?_r=1&_d=e24e5bdfi66221&sec_uid=MS4wLjABAAAAo9HUtOwWSVfoVyLRj5S81Y6BLz8JCUKou37P27o0QsuU7oq2RBDAUHNXUPqlMEpt&share_author_id=7104740320396018693&sharer_language=en&source=h5_m&u_code=e24e5mj67a47gl&item_author_type=1&utm_source=copy&tt_from=copy&enable_checksum=1&utm_medium=ios&share_link_id=EA2DD9F4-683C-40ED-976D-0D24E3020AFE&user_id=7104740320396018693&sec_user_id=MS4wLjABAAAAo9HUtOwWSVfoVyLRj5S81Y6BLz8JCUKou37P27o0QsuU7oq2RBDAUHNXUPqlMEpt&social_share_type=4&ug_btm=b8727,b0&utm_campaign=client_share&share_app_id=1233",
       color: "hover:bg-black",
     },
     {
       Icon: MessageCircle,
-      href: "https://wa.me/94777112434", // WhatsApp ලින්ක් එක
+      href: "https://wa.me/message/L7DQU2A2QGEMJ1",
       color: "hover:bg-green-600",
     },
   ];
@@ -250,7 +250,7 @@ export default function InquiryForm() {
                       Investment
                     </p>
                     <p className="text-[10px] text-gray-400 font-bold uppercase">
-                      Join as a Partner
+                      Inerested in partnership programs
                     </p>
                   </div>
                   <div

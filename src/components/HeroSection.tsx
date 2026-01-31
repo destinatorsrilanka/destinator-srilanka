@@ -161,7 +161,14 @@ export default function HeroSection() {
               </p>
             </div>
 
-            <button className="bg-orange-500 hover:bg-white text-white hover:text-black px-8 py-3 rounded-full font-black transition-all flex items-center gap-2 text-sm md:text-lg group shrink-0 mb-8 md:mb-0">
+            <button
+              onClick={() =>
+                document
+                  .getElementById("heritage")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
+              className="bg-orange-500 hover:bg-white text-white hover:text-black px-8 py-3 rounded-full font-black transition-all flex items-center gap-2 text-sm md:text-lg group shrink-0 mb-8 md:mb-0"
+            >
               EXPLORE NOW{" "}
               <ArrowRight
                 size={20}
