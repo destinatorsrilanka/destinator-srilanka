@@ -54,7 +54,7 @@ export default function HeroSection() {
     );
 
   return (
-    <section className="relative h-screen w-full bg-black font-montserrat overflow-hidden">
+    <section className="relative min-h-[700px] h-screen w-full bg-black font-montserrat overflow-hidden flex flex-col">
       <style
         dangerouslySetInnerHTML={{
           __html: `
@@ -70,9 +70,6 @@ export default function HeroSection() {
         .animate-border-bottom-new { animation: border-bottom-new 3s infinite linear 1.5s; }
         .animate-border-left-new { animation: border-left-new 3s infinite linear 2.25s; }
         .animate-slide-up { animation: slide-up 0.8s forwards; }
-        
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
       `,
         }}
       />
@@ -98,19 +95,18 @@ export default function HeroSection() {
         ))}
       </div>
 
-      <div className="relative z-30 h-full w-full flex flex-col pt-[100px] ">
-        <div className="flex-1 overflow-y-auto no-scrollbar flex flex-col justify-center px-6 md:px-12 lg:px-24 py-10">
-          <div className="animate-slide-up flex flex-col items-start w-full">
-            {/* Logo & Badge Area */}
-            <div className="flex flex-col items-start gap-3 mb-6 shrink-0">
+      {/* Main Container */}
+      <div className="relative z-30 flex-grow w-full flex items-center px-6 md:px-12 lg:px-24">
+        {/* Flex-row මගින් වම සහ දකුණ එකම මට්ටමේ තබා, items-end මගින් ස්ලයිඩර් එක පාලනය කළා */}
+        <div className="flex flex-col lg:flex-row items-center lg:items-center justify-between w-full max-w-7xl mx-auto">
+          {/* Left Content (Center Alignment) */}
+          <div className="animate-slide-up flex flex-col items-start w-full lg:w-2/3">
+            <div className="flex flex-col items-start gap-3 mb-6">
               <div className="relative w-fit">
-                <div className="relative px-4 py-2 md:px-8 md:py-4 bg-white/5 backdrop-blur-md border border-white/10 overflow-hidden rounded-2xl flex flex-col items-center">
+                <div className="relative px-5 py-3 md:px-8 md:py-4 bg-white/5 backdrop-blur-md border border-white/10 overflow-hidden rounded-2xl flex flex-col items-center">
                   <span className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-orange-500 to-transparent -translate-x-full animate-border-top-new"></span>
-                  <span className="absolute top-0 right-0 w-[2px] h-full bg-gradient-to-b from-transparent via-orange-500 to-transparent -translate-y-full animate-border-right-new"></span>
                   <span className="absolute bottom-0 right-0 w-full h-[2px] bg-gradient-to-l from-transparent via-orange-500 to-transparent translate-x-full animate-border-bottom-new"></span>
-                  <span className="absolute bottom-0 left-0 w-[2px] h-full bg-gradient-to-t from-transparent via-orange-500 to-transparent translate-y-full animate-border-left-new"></span>
-
-                  <h3 className="text-orange-500 text-[1.8rem] md:text-3xl lg:text-4xl font-black tracking-[0.15em] md:tracking-[0.2em] uppercase italic flex items-center gap-0 leading-none">
+                  <h3 className="text-orange-500 text-2xl md:text-3xl lg:text-4xl font-black tracking-[0.15em] uppercase italic flex items-center gap-0 leading-none">
                     DESTINAT
                     <span className="relative inline-flex items-center justify-center mx-1">
                       <span className="opacity-0">O</span>
@@ -120,43 +116,28 @@ export default function HeroSection() {
                     </span>
                     R
                   </h3>
-
-                  <div className="hidden md:flex items-center justify-center gap-3 w-full border-t border-white/10 pt-2 mt-2">
-                    {["Nature", "Culture", "Adventure"].map((text, i) => (
-                      <div key={text} className="flex items-center gap-3">
-                        <span className="text-white/90 text-[9px] font-bold tracking-[0.2em] uppercase">
-                          {text}
-                        </span>
-                        {i < 2 && (
-                          <span className="w-1 h-1 bg-orange-500 rounded-full"></span>
-                        )}
-                      </div>
-                    ))}
-                  </div>
                 </div>
               </div>
-
               <div className="inline-flex items-center gap-2 bg-orange-500/20 backdrop-blur-lg border border-orange-500/30 px-3 py-1.5 rounded-xl">
                 <div className="flex gap-1 shrink-0">
                   <span className="w-1 h-3 bg-[#002395]"></span>
                   <span className="w-1 h-3 bg-white"></span>
                   <span className="w-1 h-3 bg-[#ED2939]"></span>
                 </div>
-                <p className="text-white text-[9px] md:text-[10px] font-black tracking-widest uppercase italic leading-tight">
+                <p className="text-white text-[10px] font-black tracking-widest uppercase italic">
                   Spécialiste des Circuits Francophones
                 </p>
               </div>
             </div>
 
-            {/* Texts Section */}
-            <div className="mb-6 w-full max-w-fit shrink-0">
-              <h2 className="text-orange-500 text-sm md:text-lg font-bold italic mb-1 uppercase">
+            <div className="mb-8 w-full">
+              <h2 className="text-orange-500 text-lg md:text-xl font-bold italic mb-2 uppercase tracking-wide">
                 {carouselImages[currentIndex]?.frTitle}
               </h2>
-              <h1 className="text-white text-[2.5rem] md:text-6xl lg:text-7xl xl:text-8xl font-black uppercase leading-[1.1] md:leading-none mb-3">
+              <h1 className="text-white text-[2.5rem] sm:text-[3.5rem] md:text-6xl lg:text-7xl xl:text-8xl font-black uppercase leading-[1.1] mb-4 whitespace-nowrap">
                 {carouselImages[currentIndex]?.enTitle}
               </h1>
-              <p className="text-gray-300 text-sm md:text-base lg:text-lg max-w-xl md:max-w-2xl leading-relaxed opacity-90">
+              <p className="text-gray-300 text-sm md:text-lg max-w-xl leading-relaxed opacity-90">
                 {carouselImages[currentIndex]?.description}
               </p>
             </div>
@@ -167,44 +148,49 @@ export default function HeroSection() {
                   .getElementById("heritage")
                   ?.scrollIntoView({ behavior: "smooth" })
               }
-              className="bg-orange-500 hover:bg-white text-white hover:text-black px-8 py-3 rounded-full font-black transition-all flex items-center gap-2 text-sm md:text-lg group shrink-0 mb-8 md:mb-0"
+              className="bg-orange-500 hover:bg-white text-white hover:text-black px-10 py-4 rounded-full font-black transition-all flex items-center gap-2 text-lg shadow-2xl"
             >
               EXPLORE NOW{" "}
               <ArrowRight
-                size={20}
+                size={22}
                 className="group-hover:translate-x-2 transition-transform"
               />
             </button>
           </div>
-        </div>
 
-        {/* --- Slider Controls: Hidden if screen width < 1215px --- */}
-        <div className="hidden min-[1216px]:flex absolute bottom-8 right-12 lg:right-24 z-40 flex-col items-center gap-4">
-          <div className="flex gap-2 p-2 bg-black/40 backdrop-blur-xl rounded-[2rem] border border-white/20">
-            {carouselImages.map((item, index) => (
+          {/* Right Slider (මෙහි self-end සහ mt-24 මගින් පරතරය සියුම්ව සකස් කළා) */}
+          <div className="hidden lg:flex flex-col items-center gap-4 shrink-0 self-center lg:self-end lg:mb-[-40px]">
+            <div className="flex gap-2 p-2 bg-black/40 backdrop-blur-xl rounded-[2rem] border border-white/20">
+              {carouselImages.map((item, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentIndex(index)}
+                  className={`relative w-14 h-9 xl:w-20 xl:h-12 rounded-xl overflow-hidden border-2 transition-all duration-500 ${index === currentIndex ? "border-orange-500 scale-105" : "border-transparent opacity-40 hover:opacity-100"}`}
+                >
+                  <Image
+                    src={item.src}
+                    alt="nav"
+                    fill
+                    className="object-cover"
+                  />
+                </button>
+              ))}
+            </div>
+
+            <div className="flex gap-4">
               <button
-                key={index}
-                onClick={() => setCurrentIndex(index)}
-                className={`relative w-16 h-10 lg:w-20 lg:h-12 rounded-xl overflow-hidden border-2 transition-all ${index === currentIndex ? "border-orange-500 scale-105" : "border-transparent opacity-40 hover:opacity-100"}`}
+                onClick={handlePrev}
+                className="p-3 rounded-full border border-white/20 bg-black/50 hover:bg-orange-500 text-white transition-all shadow-lg"
               >
-                <Image src={item.src} alt="nav" fill className="object-cover" />
+                <ChevronLeft size={24} />
               </button>
-            ))}
-          </div>
-
-          <div className="flex gap-4 justify-center w-full">
-            <button
-              onClick={handlePrev}
-              className="p-3 rounded-full border border-white/20 bg-black/50 hover:bg-orange-500 text-white transition-all"
-            >
-              <ChevronLeft size={24} />
-            </button>
-            <button
-              onClick={handleNext}
-              className="p-3 rounded-full border border-white/20 bg-black/50 hover:bg-orange-500 text-white transition-all"
-            >
-              <ChevronRight size={24} />
-            </button>
+              <button
+                onClick={handleNext}
+                className="p-3 rounded-full border border-white/20 bg-black/50 hover:bg-orange-500 text-white transition-all shadow-lg"
+              >
+                <ChevronRight size={24} />
+              </button>
+            </div>
           </div>
         </div>
       </div>

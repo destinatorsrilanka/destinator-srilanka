@@ -78,6 +78,26 @@ const tourismTags = [
   { name: "Health & Wellness", color: "#14B8A6" },
 ];
 
+// Reusable Separator Component for better visibility
+const YellowSeparator = ({ className = "" }: { className?: string }) => (
+  <div
+    className={`w-full max-w-[1200px] relative flex flex-col items-center justify-center ${className}`}
+  >
+    <motion.div
+      initial={{ width: 0, opacity: 0 }}
+      whileInView={{ width: "100%", opacity: 1 }}
+      transition={{ duration: 1.5, ease: "easeOut" }}
+      className="h-[1.5px] bg-gradient-to-r from-transparent via-yellow-500 to-transparent shadow-[0_0_15px_rgba(234,179,8,0.5)]"
+    />
+    <motion.div
+      initial={{ scale: 0, opacity: 0 }}
+      whileInView={{ scale: 1, opacity: 1 }}
+      transition={{ delay: 0.5, duration: 0.5 }}
+      className="absolute w-2 h-2 bg-yellow-500 rounded-full shadow-[0_0_12px_#eab308,0_0_20px_#eab308]"
+    />
+  </div>
+);
+
 export default function SriLankaClimateSection() {
   const [startPoint, setStartPoint] = useState<string>("");
   const [endPoint, setEndPoint] = useState<string>("");
@@ -108,14 +128,9 @@ export default function SriLankaClimateSection() {
         transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
         className="absolute top-10 left-1/4 w-[400px] h-[400px] bg-yellow-500/10 blur-[100px] rounded-full pointer-events-none z-0"
       />
-      <motion.div
-        animate={{ x: [0, -50, 0], y: [0, 40, 0], scale: [1, 1.2, 1] }}
-        transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
-        className="absolute bottom-10 right-1/4 w-[350px] h-[350px] bg-green-500/5 blur-[100px] rounded-full pointer-events-none z-0"
-      />
 
       {/* Infinite Tags */}
-      <div className="w-full max-w-[1400px] overflow-hidden mb-16 relative z-20 py-4">
+      <div className="w-full max-w-[1400px] overflow-hidden mb-8 relative z-20 py-4">
         <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#050505] to-transparent z-30 pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#050505] to-transparent z-30 pointer-events-none" />
         <motion.div
@@ -142,6 +157,9 @@ export default function SriLankaClimateSection() {
         </motion.div>
       </div>
 
+      {/* SEPARATOR 1: Below Tourism Tags */}
+      <YellowSeparator className="mb-16" />
+
       <div className="text-center mb-10 z-10">
         <div className="flex items-center justify-center gap-2 mb-1">
           <span className="w-1.5 h-1.5 rounded-full bg-yellow-500 animate-pulse" />
@@ -157,9 +175,8 @@ export default function SriLankaClimateSection() {
         </h2>
       </div>
 
-      {/* --- UPDATED GRID SYSTEM FOR CENTERING --- */}
       <div className="max-w-[1300px] mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-20 justify-items-center">
-        {/* LEFT: PLANNER (Centered Content) */}
+        {/* LEFT: PLANNER */}
         <div className="w-full max-w-[400px] flex flex-col gap-5">
           <div className="bg-white/[0.03] border border-white/10 p-6 rounded-[2.5rem] backdrop-blur-md shadow-2xl">
             <h4 className="text-white font-bold text-[10px] uppercase mb-5 flex items-center gap-2 tracking-widest">
@@ -246,7 +263,7 @@ export default function SriLankaClimateSection() {
           </div>
         </div>
 
-        {/* RIGHT: MAP (Centered Content) */}
+        {/* RIGHT: MAP */}
         <div className="w-full flex justify-center items-center">
           <div className="relative w-full max-w-[500px] aspect-square rounded-full border border-white/15 shadow-[0_0_50px_rgba(255,255,255,0.03)] flex items-center justify-center overflow-visible bg-white/[0.01]">
             <img
@@ -301,15 +318,6 @@ export default function SriLankaClimateSection() {
                             "drop-shadow(0px 0px 2px rgba(255,255,255,0.8))",
                         }}
                       />
-                      <foreignObject x="-2.5" y="-2.5" width="5" height="5">
-                        <div className="flex items-center justify-center w-full h-full bg-white rounded-full shadow-inner">
-                          <Car
-                            size={3.5}
-                            strokeWidth={3}
-                            className="text-black"
-                          />
-                        </div>
-                      </foreignObject>
                     </motion.g>
                   </g>
                 )}
@@ -317,15 +325,6 @@ export default function SriLankaClimateSection() {
               {climateZones.map((zone) => (
                 <g key={zone.id}>
                   <circle cx={zone.x} cy={zone.y} r="1.5" fill={zone.color} />
-                  <circle
-                    cx={zone.x}
-                    cy={zone.y}
-                    r="1.8"
-                    fill="none"
-                    stroke="white"
-                    strokeWidth="0.2"
-                    className="opacity-40"
-                  />
                 </g>
               ))}
             </svg>
@@ -334,7 +333,7 @@ export default function SriLankaClimateSection() {
       </div>
 
       {/* LEGEND */}
-      <div className="flex flex-wrap justify-center gap-6 mt-12 opacity-30">
+      <div className="flex flex-wrap justify-center gap-6 mt-12 mb-10 opacity-30">
         {climateZones.map((z) => (
           <div key={z.id} className="flex items-center gap-2">
             <div
@@ -347,6 +346,9 @@ export default function SriLankaClimateSection() {
           </div>
         ))}
       </div>
+
+      {/* SEPARATOR 2: At the Bottom of the Section */}
+      <YellowSeparator className="mt-10" />
     </section>
   );
 }
