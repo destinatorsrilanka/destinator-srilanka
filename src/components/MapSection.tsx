@@ -21,19 +21,40 @@ import {
   Gem,
 } from "lucide-react";
 
-// --- Realistic River Component (Enhanced for Visibility) ---
+// --- River Component with Text Following the Path ---
 const RiverLine = ({
   d,
+  textPathD,
   color,
   name,
-  labelCoords,
+  id,
+  startOffset = "60%",
+  dy = "1",
 }: {
   d: string;
+  textPathD?: string;
   color: string;
   name: string;
-  labelCoords: { top: string; left: string };
+  id: string;
+  startOffset?: string;
+  dy?: string;
 }) => (
   <g>
+    <defs>
+      <path id={`path-${id}`} d={textPathD || d} />
+    </defs>
+
+    <motion.path
+      d={d}
+      fill="transparent"
+      stroke={color}
+      strokeWidth="0.8"
+      strokeLinecap="round"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 0.2 }}
+      className="blur-[1px]"
+    />
+
     <motion.path
       d={d}
       fill="transparent"
@@ -41,26 +62,37 @@ const RiverLine = ({
       strokeWidth="0.6"
       strokeLinecap="round"
       strokeLinejoin="round"
-      initial={{ pathLength: 0, opacity: 0.8 }}
-      animate={{ pathLength: 1, opacity: 1 }}
-      transition={{ duration: 2, ease: "easeInOut" }}
+      strokeDasharray="4, 6"
+      initial={{ pathLength: 0, strokeDashoffset: 0 }}
+      animate={{
+        pathLength: 1,
+        strokeDashoffset: [-20, 0],
+      }}
+      transition={{
+        pathLength: { duration: 2, ease: "easeInOut" },
+        strokeDashoffset: { repeat: Infinity, duration: 3, ease: "linear" },
+      }}
     />
 
     <text
-      x={labelCoords.left}
-      y={labelCoords.top}
-      fill={color}
-      fontSize="2.0"
-      fontWeight="900"
-      className="uppercase tracking-tighter"
+      dy={dy}
       style={{
+        fontSize: "1.8px",
+        fontWeight: "900",
+        fill: color,
+        textTransform: "uppercase",
+        letterSpacing: "0.1px",
         pointerEvents: "none",
-        textShadow:
-          "1px 1px 0px #fff, -1px -1px 0px #fff, 1px -1px 0px #fff, -1px 1px 0px #fff",
-        letterSpacing: "-0.05em",
+        paintOrder: "stroke",
+        stroke: "#ffffff",
+        strokeWidth: "0.3px",
+        strokeLinejoin: "round",
+        opacity: 0.9,
       }}
     >
-      {name}
+      <textPath href={`#path-${id}`} startOffset={startOffset}>
+        {name}
+      </textPath>
     </text>
   </g>
 );
@@ -84,6 +116,9 @@ interface Destination {
   color: string;
   imageFocus?: string;
   riverPath?: string;
+  textPathD?: string;
+  textOffset?: string;
+  textDy?: string;
 }
 
 const SLOW_TRANSITION = { type: "spring", stiffness: 40, damping: 20 } as const;
@@ -270,6 +305,7 @@ const destinations: Destination[] = [
     color: "#0369A1",
     riverPath:
       "M 52 68 C 58 65, 48 58, 52 52 C 55 48, 65 48, 62 38 C 60 35, 58 34, 58 34",
+    textOffset: "15%",
   },
   {
     id: "kelani",
@@ -282,6 +318,9 @@ const destinations: Destination[] = [
     iconType: "river",
     color: "#0284C7",
     riverPath: "M 47 68 C 42 69, 38 71, 32 70 C 30 70, 29 71, 29 71",
+    textPathD: "M 29 71 C 29 71, 30 70, 32 70 C 38 71, 42 69, 47 68",
+    textDy: "-1.2",
+    textOffset: "35%",
   },
   {
     id: "kalu",
@@ -292,8 +331,11 @@ const destinations: Destination[] = [
     image: "image/kalu.jpg",
     stats: { altitude: "129km", period: "Fast Flow", climate: "Wet" },
     iconType: "river",
-    color: "#1e3a8a", // Changed from black/slate to Deep Blue
+    color: "#1e3a8a",
     riverPath: "M 47 68 C 45 73, 44 76, 40 80 C 36 84, 33 83, 31 83",
+    textPathD: "M 31 83 C 33 83, 36 84, 40 80 C 44 76, 45 73, 47 68",
+    textDy: "-1.2",
+    textOffset: "25%",
   },
   {
     id: "walawe",
@@ -306,18 +348,21 @@ const destinations: Destination[] = [
     iconType: "river",
     color: "#075985",
     riverPath: "M 52 68 C 55 75, 54 82, 57 85 C 58 87, 59 88, 60 89",
+    textOffset: "50%",
   },
   {
-    id: "nilwala",
-    name: "NILWALA RIVER",
-    tagline: "The Blue River",
-    coords: { top: "88%", left: "46%" },
-    description: "Flowing through Matara, starting from Sinharaja area.",
-    image: "image/nilwala.jpg",
-    stats: { altitude: "72km", period: "Southern Heritage", climate: "Wet" },
+    id: "uma-oya",
+    name: "UMA OYA RIVER",
+    tagline: "Eastern Tributary",
+    coords: { top: "66%", left: "62%" },
+    description:
+      "A major tributary of the Mahaweli river, vital for hydropower in the east.",
+    image: "image/umaoya.jpg",
+    stats: { altitude: "Multi-purpose", period: "Modern", climate: "Dry Zone" },
     iconType: "river",
-    color: "#1e40af",
-    riverPath: "M 45 76 C 47 84, 48 89, 47 96",
+    color: "#0ea5e9",
+    riverPath: "M 52 68 C 55 70, 60 71, 65 69 C 70 67, 74 64, 76 65",
+    textOffset: "40%",
   },
 ];
 
@@ -388,6 +433,7 @@ export default function SriLankaInteractiveMap() {
         }}
         className="relative w-full max-w-[1400px] h-[100vh] sm:h-[90vh] overflow-hidden sm:rounded-[4rem] border-0 sm:border shadow-2xl flex flex-col items-center justify-center transition-colors duration-1000"
       >
+        {/* Header Title */}
         <div className="absolute top-10 sm:top-12 left-8 lg:left-16 z-40 pointer-events-none">
           <AnimatePresence>
             {!active && (
@@ -416,6 +462,7 @@ export default function SriLankaInteractiveMap() {
           </AnimatePresence>
         </div>
 
+        {/* Background Image Container */}
         <AnimatePresence mode="wait">
           {active && (
             <motion.div
@@ -442,6 +489,7 @@ export default function SriLankaInteractiveMap() {
           )}
         </AnimatePresence>
 
+        {/* Map Container */}
         <motion.div
           style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
           animate={{
@@ -456,6 +504,7 @@ export default function SriLankaInteractiveMap() {
             className="relative w-full h-full"
             onMouseLeave={() => !isMobile && setHoveredId(null)}
           >
+            {/* SVG Rivers Layer */}
             <svg
               viewBox="0 0 100 100"
               className="absolute inset-0 w-full h-full z-20 pointer-events-none overflow-visible"
@@ -465,26 +514,26 @@ export default function SriLankaInteractiveMap() {
                   loc.riverPath && (
                     <RiverLine
                       key={`river-${loc.id}`}
+                      id={loc.id}
                       d={loc.riverPath}
+                      textPathD={loc.textPathD}
                       name={loc.name.split(" ")[0]}
                       color={loc.color}
-                      labelCoords={{
-                        top: (parseFloat(loc.coords.top) + 2).toString(),
-                        left: (parseFloat(loc.coords.left) + 2).toString(),
-                      }}
+                      startOffset={loc.textOffset}
+                      dy={loc.textDy || "1"}
                     />
                   ),
               )}
             </svg>
 
+            {/* Base Map Image */}
             <img
               src="/image/lk.svg"
               alt="Map"
-              className={`relative z-10 w-full h-full object-contain transition-all duration-1000 ${
-                active ? "opacity-30 blur-[1px]" : "opacity-95"
-              }`}
+              className={`relative z-10 w-full h-full object-contain transition-all duration-1000 ${active ? "opacity-30 blur-[1px]" : "opacity-95"}`}
             />
 
+            {/* Markers Layer */}
             {destinations.map(
               (loc) =>
                 loc.iconType !== "river" && (
@@ -529,11 +578,7 @@ export default function SriLankaInteractiveMap() {
                             hoveredId === loc.id ? loc.color : "#FFFFFF",
                           opacity: active && hoveredId !== loc.id ? 0.1 : 1,
                         }}
-                        className={`relative flex items-center justify-center border transition-all ${
-                          hoveredId === loc.id
-                            ? "w-7 h-7 sm:w-11 sm:h-11 border-2 rounded-lg"
-                            : "w-4 h-4 sm:w-8 sm:h-8 border rounded-md"
-                        }`}
+                        className={`relative flex items-center justify-center border transition-all ${hoveredId === loc.id ? "w-7 h-7 sm:w-11 sm:h-11 border-2 rounded-lg" : "w-4 h-4 sm:w-8 sm:h-8 border rounded-md"}`}
                       >
                         {renderIcon(
                           loc.iconType,
@@ -547,6 +592,7 @@ export default function SriLankaInteractiveMap() {
             )}
           </div>
 
+          {/* Details Card */}
           <AnimatePresence>
             {active && (
               <motion.div
@@ -603,19 +649,16 @@ export default function SriLankaInteractiveMap() {
           </AnimatePresence>
         </motion.div>
 
+        {/* Footer */}
         <div className="absolute bottom-6 left-8 z-[100] flex items-center gap-3">
           <div
-            className={`w-7 h-7 rounded-lg flex items-center justify-center font-black text-[10px] ${
-              active ? "text-black" : "bg-black text-white"
-            }`}
+            className={`w-7 h-7 rounded-lg flex items-center justify-center font-black text-[10px] ${active ? "text-black" : "bg-black text-white"}`}
             style={{ backgroundColor: active ? active.color : undefined }}
           >
             SL
           </div>
           <p
-            className={`text-[8px] font-black tracking-[0.3em] uppercase ${
-              active ? "text-white/40" : "text-black/20"
-            }`}
+            className={`text-[8px] font-black tracking-[0.3em] uppercase ${active ? "text-white/40" : "text-black/20"}`}
           >
             Heritage Archive v7
           </p>
