@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import Image from "next/image"; // Next.js Image component එක එකතු කළා
 import {
   motion,
   AnimatePresence,
@@ -17,6 +18,8 @@ import {
   Anchor,
   Mountain,
   Compass,
+  Waves,
+  Gem,
 } from "lucide-react";
 
 // --- Types & Interfaces ---
@@ -28,123 +31,216 @@ interface Destination {
   description: string;
   image: string;
   stats: { altitude: string; period: string; climate: string };
-  iconType: "landmark" | "trees" | "anchor" | "mountain" | "map-pin";
-  geo: string;
+  iconType:
+    | "landmark"
+    | "trees"
+    | "anchor"
+    | "mountain"
+    | "map-pin"
+    | "waves"
+    | "gem";
   color: string;
+  imageFocus?: string; // Custom focus point for images
 }
 
-const SLOW_TRANSITION = {
-  type: "spring",
-  stiffness: 40,
-  damping: 20,
-} as const;
-
+const SLOW_TRANSITION = { type: "spring", stiffness: 40, damping: 20 } as const;
 const LOGO_COLOR = "#EAB308";
 
 const destinations: Destination[] = [
   {
+    id: "jaffna",
+    name: "JAFFNA",
+    tagline: "Northern Kingdom",
+    coords: { top: "17%", left: "35%" },
+    description:
+      "The cultural hub of the North, famous for its historic fort, Nallur Kandaswamy temple, and unique heritage.",
+    image: "image/jaffna.jpg",
+    stats: { altitude: "5m", period: "Ancient Era", climate: "Dry/Hot" },
+    iconType: "landmark",
+    color: "#F97316",
+    imageFocus: "center 20%",
+  },
+  {
+    id: "trincomalee",
+    name: "TRINCOMALEE",
+    tagline: "The Deep Harbor",
+    coords: { top: "35%", left: "58%" },
+    description:
+      "Home to Sober Island and the world's deepest natural harbor. Known for Koneswaram temple and whale watching.",
+    image: "image/thrinco.jpg",
+    stats: { altitude: "2m", period: "Pre-Christian", climate: "Hot" },
+    iconType: "anchor",
+    color: "#0EA5E9",
+    imageFocus: "center 40%",
+  },
+  {
     id: "anuradhapura",
     name: "ANURADHAPURA",
-    tagline: "Sacred Ancient City",
-    coords: { top: "38%", left: "42%" },
+    tagline: "First Sacred Capital",
+    coords: { top: "38%", left: "40%" },
     description:
-      "The first capital of ancient Sri Lanka, a UNESCO site home to grand stupas and the sacred Bodhi tree.",
-    image: "image/anuradhapura.jpeg",
+      "The first capital of ancient Sri Lanka, home to grand stupas and the sacred Bodhi tree.",
+    image: "image/anuradhapura.jpg",
     stats: { altitude: "81m", period: "4th Century BC", climate: "Dry" },
     iconType: "landmark",
-    geo: "8.3114° N, 80.4037° E",
     color: "#EF4444",
+    imageFocus: "center 30%",
   },
   {
     id: "polonnaruwa",
     name: "POLONNARUWA",
     tagline: "Medieval Capital",
-    coords: { top: "46%", left: "56%" },
+    coords: { top: "47%", left: "58%" },
     description:
-      "The second capital of Sri Lanka, known for its well-preserved ruins and spectacular Gal Vihara rock statues.",
-    image: "image/polonnaruva.jpeg",
+      "The second capital, showcasing grand ruins and the spectacular Gal Vihara rock statues.",
+    image: "image/polonnarruva.jpg",
     stats: { altitude: "55m", period: "11th Century", climate: "Dry" },
     iconType: "landmark",
-    geo: "7.9403° N, 81.0188° E",
     color: "#F59E0B",
+    imageFocus: "center 10%",
   },
   {
     id: "sigiriya",
     name: "SIGIRIYA",
     tagline: "The Lion Rock",
-    coords: { top: "48%", left: "48%" },
+    coords: { top: "49%", left: "49%" },
     description:
       "An ancient rock fortress rising 200m from the jungle, featuring mirror walls and celestial frescoes.",
-    image: "image/sigiriya.WEBP",
+    image: "image/sigiriya.jpg",
     stats: { altitude: "349m", period: "5th Century", climate: "Humid" },
     iconType: "mountain",
-    geo: "7.9570° N, 80.7603° E",
     color: "#EA580C",
+    imageFocus: "center 20%",
   },
   {
     id: "dambulla",
     name: "DAMBULLA",
     tagline: "Golden Cave Temple",
-    coords: { top: "55%", left: "45%" },
+    coords: { top: "52%", left: "46%" },
     description:
-      "The largest cave temple complex in Sri Lanka with 157 statues and extensive sacred murals.",
-    image: "image/dabulla.jpg",
+      "The largest cave temple complex in Sri Lanka with 157 statues and extensive murals.",
+    image: "image/dambulla.jpg",
     stats: { altitude: "340m", period: "1st Century BC", climate: "Hot" },
     iconType: "landmark",
-    geo: "7.8608° N, 80.6516° E",
     color: "#D97706",
+    imageFocus: "center 30%",
+  },
+  {
+    id: "knuckles",
+    name: "KNUCKLES RANGE",
+    tagline: "Mountain Mist",
+    coords: { top: "63%", left: "53%" },
+    description:
+      "A biodiversity hotspot with unique cloud forests, rugged peaks, and world-class hiking trails.",
+    image: "image/knuckles.jpg",
+    stats: { altitude: "1863m", period: "Natural", climate: "Mist" },
+    iconType: "mountain",
+    color: "#10B981",
+    imageFocus: "center center",
   },
   {
     id: "kandy",
     name: "KANDY",
     tagline: "Sacred Hill Capital",
-    coords: { top: "62%", left: "45%" },
+    coords: { top: "60%", left: "48%" },
     description:
       "The last royal stronghold and home to the Temple of the Sacred Tooth Relic.",
     image: "image/kandy.jpg",
     stats: { altitude: "500m", period: "15th Century", climate: "Cool" },
     iconType: "landmark",
-    geo: "7.2906° N, 80.6337° E",
     color: "#991B1B",
+    imageFocus: "center 30%",
+  },
+  {
+    id: "horton",
+    name: "HORTON PLAINS",
+    tagline: "Cloud Forest",
+    coords: { top: "68%", left: "52%" },
+    description:
+      "A high-altitude plateau where the world ends at World's End cliff. A unique montane ecosystem.",
+    image: "image/hortan.jpg",
+    stats: { altitude: "2100m", period: "Natural", climate: "Cold" },
+    iconType: "trees",
+    color: "#065F46",
+    imageFocus: "center 40%",
+  },
+  {
+    id: "peak-wilderness",
+    name: "ADAM'S PEAK",
+    tagline: "Wilderness Sanctuary",
+    coords: { top: "68%", left: "47%" },
+    description:
+      "A rugged sanctuary surrounding the sacred Sri Pada mountain, home to diverse wildlife.",
+    image: "image/adam.jpg",
+    stats: { altitude: "2243m", period: "Ancient", climate: "Rainy" },
+    iconType: "mountain",
+    color: "#4F46E5",
+    imageFocus: "center 20%",
+  },
+  {
+    id: "ratnapura",
+    name: "RATNAPURA",
+    tagline: "Gem City",
+    coords: { top: "72%", left: "43%" },
+    description:
+      "The City of Gems, world-famous for its blue sapphires and traditional mining heritage.",
+    image: "image/ratnapura.webp",
+    stats: { altitude: "130m", period: "History", climate: "Wet" },
+    iconType: "gem",
+    color: "#C026D3",
+    imageFocus: "center center",
+  },
+  {
+    id: "sinharaja",
+    name: "SINHARAJA",
+    tagline: "Rain Forest Heritage",
+    coords: { top: "76%", left: "45%" },
+    description:
+      "A primary tropical rainforest and UNESCO site, rich in endemic species of birds and plants.",
+    image: "image/sinharaja.jpg",
+    stats: { altitude: "1170m", period: "Natural", climate: "Rainy" },
+    iconType: "trees",
+    color: "#059669",
+    imageFocus: "center center",
   },
   {
     id: "galle",
     name: "GALLE",
     tagline: "Old Town & Fort",
-    coords: { top: "80%", left: "36%" },
+    coords: { top: "83%", left: "39%" },
     description:
-      "A coastal fortress built by Europeans, showcasing a blend of colonial and South Asian architecture.",
+      "A coastal fortress town showcasing a blend of colonial European and South Asian styles.",
     image: "image/galle.jpg",
     stats: { altitude: "0m", period: "16th Century", climate: "Humid" },
     iconType: "anchor",
-    geo: "6.0329° N, 80.2168° E",
     color: "#0284C7",
+    imageFocus: "center 30%",
   },
   {
-    id: "sinharaja",
-    name: "SINHARAJA",
-    tagline: "Natural Rain Forest",
-    coords: { top: "70%", left: "40%" },
+    id: "devundara",
+    name: "DEVUNDARA",
+    tagline: "City of Gods",
+    coords: { top: "86%", left: "45%" },
     description:
-      "A primary tropical rainforest and a UNESCO site, rich in endemic flora and fauna.",
-    image: "image/sinharaja.jpg",
-    stats: { altitude: "1170m", period: "Natural Heritage", climate: "Rainy" },
-    iconType: "trees",
-    geo: "6.3833° N, 80.4167° E",
-    color: "#059669",
+      "The southernmost point of the island, home to a grand shrine and the island's tallest lighthouse.",
+    image: "image/devundara.jpg",
+    stats: { altitude: "1m", period: "Ancient", climate: "Coastal" },
+    iconType: "landmark",
+    color: "#4338CA",
+    imageFocus: "center 20%",
   },
   {
-    id: "highlands",
-    name: "CENTRAL HIGHLANDS",
-    tagline: "Wilderness Peaks",
-    coords: { top: "58%", left: "52%" },
+    id: "ruhuna",
+    name: "RUHUNA (YALA)",
+    tagline: "Kingdom of Wild",
+    coords: { top: "73%", left: "66%" },
     description:
-      "Includes Horton Plains and Adam's Peak, known for biodiversity and scenic beauty.",
-    image: "image/centralHighland.jpeg",
-    stats: { altitude: "2100m", period: "Natural Heritage", climate: "Cold" },
-    iconType: "mountain",
-    geo: "6.8096° N, 80.8144° E",
-    color: "#0891B2",
+      "Part of the ancient Ruhuna Kingdom, now a world-renowned leopard sanctuary.",
+    image: "image/ruhuna.jpg",
+    stats: { altitude: "30m", period: "2nd Century BC", climate: "Dry" },
+    iconType: "landmark",
+    color: "#84CC16",
+    imageFocus: "center 40%",
   },
 ];
 
@@ -181,9 +277,9 @@ export default function SriLankaInteractiveMap() {
     customColor?: string,
   ) => {
     const iconProps = {
-      size: isMobile ? (isActive ? 12 : 10) : 20,
+      size: isMobile ? (isActive ? 12 : 9) : 18,
       style: { color: isActive ? "#fff" : customColor || "#000" },
-      className: isActive ? "" : "opacity-80",
+      className: isActive ? "" : "opacity-90",
     };
     switch (type) {
       case "landmark":
@@ -194,6 +290,10 @@ export default function SriLankaInteractiveMap() {
         return <Anchor {...iconProps} />;
       case "mountain":
         return <Mountain {...iconProps} />;
+      case "waves":
+        return <Waves {...iconProps} />;
+      case "gem":
+        return <Gem {...iconProps} />;
       default:
         return <MapPin {...iconProps} />;
     }
@@ -213,14 +313,13 @@ export default function SriLankaInteractiveMap() {
         className="relative w-full max-w-[1400px] h-[100vh] sm:h-[90vh] overflow-hidden sm:rounded-[4rem] border-0 sm:border shadow-2xl flex flex-col items-center justify-center transition-colors duration-1000"
       >
         {/* HEADER */}
-        <div className="absolute top-10 sm:top-12 left-8 lg:left-16 z-20 pointer-events-none">
+        <div className="absolute top-10 sm:top-12 left-8 lg:left-16 z-40 pointer-events-none">
           <AnimatePresence>
             {!active && (
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.6 }}
               >
                 <h3 className="text-[10px] font-bold tracking-[0.5em] uppercase mb-2 text-gray-400">
                   Sri Lanka Expedition
@@ -242,23 +341,29 @@ export default function SriLankaInteractiveMap() {
           </AnimatePresence>
         </div>
 
-        {/* BACKGROUND IMAGE */}
+        {/* BACKGROUND IMAGE - Next.js Image Component එක භාවිතා කර ඇත */}
         <AnimatePresence mode="wait">
           {active && (
             <motion.div
               key={active.id}
-              initial={{ opacity: 0, scale: 1.15 }}
-              animate={{ opacity: 0.35, scale: 1 }}
+              initial={{ opacity: 0, scale: 1.1 }}
+              animate={{ opacity: 0.45, scale: 1 }}
               exit={{ opacity: 0, scale: 1.1 }}
-              transition={{ duration: 1.2, ease: "easeOut" }}
-              className="absolute inset-0 z-0 overflow-hidden"
+              transition={{ duration: 0.8 }}
+              className="absolute inset-0 z-0"
             >
-              <img
+              <Image
                 src={`/${active.image}`}
                 alt={active.name}
-                className="w-full h-full object-cover grayscale brightness-75 contrast-125"
+                fill
+                priority
+                className="grayscale brightness-90 contrast-110"
+                style={{
+                  objectFit: "cover",
+                  objectPosition: active.imageFocus || "center 30%",
+                }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/40" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-black/60" />
             </motion.div>
           )}
         </AnimatePresence>
@@ -268,8 +373,8 @@ export default function SriLankaInteractiveMap() {
           style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
           animate={{
             x: active ? (isMobile ? 0 : "22%") : "0%",
-            scale: isMobile ? (active ? 0.85 : 1.6) : 1,
-            y: isMobile && active ? -80 : 0,
+            scale: isMobile ? (active ? 0.75 : 1.35) : 1,
+            y: isMobile ? (active ? -40 : 40) : 0,
           }}
           transition={SLOW_TRANSITION}
           className="relative w-full max-w-[310px] sm:max-w-[480px] lg:max-w-[650px] aspect-[4/5] z-10 flex items-center justify-center"
@@ -295,9 +400,8 @@ export default function SriLankaInteractiveMap() {
                   zIndex: hoveredId === loc.id ? 200 : 100,
                 }}
               >
-                {/* ළඟ පින් පටලැවීම වැළැක්වීමට p-2 ප්‍රමාණයේ touch target එකක් */}
                 <button
-                  className="relative p-2 outline-none bg-transparent border-none cursor-pointer touch-manipulation"
+                  className="relative p-1 outline-none bg-transparent border-none cursor-pointer touch-manipulation"
                   onMouseEnter={() => !isMobile && setHoveredId(loc.id)}
                   onClick={(e) => {
                     e.stopPropagation();
@@ -322,18 +426,13 @@ export default function SriLankaInteractiveMap() {
 
                   <motion.div
                     animate={{
-                      y: hoveredId === loc.id ? -8 : 0,
-                      scale: hoveredId === loc.id ? 1.2 : 1,
+                      y: hoveredId === loc.id ? -5 : 0,
+                      scale: hoveredId === loc.id ? 1.15 : 1,
                       backgroundColor:
                         hoveredId === loc.id ? loc.color : "#FFFFFF",
-                      opacity: active && hoveredId !== loc.id ? 0.2 : 1,
+                      opacity: active && hoveredId !== loc.id ? 0.1 : 1,
                     }}
-                    className={`relative flex items-center justify-center border transition-all 
-                      ${
-                        hoveredId === loc.id
-                          ? "w-8 h-8 sm:w-12 sm:h-12 border-2 rounded-lg sm:rounded-2xl"
-                          : "w-5 h-5 sm:w-9 sm:h-9 border rounded-md sm:rounded-xl"
-                      }`}
+                    className={`relative flex items-center justify-center border transition-all ${hoveredId === loc.id ? "w-7 h-7 sm:w-11 sm:h-11 border-2 rounded-lg" : "w-4 h-4 sm:w-8 sm:h-8 border rounded-md"}`}
                   >
                     {renderIcon(loc.iconType, hoveredId === loc.id, loc.color)}
                   </motion.div>
@@ -351,10 +450,10 @@ export default function SriLankaInteractiveMap() {
                 animate={{
                   opacity: 1,
                   x: isMobile ? 0 : -450,
-                  y: isMobile ? 220 : 0,
+                  y: isMobile ? 260 : 0,
                 }}
                 exit={{ opacity: 0, y: 20 }}
-                className="absolute z-[1000] w-[88vw] max-w-[360px] bg-white/10 backdrop-blur-3xl border border-white/20 p-5 rounded-[2rem] text-white pointer-events-auto"
+                className="absolute z-[1000] w-[85vw] max-w-[340px] bg-white/10 backdrop-blur-3xl border border-white/20 p-5 rounded-[2rem] text-white pointer-events-auto"
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="space-y-3">

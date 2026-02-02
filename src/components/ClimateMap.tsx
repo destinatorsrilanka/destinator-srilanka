@@ -69,6 +69,15 @@ const climateZones = [
   },
 ];
 
+const tourismTags = [
+  { name: "Eco Tourism", color: "#10B981" },
+  { name: "Adventure Tourism", color: "#F59E0B" },
+  { name: "Culture/Heritage", color: "#8B5CF6" },
+  { name: "Religious/Spiritual", color: "#EC4899" },
+  { name: "Leisure", color: "#3B82F6" },
+  { name: "Health & Wellness", color: "#14B8A6" },
+];
+
 export default function SriLankaClimateSection() {
   const [startPoint, setStartPoint] = useState<string>("");
   const [endPoint, setEndPoint] = useState<string>("");
@@ -93,25 +102,45 @@ export default function SriLankaClimateSection() {
 
   return (
     <section className="bg-[#050505] py-16 px-6 relative overflow-hidden flex flex-col items-center min-h-[750px] justify-center">
-      {/* --- Dynamic Background Blobs --- */}
+      {/* Background Blobs */}
       <motion.div
-        animate={{
-          x: [0, 40, 0],
-          y: [0, -30, 0],
-          scale: [1, 1.1, 1],
-        }}
+        animate={{ x: [0, 40, 0], y: [0, -30, 0], scale: [1, 1.1, 1] }}
         transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
         className="absolute top-10 left-1/4 w-[400px] h-[400px] bg-yellow-500/10 blur-[100px] rounded-full pointer-events-none z-0"
       />
       <motion.div
-        animate={{
-          x: [0, -50, 0],
-          y: [0, 40, 0],
-          scale: [1, 1.2, 1],
-        }}
+        animate={{ x: [0, -50, 0], y: [0, 40, 0], scale: [1, 1.2, 1] }}
         transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
         className="absolute bottom-10 right-1/4 w-[350px] h-[350px] bg-green-500/5 blur-[100px] rounded-full pointer-events-none z-0"
       />
+
+      {/* Infinite Tags */}
+      <div className="w-full max-w-[1400px] overflow-hidden mb-16 relative z-20 py-4">
+        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#050505] to-transparent z-30 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#050505] to-transparent z-30 pointer-events-none" />
+        <motion.div
+          animate={{ x: [0, -2000] }}
+          transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+          className="flex gap-6 whitespace-nowrap"
+        >
+          {[...tourismTags, ...tourismTags, ...tourismTags, ...tourismTags].map(
+            (tag, i) => (
+              <div
+                key={i}
+                className="flex items-center gap-3 px-6 py-2.5 rounded-2xl border border-white/5 bg-white/[0.03] backdrop-blur-sm group hover:border-yellow-500/30 hover:bg-white/[0.07] transition-all duration-500 cursor-default shadow-lg"
+              >
+                <div
+                  className="w-2 h-2 rounded-full shadow-[0_0_8px_currentcolor] animate-pulse"
+                  style={{ backgroundColor: tag.color, color: tag.color }}
+                />
+                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 group-hover:text-white transition-colors">
+                  {tag.name}
+                </span>
+              </div>
+            ),
+          )}
+        </motion.div>
+      </div>
 
       <div className="text-center mb-10 z-10">
         <div className="flex items-center justify-center gap-2 mb-1">
@@ -128,9 +157,10 @@ export default function SriLankaClimateSection() {
         </h2>
       </div>
 
-      <div className="max-w-[1300px] mx-auto w-full grid lg:grid-cols-12 gap-8 items-center relative z-20">
-        {/* LEFT: PLANNER */}
-        <div className="lg:col-span-4 flex flex-col gap-5">
+      {/* --- UPDATED GRID SYSTEM FOR CENTERING --- */}
+      <div className="max-w-[1300px] mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-20 justify-items-center">
+        {/* LEFT: PLANNER (Centered Content) */}
+        <div className="w-full max-w-[400px] flex flex-col gap-5">
           <div className="bg-white/[0.03] border border-white/10 p-6 rounded-[2.5rem] backdrop-blur-md shadow-2xl">
             <h4 className="text-white font-bold text-[10px] uppercase mb-5 flex items-center gap-2 tracking-widest">
               <Navigation size={14} className="text-yellow-500" /> Route Planner
@@ -216,15 +246,14 @@ export default function SriLankaClimateSection() {
           </div>
         </div>
 
-        {/* RIGHT: MAP */}
-        <div className="lg:col-span-8 relative flex justify-center items-center h-full">
+        {/* RIGHT: MAP (Centered Content) */}
+        <div className="w-full flex justify-center items-center">
           <div className="relative w-full max-w-[500px] aspect-square rounded-full border border-white/15 shadow-[0_0_50px_rgba(255,255,255,0.03)] flex items-center justify-center overflow-visible bg-white/[0.01]">
             <img
               src="/image/climet.png"
               alt="Sri Lanka Map"
               className="w-full h-full scale-[1.15] object-contain opacity-30 pointer-events-none z-10"
             />
-
             <svg
               viewBox="0 0 100 100"
               className="absolute inset-0 w-full h-full overflow-visible z-30 pointer-events-none"
@@ -248,7 +277,6 @@ export default function SriLankaClimateSection() {
                       animate={{ x: endZone.x, y: endZone.y }}
                       transition={{ duration: 3, ease: "easeInOut" }}
                     >
-                      {/* KM POPUP */}
                       <foreignObject
                         x="-15"
                         y="-18"
@@ -258,15 +286,13 @@ export default function SriLankaClimateSection() {
                       >
                         <div className="flex flex-col items-center">
                           <div className="bg-yellow-500 px-1.5 py-0.5 rounded-sm shadow-xl">
-                            <p className="text-black font-black text-[3.5px] whitespace-nowrap uppercase">
+                            <p className="text-black font-black text-[3.5px] uppercase">
                               {calculateDistance()} KM
                             </p>
                           </div>
                           <div className="w-0 h-0 border-l-[1.5px] border-l-transparent border-r-[1.5px] border-r-transparent border-t-[2.5px] border-t-yellow-500" />
                         </div>
                       </foreignObject>
-
-                      {/* IMPROVED CAR ICON DESIGN */}
                       <circle
                         r="3.5"
                         fill="white"
@@ -288,7 +314,6 @@ export default function SriLankaClimateSection() {
                   </g>
                 )}
               </AnimatePresence>
-
               {climateZones.map((zone) => (
                 <g key={zone.id}>
                   <circle cx={zone.x} cy={zone.y} r="1.5" fill={zone.color} />
@@ -308,6 +333,7 @@ export default function SriLankaClimateSection() {
         </div>
       </div>
 
+      {/* LEGEND */}
       <div className="flex flex-wrap justify-center gap-6 mt-12 opacity-30">
         {climateZones.map((z) => (
           <div key={z.id} className="flex items-center gap-2">

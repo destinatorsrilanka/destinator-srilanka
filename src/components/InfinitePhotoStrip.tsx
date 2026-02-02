@@ -4,21 +4,23 @@ import { motion } from "framer-motion";
 
 const visualHighlights = [
   { src: "/image/herbal.jpg", title: "Herbal massage" },
-  { src: "/image/medication.jpg", title: "Meditation programs" },
+  { src: "/image/medication.jpg", title: "ayurveda" },
   { src: "/image/abseiling.jpg", title: "Trekking hiking abseiling" },
   { src: "/image/water_sport.jpg", title: "Water sports (rafting kayaking)" },
   { src: "/image/Glamping.jpg", title: "Camping / Glamping" },
   { src: "/image/Cooking.jpg", title: "Cooking / Village experiences" },
-  { src: "/image/Sunrise.jpg", title: "Sunrise spots (pidurangala etc)" },
-  { src: "/image/Handicrafts.jpeg", title: "Handicrafts" },
-  { src: "/image/leopard.jpg", title: "Sri Lankan Leopard" },
-  { src: "/image/Secret-Beach-Mirissa.jpg", title: "Secret Shores" },
-  { src: "/image/Surfing.jpg", title: "Surfing 🏄 (hiriketiya Arugambay)" },
+  { src: "/image/Sunrice.jpg", title: "Sunrise spots" },
+  { src: "/image/Handicrafts.jpg", title: "Handicrafts" },
+  { src: "/image/leapord.jpg", title: "Sri Lankan Leopard" },
+  { src: "/image/waterfalls.jpg", title: "land og waterfalls" },
+  { src: "/image/mirissa.jpg", title: "Secret Shores" },
+  { src: "/image/Surfing1.jpg", title: "Surfing 🏄 (hiriketiya Arugambay)" },
   { src: "/image/Dolphing.jpg", title: "Dolphing and whale watching" },
+  { src: "/image/tea_states.jpg", title: "tea states" },
   { src: "/image/Snorkeling.jpg", title: "Scuba Diving . Snorkelling 🤿" },
   { src: "/image/Cinnamon.jpg", title: "Pure Cinnamon" },
-  { src: "/image/gems.webp", title: "Ceylon Sapphires" },
-  { src: "/image/slide3.PNG", title: "Forest Jewel" },
+  { src: "/image/gems.jpg", title: "Ceylon Sapphires" },
+  { src: "/image/elephants.jpg", title: "land of elephants" },
 ];
 
 const fullList = [
