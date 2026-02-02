@@ -303,7 +303,7 @@ export default function CreativeAboutUs() {
                       Specialist in
                     </p>
                     <p className="text-xs lg:text-sm text-white font-bold leading-tight">
-                      Pristine Destinations
+                      historical Central Highlands
                     </p>
                   </div>
                 </div>

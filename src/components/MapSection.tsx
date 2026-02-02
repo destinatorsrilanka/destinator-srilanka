@@ -455,7 +455,7 @@ export default function SriLankaInteractiveMap() {
     customColor?: string,
   ) => {
     const iconProps = {
-      size: isMobile ? (isActive ? 10 : 7) : 14,
+      size: isMobile ? (isActive ? 12 : 8) : 14,
       style: { color: isActive ? "#fff" : customColor || "#000" },
       className: isActive ? "" : "opacity-90",
     };
@@ -482,6 +482,9 @@ export default function SriLankaInteractiveMap() {
         animate={{ backgroundColor: active ? "#050505" : "#ffffff" }}
         style={{ height: "800px" }}
         className="relative w-full max-w-[1400px] overflow-hidden sm:rounded-[4rem] border shadow-2xl flex flex-col items-center justify-center transition-colors duration-1000"
+        onClick={() => {
+          if (isMobile) setHoveredId(null);
+        }} // Background ටැප් කළහොත් close වේ
       >
         {/* Header Section */}
         <div className="absolute top-10 sm:top-12 left-8 lg:left-16 z-40 pointer-events-none">
@@ -527,7 +530,7 @@ export default function SriLankaInteractiveMap() {
                 filter: "blur(10px) saturate(0)",
               }}
               animate={{
-                opacity: active ? 0.75 : 0.4, // Dimmer opacity when auto-sliding
+                opacity: active ? 0.75 : 0.4,
                 scale: 1,
                 filter: active
                   ? "blur(0px) saturate(1.4)"
@@ -568,11 +571,11 @@ export default function SriLankaInteractiveMap() {
           transition={SLOW_TRANSITION}
           className="relative w-full max-w-[310px] sm:max-w-[480px] lg:max-w-[650px] aspect-[4/5] z-10 flex items-center justify-center cursor-crosshair"
         >
-          <div className="relative w-full h-full pointer-events-none">
+          <div className="relative w-full h-full">
             <img
               src="/image/lk.svg"
               alt="Map"
-              className={`relative z-10 w-full h-full object-contain transition-all duration-1000 ${active ? "opacity-30 blur-[2px]" : "opacity-95"}`}
+              className={`relative z-10 w-full h-full object-contain transition-all duration-1000 pointer-events-none ${active ? "opacity-30 blur-[2px]" : "opacity-95"}`}
             />
             <svg
               viewBox="0 0 100 100"
@@ -607,7 +610,14 @@ export default function SriLankaInteractiveMap() {
                       zIndex: hoveredId === loc.id ? 100 : 30,
                     }}
                   >
-                    <div className="relative flex items-center justify-center">
+                    <button
+                      className="relative flex items-center justify-center outline-none"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setHoveredId(loc.id);
+                      }}
+                      onMouseEnter={() => !isMobile && setHoveredId(loc.id)}
+                    >
                       <AnimatePresence>
                         {(hoveredId === loc.id || !active) && (
                           <motion.div
@@ -627,7 +637,7 @@ export default function SriLankaInteractiveMap() {
                             hoveredId === loc.id ? loc.color : "#FFFFFF",
                           opacity: active && hoveredId !== loc.id ? 0.2 : 1,
                         }}
-                        className={`flex items-center justify-center border shadow-md transition-all ${hoveredId === loc.id ? "w-6 h-6 sm:w-9 sm:h-9 rounded-lg" : "w-3 h-3 sm:w-6 sm:h-6 rounded-md"}`}
+                        className={`flex items-center justify-center border shadow-md transition-all ${hoveredId === loc.id ? "w-8 h-8 sm:w-9 sm:h-9 rounded-lg" : "w-4 h-4 sm:w-6 sm:h-6 rounded-md"}`}
                       >
                         {renderIcon(
                           loc.iconType,
@@ -635,7 +645,7 @@ export default function SriLankaInteractiveMap() {
                           loc.color,
                         )}
                       </motion.div>
-                    </div>
+                    </button>
                   </div>
                 ),
             )}
