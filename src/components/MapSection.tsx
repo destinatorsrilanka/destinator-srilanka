@@ -186,7 +186,7 @@ const destinations: Destination[] = [
     tagline: "Cloud Forest",
     coords: { top: "68%", left: "52%" },
     description: "High plateau. Source of Mahaweli, Kelani, and Walawe rivers.",
-    image: "image/hortan.jpg",
+    image: "image/hortan.png",
     stats: { altitude: "2100m", period: "Natural", climate: "Cold" },
     iconType: "trees",
     color: "#065F46",

@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Montserrat, Lora, Poppins } from "next/font/google";
-import PreLoader from "@/components/PreLoader"; // PreLoader එක ඇති තැන නිවැරදිව දෙන්න
+import PreLoader from "@/components/PreLoader";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
   variable: "--font-montserrat",
   display: "swap",
+  preload: false,
 });
 
 const lora = Lora({
@@ -26,7 +28,7 @@ export const metadata: Metadata = {
   title: "Destinator",
   description: "Explore the beauty of Sri Lanka with us.",
   icons: {
-    icon: "/image/Logo2.png", // ඔබේ ලොගෝ එකේ path එක මෙතැනට දෙන්න
+    icon: "/image/logo2.png",
   },
 };
 

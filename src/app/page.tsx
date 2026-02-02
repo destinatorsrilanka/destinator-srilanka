@@ -9,6 +9,7 @@ import ClimateMap from "@/components/ClimateMap";
 import InvestInviteStrip from "@/components/InvestInviteStrip";
 import GreenCarpetWidget from "@/components/GreenCarpetWidget";
 import InquiryModal from "@/components/InquiryModal";
+import HighlightSection from "@/components/HighlightSection";
 
 export default function Home() {
   return (
@@ -22,6 +23,7 @@ export default function Home() {
       <section id="heritage">
         <MapSection />
       </section>
+      <HighlightSection />
       <section id="climate">
         <ClimateMap />
       </section>
