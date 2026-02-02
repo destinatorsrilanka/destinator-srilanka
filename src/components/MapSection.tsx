@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Image from "next/image"; // Next.js Image component එක එකතු කළා
+import Image from "next/image";
 import {
   motion,
   AnimatePresence,
@@ -40,7 +40,7 @@ interface Destination {
     | "waves"
     | "gem";
   color: string;
-  imageFocus?: string; // Custom focus point for images
+  imageFocus?: string;
 }
 
 const SLOW_TRANSITION = { type: "spring", stiffness: 40, damping: 20 } as const;
@@ -49,11 +49,11 @@ const LOGO_COLOR = "#EAB308";
 const destinations: Destination[] = [
   {
     id: "jaffna",
-    name: "JAFFNA",
+    name: "JAFFNA (FORT/CULTURE)",
     tagline: "Northern Kingdom",
     coords: { top: "17%", left: "35%" },
     description:
-      "The cultural hub of the North, famous for its historic fort, Nallur Kandaswamy temple, and unique heritage.",
+      "The cultural hub of the North, famous for its historic fort, Nallur Kandaswamy temple, and unique Tamil heritage.",
     image: "image/jaffna.jpg",
     stats: { altitude: "5m", period: "Ancient Era", climate: "Dry/Hot" },
     iconType: "landmark",
@@ -62,7 +62,7 @@ const destinations: Destination[] = [
   },
   {
     id: "trincomalee",
-    name: "TRINCOMALEE",
+    name: "TRINCOMALEE (SOBER ISLAND)",
     tagline: "The Deep Harbor",
     coords: { top: "35%", left: "58%" },
     description:
@@ -79,7 +79,7 @@ const destinations: Destination[] = [
     tagline: "First Sacred Capital",
     coords: { top: "38%", left: "40%" },
     description:
-      "The first capital of ancient Sri Lanka, home to grand stupas and the sacred Bodhi tree.",
+      "The first capital of ancient Sri Lanka, home to grand stupas like Ruwanwelisaya and the sacred Bodhi tree.",
     image: "image/anuradhapura.jpg",
     stats: { altitude: "81m", period: "4th Century BC", climate: "Dry" },
     iconType: "landmark",
@@ -92,7 +92,7 @@ const destinations: Destination[] = [
     tagline: "Medieval Capital",
     coords: { top: "47%", left: "58%" },
     description:
-      "The second capital, showcasing grand ruins and the spectacular Gal Vihara rock statues.",
+      "The second capital, showcasing grand ruins and the spectacular Gal Vihara rock statues of the medieval era.",
     image: "image/polonnarruva.jpg",
     stats: { altitude: "55m", period: "11th Century", climate: "Dry" },
     iconType: "landmark",
@@ -118,7 +118,7 @@ const destinations: Destination[] = [
     tagline: "Golden Cave Temple",
     coords: { top: "52%", left: "46%" },
     description:
-      "The largest cave temple complex in Sri Lanka with 157 statues and extensive murals.",
+      "The largest cave temple complex in Sri Lanka with 157 statues and extensive ancient murals.",
     image: "image/dambulla.jpg",
     stats: { altitude: "340m", period: "1st Century BC", climate: "Hot" },
     iconType: "landmark",
@@ -127,7 +127,7 @@ const destinations: Destination[] = [
   },
   {
     id: "knuckles",
-    name: "KNUCKLES RANGE",
+    name: "KNUCKLES MOUNTAIN RANGE",
     tagline: "Mountain Mist",
     coords: { top: "63%", left: "53%" },
     description:
@@ -144,7 +144,7 @@ const destinations: Destination[] = [
     tagline: "Sacred Hill Capital",
     coords: { top: "60%", left: "48%" },
     description:
-      "The last royal stronghold and home to the Temple of the Sacred Tooth Relic.",
+      "The last royal stronghold and home to the Temple of the Sacred Tooth Relic (Dalada Maligawa).",
     image: "image/kandy.jpg",
     stats: { altitude: "500m", period: "15th Century", climate: "Cool" },
     iconType: "landmark",
@@ -153,7 +153,7 @@ const destinations: Destination[] = [
   },
   {
     id: "horton",
-    name: "HORTON PLAINS",
+    name: "HORTON PLAINS CLOUD FOREST",
     tagline: "Cloud Forest",
     coords: { top: "68%", left: "52%" },
     description:
@@ -166,11 +166,11 @@ const destinations: Destination[] = [
   },
   {
     id: "peak-wilderness",
-    name: "ADAM'S PEAK",
+    name: "PEAK WILDERNESS SANCTUARY",
     tagline: "Wilderness Sanctuary",
     coords: { top: "68%", left: "47%" },
     description:
-      "A rugged sanctuary surrounding the sacred Sri Pada mountain, home to diverse wildlife.",
+      "A rugged sanctuary surrounding the sacred Sri Pada mountain, home to diverse endemic wildlife.",
     image: "image/adam.jpg",
     stats: { altitude: "2243m", period: "Ancient", climate: "Rainy" },
     iconType: "mountain",
@@ -179,11 +179,11 @@ const destinations: Destination[] = [
   },
   {
     id: "ratnapura",
-    name: "RATNAPURA",
+    name: "GEM CITY RATNAPURA",
     tagline: "Gem City",
     coords: { top: "72%", left: "43%" },
     description:
-      "The City of Gems, world-famous for its blue sapphires and traditional mining heritage.",
+      "The City of Gems, world-famous for its blue sapphires and traditional gem mining heritage.",
     image: "image/ratnapura.webp",
     stats: { altitude: "130m", period: "History", climate: "Wet" },
     iconType: "gem",
@@ -192,11 +192,11 @@ const destinations: Destination[] = [
   },
   {
     id: "sinharaja",
-    name: "SINHARAJA",
+    name: "SINHARAJAYA RAIN FOREST",
     tagline: "Rain Forest Heritage",
     coords: { top: "76%", left: "45%" },
     description:
-      "A primary tropical rainforest and UNESCO site, rich in endemic species of birds and plants.",
+      "A primary tropical rainforest and UNESCO site, rich in endemic species of birds, plants, and reptiles.",
     image: "image/sinharaja.jpg",
     stats: { altitude: "1170m", period: "Natural", climate: "Rainy" },
     iconType: "trees",
@@ -209,7 +209,7 @@ const destinations: Destination[] = [
     tagline: "Old Town & Fort",
     coords: { top: "83%", left: "39%" },
     description:
-      "A coastal fortress town showcasing a blend of colonial European and South Asian styles.",
+      "A coastal fortress town showcasing a blend of colonial European and South Asian architectural styles.",
     image: "image/galle.jpg",
     stats: { altitude: "0m", period: "16th Century", climate: "Humid" },
     iconType: "anchor",
@@ -218,7 +218,7 @@ const destinations: Destination[] = [
   },
   {
     id: "devundara",
-    name: "DEVUNDARA",
+    name: "CITY OF GODS - DEVUNDARA",
     tagline: "City of Gods",
     coords: { top: "86%", left: "45%" },
     description:
@@ -231,11 +231,11 @@ const destinations: Destination[] = [
   },
   {
     id: "ruhuna",
-    name: "RUHUNA (YALA)",
+    name: "KINGDOM OF RUHUNA",
     tagline: "Kingdom of Wild",
     coords: { top: "73%", left: "66%" },
     description:
-      "Part of the ancient Ruhuna Kingdom, now a world-renowned leopard sanctuary.",
+      "Part of the ancient Ruhuna Kingdom, now a world-renowned leopard sanctuary (Yala National Park).",
     image: "image/ruhuna.jpg",
     stats: { altitude: "30m", period: "2nd Century BC", climate: "Dry" },
     iconType: "landmark",
@@ -341,7 +341,7 @@ export default function SriLankaInteractiveMap() {
           </AnimatePresence>
         </div>
 
-        {/* BACKGROUND IMAGE - Next.js Image Component එක භාවිතා කර ඇත */}
+        {/* BACKGROUND IMAGE */}
         <AnimatePresence mode="wait">
           {active && (
             <motion.div

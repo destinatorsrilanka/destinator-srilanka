@@ -58,7 +58,7 @@ export async function POST(req: Request) {
     const userMailOptions = {
       from: process.env.EMAIL_USER,
       to: email,
-      subject: "Inquiry Received - Heritage Forest Sri Lanka",
+      subject: "Inquiry Received - Destinator",
       html: `
         <div style="font-family: sans-serif; padding: 20px; text-align: center;">
           <h1 style="color: #064e3b;">Ayubowan ${name}!</h1>
