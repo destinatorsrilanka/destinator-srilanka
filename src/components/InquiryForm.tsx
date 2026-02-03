@@ -13,22 +13,19 @@ import {
   Landmark,
   Camera,
   Check,
-} from "lucide-react"; // ඔබ පාවිච්චි කරන්නේ lucide-react නම් එය වෙනස් නොකරන්න
+} from "lucide-react";
 
 export default function InquiryForm() {
   const [status, setStatus] = useState({ type: "", message: "" });
   const [loading, setLoading] = useState(false);
 
-  // States
   const [plantInterest, setPlantInterest] = useState(false);
   const [investInterest, setInvestInterest] = useState(false);
 
-  // Date States
   const [arrivalDate, setArrivalDate] = useState("");
   const [departureDate, setDepartureDate] = useState("");
 
   useEffect(() => {
-    // URL එක පරීක්ෂා කරන function එක
     const checkUrl = () => {
       const params = new URLSearchParams(window.location.search);
       const hasPlant = params.get("plant") === "true";
@@ -37,17 +34,13 @@ export default function InquiryForm() {
       if (hasPlant) setPlantInterest(true);
       if (hasInvest) setInvestInterest(true);
 
-      // ටික් එක වැටුණා නම් URL එක පිරිසිදු කරන්න
       if (hasPlant || hasInvest) {
         const newUrl = window.location.pathname;
         window.history.replaceState({}, "", newUrl);
       }
     };
 
-    // 1. පේජ් එක ලෝඩ් වන විට පරීක්ෂා කරන්න
     checkUrl();
-
-    // 2. තත්පරයකට වරක් URL එක බලන්න (පිටත බටන් එකක් එබුවොත් අල්ලා ගැනීමට)
     const interval = setInterval(checkUrl, 1000);
     return () => clearInterval(interval);
   }, []);
@@ -59,7 +52,6 @@ export default function InquiryForm() {
 
     const formData = new FormData(e.currentTarget);
 
-    // API එකට යවන දත්ත
     const data = {
       name: formData.get("name"),
       email: formData.get("email"),
@@ -105,24 +97,28 @@ export default function InquiryForm() {
 
   const socials = [
     {
-      Icon: Facebook,
-      href: "https://www.facebook.com/share/...",
-      color: "hover:bg-blue-600",
+      imgSrc: "/image/fb.webp",
+      href: "https://www.facebook.com/share/17dR9DX9c8/?mibextid=wwXIfr",
+      color: "hover:scale-110",
+      isLarge: false,
     },
     {
-      Icon: Instagram,
-      href: "https://www.instagram.com/...",
-      color: "hover:bg-pink-600",
+      imgSrc: "/image/intergram.webp",
+      href: "https://www.instagram.com/destinatorlk?igsh=aGxwbzNpaHF3NmNo&utm_source=qr",
+      color: "hover:scale-110",
+      isLarge: false,
     },
     {
-      Icon: Music2,
-      href: "https://www.tiktok.com/...",
-      color: "hover:bg-black",
+      imgSrc: "/image/tiktok.png",
+      href: "https://www.tiktok.com/@destinator.lk?_r=1&_d=e24e5bdfi66221&sec_uid=MS4wLjABAAAAo9HUtOwWSVfoVyLRj5S81Y6BLz8JCUKou37P27o0QsuU7oq2RBDAUHNXUPqlMEpt&share_author_id=7104740320396018693&sharer_language=en&source=h5_m&u_code=e24e5mj67a47gl&item_author_type=1&utm_source=copy&tt_from=copy&enable_checksum=1&utm_medium=ios&share_link_id=EA2DD9F4-683C-40ED-976D-0D24E3020AFE&user_id=7104740320396018693&sec_user_id=MS4wLjABAAAAo9HUtOwWSVfoVyLRj5S81Y6BLz8JCUKou37P27o0QsuU7oq2RBDAUHNXUPqlMEpt&social_share_type=4&ug_btm=b8727,b0&utm_campaign=client_share&share_app_id=1233",
+      color: "hover:scale-110",
+      isLarge: false,
     },
     {
-      Icon: MessageCircle,
-      href: "https://wa.me/...",
-      color: "hover:bg-green-600",
+      imgSrc: "/image/whatsapp.png",
+      href: "https://wa.me/message/L7DQU2A2QGEMJ1",
+      color: "hover:scale-110",
+      isLarge: true, // වට්සැප් එක විශාලව පෙන්වීමට
     },
   ];
 
@@ -193,14 +189,21 @@ export default function InquiryForm() {
                 </div>
               </div>
 
+              {/* Social Media Images */}
               <div className="flex gap-4">
                 {socials.map((social, i) => (
                   <a
                     key={i}
                     href={social.href}
-                    className={`w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 transition-all ${social.color} hover:text-white`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center overflow-hidden transition-all ${social.color}`}
                   >
-                    <social.Icon size={18} />
+                    <img
+                      src={social.imgSrc}
+                      alt="social icon"
+                      className={`w-full h-full object-contain ${social.isLarge ? "scale-125" : "p-[4px]"}`}
+                    />
                   </a>
                 ))}
               </div>
