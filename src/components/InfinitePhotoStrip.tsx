@@ -2,98 +2,120 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-const visualHighlights = [
-  { src: "/image/herbal.jpg", title: "Herbal massage" },
-  { src: "/image/medication.jpg", title: "ayurveda" },
-  { src: "/image/abseiling.jpg", title: "Trekking hiking abseiling" },
-  { src: "/image/water_sport.jpg", title: "Water sports (rafting kayaking)" },
-  { src: "/image/Glamping.jpg", title: "Camping / Glamping" },
-  { src: "/image/Cooking.jpg", title: "Cooking / Village experiences" },
-  { src: "/image/Sunrice.jpg", title: "Sunrise spots" },
-  { src: "/image/Handicrafts.jpg", title: "Handicrafts" },
-  { src: "/image/leapord.jpg", title: "Sri Lankan Leopard" },
-  { src: "/image/waterfalls.jpg", title: "land og waterfalls" },
-  { src: "/image/mirissa.jpg", title: "Secret Shores" },
-  { src: "/image/Surfing1.jpg", title: "Surfing 🏄 (hiriketiya Arugambay)" },
-  { src: "/image/Dolphing.jpg", title: "Dolphing and whale watching" },
-  { src: "/image/tea_states.jpg", title: "tea states" },
-  { src: "/image/Snorkeling.jpg", title: "Scuba Diving . Snorkelling 🤿" },
-  { src: "/image/Cinnamon.jpg", title: "Pure Cinnamon" },
-  { src: "/image/gems.jpg", title: "Ceylon Sapphires" },
-  { src: "/image/elephants.jpg", title: "land of elephants" },
+const travelKeys = [
+  { src: "/image/herbal.jpg" },
+  { src: "/image/abseiling.jpg" },
+  { src: "/image/water_sport.jpg" },
+  { src: "/image/Glamping.jpg" },
+  { src: "/image/Cooking.jpg" },
+  { src: "/image/mirissa.jpg" },
+  { src: "/image/Surfing1.jpg" },
+  { src: "/image/Dolphing.jpg" },
+  { src: "/image/Snorkeling.jpg" },
 ];
 
-const fullList = [
-  ...visualHighlights,
-  ...visualHighlights,
-  ...visualHighlights,
+const greatCivilization = [
+  { src: "/image/medication.jpg" },
+  { src: "/image/Sunrice.jpg" },
+  { src: "/image/Handicrafts.jpg" },
+  { src: "/image/leapord.jpg" },
+  { src: "/image/waterfalls.jpg" },
+  { src: "/image/tea_states.jpg" },
+  { src: "/image/Cinnamon.jpg" },
+  { src: "/image/gems.jpg" },
+  { src: "/image/elephants.jpg" },
 ];
 
-export default function CompactPhotoStrip() {
+export default function DualPhotoStrips() {
   return (
-    <section className="py-10 bg-[#080808] overflow-hidden">
-      {/* Header */}
-      <div className="max-w-[1400px] mx-auto px-6 mb-8 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <span className="w-10 h-[1.5px] bg-yellow-500 shadow-[0_0_8px_#eab308]"></span>
-          <h2 className="text-white text-xs md:text-sm font-black uppercase tracking-[0.4em]">
-            Visual Highlights
-          </h2>
+    <section className="py-12 bg-[#050505] overflow-hidden flex flex-col gap-12">
+      {/* STRIP 1: TRAVEL KEYS (Right to Left) */}
+      <div className="relative">
+        <div className="max-w-[1400px] mx-auto px-6 mb-5">
+          <div className="flex flex-col border-l-4 border-yellow-500 pl-4 py-1">
+            <h2 className="text-yellow-500 text-xl md:text-2xl font-black uppercase tracking-[0.25em] drop-shadow-[0_0_10px_rgba(234,179,8,0.5)] leading-none">
+              Travel Keys
+            </h2>
+            <div className="flex items-center gap-2 mt-1.5">
+              <span className="h-[1px] w-4 bg-white/30"></span>
+              <p className="text-white text-[9px] md:text-[11px] uppercase tracking-[0.4em] font-black opacity-90">
+                You Decide <span className="text-yellow-500">—</span> We Arrange
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="relative group">
+          <div className="absolute inset-y-0 left-0 w-24 md:w-40 bg-gradient-to-r from-[#050505] via-[#050505]/80 to-transparent z-10 pointer-events-none" />
+          <div className="absolute inset-y-0 right-0 w-24 md:w-40 bg-gradient-to-l from-[#050505] via-[#050505]/80 to-transparent z-10 pointer-events-none" />
+
+          <motion.div
+            className="flex"
+            animate={{ x: ["0%", "-50%"] }}
+            transition={{ duration: 40, ease: "linear", repeat: Infinity }}
+            style={{ width: "max-content" }}
+          >
+            {[...travelKeys, ...travelKeys].map((item, index) => (
+              <div
+                key={index}
+                className="h-[110px] md:h-[140px] shrink-0 overflow-hidden"
+              >
+                <img
+                  src={item.src}
+                  alt="Travel"
+                  className="h-full w-auto object-cover transition-transform duration-700 hover:scale-110"
+                />
+              </div>
+            ))}
+          </motion.div>
         </div>
       </div>
 
-      {/* The Strip Container */}
+      {/* STRIP 2: GREAT CIVILIZATION (Left to Right) */}
       <div className="relative">
-        {/* Side Fades */}
-        <div className="absolute inset-y-0 left-0 w-20 md:w-40 bg-gradient-to-r from-[#080808] via-[#080808]/80 to-transparent z-10 pointer-events-none" />
-        <div className="absolute inset-y-0 right-0 w-20 md:w-40 bg-gradient-to-l from-[#080808] via-[#080808]/80 to-transparent z-10 pointer-events-none" />
-
-        <motion.div
-          className="flex gap-5 py-4"
-          animate={{ x: ["0%", "-33.33%"] }}
-          transition={{ duration: 45, ease: "linear", repeat: Infinity }}
-          style={{ width: "max-content" }}
-        >
-          {fullList.map((item, index) => (
-            <div
-              key={index}
-              className="relative shrink-0 h-[180px] md:h-[260px] rounded-[1.5rem] overflow-hidden border border-white/10 bg-[#111]"
-            >
-              {/* Image */}
-              <img
-                src={item.src}
-                alt={item.title}
-                className="h-full w-auto object-contain transition-transform duration-1000 group-hover:scale-110"
-              />
-
-              {/* Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
-
-              {/* Updated Tag Design */}
-              <div className="absolute bottom-4 left-3 right-3 flex justify-start">
-                <div className="flex items-start gap-2.5 bg-black/40 backdrop-blur-xl border border-white/20 px-3 py-2 rounded-xl shadow-2xl max-w-full">
-                  {/* Glowing Dot - දැන් අකුරු සමඟ පෙළ ගැසීමට items-start සහ mt-1.5 භාවිතා කර ඇත */}
-                  <div className="relative flex h-2 w-2 shrink-0 mt-1.5">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-yellow-500 shadow-[0_0_10px_#eab308]"></span>
-                  </div>
-
-                  {/* Text Container */}
-                  <span className="text-white text-[10px] md:text-[11px] font-bold uppercase tracking-[0.1em] leading-tight overflow-hidden text-ellipsis">
-                    {item.title}
-                  </span>
-                </div>
-              </div>
-
-              {/* Bottom Accent */}
-              <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-yellow-500/40 via-transparent to-transparent" />
+        <div className="max-w-[1400px] mx-auto px-6 mb-5 text-right flex justify-end">
+          <div className="flex flex-col border-r-4 border-white pr-4 py-1 items-end">
+            <h2 className="text-white text-xl md:text-2xl font-black uppercase tracking-[0.25em] drop-shadow-[0_0_10px_rgba(255,255,255,0.3)] leading-none">
+              Great Civilization
+            </h2>
+            <div className="flex items-center gap-2 mt-1.5 justify-end">
+              <p className="text-yellow-500 text-[10px] md:text-[12px] uppercase tracking-[0.5em] font-black">
+                MAHAWANSHA
+              </p>
+              <span className="h-[1px] w-4 bg-yellow-500/50"></span>
             </div>
-          ))}
-        </motion.div>
+          </div>
+        </div>
+
+        <div className="relative">
+          <div className="absolute inset-y-0 left-0 w-24 md:w-40 bg-gradient-to-r from-[#050505] via-[#050505]/80 to-transparent z-10 pointer-events-none" />
+          <div className="absolute inset-y-0 right-0 w-24 md:w-40 bg-gradient-to-l from-[#050505] via-[#050505]/80 to-transparent z-10 pointer-events-none" />
+
+          <motion.div
+            className="flex"
+            animate={{ x: ["-50%", "0%"] }}
+            transition={{ duration: 45, ease: "linear", repeat: Infinity }}
+            style={{ width: "max-content" }}
+          >
+            {[...greatCivilization, ...greatCivilization].map((item, index) => (
+              <div
+                key={index}
+                className="h-[110px] md:h-[140px] shrink-0 overflow-hidden"
+              >
+                <img
+                  src={item.src}
+                  alt="History"
+                  className="h-full w-auto object-cover transition-transform duration-700 hover:scale-110"
+                />
+              </div>
+            ))}
+          </motion.div>
+        </div>
       </div>
 
-      <div className="mt-10 opacity-30">
-        <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-yellow-500 to-transparent shadow-[0_0_15px_rgba(234,179,8,0.5)]" />
+      {/* Bottom Accent */}
+      <div className="max-w-[1100px] mx-auto w-full px-6 opacity-20 mt-4">
+        <div className="h-[1px] bg-gradient-to-r from-transparent via-yellow-500 to-transparent" />
       </div>
     </section>
   );

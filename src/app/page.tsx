@@ -10,6 +10,7 @@ import InvestInviteStrip from "@/components/InvestInviteStrip";
 import GreenCarpetWidget from "@/components/GreenCarpetWidget";
 import InquiryModal from "@/components/InquiryModal";
 import HighlightSection from "@/components/HighlightSection";
+import ProtectedAreas from "@/components/ProtectedAreas";
 
 export default function Home() {
   return (
@@ -29,6 +30,8 @@ export default function Home() {
       </section>
 
       <GreenCarpetWidget />
+
+      <ProtectedAreas />
 
       <section id="about">
         <Aboutus />

@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import {
@@ -118,6 +119,7 @@ interface Destination {
   textDy?: string;
 }
 
+// "devinuvara" අයිතමය ඉවත් කර ඇත
 const destinations: Destination[] = [
   {
     id: "jaffna",
@@ -290,18 +292,6 @@ const destinations: Destination[] = [
     color: "#4338CA",
   },
   {
-    id: "devinuvara",
-    name: "DEVINUVARA",
-    tagline: "City of the God Upulvan",
-    coords: { top: "85%", left: "48%" },
-    description:
-      "Home to the historic Upulvan Devalaya and the iconic lighthouse.",
-    image: "image/devinuvara.jpg",
-    stats: { altitude: "2m", period: "Dambadeniya Era", climate: "Coastal" },
-    iconType: "landmark",
-    color: "#6366F1",
-  },
-  {
     id: "ruhuna",
     name: "KINGDOM OF RUHUNA",
     tagline: "Kingdom of Wild",
@@ -390,20 +380,18 @@ const LOGO_COLOR = "#EAB308";
 export default function SriLankaInteractiveMap() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState<boolean>(false);
-  const [currentBgIndex, setCurrentBgIndex] = useState(0); // Auto-slide index
+  const [currentBgIndex, setCurrentBgIndex] = useState(0);
   const active = destinations.find((d) => d.id === hoveredId);
 
-  // Filter only locations with images for the auto-slider
   const slideableDestinations = destinations.filter(
     (d) => d.iconType !== "river",
   );
 
-  // --- AUTO SLIDER LOGIC ---
   useEffect(() => {
-    if (active) return; // Stop sliding when user hovers
+    if (active) return;
     const timer = setInterval(() => {
       setCurrentBgIndex((prev) => (prev + 1) % slideableDestinations.length);
-    }, 4000); // Slide every 4 seconds
+    }, 4000);
     return () => clearInterval(timer);
   }, [active, slideableDestinations.length]);
 
@@ -484,9 +472,8 @@ export default function SriLankaInteractiveMap() {
         className="relative w-full max-w-[1400px] overflow-hidden sm:rounded-[4rem] border shadow-2xl flex flex-col items-center justify-center transition-colors duration-1000"
         onClick={() => {
           if (isMobile) setHoveredId(null);
-        }} // Background ටැප් කළහොත් close වේ
+        }}
       >
-        {/* Header Section */}
         <div className="absolute top-10 sm:top-12 left-8 lg:left-16 z-40 pointer-events-none">
           <AnimatePresence>
             {!active && (
@@ -519,7 +506,6 @@ export default function SriLankaInteractiveMap() {
           </AnimatePresence>
         </div>
 
-        {/* --- DYNAMIC SLIDER BACKGROUND --- */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           <AnimatePresence mode="popLayout">
             <motion.div
@@ -557,7 +543,6 @@ export default function SriLankaInteractiveMap() {
           </AnimatePresence>
         </div>
 
-        {/* Map Area */}
         <motion.div
           ref={mapRef}
           onMouseMove={handleMouseMove}
@@ -707,7 +692,6 @@ export default function SriLankaInteractiveMap() {
           </AnimatePresence>
         </motion.div>
 
-        {/* Navigation List */}
         {!isMobile && (
           <div
             className="absolute right-12 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-1 text-right pointer-events-auto max-h-[650px] overflow-y-auto pr-6"
@@ -723,55 +707,56 @@ export default function SriLankaInteractiveMap() {
             >
               Directory
             </p>
-            {destinations.map((loc) => (
-              <motion.button
-                key={`nav-${loc.id}`}
-                onMouseEnter={() => setHoveredId(loc.id)}
-                onMouseLeave={() => setHoveredId(null)}
-                animate={{
-                  x: hoveredId === loc.id ? -8 : 0,
-                  color:
-                    hoveredId === loc.id
-                      ? active
-                        ? "#fff"
-                        : loc.color
-                      : active
-                        ? "rgba(255,255,255,0.4)"
-                        : "rgba(0,0,0,0.5)",
-                  scale: hoveredId === loc.id ? 1.05 : 1,
-                }}
-                className="group relative text-[10px] font-bold tracking-wider uppercase flex items-center justify-end py-1.5 transition-all outline-none"
-              >
-                <span className="mr-3 overflow-hidden">
-                  {hoveredId === loc.id && (
-                    <motion.span
-                      initial={{ x: 20 }}
-                      animate={{ x: 0 }}
-                      className="inline-block mr-2 opacity-50"
-                    >
-                      —
-                    </motion.span>
-                  )}
-                  {loc.name}
-                </span>
-                <motion.div
+            {destinations
+              .filter((loc) => loc.iconType !== "river")
+              .map((loc) => (
+                <motion.button
+                  key={`nav-${loc.id}`}
+                  onMouseEnter={() => setHoveredId(loc.id)}
+                  onMouseLeave={() => setHoveredId(null)}
                   animate={{
-                    scale: hoveredId === loc.id ? 1.5 : 1,
-                    backgroundColor:
+                    x: hoveredId === loc.id ? -8 : 0,
+                    color:
                       hoveredId === loc.id
-                        ? loc.color
+                        ? active
+                          ? "#fff"
+                          : loc.color
                         : active
-                          ? "rgba(255,255,255,0.2)"
-                          : "rgba(0,0,0,0.1)",
+                          ? "rgba(255,255,255,0.4)"
+                          : "rgba(0,0,0,0.5)",
+                    scale: hoveredId === loc.id ? 1.05 : 1,
                   }}
-                  className="w-1.5 h-1.5 rounded-full transition-colors"
-                />
-              </motion.button>
-            ))}
+                  className="group relative text-[10px] font-bold tracking-wider uppercase flex items-center justify-end py-1.5 transition-all outline-none"
+                >
+                  <span className="mr-3 overflow-hidden">
+                    {hoveredId === loc.id && (
+                      <motion.span
+                        initial={{ x: 20 }}
+                        animate={{ x: 0 }}
+                        className="inline-block mr-2 opacity-50"
+                      >
+                        —
+                      </motion.span>
+                    )}
+                    {loc.name}
+                  </span>
+                  <motion.div
+                    animate={{
+                      scale: hoveredId === loc.id ? 1.5 : 1,
+                      backgroundColor:
+                        hoveredId === loc.id
+                          ? loc.color
+                          : active
+                            ? "rgba(255,255,255,0.2)"
+                            : "rgba(0,0,0,0.1)",
+                    }}
+                    className="w-1.5 h-1.5 rounded-full transition-colors"
+                  />
+                </motion.button>
+              ))}
           </div>
         )}
 
-        {/* Footer */}
         <div className="absolute bottom-6 left-8 z-[100] flex items-center gap-3">
           <div
             className={`w-7 h-7 rounded-lg flex items-center justify-center font-black text-[10px] transition-colors duration-500 ${active ? "text-black" : "bg-black text-white"}`}

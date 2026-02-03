@@ -70,15 +70,26 @@ const climateZones = [
 ];
 
 const tourismTags = [
-  { name: "Eco Tourism", color: "#10B981" },
-  { name: "Adventure Tourism", color: "#F59E0B" },
-  { name: "Culture/Heritage", color: "#8B5CF6" },
-  { name: "Religious/Spiritual", color: "#EC4899" },
-  { name: "Leisure", color: "#3B82F6" },
-  { name: "Health & Wellness", color: "#14B8A6" },
+  { name: "Eco Tourism", color: "#10B981", bg: "rgba(16, 185, 129, 0.1)" },
+  {
+    name: "Adventure Tourism",
+    color: "#F59E0B",
+    bg: "rgba(245, 158, 11, 0.1)",
+  },
+  { name: "Culture/Heritage", color: "#8B5CF6", bg: "rgba(139, 92, 246, 0.1)" },
+  {
+    name: "Religious/Spiritual",
+    color: "#EC4899",
+    bg: "rgba(236, 72, 153, 0.1)",
+  },
+  { name: "Leisure", color: "#3B82F6", bg: "rgba(59, 130, 246, 0.1)" },
+  {
+    name: "Health & Wellness",
+    color: "#14B8A6",
+    bg: "rgba(20, 184, 166, 0.1)",
+  },
 ];
 
-// Reusable Separator Component for better visibility
 const YellowSeparator = ({ className = "" }: { className?: string }) => (
   <div
     className={`w-full max-w-[1200px] relative flex flex-col items-center justify-center ${className}`}
@@ -122,14 +133,12 @@ export default function SriLankaClimateSection() {
 
   return (
     <section className="bg-[#050505] py-16 px-6 relative overflow-hidden flex flex-col items-center min-h-[750px] justify-center">
-      {/* Background Blobs */}
       <motion.div
         animate={{ x: [0, 40, 0], y: [0, -30, 0], scale: [1, 1.1, 1] }}
         transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
         className="absolute top-10 left-1/4 w-[400px] h-[400px] bg-yellow-500/10 blur-[100px] rounded-full pointer-events-none z-0"
       />
 
-      {/* Infinite Tags */}
       <div className="w-full max-w-[1400px] overflow-hidden mb-8 relative z-20 py-4">
         <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#050505] to-transparent z-30 pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#050505] to-transparent z-30 pointer-events-none" />
@@ -142,13 +151,14 @@ export default function SriLankaClimateSection() {
             (tag, i) => (
               <div
                 key={i}
-                className="flex items-center gap-3 px-6 py-2.5 rounded-2xl border border-white/5 bg-white/[0.03] backdrop-blur-sm group hover:border-yellow-500/30 hover:bg-white/[0.07] transition-all duration-500 cursor-default shadow-lg"
+                className="flex items-center gap-3 px-6 py-2.5 rounded-2xl border border-white/5 backdrop-blur-sm group hover:border-yellow-500/30 transition-all duration-500 cursor-default shadow-lg"
+                style={{ backgroundColor: tag.bg }}
               >
                 <div
-                  className="w-2 h-2 rounded-full shadow-[0_0_8px_currentcolor] animate-pulse"
+                  className="w-2 h-2 rounded-full shadow-[0_0_8px_currentcolor]"
                   style={{ backgroundColor: tag.color, color: tag.color }}
                 />
-                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 group-hover:text-white transition-colors">
+                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/80 group-hover:text-white transition-colors">
                   {tag.name}
                 </span>
               </div>
@@ -157,12 +167,11 @@ export default function SriLankaClimateSection() {
         </motion.div>
       </div>
 
-      {/* SEPARATOR 1: Below Tourism Tags */}
       <YellowSeparator className="mb-16" />
 
       <div className="text-center mb-10 z-10">
         <div className="flex items-center justify-center gap-2 mb-1">
-          <span className="w-1.5 h-1.5 rounded-full bg-yellow-500 animate-pulse" />
+          <span className="w-1.5 h-1.5 rounded-full bg-yellow-500" />
           <span className="text-yellow-500 font-bold uppercase tracking-[0.3em] text-[10px]">
             Climate Intelligence
           </span>
@@ -176,7 +185,6 @@ export default function SriLankaClimateSection() {
       </div>
 
       <div className="max-w-[1300px] mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-20 justify-items-center">
-        {/* LEFT: PLANNER */}
         <div className="w-full max-w-[400px] flex flex-col gap-5">
           <div className="bg-white/[0.03] border border-white/10 p-6 rounded-[2.5rem] backdrop-blur-md shadow-2xl">
             <h4 className="text-white font-bold text-[10px] uppercase mb-5 flex items-center gap-2 tracking-widest">
@@ -310,14 +318,15 @@ export default function SriLankaClimateSection() {
                           <div className="w-0 h-0 border-l-[1.5px] border-l-transparent border-r-[1.5px] border-r-transparent border-t-[2.5px] border-t-yellow-500" />
                         </div>
                       </foreignObject>
-                      <circle
-                        r="3.5"
-                        fill="white"
-                        style={{
-                          filter:
-                            "drop-shadow(0px 0px 2px rgba(255,255,255,0.8))",
-                        }}
-                      />
+
+                      {/* Car Icon inside a white circle with black icon color */}
+                      <foreignObject x="-4" y="-4" width="8" height="8">
+                        <div className="w-full h-full flex items-center justify-center bg-white rounded-full shadow-lg border-[0.3px] border-black/10">
+                          <div className="text-black">
+                            <Car size={5} strokeWidth={3} />
+                          </div>
+                        </div>
+                      </foreignObject>
                     </motion.g>
                   </g>
                 )}
@@ -332,7 +341,6 @@ export default function SriLankaClimateSection() {
         </div>
       </div>
 
-      {/* LEGEND */}
       <div className="flex flex-wrap justify-center gap-6 mt-12 mb-10 opacity-30">
         {climateZones.map((z) => (
           <div key={z.id} className="flex items-center gap-2">
@@ -347,7 +355,6 @@ export default function SriLankaClimateSection() {
         ))}
       </div>
 
-      {/* SEPARATOR 2: At the Bottom of the Section */}
       <YellowSeparator className="mt-10" />
     </section>
   );
