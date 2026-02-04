@@ -6,7 +6,6 @@ import Image from "next/image";
 
 export default function HighlandWaterLine() {
   const [showPhotos, setShowPhotos] = useState(false);
-  // TypeScript සඳහා HTMLVideoElement වර්ගය සඳහන් කරන ලදී
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const images = [
@@ -48,7 +47,8 @@ export default function HighlandWaterLine() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="relative w-full h-48 md:h-64 mb-10 overflow-hidden group rounded-sm border border-white/5">
+        {/* මෙහි උස h-64 (mobile) සහ md:h-96 (desktop) ලෙස වැඩි කරන ලදී */}
+        <div className="relative w-full h-64 md:h-96 mb-10 overflow-hidden group rounded-sm border border-white/5">
           <AnimatePresence mode="wait">
             {!showPhotos ? (
               <motion.div
@@ -56,10 +56,14 @@ export default function HighlandWaterLine() {
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: false, amount: 0.5 }}
-                onViewportEnter={() => {
+                onViewportEnter={async () => {
                   if (videoRef.current) {
-                    videoRef.current.currentTime = 0;
-                    videoRef.current.play();
+                    try {
+                      videoRef.current.currentTime = 0;
+                      await videoRef.current.play();
+                    } catch (err) {
+                      console.warn("Video play interrupted safely:", err);
+                    }
                   }
                 }}
                 exit={{ x: -100, opacity: 0 }}
