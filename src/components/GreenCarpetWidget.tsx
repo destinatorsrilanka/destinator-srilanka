@@ -1,261 +1,258 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState } from "react";
+import { motion, AnimatePresence, Transition } from "framer-motion"; // Transition එකතු කළා
 import {
   Sprout,
   ShieldCheck,
   ChevronRight,
   ExternalLink,
-  CheckCircle2,
-  X,
   MessageCircle,
   ArrowRight,
   TrendingUp,
+  CheckCircle2,
 } from "lucide-react";
 
 export default function GreenRibbonPremiumStrip() {
   const [isHovered, setIsHovered] = useState(false);
-  const [isWide, setIsWide] = useState(false);
-  const [showToast, setShowToast] = useState({ show: false, message: "" });
-
   const [isInvestHovered, setIsInvestHovered] = useState(false);
-  const [isInvestWide, setIsInvestWide] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
 
   const trees = [
-    {
-      name: "Kumbuk",
-      scientific: "Terminalia arjuna",
-      img: "/image/kubuk.webp",
-    },
-    { name: "Mee", scientific: "Madhuca longifolia", img: "/image/mee.jpg" },
+    { name: "Kumbuk", img: "/image/kubuk.webp" },
+    { name: "Mee", img: "/image/mee.jpg" },
   ];
 
-  useEffect(() => {
-    if (showToast.show) {
-      const timer = setTimeout(
-        () => setShowToast({ show: false, message: "" }),
-        3000,
-      );
-      return () => clearTimeout(timer);
-    }
-  }, [showToast]);
-
-  useEffect(() => {
-    if (!isHovered) setIsWide(false);
-  }, [isHovered]);
-  useEffect(() => {
-    if (!isInvestHovered) setIsInvestWide(false);
-  }, [isInvestHovered]);
-
-  const handleAction = (param: string, message: string) => {
+  const handleAction = (type: "Planting" | "Investment") => {
     const url = new URL(window.location.href);
-    const currentValue = url.searchParams.get(param) === "true";
-    url.searchParams.set(param, (!currentValue).toString());
-    window.history.pushState({}, "", url);
-    window.dispatchEvent(new Event("urlchange"));
-    setShowToast({ show: true, message });
+    if (type === "Planting") {
+      url.searchParams.set("plant", "true");
+    } else {
+      url.searchParams.set("invest", "true");
+    }
+    window.history.replaceState({}, "", url.toString());
+
+    const inquirySection = document.getElementById("contact");
+    if (inquirySection) {
+      inquirySection.scrollIntoView({ behavior: "smooth" });
+    }
+
+    setShowAlert(true);
+    setTimeout(() => setShowAlert(false), 3000);
+  };
+
+  // මෙතන Type එක සඳහන් කිරීමෙන් Build error එක නැති වෙනවා
+  const smoothTransition: Transition = {
+    type: "spring",
+    stiffness: 200,
+    damping: 25,
+    mass: 0.5,
   };
 
   return (
-    <div className="relative w-full py-10 flex flex-col lg:flex-row justify-center items-center gap-6 bg-transparent px-4 overflow-visible font-sans max-w-full">
-      {/* --- Toast Notification --- */}
-      <div className="fixed top-24 right-4 z-[100] pointer-events-none">
-        <AnimatePresence>
-          {showToast.show && (
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              className="pointer-events-auto flex items-center gap-3 bg-[#064e3b] border border-green-400/50 p-4 rounded-2xl shadow-2xl"
-            >
-              <CheckCircle2 className="text-green-400 w-5 h-5" />
-              <div className="flex-1">
-                <p className="text-white text-[10px] font-black uppercase tracking-widest">
-                  Recorded!
-                </p>
-                <p className="text-green-200/60 text-[9px]">
-                  {showToast.message}
-                </p>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
+    <div className="relative w-full py-12 flex flex-col lg:flex-row justify-center items-center gap-8 bg-transparent px-4 font-sans box-border">
+      {/* Success Alert */}
+      <AnimatePresence>
+        {showAlert && (
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 50 }}
+            className="fixed top-5 right-5 z-[999] flex items-center gap-3 bg-[#064e3b] text-white px-6 py-4 rounded-2xl shadow-2xl border border-green-400/30"
+          >
+            <CheckCircle2 className="text-green-400 w-6 h-6" />
+            <div className="flex flex-col">
+              <span className="font-bold text-sm">Selection Saved!</span>
+              <span className="text-[11px] text-green-200">
+                Inquiry options updated below.
+              </span>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-      {/* --- 1. GREEN CARPET --- */}
+      {/* 1. GREEN CARPET */}
       <motion.div
+        layout
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        animate={{
-          width: isHovered
-            ? typeof window !== "undefined" && window.innerWidth > 1024
-              ? "95%"
-              : "100%"
-            : "300px",
-          height: isHovered && isWide ? "auto" : "85px",
+        transition={smoothTransition}
+        className="relative flex flex-col bg-[#064e3b] rounded-[2.5rem] lg:rounded-[6rem] shadow-2xl border border-green-400/20 cursor-pointer overflow-hidden"
+        style={{
+          width: isHovered ? "100%" : "320px",
+          maxWidth: isHovered ? "1100px" : "320px",
         }}
-        onAnimationComplete={() => {
-          if (isHovered) setIsWide(true);
-        }}
-        className="relative z-50 flex flex-col lg:flex-row items-center bg-gradient-to-br from-[#064e3b] via-[#065f46] to-[#022c22] rounded-[2.5rem] lg:rounded-[5rem] shadow-2xl border border-green-400/25 cursor-pointer overflow-hidden min-w-fit max-w-[1200px]"
       >
         <AnimatePresence>
           {isHovered && (
             <motion.div
               initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="absolute inset-0 -z-10"
+              animate={{ opacity: 0.4 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 z-0"
             >
               <div
                 style={{
                   backgroundImage: "url('/image/Like_plant.jpeg')",
                   backgroundSize: "cover",
-                  backgroundPosition: "50% 35%",
+                  backgroundPosition: "center",
                 }}
-                className="absolute inset-0 w-full h-full opacity-40"
+                className="absolute inset-0 w-full h-full"
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#064e3b]/90 via-[#064e3b]/40 to-[#022c22]/95" />
+              <div className="absolute inset-0 bg-gradient-to-b from-[#064e3b]/80 via-transparent to-[#064e3b]/90" />
             </motion.div>
           )}
         </AnimatePresence>
-
-        <div className="flex items-center px-6 lg:px-8 py-5 gap-4 shrink-0 whitespace-nowrap">
-          <div className="p-3 bg-green-400/15 rounded-full border border-green-400/30">
-            <Sprout className="text-green-400 w-5 h-5 lg:w-6 lg:h-6" />
-          </div>
-          <div className="flex flex-col">
-            <span className="text-white font-black uppercase tracking-widest text-xs lg:text-sm leading-none">
-              Green Carpet
-            </span>
-            <span className="text-green-300/60 text-[8px] uppercase font-bold tracking-widest mt-1">
-              Heritage Forest
-            </span>
-          </div>
-          {!isHovered && <ChevronRight className="text-green-400 w-5 h-5" />}
-        </div>
-
-        <div className="flex-1 w-full overflow-hidden">
-          <AnimatePresence>
-            {isHovered && isWide && (
+        <div className="relative z-10 w-full">
+          <motion.div
+            layout="position"
+            className="flex items-center px-8 h-[85px] gap-4 shrink-0"
+          >
+            <div className="p-3 bg-green-400/20 rounded-2xl backdrop-blur-md border border-green-400/30">
+              <Sprout className="text-green-400 w-6 h-6" />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-white font-black uppercase tracking-widest text-sm leading-none">
+                Green Carpet
+              </span>
+              <span className="text-green-400/60 text-[9px] uppercase font-bold tracking-widest mt-1">
+                Heritage Forest
+              </span>
+            </div>
+            {!isHovered && (
               <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="flex flex-col lg:flex-row items-center justify-between px-6 lg:px-10 py-6 lg:py-8 gap-4 lg:gap-8 w-full"
+                layout
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="ml-auto"
               >
-                <div className="flex gap-4 lg:gap-8 shrink-0">
-                  {trees.map((tree, idx) => (
-                    <div key={idx} className="flex flex-col items-center">
-                      <div className="w-12 h-12 lg:w-16 lg:h-16 rounded-full border-2 border-green-400/40 p-1 overflow-hidden bg-[#022c22]/50">
-                        <img
-                          src={tree.img}
-                          className="w-full h-full object-cover rounded-full"
-                          alt={tree.name}
-                        />
+                <ChevronRight className="text-green-400 w-5 h-5" />
+              </motion.div>
+            )}
+          </motion.div>
+          <AnimatePresence mode="wait">
+            {isHovered && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={smoothTransition}
+                className="w-full overflow-hidden"
+              >
+                <div className="flex flex-col items-center justify-center px-8 pb-5 gap-2 w-full text-center">
+                  <div className="flex gap-8 mb-1">
+                    {trees.map((tree, idx) => (
+                      <div key={idx} className="flex flex-col items-center">
+                        <div className="w-16 h-16 rounded-full border-2 border-green-400/40 p-1 bg-black/30">
+                          <img
+                            src={tree.img}
+                            className="w-full h-full object-cover rounded-full"
+                            alt={tree.name}
+                          />
+                        </div>
+                        <span className="text-[10px] text-green-300 font-bold uppercase mt-1">
+                          {tree.name}
+                        </span>
                       </div>
-                      <span className="text-[9px] lg:text-[10px] text-green-300 font-black uppercase mt-2">
-                        {tree.name}
-                      </span>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
+                  <p className="text-white/90 font-medium italic text-[13px] max-w-[500px]">
+                    "Join Kubuk, mee tree plantation in the Island. Help to
+                    protect our pristine world heritage geography of Central
+                    highlands. understand sensitive ecosystems and protect fauna
+                    and flora while roaming the country."
+                  </p>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleAction("Planting");
+                    }}
+                    className="px-8 py-2.5 bg-green-500 text-[#022c22] font-black uppercase text-[10px] rounded-full mt-1 hover:bg-white transition-colors"
+                  >
+                    Like to Plant{" "}
+                    <ExternalLink size={14} className="inline ml-1" />
+                  </button>
                 </div>
-                <p className="text-white font-medium italic leading-relaxed text-[12px] lg:text-[13px] flex-1 max-w-[400px] text-center lg:text-left">
-                  "Join Kubuk, mee tree plantation in the Island. Help to
-                  protect our pristine world heritage geography..."
-                </p>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleAction("plant", "Planting preference updated.");
-                  }}
-                  className="px-6 lg:px-8 py-3 lg:py-4 bg-green-500 text-[#022c22] font-black uppercase text-[9px] lg:text-[10px] tracking-widest rounded-full flex items-center gap-2 whitespace-nowrap shrink-0 shadow-lg"
-                >
-                  Like to Plant <ExternalLink size={14} />
-                </button>
               </motion.div>
             )}
           </AnimatePresence>
         </div>
       </motion.div>
 
-      {/* --- 2. INVEST RIBBON --- */}
+      {/* 2. INVEST RIBBON */}
       <motion.div
+        layout
         onMouseEnter={() => setIsInvestHovered(true)}
         onMouseLeave={() => setIsInvestHovered(false)}
-        animate={{
-          width: isInvestHovered
-            ? typeof window !== "undefined" && window.innerWidth > 1024
-              ? "95%"
-              : "100%"
-            : "fit-content",
-          height: isInvestHovered && isInvestWide ? "auto" : "85px",
+        transition={smoothTransition}
+        className="relative flex flex-col bg-gradient-to-r from-[#eab308] via-[#facc15] to-[#ca8a04] rounded-[2.5rem] lg:rounded-[6rem] shadow-2xl border border-yellow-400/30 cursor-pointer overflow-hidden"
+        style={{
+          width: isInvestHovered ? "100%" : "320px",
+          maxWidth: isInvestHovered ? "1100px" : "320px",
         }}
-        onAnimationComplete={() => {
-          if (isInvestHovered) setIsInvestWide(true);
-        }}
-        className="relative z-40 flex flex-col lg:flex-row items-center bg-gradient-to-r from-[#eab308] via-[#facc15] to-[#ca8a04] rounded-[2.5rem] lg:rounded-[5rem] shadow-2xl cursor-pointer overflow-hidden min-w-fit max-w-[1200px]"
       >
-        <div className="flex items-center px-6 lg:px-8 py-5 gap-4 shrink-0 whitespace-nowrap">
-          <div className="relative w-10 h-10 lg:w-12 lg:h-12 bg-[#111] rounded-full flex items-center justify-center shadow-xl">
-            <MessageCircle className="text-white w-5 h-5 lg:w-6 lg:h-6 fill-white" />
-            <div className="absolute top-0 right-0 w-3 h-3 bg-red-600 rounded-full border-2 border-[#111] animate-bounce" />
+        <motion.div
+          layout="position"
+          className="flex items-center px-8 h-[85px] gap-4 shrink-0"
+        >
+          <div className="relative w-12 h-12 bg-black rounded-2xl flex items-center justify-center border border-white/10">
+            <MessageCircle className="text-yellow-500 w-6 h-6 fill-yellow-500" />
           </div>
           <div className="flex flex-col">
-            <span className="text-[#111] font-black uppercase tracking-tighter text-xs lg:text-sm leading-none">
+            <span className="text-black font-black uppercase text-sm leading-none">
               your partner in sri lanka
             </span>
-            <span className="text-[#111]/70 text-[8px] uppercase font-black tracking-[0.1em] mt-1">
-              partnership programs
+            <span className="text-black/60 text-[9px] uppercase font-black tracking-widest mt-1">
+              Partnership Programs
             </span>
           </div>
           {!isInvestHovered && (
-            <ArrowRight className="text-[#111] w-5 h-5 ml-2" />
+            <motion.div layout className="ml-auto">
+              <ArrowRight className="text-black w-5 h-5" />
+            </motion.div>
           )}
-        </div>
-
-        <div className="flex-1 w-full overflow-hidden">
-          <AnimatePresence>
-            {isInvestHovered && isInvestWide && (
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="flex flex-col lg:flex-row items-center justify-between px-6 lg:px-10 py-6 lg:py-8 gap-4 lg:gap-6 w-full"
-              >
-                <div className="flex gap-4 lg:gap-6 shrink-0">
-                  <div className="flex flex-col items-center bg-black/10 p-3 lg:p-4 rounded-3xl">
-                    <TrendingUp size={20} className="text-[#111] mb-1" />
-                    <span className="text-[#111] font-black text-[9px] lg:text-[10px] uppercase">
+        </motion.div>
+        <AnimatePresence mode="wait">
+          {isInvestHovered && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={smoothTransition}
+              className="w-full overflow-hidden"
+            >
+              <div className="flex flex-col items-center justify-center px-8 pb-5 gap-2 w-full text-center">
+                <div className="flex gap-4 mb-1">
+                  <div className="bg-black/10 px-5 py-2 rounded-xl border border-black/5 flex flex-col items-center">
+                    <TrendingUp size={20} className="text-black mb-1" />
+                    <span className="text-black font-black text-[9px] uppercase">
                       ROI
                     </span>
                   </div>
-                  <div className="flex flex-col items-center bg-black/10 p-3 lg:p-4 rounded-3xl">
-                    <ShieldCheck size={20} className="text-[#111] mb-1" />
-                    <span className="text-[#111] font-black text-[9px] lg:text-[10px] uppercase">
+                  <div className="bg-black/10 px-5 py-2 rounded-xl border border-black/5 flex flex-col items-center">
+                    <ShieldCheck size={20} className="text-black mb-1" />
+                    <span className="text-black font-black text-[9px] uppercase">
                       Secure
                     </span>
                   </div>
                 </div>
-                <p className="text-[#111] font-bold italic leading-relaxed text-[12px] lg:text-[13px] flex-1 max-w-[400px] text-center lg:text-left">
+                <p className="text-black font-bold italic text-[13px] max-w-[500px]">
                   "Get professional advice on sustainable heritage investments.
                   Grow your capital while protecting the environment."
                 </p>
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
-                    handleAction("invest", "Consultation request recorded.");
+                    handleAction("Investment");
                   }}
-                  className="px-6 lg:px-8 py-3 lg:py-4 bg-[#111] text-[#facc15] font-black uppercase text-[9px] lg:text-[10px] tracking-widest rounded-full flex items-center gap-2 whitespace-nowrap shrink-0 shadow-2xl"
+                  className="px-8 py-2.5 bg-[#111] text-yellow-500 font-black uppercase text-[10px] rounded-full mt-1 hover:bg-yellow-500 hover:text-black transition-colors"
                 >
-                  like to invest? <ArrowRight size={14} />
+                  Like to Invest?{" "}
+                  <ArrowRight size={14} className="inline ml-1" />
                 </button>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-        <motion.div
-          animate={{ x: ["-100%", "200%"] }}
-          transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
-          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12 pointer-events-none"
-        />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.div>
     </div>
   );

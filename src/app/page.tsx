@@ -13,6 +13,7 @@ import HighlightSection from "@/components/HighlightSection";
 import ProtectedAreas from "@/components/ProtectedAreas";
 import GreatCivilizationStrip from "@/components/GreatCivilizationStrip";
 import HighlandWaters from "@/components/HighlandWaters";
+import AgroTourism from "@/components/AgroTourism";
 
 export default function Home() {
   return (
@@ -32,6 +33,8 @@ export default function Home() {
       <section id="climate">
         <ClimateMap />
       </section>
+
+      <AgroTourism />
       <GreatCivilizationStrip />
       <GreenCarpetWidget />
 

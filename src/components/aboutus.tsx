@@ -16,11 +16,7 @@ import {
 const LOGO_COLOR = "#EAB308";
 
 const aboutImages = [
-  {
-    src: "image/about.png",
-    title: "",
-    subtitle: "",
-  },
+  { src: "image/about.png", title: "", subtitle: "" },
   { src: "/image/kadu1.jpeg", title: "Sri Pada", subtitle: "The Sacred Peak" },
   {
     src: "/image/kadu2.jpeg",
@@ -47,6 +43,19 @@ const aboutImages = [
     title: "Hunnasgiriya",
     subtitle: "Mist-Clad Knuckles Edge",
   },
+
+  { src: "/image/a1.PNG" },
+  { src: "/image/a2.PNG" },
+  { src: "/image/a3.PNG" },
+  { src: "/image/a4.PNG" },
+  { src: "/image/a5.PNG" },
+  { src: "/image/a6.PNG" },
+  { src: "/image/a7.PNG" },
+  { src: "/image/a8.jpeg" },
+  { src: "/image/a9.PNG" },
+  { src: "/image/a10.PNG" },
+  { src: "/image/a11.jpeg" },
+  { src: "/image/a12.jpeg" },
 ];
 
 const stats = [
@@ -66,7 +75,6 @@ export default function CreativeAboutUs() {
     return () => clearInterval(timer);
   }, []);
 
-  // Social Media Links
   const socialLinks = [
     {
       Icon: Facebook,
@@ -84,7 +92,6 @@ export default function CreativeAboutUs() {
 
   return (
     <section className="relative w-full min-h-screen bg-[#0a0a0a] overflow-hidden py-20 px-6 lg:px-20 text-white flex items-center font-montserrat">
-      {/* Background decoration */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-yellow-500/5 rounded-full blur-[120px] -z-10" />
       <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-white/5 rounded-full blur-[100px] -z-10" />
 
@@ -103,7 +110,6 @@ export default function CreativeAboutUs() {
                 Our Vision & Story
               </h3>
 
-              {/* Main Title Container */}
               <div className="relative mb-8 text-left w-full">
                 <h2 className="text-4xl lg:text-7xl font-black tracking-tighter leading-[0.9] text-white">
                   CRAFTING ELITE <br />
@@ -126,7 +132,6 @@ export default function CreativeAboutUs() {
                 />
               </div>
 
-              {/* Story Details */}
               <div className="space-y-6 max-w-xl text-left">
                 <p className="text-gray-400 text-sm lg:text-base leading-relaxed">
                   Our journey began with a simple passion: to unveil the untold
@@ -145,7 +150,6 @@ export default function CreativeAboutUs() {
                 </p>
               </div>
 
-              {/* Contact & Trust Badges */}
               <div className="mt-12 flex flex-col sm:flex-row items-start sm:items-center gap-8 lg:gap-16 border-t border-white/5 pt-10 w-full">
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-full border border-yellow-500/30 flex items-center justify-center relative">
@@ -190,7 +194,6 @@ export default function CreativeAboutUs() {
                       </p>
                     </a>
 
-                    {/* --- යාවත්කාලීන කරන ලද Social Media අංශය --- */}
                     <div className="flex gap-4 border-l border-white/10 pl-6">
                       {socialLinks.map(({ Icon, href }, idx) => (
                         <motion.a
@@ -211,7 +214,7 @@ export default function CreativeAboutUs() {
             </motion.div>
           </div>
 
-          {/* --- RIGHT CONTENT: STATS & IMAGE SLIDER --- */}
+          {/* --- RIGHT CONTENT --- */}
           <div className="lg:col-span-5 relative">
             <div className="grid grid-cols-2 gap-3 mb-8">
               {stats.map((stat, index) => (
@@ -238,22 +241,23 @@ export default function CreativeAboutUs() {
             </div>
 
             <div className="relative">
-              <div className="relative rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl h-[320px] lg:h-[400px]">
+              <div className="relative rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl h-[320px] lg:h-[400px] bg-black">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={currentImage}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    transition={{ duration: 1 }}
+                    transition={{ duration: 1.5 }} // Smooth solid transition
                     className="absolute inset-0"
                   >
                     <img
                       src={aboutImages[currentImage].src}
                       alt={aboutImages[currentImage].title}
-                      className="w-full h-full object-cover brightness-75 transition-transform duration-[5000ms] scale-110"
+                      className="w-full h-full object-cover brightness-100 transition-transform duration-[5000ms] scale-100" // Solid visual
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent opacity-80" />
+                    {/* Gradient overlay එකේ opacity එක අඩු කළා පින්තූරය තවත් solid වීමට */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                     <div className="absolute bottom-5 left-6">
                       <span className="bg-yellow-500 text-black text-[7px] font-black px-2 py-1 rounded uppercase mb-2 inline-block">
                         Featured
@@ -269,7 +273,6 @@ export default function CreativeAboutUs() {
                 </AnimatePresence>
               </div>
 
-              {/* Slider Dots */}
               <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-30">
                 {aboutImages.map((_, i) => (
                   <div
@@ -283,7 +286,6 @@ export default function CreativeAboutUs() {
                 ))}
               </div>
 
-              {/* Floating Specialist Badge */}
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}

@@ -1,37 +1,35 @@
 "use client";
 
-import React, { useState, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useRef } from "react";
+import { motion } from "framer-motion";
 import Image from "next/image";
 
 export default function HighlandWaterLine() {
-  const [showPhotos, setShowPhotos] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const images = [
+    "image/lake7.jpeg",
+    "image/lake1.jpeg",
+
+    "image/lake3.jpeg",
+
+    "image/lake5.jpeg",
+
+    "image/lake2.jpeg",
+    "image/lake4.jpeg",
     "image/lake1.jpeg",
     "image/lake2.jpeg",
-    "image/lake3.jpeg",
-    "image/lake4.jpeg",
-    "image/lake5.jpeg",
     "image/lake6.jpeg",
+
+    "image/lake3.jpeg",
     "image/lake7.jpeg",
+    "image/lake4.jpeg",
   ];
 
   return (
     <section className="py-12 bg-[#050505] overflow-hidden relative border-y border-white/5">
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `
-        .custom-scrollbar::-webkit-scrollbar { width: 3px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(234, 179, 8, 0.2); border-radius: 10px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(234, 179, 8, 0.5); }
-      `,
-        }}
-      />
-
-      <div className="w-full flex flex-col items-center justify-center mb-16 relative">
+      {/* --- ඉහළින් තිබූ රන්වන් පැහැති රේඛාව (Gold Line Animation) --- */}
+      <div className="w-full flex flex-col items-center justify-center mb-12 relative">
         <motion.div
           initial={{ width: 0, opacity: 0 }}
           whileInView={{ width: "85%", opacity: 1 }}
@@ -47,132 +45,108 @@ export default function HighlandWaterLine() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        {/* මෙහි උස h-64 (mobile) සහ md:h-96 (desktop) ලෙස වැඩි කරන ලදී */}
-        <div className="relative w-full h-64 md:h-96 mb-10 overflow-hidden group rounded-sm border border-white/5">
-          <AnimatePresence mode="wait">
-            {!showPhotos ? (
-              <motion.div
-                key="video"
+        {/* වීඩියෝ කන්ටේනරය */}
+        <div className="relative w-full h-[400px] md:h-[450px] overflow-hidden rounded-sm border border-white/10 shadow-2xl bg-black">
+          {/* 1. Background Video */}
+          <div className="absolute inset-0 z-0">
+            <video
+              ref={videoRef}
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full h-full object-cover opacity-60"
+            >
+              <source src="/image/lake.mp4" type="video/mp4" />
+            </video>
+            <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/90" />
+          </div>
+
+          {/* 2. Content Overlay */}
+          <div className="relative z-10 h-full flex flex-col items-center pt-16 md:pt-20 px-4">
+            {/* විස්තරය (Text) */}
+            <div className="text-center mb-6">
+              <motion.h2
+                initial={{ opacity: 0, y: -20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                className="text-white text-sm md:text-xl font-bold tracking-[0.25em] uppercase mb-4 drop-shadow-lg"
+              >
+                Seven Natural high altitude lakes in the{" "}
+                <br className="hidden md:block" /> Central Highlands of the
+                Island
+              </motion.h2>
+              <motion.p
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
-                viewport={{ once: false, amount: 0.5 }}
-                onViewportEnter={async () => {
-                  if (videoRef.current) {
-                    try {
-                      videoRef.current.currentTime = 0;
-                      await videoRef.current.play();
-                    } catch (err) {
-                      console.warn("Video play interrupted safely:", err);
-                    }
-                  }
-                }}
-                exit={{ x: -100, opacity: 0 }}
-                className="absolute inset-0 flex items-center justify-center"
+                transition={{ delay: 0.3 }}
+                className="text-yellow-400 text-[9px] md:text-xs font-bold tracking-[0.2em] uppercase max-w-2xl drop-shadow-md mx-auto"
               >
-                <video
-                  ref={videoRef}
-                  autoPlay
-                  muted
-                  playsInline
-                  onCanPlay={(e) => (e.currentTarget.playbackRate = 2)}
-                  onEnded={() => setShowPhotos(true)}
-                  className="w-full h-full object-cover"
-                >
-                  <source src="/image/lake.mp4" type="video/mp4" />
-                </video>
-                <div
-                  onClick={() => setShowPhotos(true)}
-                  className="absolute inset-0 bg-black/20 flex items-center justify-center cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity"
-                >
-                  <span className="text-[9px] text-white tracking-[0.5em] uppercase font-medium bg-black/40 px-4 py-2 backdrop-blur-sm rounded-full">
-                    Explore Gallery
-                  </span>
-                </div>
-              </motion.div>
-            ) : (
-              <motion.div
-                key="gallery"
-                initial={{ x: 100, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                onViewportLeave={() => setShowPhotos(false)}
-                className="absolute inset-0 flex p-1"
-              >
-                <div className="grid grid-cols-2 md:flex md:flex-row w-full h-full gap-1 md:gap-2 overflow-y-auto md:overflow-hidden custom-scrollbar">
-                  {images.map((src, i) => (
-                    <motion.div
-                      key={i}
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      className="h-24 md:h-full md:flex-1 relative overflow-hidden rounded-sm filter brightness-75 hover:brightness-110 border border-white/5"
-                    >
-                      <Image
-                        src={`/${src}`}
-                        alt="Lake"
-                        fill
-                        sizes="(max-width: 768px) 50vw, 15vw"
-                        className="object-cover"
-                      />
-                    </motion.div>
-                  ))}
-                </div>
-                <button
-                  onClick={() => setShowPhotos(false)}
-                  className="absolute right-2 top-2 bg-black/80 w-6 h-6 flex items-center justify-center rounded-full text-[10px] text-white/70 border border-white/20 z-30"
-                >
-                  ✕
-                </button>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
+                1 (one) Great Lake (Cool water/No hot) and starts 04 great
+                Rivers from it <br className="hidden md:block" />
+                and flows in 04 directions to the ocean.
+              </motion.p>
+            </div>
 
-        <div className="relative flex flex-col items-center">
-          <div className="relative w-full max-w-5xl flex items-center justify-between">
-            <div className="absolute inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-            <motion.div
-              animate={{ left: ["0%", "100%"] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-              className="absolute w-12 h-[1px] bg-emerald-400 shadow-[0_0_10px_#10b981] z-10"
-            />
-            <div className="relative z-20 flex flex-col items-center bg-[#050505] px-4">
-              <div className="flex gap-0.5 mb-2">
-                {[...Array(7)].map((_, i) => (
+            {/* පින්තූර ස්ලයිඩරය - වර්ණ සහිතයි (No Grayscale) */}
+            <div className="absolute bottom-0 left-0 w-full overflow-hidden border-t border-white/10 bg-black/40 backdrop-blur-sm">
+              <motion.div
+                animate={{ x: ["0%", "-50%"] }}
+                transition={{
+                  duration: 25,
+                  repeat: Infinity,
+                  ease: "linear",
+                }}
+                className="flex flex-nowrap"
+              >
+                {images.map((src, i) => (
                   <div
                     key={i}
-                    className="w-1 h-1 rounded-full bg-emerald-500/40"
-                  />
+                    className="relative w-28 md:w-40 h-16 md:h-24 shrink-0 border-r border-white/5"
+                  >
+                    <Image
+                      src={`/${src}`}
+                      alt="Highland Lake"
+                      fill
+                      className="object-cover opacity-90 hover:opacity-100 transition-opacity duration-300"
+                    />
+                  </div>
                 ))}
-              </div>
-              <span className="text-[8px] text-white/40 uppercase tracking-[0.3em] font-bold">
+              </motion.div>
+            </div>
+          </div>
+        </div>
+
+        {/* 3. දර්ශක (Indicators) */}
+        <div className="w-full max-w-4xl mx-auto mt-10">
+          <div className="relative flex items-center justify-between px-4">
+            <div className="absolute inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+
+            <div className="relative z-20 flex flex-col items-center">
+              <span className="text-[7px] md:text-[8px] text-white/40 uppercase tracking-[0.3em] font-bold">
                 07 Lakes
               </span>
             </div>
-            <div className="relative z-20 flex flex-col items-center bg-[#050505] px-4">
-              <div className="w-6 h-6 rounded-full border border-emerald-500/30 flex items-center justify-center">
+
+            <div className="relative z-20 flex flex-col items-center">
+              <div className="w-4 h-4 rounded-full border border-emerald-500/30 flex items-center justify-center bg-[#050505]">
                 <div className="w-1 h-1 bg-emerald-500 rounded-full shadow-[0_0_5px_#10b981]" />
               </div>
-              <span className="text-[8px] text-emerald-500 uppercase tracking-[0.3em] font-bold mt-1">
+              <span className="text-[7px] md:text-[8px] text-emerald-500/80 uppercase tracking-[0.2em] font-bold mt-1">
                 The Core
               </span>
             </div>
-            <div className="relative z-20 flex flex-col items-center bg-[#050505] px-4">
-              <div className="relative w-4 h-4 mb-1">
-                <div className="absolute inset-x-0 top-1/2 h-[1px] bg-blue-500/50" />
-                <div className="absolute inset-y-0 left-1/2 w-[1px] bg-blue-500/50" />
-              </div>
-              <span className="text-[8px] text-white/40 uppercase tracking-[0.3em] font-bold">
+
+            <div className="relative z-20 flex flex-col items-center">
+              <span className="text-[7px] md:text-[8px] text-white/40 uppercase tracking-[0.3em] font-bold">
                 04 Rivers
               </span>
             </div>
           </div>
-          <p className="mt-6 text-[9px] text-slate-600 uppercase tracking-[0.5em] font-light">
-            Cool Source <span className="mx-2 text-white/10">•</span> Millennial
-            Life
-          </p>
-          <div className="mt-8 max-w-2xl text-center">
-            <p className="text-[11px] md:text-[12px] text-slate-400 leading-relaxed font-light tracking-[0.1em] uppercase">
-              Originating from high-altitude springs, this ancient water network
-              nourishes seven pristine lakes and four major rivers.
+
+          <div className="text-center mt-6">
+            <p className="text-[8px] text-slate-700 uppercase tracking-[0.5em] font-light">
+              Cool Source <span className="mx-2 text-white/5">•</span>{" "}
+              Millennial Life
             </p>
           </div>
         </div>

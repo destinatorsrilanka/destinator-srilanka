@@ -10,7 +10,7 @@ import {
   Navigation,
   ArrowRight,
   Wind,
-} from "lucide-react"; // Lucide React ලෙස වෙනස් විය යුතුයි ඔබගේ imports අනුව
+} from "lucide-react";
 
 const climateZones = [
   {
@@ -118,8 +118,6 @@ export default function SriLankaClimateSection() {
         className="absolute top-10 left-1/4 w-[400px] h-[400px] bg-yellow-500/10 blur-[100px] rounded-full pointer-events-none z-0"
       />
 
-      {/* INFINITE CATEGORY STRIP REMOVED FROM HERE */}
-
       <YellowSeparator className="mb-16" />
 
       <div className="text-center mb-10 z-10">
@@ -138,6 +136,7 @@ export default function SriLankaClimateSection() {
       </div>
 
       <div className="max-w-[1300px] mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-20 justify-items-center">
+        {/* LEFT: PLANNER */}
         <div className="w-full max-w-[400px] flex flex-col gap-5">
           <div className="bg-white/[0.03] border border-white/10 p-6 rounded-[2.5rem] backdrop-blur-md shadow-2xl">
             <h4 className="text-white font-bold text-[10px] uppercase mb-5 flex items-center gap-2 tracking-widest">
@@ -150,7 +149,7 @@ export default function SriLankaClimateSection() {
                   setStartPoint(e.target.value);
                   setIsAnimating(false);
                 }}
-                className="w-full bg-black/60 border border-white/10 text-white p-4 rounded-2xl text-xs outline-none focus:border-yellow-500 appearance-none transition-all"
+                className="w-full bg-black/60 border border-white/10 text-white p-4 rounded-2xl text-xs outline-none focus:border-yellow-500 appearance-none transition-all cursor-pointer"
               >
                 <option value="">Starting Point</option>
                 {climateZones.map((z) => (
@@ -165,7 +164,7 @@ export default function SriLankaClimateSection() {
                   setEndPoint(e.target.value);
                   setIsAnimating(false);
                 }}
-                className="w-full bg-black/60 border border-white/10 text-white p-4 rounded-2xl text-xs outline-none focus:border-yellow-500 appearance-none transition-all"
+                className="w-full bg-black/60 border border-white/10 text-white p-4 rounded-2xl text-xs outline-none focus:border-yellow-500 appearance-none transition-all cursor-pointer"
               >
                 <option value="">Destination</option>
                 {climateZones.map((z) => (
@@ -216,8 +215,8 @@ export default function SriLankaClimateSection() {
                   </div>
                 </motion.div>
               ) : (
-                <div className="h-[180px] border border-dashed border-white/10 rounded-[2.5rem] flex items-center justify-center text-gray-600 text-[10px] uppercase font-bold tracking-widest">
-                  Select destination
+                <div className="h-[180px] border border-dashed border-white/10 rounded-[2.5rem] flex items-center justify-center text-gray-600 text-[10px] uppercase font-bold tracking-widest text-center px-6">
+                  Select destination to view climate profile
                 </div>
               )}
             </AnimatePresence>
@@ -271,7 +270,6 @@ export default function SriLankaClimateSection() {
                           <div className="w-0 h-0 border-l-[1.5px] border-l-transparent border-r-[1.5px] border-r-transparent border-t-[2.5px] border-t-yellow-500" />
                         </div>
                       </foreignObject>
-
                       <foreignObject x="-4" y="-4" width="8" height="8">
                         <div className="w-full h-full flex items-center justify-center bg-white rounded-full shadow-lg border-[0.3px] border-black/10">
                           <div className="text-black">
@@ -283,9 +281,26 @@ export default function SriLankaClimateSection() {
                   </g>
                 )}
               </AnimatePresence>
+
+              {/* POINTS WITH LABELS (NO ANIMATION) */}
               {climateZones.map((zone) => (
                 <g key={zone.id}>
+                  {/* Fixed points without pulse animation */}
                   <circle cx={zone.x} cy={zone.y} r="1.5" fill={zone.color} />
+                  <foreignObject
+                    x={zone.x + 3}
+                    y={zone.y - 3}
+                    width="40"
+                    height="10"
+                    className="overflow-visible"
+                  >
+                    <div
+                      className="text-[2.8px] font-black uppercase tracking-tighter whitespace-nowrap drop-shadow-md"
+                      style={{ color: zone.color }}
+                    >
+                      {zone.name}
+                    </div>
+                  </foreignObject>
                 </g>
               ))}
             </svg>
@@ -293,21 +308,28 @@ export default function SriLankaClimateSection() {
         </div>
       </div>
 
-      <div className="flex flex-wrap justify-center gap-6 mt-12 mb-10 opacity-30">
-        {climateZones.map((z) => (
-          <div key={z.id} className="flex items-center gap-2">
-            <div
-              className="w-2 h-2 rounded-full"
-              style={{ backgroundColor: z.color }}
-            />
-            <span className="text-[9px] text-white font-bold uppercase tracking-widest">
-              {z.name}
-            </span>
-          </div>
-        ))}
-      </div>
+      {/* DESCRIPTION SECTION */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+        className="max-w-3xl mt-20 px-6 text-center z-10"
+      >
+        <p className="text-white/80 text-sm md:text-lg leading-relaxed font-medium">
+          <span className="text-yellow-500 font-bold">Sri Lanka</span> is the
+          only country in the world where every climate condition exists
+          throughout the year. One can travel to each climatic zone in a few
+          hours. Cultivation in Sri Lanka is also carried out mainly during{" "}
+          <span className="text-yellow-500 italic">two rainy seasons</span>.
+        </p>
+        <div className="mt-4 flex justify-center gap-1">
+          <div className="w-8 h-1 bg-yellow-500/20 rounded-full" />
+          <div className="w-12 h-1 bg-yellow-500 rounded-full" />
+          <div className="w-8 h-1 bg-yellow-500/20 rounded-full" />
+        </div>
+      </motion.div>
 
-      <YellowSeparator className="mt-10" />
+      <YellowSeparator className="mt-16" />
     </section>
   );
 }

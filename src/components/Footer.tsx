@@ -1,11 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import {
   Facebook,
   Instagram,
-  Music2, // TikTok සඳහා
-  MessageCircle, // WhatsApp සඳහා
+  Music2,
+  MessageCircle,
   MapPin,
   Phone,
   Mail,
@@ -40,7 +41,18 @@ export default function Footer() {
     return () => clearInterval(timer);
   }, []);
 
-  // Social Media Links mapping
+  const stripImages = [
+    "/image/f1.jpeg",
+    "/image/f2.PNG",
+    "/image/f3.jpeg",
+    "/image/f4.jpeg",
+    "/image/f5.jpeg",
+    "/image/f6.jpeg",
+    "/image/f7.PNG",
+    "/image/f9.jpeg",
+    "/image/f10.jpeg",
+  ];
+
   const socialLinks = [
     {
       Icon: Facebook,
@@ -50,8 +62,8 @@ export default function Footer() {
       Icon: Instagram,
       href: "https://www.instagram.com/destinatorlk?igsh=aGxwbzNpaHF3NmNo&utm_source=qr",
     },
-    { Icon: Music2, href: "#" }, // TikTok සඳහා ලින්ක් එකක් ඇත්නම් මෙතැනට එක් කරන්න
-    { Icon: MessageCircle, href: "#" }, // WhatsApp සඳහා ලින්ක් එකක් ඇත්නම් මෙතැනට එක් කරන්න
+    { Icon: Music2, href: "#" },
+    { Icon: MessageCircle, href: "#" },
   ];
 
   return (
@@ -60,8 +72,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
           {/* --- COLUMN 1: BRAND --- */}
           <div className="space-y-4">
-            {/* Destinator Logo Style */}
-            <h3 className="text-destinator-orange text-2xl font-black tracking-[0.15em] uppercase italic flex items-center gap-0 leading-none">
+            <h3 className="text-orange-500 text-2xl font-black tracking-[0.15em] uppercase italic flex items-center gap-0 leading-none">
               DESTINAT
               <span className="relative inline-flex items-center justify-center mx-0.5">
                 <span className="opacity-0">O</span>
@@ -69,8 +80,6 @@ export default function Footer() {
               </span>
               R
             </h3>
-
-            {/* French Flag & Guide Francophone Label */}
             <div className="flex items-center gap-2">
               <div className="flex gap-0.5 shrink-0 border border-white/10 p-0.5 rounded-sm">
                 <span className="w-2 h-3 bg-[#002395]"></span>
@@ -81,40 +90,21 @@ export default function Footer() {
                 Guide Francophone
               </span>
             </div>
-
             <p className="text-gray-400 text-xs leading-relaxed max-w-xs pt-2">
               Your premier gateway to the wonders of Sri Lanka. We craft
               memories that last a lifetime.
             </p>
-
-            {/* යාවත්කාලීන කරන ලද Social Media අයිකන සහ ලින්ක් */}
-            <div className="flex items-center gap-3">
-              {socialLinks.map(({ Icon, href }, i) => (
-                <Link
-                  key={i}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:text-destinator-orange hover:border-destinator-orange transition-all"
-                >
-                  <Icon size={16} />
-                </Link>
-              ))}
-            </div>
           </div>
 
-          {/* --- COLUMN 2: QUICK LINKS --- */}
+          {/* --- COLUMN 2: LINKS --- */}
           <div>
-            <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-destinator-orange mb-4">
+            <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-orange-500 mb-4">
               Links
             </h4>
-            <ul className="space-y-2 text-xs">
+            <ul className="space-y-2 text-xs text-gray-400">
               {["Home", "Packages", "Destinations", "Inquiry"].map((link) => (
                 <li key={link}>
-                  <Link
-                    href="#"
-                    className="text-gray-400 hover:text-white transition-colors"
-                  >
+                  <Link href="#" className="hover:text-white transition-colors">
                     {link}
                   </Link>
                 </li>
@@ -122,31 +112,30 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* --- COLUMN 3: CONTACT INFO --- */}
+          {/* --- COLUMN 3: CONTACT --- */}
           <div>
-            <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-destinator-orange mb-4">
+            <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-orange-500 mb-4">
               Contact
             </h4>
             <ul className="space-y-2 text-xs text-gray-400">
               <li className="flex items-center gap-2">
-                <MapPin size={14} className="text-destinator-orange" />
-                <span>Colombo, Sri Lanka</span>
+                <MapPin size={14} className="text-orange-500" /> Colombo, Sri
+                Lanka
               </li>
               <li className="flex items-center gap-2">
-                <Phone size={14} className="text-destinator-orange" />
-                <span>+94 77 711 2434</span>
+                <Phone size={14} className="text-orange-500" /> +94 77 711 2434
               </li>
               <li className="flex items-center gap-2">
-                <Mail size={14} className="text-destinator-orange" />
-                <span>destinatorlk@gmail.com</span>
+                <Mail size={14} className="text-orange-500" />{" "}
+                destinatorlk@gmail.com
               </li>
             </ul>
           </div>
 
-          {/* --- COLUMN 4: LOCAL TIME CARD --- */}
-          <div>
+          {/* --- COLUMN 4: TIME & SOCIALS --- */}
+          <div className="space-y-6">
             <div className="bg-white/5 border border-white/10 rounded-xl p-4 flex items-center gap-4">
-              <div className="bg-destinator-orange/10 p-2 rounded-lg text-destinator-orange">
+              <div className="bg-orange-500/10 p-2 rounded-lg text-orange-500">
                 <Clock size={20} />
               </div>
               <div>
@@ -158,7 +147,46 @@ export default function Footer() {
                 </p>
               </div>
             </div>
+            <div className="flex items-center gap-3">
+              {socialLinks.map(({ Icon, href }, i) => (
+                <Link
+                  key={i}
+                  href={href}
+                  target="_blank"
+                  className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:text-orange-500 hover:border-orange-500 transition-all"
+                >
+                  <Icon size={16} />
+                </Link>
+              ))}
+            </div>
           </div>
+        </div>
+
+        {/* --- INTERACTIVE EXPANDING PHOTO GALLERY --- */}
+        <div className="w-full mb-6 h-12 md:h-16 flex gap-1 group/gallery">
+          {stripImages.map((src, idx) => (
+            <motion.div
+              key={idx}
+              className="relative flex-1 overflow-hidden rounded-sm cursor-pointer"
+              whileHover={{ flex: 3 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            >
+              <motion.img
+                src={src}
+                alt="trip"
+                className="w-full h-full object-cover"
+                animate={{
+                  y: idx % 2 === 0 ? [-3, 3, -3] : [3, -3, 3],
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              />
+              <div className="absolute inset-0 bg-black/10 group-hover/gallery:bg-black/5 transition-colors" />
+            </motion.div>
+          ))}
         </div>
 
         {/* --- BOTTOM SECTION --- */}
