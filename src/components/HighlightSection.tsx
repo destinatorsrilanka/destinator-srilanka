@@ -1,14 +1,14 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Droplets, Trees, MousePointer2 } from "lucide-react"; // අලුත් Icon එකක්
+import { Droplets, Trees, MousePointer2 } from "lucide-react";
 
 const WATERFALL_IMAGES = [
   "image/w1.jpg",
   "image/w2.jpg",
-  "image/w3.jpg",
-  "image/w4.jpg",
-  "image/w5.jpg",
+  "image/w3.jpeg",
+  "image/w4.jpeg",
+  "image/w1.jpg",
 ];
 const ELEPHANT_IMAGES = [
   "image/e1.webp",
@@ -48,7 +48,8 @@ export default function CompactHighlight() {
             animate={{ opacity: 0.5 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 1.5 }}
-            className="absolute inset-0 w-full h-full object-cover group-hover:opacity-100 group-hover:scale-110 transition-all duration-[5s] ease-out"
+            // මෙහි duration-[5s] වෙනුවට animate-duration-[5000ms] භාවිතා කර ඇත
+            className="absolute inset-0 w-full h-full object-cover group-hover:opacity-100 group-hover:scale-110 transition-all animate-duration-[5000ms] ease-out"
             alt="Waterfalls"
           />
         </AnimatePresence>
@@ -56,7 +57,6 @@ export default function CompactHighlight() {
         <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#020202] via-[#020202]/50 to-transparent opacity-90 group-hover:opacity-70 transition-opacity duration-700" />
 
         <div className="relative z-20 h-full flex flex-col items-center justify-center p-6 text-center">
-          {/* Hover කරන්නැයි කියන ඉඟිය (Hint) */}
           <motion.div
             animate={{ y: [0, -5, 0], opacity: [0.3, 0.6, 0.3] }}
             transition={{ repeat: Infinity, duration: 2 }}
@@ -65,7 +65,6 @@ export default function CompactHighlight() {
             <MousePointer2 size={16} className="text-white/40" />
           </motion.div>
 
-          {/* Icon Animation - හුස්ම ගන්නා බඳු ස්වභාවයක් */}
           <motion.div
             animate={{ scale: [1, 1.05, 1] }}
             transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
@@ -103,7 +102,8 @@ export default function CompactHighlight() {
             animate={{ opacity: 0.5 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 1.5 }}
-            className="absolute inset-0 w-full h-full object-cover group-hover:opacity-100 group-hover:scale-110 transition-all duration-[5s] ease-out"
+            // මෙහි duration-[5s] වෙනුවට animate-duration-[5000ms] භාවිතා කර ඇත
+            className="absolute inset-0 w-full h-full object-cover group-hover:opacity-100 group-hover:scale-110 transition-all animate-duration-[5000ms] ease-out"
             alt="Elephants"
           />
         </AnimatePresence>

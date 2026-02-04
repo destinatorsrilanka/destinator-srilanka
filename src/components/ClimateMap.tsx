@@ -10,7 +10,7 @@ import {
   Navigation,
   ArrowRight,
   Wind,
-} from "lucide-react";
+} from "lucide-react"; // Lucide React ලෙස වෙනස් විය යුතුයි ඔබගේ imports අනුව
 
 const climateZones = [
   {
@@ -69,27 +69,6 @@ const climateZones = [
   },
 ];
 
-const tourismTags = [
-  { name: "Eco Tourism", color: "#10B981", bg: "rgba(16, 185, 129, 0.1)" },
-  {
-    name: "Adventure Tourism",
-    color: "#F59E0B",
-    bg: "rgba(245, 158, 11, 0.1)",
-  },
-  { name: "Culture/Heritage", color: "#8B5CF6", bg: "rgba(139, 92, 246, 0.1)" },
-  {
-    name: "Religious/Spiritual",
-    color: "#EC4899",
-    bg: "rgba(236, 72, 153, 0.1)",
-  },
-  { name: "Leisure", color: "#3B82F6", bg: "rgba(59, 130, 246, 0.1)" },
-  {
-    name: "Health & Wellness",
-    color: "#14B8A6",
-    bg: "rgba(20, 184, 166, 0.1)",
-  },
-];
-
 const YellowSeparator = ({ className = "" }: { className?: string }) => (
   <div
     className={`w-full max-w-[1200px] relative flex flex-col items-center justify-center ${className}`}
@@ -139,33 +118,7 @@ export default function SriLankaClimateSection() {
         className="absolute top-10 left-1/4 w-[400px] h-[400px] bg-yellow-500/10 blur-[100px] rounded-full pointer-events-none z-0"
       />
 
-      <div className="w-full max-w-[1400px] overflow-hidden mb-8 relative z-20 py-4">
-        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#050505] to-transparent z-30 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#050505] to-transparent z-30 pointer-events-none" />
-        <motion.div
-          animate={{ x: [0, -2000] }}
-          transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-          className="flex gap-6 whitespace-nowrap"
-        >
-          {[...tourismTags, ...tourismTags, ...tourismTags, ...tourismTags].map(
-            (tag, i) => (
-              <div
-                key={i}
-                className="flex items-center gap-3 px-6 py-2.5 rounded-2xl border border-white/5 backdrop-blur-sm group hover:border-yellow-500/30 transition-all duration-500 cursor-default shadow-lg"
-                style={{ backgroundColor: tag.bg }}
-              >
-                <div
-                  className="w-2 h-2 rounded-full shadow-[0_0_8px_currentcolor]"
-                  style={{ backgroundColor: tag.color, color: tag.color }}
-                />
-                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/80 group-hover:text-white transition-colors">
-                  {tag.name}
-                </span>
-              </div>
-            ),
-          )}
-        </motion.div>
-      </div>
+      {/* INFINITE CATEGORY STRIP REMOVED FROM HERE */}
 
       <YellowSeparator className="mb-16" />
 
@@ -319,7 +272,6 @@ export default function SriLankaClimateSection() {
                         </div>
                       </foreignObject>
 
-                      {/* Car Icon inside a white circle with black icon color */}
                       <foreignObject x="-4" y="-4" width="8" height="8">
                         <div className="w-full h-full flex items-center justify-center bg-white rounded-full shadow-lg border-[0.3px] border-black/10">
                           <div className="text-black">

@@ -11,6 +11,8 @@ import GreenCarpetWidget from "@/components/GreenCarpetWidget";
 import InquiryModal from "@/components/InquiryModal";
 import HighlightSection from "@/components/HighlightSection";
 import ProtectedAreas from "@/components/ProtectedAreas";
+import GreatCivilizationStrip from "@/components/GreatCivilizationStrip";
+import HighlandWaters from "@/components/HighlandWaters";
 
 export default function Home() {
   return (
@@ -24,11 +26,13 @@ export default function Home() {
       <section id="heritage">
         <MapSection />
       </section>
+
       <HighlightSection />
+      <HighlandWaters />
       <section id="climate">
         <ClimateMap />
       </section>
-
+      <GreatCivilizationStrip />
       <GreenCarpetWidget />
 
       <ProtectedAreas />
@@ -38,7 +42,6 @@ export default function Home() {
       </section>
 
       <InfinitePhotoStrip />
-      <InvestInviteStrip />
 
       <section id="contact">
         <InquiryForm />
