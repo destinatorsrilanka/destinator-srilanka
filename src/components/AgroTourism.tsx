@@ -21,7 +21,6 @@ const AgroTourism: React.FC = () => {
     <section className="w-full bg-[#0a0a0a] py-12 overflow-hidden">
       <div className="max-w-[1600px] mx-auto px-6 relative">
         {/* --- HEADER OVERLAY --- */}
-        {/* bg-black ඉවත් කර අකුරු පිටුපසින් පමණක් Gradient එකක් එක් කර ඇත */}
         <div className="absolute inset-0 z-20 pointer-events-none flex flex-col justify-center items-center px-6 md:px-12 text-center bg-[radial-gradient(circle,rgba(0,0,0,0.5)_0%,transparent_70%)]">
           <motion.div
             initial={{ opacity: 0, y: 10 }}
@@ -38,19 +37,51 @@ const AgroTourism: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-3xl md:text-6xl font-black tracking-tighter text-white drop-shadow-[0_4px_12px_rgba(0,0,0,1)]"
+            className="flex items-center justify-center gap-3 text-3xl md:text-6xl font-black tracking-tighter text-white drop-shadow-[0_4px_12px_rgba(0,0,0,1)]"
           >
+            {/* AGRO Text */}
             <span
               style={{
                 WebkitTextStroke: "1px rgba(255,255,255,0.9)",
                 letterSpacing: "0.05em",
+                lineHeight: "1",
               }}
-              className="text-transparent"
+              className="text-transparent inline-block"
             >
               AGRO
-            </span>{" "}
-            <span className="text-emerald-500 drop-shadow-[0_0_20px_rgba(16,185,129,0.5)]">
-              TOURISM
+            </span>
+
+            {/* TOURISM Text with Shine */}
+            <span
+              className="relative inline-block text-emerald-500 overflow-hidden"
+              style={{
+                background:
+                  "linear-gradient(120deg, rgba(16,185,129,1) 40%, rgba(255,255,255,0.8) 50%, rgba(16,185,129,1) 60%)",
+                backgroundSize: "200% 100%",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                lineHeight: "1",
+                display: "inline-block",
+              }}
+            >
+              <motion.span
+                animate={{
+                  backgroundPosition: ["200% 0%", "-200% 0%"],
+                }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 3,
+                  ease: "linear",
+                }}
+                style={{
+                  background: "inherit",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  display: "inline-block",
+                }}
+              >
+                TOURISM
+              </motion.span>
             </span>
           </motion.h2>
         </div>
@@ -70,11 +101,8 @@ const AgroTourism: React.FC = () => {
                 src={img.src}
                 alt={img.title}
                 fill
-                // Opacity එක 0.7 දක්වා වැඩි කර පින්තූර තවත් පැහැදිලි කළා
                 className="object-cover opacity-70"
               />
-
-              {/* Minimal Bottom Accent Line */}
               <div className="absolute bottom-0 left-0 w-full h-[1px] bg-emerald-500/30" />
             </motion.div>
           ))}

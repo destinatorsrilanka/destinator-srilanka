@@ -6,14 +6,15 @@ import Footer from "@/components/Footer";
 import Aboutus from "@/components/aboutus";
 import InfinitePhotoStrip from "@/components/InfinitePhotoStrip";
 import ClimateMap from "@/components/ClimateMap";
-import InvestInviteStrip from "@/components/InvestInviteStrip";
+
 import GreenCarpetWidget from "@/components/GreenCarpetWidget";
-import InquiryModal from "@/components/InquiryModal";
+
 import HighlightSection from "@/components/HighlightSection";
-import ProtectedAreas from "@/components/ProtectedAreas";
+
 import GreatCivilizationStrip from "@/components/GreatCivilizationStrip";
 import HighlandWaters from "@/components/HighlandWaters";
 import AgroTourism from "@/components/AgroTourism";
+import EcoTourism from "@/components/EcoTourism";
 
 export default function Home() {
   return (
@@ -38,7 +39,7 @@ export default function Home() {
       <GreatCivilizationStrip />
       <GreenCarpetWidget />
 
-      <ProtectedAreas />
+      <EcoTourism />
 
       <section id="about">
         <Aboutus />
