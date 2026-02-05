@@ -162,30 +162,20 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* --- INTERACTIVE EXPANDING PHOTO GALLERY --- */}
-        <div className="w-full mb-6 h-12 md:h-16 flex gap-1 group/gallery">
+        {/* --- PHOTO GALLERY (ANIMATION AND GAP REMOVED) --- */}
+        <div className="w-full mb-6 h-12 md:h-16 flex gap-0 group/gallery">
           {stripImages.map((src, idx) => (
-            <motion.div
+            <div
               key={idx}
-              className="relative flex-1 overflow-hidden rounded-sm cursor-pointer"
-              whileHover={{ flex: 3 }}
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="relative flex-1 overflow-hidden cursor-pointer"
             >
-              <motion.img
+              <img
                 src={src}
                 alt="trip"
                 className="w-full h-full object-cover"
-                animate={{
-                  y: idx % 2 === 0 ? [-3, 3, -3] : [3, -3, 3],
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
               />
               <div className="absolute inset-0 bg-black/10 group-hover/gallery:bg-black/5 transition-colors" />
-            </motion.div>
+            </div>
           ))}
         </div>
 

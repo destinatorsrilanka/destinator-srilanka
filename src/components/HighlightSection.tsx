@@ -94,10 +94,10 @@ export default function CompactHighlight() {
             </motion.div>
 
             <h2 className="text-3xl md:text-4xl font-black tracking-tighter uppercase text-white leading-none mb-4">
-              LAND OF <br /> <span className="text-blue-400">WATERFALLS</span>
+              LAND OF <br />{" "}
+              <span className="text-blue-400">WATERFALLS | LAKES</span>
             </h2>
 
-            {/* වාක්‍යය හැමවෙලේම පෙන්වීමට h-auto සහ opacity-100 කළා */}
             <div className="h-auto overflow-hidden">
               <p className="text-[12px] font-medium tracking-wide text-zinc-300 max-w-[260px] italic py-2 opacity-100">
                 Experience the mist-clad heights and the thunderous beauty.
@@ -106,7 +106,8 @@ export default function CompactHighlight() {
           </div>
 
           <div className="flex w-full overflow-hidden mt-auto px-4">
-            <div className="flex w-full overflow-hidden rounded-lg shadow-2xl">
+            {/* rounded-lg ඉවත් කර ඇත */}
+            <div className="flex w-full overflow-hidden shadow-2xl">
               {WATERFALL_STRIP.map((imgSrc, i) => (
                 <motion.div
                   key={i}
@@ -160,10 +161,10 @@ export default function CompactHighlight() {
             </motion.div>
 
             <h2 className="text-3xl md:text-4xl font-black tracking-tighter uppercase text-white leading-none mb-4">
-              LAND OF <br /> <span className="text-amber-500">ELEPHANTS</span>
+              LAND OF <br />{" "}
+              <span className="text-amber-500">ELEPHANTS | LEOPARDS</span>
             </h2>
 
-            {/* වාක්‍යය හැමවෙලේම පෙන්වීමට h-auto සහ opacity-100 කළා */}
             <div className="h-auto overflow-hidden">
               <p className="text-[12px] font-medium tracking-wide text-zinc-300 max-w-[260px] italic py-2 opacity-100">
                 Venture into the wild heartlands to witness the gentle giants.
@@ -172,7 +173,8 @@ export default function CompactHighlight() {
           </div>
 
           <div className="flex w-full overflow-hidden mt-auto px-4">
-            <div className="flex w-full overflow-hidden rounded-lg shadow-2xl">
+            {/* rounded-lg ඉවත් කර ඇත */}
+            <div className="flex w-full overflow-hidden shadow-2xl">
               {ELEPHANT_STRIP.map((imgSrc, i) => (
                 <motion.div
                   key={i}
