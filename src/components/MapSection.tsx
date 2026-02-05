@@ -22,79 +22,6 @@ import {
   Gem,
 } from "lucide-react";
 
-// --- River Component ---
-const RiverLine = ({
-  d,
-  textPathD,
-  color,
-  name,
-  id,
-  startOffset = "60%",
-  dy = "1",
-}: {
-  d: string;
-  textPathD?: string;
-  color: string;
-  name: string;
-  id: string;
-  startOffset?: string;
-  dy?: string;
-}) => (
-  <g>
-    <defs>
-      <path id={`path-${id}`} d={textPathD || d} />
-    </defs>
-    <motion.path
-      d={d}
-      fill="transparent"
-      stroke={color}
-      strokeWidth="0.8"
-      strokeLinecap="round"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 0.2 }}
-      className="blur-[1px]"
-    />
-    <motion.path
-      d={d}
-      fill="transparent"
-      stroke={color}
-      strokeWidth="0.6"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeDasharray="4, 6"
-      initial={{ pathLength: 0, strokeDashoffset: 0 }}
-      animate={{
-        pathLength: 1,
-        strokeDashoffset: [-20, 0],
-      }}
-      transition={{
-        pathLength: { duration: 2, ease: "easeInOut" },
-        strokeDashoffset: { repeat: Infinity, duration: 3, ease: "linear" },
-      }}
-    />
-    <text
-      dy={dy}
-      style={{
-        fontSize: "1.8px",
-        fontWeight: "900",
-        fill: color,
-        textTransform: "uppercase",
-        letterSpacing: "0.1px",
-        pointerEvents: "none",
-        paintOrder: "stroke",
-        stroke: "#ffffff",
-        strokeWidth: "0.3px",
-        strokeLinejoin: "round",
-        opacity: 0.9,
-      }}
-    >
-      <textPath href={`#path-${id}`} startOffset={startOffset}>
-        {name}
-      </textPath>
-    </text>
-  </g>
-);
-
 interface Destination {
   id: string;
   name: string;
@@ -103,23 +30,10 @@ interface Destination {
   description: string;
   image: string;
   stats: { altitude: string; period: string; climate: string };
-  iconType:
-    | "landmark"
-    | "trees"
-    | "anchor"
-    | "mountain"
-    | "map-pin"
-    | "gem"
-    | "river";
+  iconType: "landmark" | "trees" | "anchor" | "mountain" | "map-pin" | "gem";
   color: string;
-  imageFocus?: string;
-  riverPath?: string;
-  textPathD?: string;
-  textOffset?: string;
-  textDy?: string;
 }
 
-// "devinuvara" අයිතමය ඉවත් කර ඇත
 const destinations: Destination[] = [
   {
     id: "jaffna",
@@ -302,76 +216,6 @@ const destinations: Destination[] = [
     iconType: "landmark",
     color: "#84CC16",
   },
-  {
-    id: "mahaweli",
-    name: "MAHAWELI RIVER",
-    tagline: "The Longest River",
-    coords: { top: "55%", left: "51%" },
-    description: "Sri Lanka's longest river.",
-    image: "image/mahaweli.jpg",
-    stats: { altitude: "335km", period: "Life Line", climate: "Fresh" },
-    iconType: "river",
-    color: "#0369A1",
-    riverPath:
-      "M 52 68 C 58 65, 48 58, 52 52 C 55 48, 65 48, 62 38 C 60 35, 58 34, 58 34",
-    textOffset: "15%",
-  },
-  {
-    id: "kelani",
-    name: "KELANI RIVER",
-    tagline: "Sacred Waters",
-    coords: { top: "71%", left: "32%" },
-    description: "Flows to Colombo.",
-    image: "image/kelani.jpg",
-    stats: { altitude: "145km", period: "Sacred", climate: "Fresh" },
-    iconType: "river",
-    color: "#0284C7",
-    riverPath: "M 47 68 C 42 69, 38 71, 32 70 C 30 70, 29 71, 29 71",
-    textPathD: "M 29 71 C 29 71, 30 70, 32 70 C 38 71, 42 69, 47 68",
-    textDy: "-1.2",
-    textOffset: "35%",
-  },
-  {
-    id: "kalu",
-    name: "KALU RIVER",
-    tagline: "The Black River",
-    coords: { top: "79%", left: "31%" },
-    description: "Flows Peak Wilderness to west.",
-    image: "image/kalu.jpg",
-    stats: { altitude: "129km", period: "Fast Flow", climate: "Wet" },
-    iconType: "river",
-    color: "#1e3a8a",
-    riverPath: "M 47 68 C 45 73, 44 76, 40 80 C 36 84, 33 83, 31 83",
-    textPathD: "M 31 83 C 33 83, 36 84, 40 80 C 44 76, 45 73, 47 68",
-    textDy: "-1.2",
-    textOffset: "30%",
-  },
-  {
-    id: "walawe",
-    name: "WALAWE RIVER",
-    tagline: "Southern Flow",
-    coords: { top: "83%", left: "55%" },
-    description: "Flows to southern sea.",
-    image: "image/walawe.jpg",
-    stats: { altitude: "138km", period: "Agricultural", climate: "Dry Zone" },
-    iconType: "river",
-    color: "#075985",
-    riverPath: "M 52 68 C 55 75, 54 82, 57 85 C 58 87, 59 88, 60 89",
-    textOffset: "50%",
-  },
-  {
-    id: "uma-oya",
-    name: "UMA OYA RIVER",
-    tagline: "Eastern Tributary",
-    coords: { top: "66%", left: "62%" },
-    description: "Vital for hydropower in the east.",
-    image: "image/umaoya.jpg",
-    stats: { altitude: "Multi-purpose", period: "Modern", climate: "Dry Zone" },
-    iconType: "river",
-    color: "#0ea5e9",
-    riverPath: "M 52 68 C 55 70, 60 71, 65 69 C 70 67, 74 64, 76 65",
-    textOffset: "40%",
-  },
 ];
 
 const SLOW_TRANSITION = { type: "spring", stiffness: 40, damping: 20 } as const;
@@ -383,17 +227,13 @@ export default function SriLankaInteractiveMap() {
   const [currentBgIndex, setCurrentBgIndex] = useState(0);
   const active = destinations.find((d) => d.id === hoveredId);
 
-  const slideableDestinations = destinations.filter(
-    (d) => d.iconType !== "river",
-  );
-
   useEffect(() => {
     if (active) return;
     const timer = setInterval(() => {
-      setCurrentBgIndex((prev) => (prev + 1) % slideableDestinations.length);
+      setCurrentBgIndex((prev) => (prev + 1) % destinations.length);
     }, 4000);
     return () => clearInterval(timer);
-  }, [active, slideableDestinations.length]);
+  }, [active, destinations.length]);
 
   const mapRef = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
@@ -425,7 +265,6 @@ export default function SriLankaInteractiveMap() {
     let minDistance = 3.5;
 
     destinations.forEach((loc) => {
-      if (loc.iconType === "river") return;
       const dx = mouseX - parseFloat(loc.coords.left);
       const dy = mouseY - parseFloat(loc.coords.top);
       const distance = Math.sqrt(dx * dx + dy * dy);
@@ -447,7 +286,6 @@ export default function SriLankaInteractiveMap() {
       style: { color: isActive ? "#fff" : customColor || "#000" },
       className: isActive ? "" : "opacity-90",
     };
-    if (type === "river") return null;
     switch (type) {
       case "landmark":
         return <Landmark {...iconProps} />;
@@ -530,7 +368,7 @@ export default function SriLankaInteractiveMap() {
                 src={
                   active
                     ? `/${active.image}`
-                    : `/${slideableDestinations[currentBgIndex].image}`
+                    : `/${destinations[currentBgIndex].image}`
                 }
                 alt="Background"
                 fill
@@ -562,78 +400,52 @@ export default function SriLankaInteractiveMap() {
               alt="Map"
               className={`relative z-10 w-full h-full object-contain transition-all duration-1000 pointer-events-none ${active ? "opacity-30 blur-[2px]" : "opacity-95"}`}
             />
-            <svg
-              viewBox="0 0 100 100"
-              className="absolute inset-0 w-full h-full z-20 pointer-events-none overflow-visible"
-            >
-              {destinations.map(
-                (loc) =>
-                  loc.riverPath && (
-                    <RiverLine
-                      key={`river-${loc.id}`}
-                      id={loc.id}
-                      d={loc.riverPath}
-                      textPathD={loc.textPathD}
-                      name={loc.name.split(" ")[0]}
-                      color={loc.color}
-                      startOffset={loc.textOffset}
-                      dy={loc.textDy}
-                    />
-                  ),
-              )}
-            </svg>
-            {destinations.map(
-              (loc) =>
-                loc.iconType !== "river" && (
-                  <div
-                    key={loc.id}
-                    className="absolute"
-                    style={{
-                      top: loc.coords.top,
-                      left: loc.coords.left,
-                      transform: "translate(-50%, -50%)",
-                      zIndex: hoveredId === loc.id ? 100 : 30,
-                    }}
-                  >
-                    <button
-                      className="relative flex items-center justify-center outline-none"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setHoveredId(loc.id);
-                      }}
-                      onMouseEnter={() => !isMobile && setHoveredId(loc.id)}
-                    >
-                      <AnimatePresence>
-                        {(hoveredId === loc.id || !active) && (
-                          <motion.div
-                            initial={{ scale: 0.5, opacity: 0 }}
-                            animate={{ scale: 2.2, opacity: 0 }}
-                            transition={{ repeat: Infinity, duration: 2 }}
-                            style={{ borderColor: loc.color }}
-                            className="absolute inset-0 rounded-full border-2 opacity-50"
-                          />
-                        )}
-                      </AnimatePresence>
+
+            {destinations.map((loc) => (
+              <div
+                key={loc.id}
+                className="absolute"
+                style={{
+                  top: loc.coords.top,
+                  left: loc.coords.left,
+                  transform: "translate(-50%, -50%)",
+                  zIndex: hoveredId === loc.id ? 100 : 30,
+                }}
+              >
+                <button
+                  className="relative flex items-center justify-center outline-none"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setHoveredId(loc.id);
+                  }}
+                  onMouseEnter={() => !isMobile && setHoveredId(loc.id)}
+                >
+                  <AnimatePresence>
+                    {(hoveredId === loc.id || !active) && (
                       <motion.div
-                        animate={{
-                          y: hoveredId === loc.id ? -5 : 0,
-                          scale: hoveredId === loc.id ? 1.3 : 1,
-                          backgroundColor:
-                            hoveredId === loc.id ? loc.color : "#FFFFFF",
-                          opacity: active && hoveredId !== loc.id ? 0.2 : 1,
-                        }}
-                        className={`flex items-center justify-center border shadow-md transition-all ${hoveredId === loc.id ? "w-8 h-8 sm:w-9 sm:h-9 rounded-lg" : "w-4 h-4 sm:w-6 sm:h-6 rounded-md"}`}
-                      >
-                        {renderIcon(
-                          loc.iconType,
-                          hoveredId === loc.id,
-                          loc.color,
-                        )}
-                      </motion.div>
-                    </button>
-                  </div>
-                ),
-            )}
+                        initial={{ scale: 0.5, opacity: 0 }}
+                        animate={{ scale: 2.2, opacity: 0 }}
+                        transition={{ repeat: Infinity, duration: 2 }}
+                        style={{ borderColor: loc.color }}
+                        className="absolute inset-0 rounded-full border-2 opacity-50"
+                      />
+                    )}
+                  </AnimatePresence>
+                  <motion.div
+                    animate={{
+                      y: hoveredId === loc.id ? -5 : 0,
+                      scale: hoveredId === loc.id ? 1.3 : 1,
+                      backgroundColor:
+                        hoveredId === loc.id ? loc.color : "#FFFFFF",
+                      opacity: active && hoveredId !== loc.id ? 0.2 : 1,
+                    }}
+                    className={`flex items-center justify-center border shadow-md transition-all ${hoveredId === loc.id ? "w-8 h-8 sm:w-9 sm:h-9 rounded-lg" : "w-4 h-4 sm:w-6 sm:h-6 rounded-md"}`}
+                  >
+                    {renderIcon(loc.iconType, hoveredId === loc.id, loc.color)}
+                  </motion.div>
+                </button>
+              </div>
+            ))}
           </div>
 
           <AnimatePresence>
@@ -707,53 +519,51 @@ export default function SriLankaInteractiveMap() {
             >
               Directory
             </p>
-            {destinations
-              .filter((loc) => loc.iconType !== "river")
-              .map((loc) => (
-                <motion.button
-                  key={`nav-${loc.id}`}
-                  onMouseEnter={() => setHoveredId(loc.id)}
-                  onMouseLeave={() => setHoveredId(null)}
+            {destinations.map((loc) => (
+              <motion.button
+                key={`nav-${loc.id}`}
+                onMouseEnter={() => setHoveredId(loc.id)}
+                onMouseLeave={() => setHoveredId(null)}
+                animate={{
+                  x: hoveredId === loc.id ? -8 : 0,
+                  color:
+                    hoveredId === loc.id
+                      ? active
+                        ? "#fff"
+                        : loc.color
+                      : active
+                        ? "rgba(255,255,255,0.4)"
+                        : "rgba(0,0,0,0.5)",
+                  scale: hoveredId === loc.id ? 1.05 : 1,
+                }}
+                className="group relative text-[10px] font-bold tracking-wider uppercase flex items-center justify-end py-1.5 transition-all outline-none"
+              >
+                <span className="mr-3 overflow-hidden">
+                  {hoveredId === loc.id && (
+                    <motion.span
+                      initial={{ x: 20 }}
+                      animate={{ x: 0 }}
+                      className="inline-block mr-2 opacity-50"
+                    >
+                      —
+                    </motion.span>
+                  )}
+                  {loc.name}
+                </span>
+                <motion.div
                   animate={{
-                    x: hoveredId === loc.id ? -8 : 0,
-                    color:
+                    scale: hoveredId === loc.id ? 1.5 : 1,
+                    backgroundColor:
                       hoveredId === loc.id
-                        ? active
-                          ? "#fff"
-                          : loc.color
+                        ? loc.color
                         : active
-                          ? "rgba(255,255,255,0.4)"
-                          : "rgba(0,0,0,0.5)",
-                    scale: hoveredId === loc.id ? 1.05 : 1,
+                          ? "rgba(255,255,255,0.2)"
+                          : "rgba(0,0,0,0.1)",
                   }}
-                  className="group relative text-[10px] font-bold tracking-wider uppercase flex items-center justify-end py-1.5 transition-all outline-none"
-                >
-                  <span className="mr-3 overflow-hidden">
-                    {hoveredId === loc.id && (
-                      <motion.span
-                        initial={{ x: 20 }}
-                        animate={{ x: 0 }}
-                        className="inline-block mr-2 opacity-50"
-                      >
-                        —
-                      </motion.span>
-                    )}
-                    {loc.name}
-                  </span>
-                  <motion.div
-                    animate={{
-                      scale: hoveredId === loc.id ? 1.5 : 1,
-                      backgroundColor:
-                        hoveredId === loc.id
-                          ? loc.color
-                          : active
-                            ? "rgba(255,255,255,0.2)"
-                            : "rgba(0,0,0,0.1)",
-                    }}
-                    className="w-1.5 h-1.5 rounded-full transition-colors"
-                  />
-                </motion.button>
-              ))}
+                  className="w-1.5 h-1.5 rounded-full transition-colors"
+                />
+              </motion.button>
+            ))}
           </div>
         )}
 
