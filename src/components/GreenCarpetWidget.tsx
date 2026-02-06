@@ -42,12 +42,13 @@ export default function GreenRibbonPremiumStrip() {
     setTimeout(() => setShowAlert(false), 3000);
   };
 
+  // Fixed transition object with 'as const'
   const smoothTransition = {
     type: "spring",
     stiffness: 250,
     damping: 30,
     mass: 0.8,
-  };
+  } as const;
 
   return (
     <div className="relative w-full py-12 flex flex-col lg:flex-row justify-center items-center gap-8 bg-transparent px-4 overflow-hidden">
