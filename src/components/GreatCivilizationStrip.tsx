@@ -84,14 +84,12 @@ const greatCivilization = [
   { src: "/image/m74.jpeg" },
   { src: "/image/m75.jpeg" },
   { src: "/image/m76.jpeg" },
-
   { src: "/image/m78.jpeg" },
   { src: "/image/m79.jpeg" },
   { src: "/image/m80.jpeg" },
   { src: "/image/m81.jpeg" },
   { src: "/image/m82.jpeg" },
   { src: "/image/m83.jpeg" },
-
   { src: "/image/m89.jpeg" },
   { src: "/image/m90.jpeg" },
   { src: "/image/m91.jpeg" },
