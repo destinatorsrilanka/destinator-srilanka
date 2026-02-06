@@ -6,7 +6,6 @@ import { Leaf, Footprints } from "lucide-react";
 import Image from "next/image";
 
 const EcoTourism: React.FC = () => {
-  // පින්තූර 7ක් පමණක් ඇතුළත් කර ඇත
   const ecoImages = [
     { id: 6, src: "/image/ga6.PNG", title: "Sanctuaries" },
     { id: 5, src: "/image/ga5.PNG", title: "Gardens" },
@@ -15,6 +14,7 @@ const EcoTourism: React.FC = () => {
     { id: 3, src: "/image/ga3.PNG", title: "Rainforests" },
     { id: 7, src: "/image/ga7.PNG", title: "National Parks" },
     { id: 8, src: "/image/ga8.PNG", title: "Biodiversity" },
+    { id: 9, src: "/image/ga8.PNG", title: "Biodiversity" },
   ];
 
   const categories = [
@@ -22,39 +22,39 @@ const EcoTourism: React.FC = () => {
     "Conservation Forests",
     "Rainforests",
     "Plains",
-    "Gardens",
+    "Botenicak Gardens",
     "Sanctuaries",
     "National Parks",
   ];
 
   return (
-    <section className="w-full bg-[#050805] py-8 overflow-hidden">
+    <section className="w-full bg-[#050805] py-4 overflow-hidden relative">
       <div className="max-w-[1600px] mx-auto px-6 relative">
         {/* --- HEADER CONTENT OVERLAY --- */}
         <div className="absolute inset-0 z-20 pointer-events-none flex flex-col justify-center items-center px-6 text-center">
+          {/* ඉහළම ඇති කුඩා පෙළ - Mobile size increased to 12px */}
           <motion.div
-            initial={{ opacity: 0, y: 5 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="flex items-center gap-2 text-emerald-400 font-bold uppercase tracking-[0.3em] text-[10px] md:text-[11px] mb-1 drop-shadow-[0_2px_4px_rgba(0,0,0,1)]"
+            className="flex items-center gap-1.5 text-emerald-400 font-bold uppercase tracking-[0.2em] text-[12px] md:text-[10px] drop-shadow-lg"
           >
-            <span className="flex items-center gap-2 drop-shadow-lg">
-              <Leaf size={12} />
-              Sustainable Exploration
-            </span>
+            <Leaf size={12} className="md:w-[10px] md:h-[10px]" />
+            Sustainable Exploration
           </motion.div>
 
+          {/* මාතෘකාව - Mobile size increased to 3xl */}
           <motion.h2
-            initial={{ opacity: 0, y: 5 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="flex items-center justify-center gap-2 text-2xl md:text-5xl font-black tracking-tighter text-white drop-shadow-[0_4px_12px_rgba(0,0,0,1)]"
+            className="flex items-center justify-center gap-2 text-3xl md:text-4xl font-black tracking-tighter text-white drop-shadow-2xl mt-2 mb-2"
           >
             <span
               style={{
                 WebkitTextStroke: "1px rgba(255,255,255,0.9)",
-                letterSpacing: "0.05em",
-                lineHeight: "1",
+                letterSpacing: "0.03em",
+                lineHeight: "0.9",
               }}
               className="text-transparent inline-block"
             >
@@ -71,7 +71,7 @@ const EcoTourism: React.FC = () => {
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   display: "inline-block",
-                  lineHeight: "1",
+                  lineHeight: "0.9",
                 }}
               >
                 TOURISM
@@ -79,69 +79,53 @@ const EcoTourism: React.FC = () => {
             </span>
           </motion.h2>
 
+          {/* Categories පෙළ - Mobile size increased to 10px */}
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="max-w-4xl flex flex-wrap justify-center gap-x-2 gap-y-1 mt-3 px-3 py-1.5"
+            className="max-w-4xl flex flex-wrap justify-center gap-x-2 gap-y-1 px-3"
           >
             {categories.map((cat, i) => (
               <span
                 key={i}
-                className="text-[8px] md:text-[10px] text-emerald-50 font-semibold tracking-[0.1em] uppercase flex items-center drop-shadow-[0_2px_4px_rgba(0,0,0,1)]"
+                className="text-[10px] md:text-[9px] text-emerald-50/90 font-medium tracking-wider uppercase flex items-center drop-shadow-md"
               >
                 {cat}
                 {i !== categories.length - 1 && (
-                  <span className="ml-2 text-emerald-600/50">/</span>
+                  <span className="ml-2 text-emerald-400/30">/</span>
                 )}
               </span>
             ))}
           </motion.div>
 
-          {/* Footprint Animation */}
+          {/* --- INTEGRATED BADGE --- */}
           <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-            className="flex flex-col items-center mt-4"
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            className="relative w-14 h-14 md:w-16 md:h-16 flex items-center justify-center mt-3"
           >
-            <div className="flex gap-5 mb-1">
-              <motion.div
-                animate={{ opacity: [0, 1, 0], y: [0, -4, -8] }}
-                transition={{
-                  repeat: Infinity,
-                  duration: 2,
-                  times: [0, 0.4, 1],
-                }}
-              >
-                <Footprints
-                  size={18}
-                  className="text-emerald-400 rotate-[-20deg]"
+            <div className="absolute inset-0 bg-black/30 rounded-full blur-sm" />
+            <svg
+              className="absolute w-full h-full animate-[spin_15s_linear_infinite]"
+              viewBox="0 0 100 100"
+            >
+              <defs>
+                <path
+                  id="badgePath"
+                  d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0"
                 />
-              </motion.div>
-              <motion.div
-                animate={{ opacity: [0, 1, 0], y: [0, -4, -8] }}
-                transition={{
-                  repeat: Infinity,
-                  duration: 2,
-                  delay: 1,
-                  times: [0, 0.4, 1],
-                }}
-              >
-                <Footprints
-                  size={18}
-                  className="text-emerald-400 rotate-[20deg]"
-                />
-              </motion.div>
-            </div>
-            <p className="text-[11px] md:text-[12px] font-bold italic text-emerald-300 tracking-[0.2em] uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-              Leave only footprints
-            </p>
+              </defs>
+              <text className="fill-emerald-300/80 text-[10px] font-bold uppercase tracking-[0.3em]">
+                <textPath xlinkHref="#badgePath">
+                  LEAVE ONLY • LEAVE ONLY •{" "}
+                </textPath>
+              </text>
+            </svg>
+            <Footprints size={16} className="text-emerald-400 opacity-80" />
           </motion.div>
         </div>
 
-        {/* --- ADJUSTED IMAGE GRID FOR 7 ITEMS --- */}
-        {/* පින්තූර 7ක් තිබෙන විට එය හරියටම screen එක පුරා විහිදෙන ලෙස මෙහි සකසා ඇත */}
+        {/* --- IMAGE GRID --- */}
         <div className="flex flex-wrap lg:flex-nowrap justify-center w-full border border-white/5 relative z-10">
           {ecoImages.map((img, index) => (
             <motion.div
@@ -149,15 +133,16 @@ const EcoTourism: React.FC = () => {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.05 }}
-              className="relative h-32 md:h-44 w-1/2 sm:w-1/4 lg:w-[14.28%] overflow-hidden border-r border-white/5 group"
+              transition={{ delay: index * 0.03 }}
+              className="relative h-28 md:h-36 w-1/2 sm:w-1/4 lg:w-[14.28%] overflow-hidden border-r border-white/5"
             >
               <Image
                 src={img.src}
                 alt={img.title}
                 fill
-                className="object-cover opacity-40 group-hover:opacity-60 transition-opacity duration-500"
+                className="object-cover opacity-70"
               />
+              <div className="absolute inset-0 bg-black/20" />
               <div className="absolute bottom-0 left-0 w-full h-[1px] bg-emerald-500/20" />
             </motion.div>
           ))}

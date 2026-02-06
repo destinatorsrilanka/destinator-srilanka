@@ -59,9 +59,9 @@ export default function CompactHighlight() {
   }, []);
 
   return (
-    <section className="w-full h-auto md:h-[40vh] min-h-[550px] md:min-h-[380px] flex flex-col md:flex-row bg-[#020202] overflow-hidden translate-z-0">
+    <section className="w-full h-auto md:h-[40vh] min-h-[550px] md:min-h-[380px] flex flex-col md:flex-row bg-[#020202] overflow-hidden translate-z-0 px-4 md:px-8 py-6 gap-4">
       {/* --- Section: Waterfalls --- */}
-      <div className="relative flex-1 overflow-hidden border-b md:border-b-0 md:border-r border-white/10">
+      <div className="relative flex-1 overflow-hidden rounded-none border border-white/10">
         <AnimatePresence mode="wait">
           <motion.img
             key={WATERFALL_MAIN[wIndex]}
@@ -126,7 +126,7 @@ export default function CompactHighlight() {
       </div>
 
       {/* --- Section: Elephants --- */}
-      <div className="relative flex-1 overflow-hidden">
+      <div className="relative flex-1 overflow-hidden rounded-none border border-white/10">
         <AnimatePresence mode="wait">
           <motion.img
             key={ELEPHANT_MAIN[eIndex]}
@@ -158,7 +158,6 @@ export default function CompactHighlight() {
               >
                 LAND OF
               </h2>
-              {/* අකුරු තවත් කුඩා කර ඇති බැවින් කිසිවිටක යටට වැටෙන්නේ නැත */}
               <h2
                 className="text-amber-500 font-black uppercase tracking-tighter leading-none whitespace-nowrap mt-1 flex items-center justify-center gap-1 w-full"
                 style={{ fontSize: "clamp(0.65rem, 3.8vw, 2.2rem)" }}

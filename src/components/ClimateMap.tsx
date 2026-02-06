@@ -320,7 +320,7 @@ export default function SriLankaClimateSection() {
           only country in the world where every climate condition exists
           throughout the year. One can travel to each climatic zone in a few
           hours. Cultivation in Sri Lanka is also carried out mainly during{" "}
-          <span className="text-yellow-500 italic">two rainy seasons</span>.
+          <span className="text-yellow-500 italic">two main rainfalls</span>.
         </p>
         <div className="mt-4 flex justify-center gap-1">
           <div className="w-8 h-1 bg-yellow-500/20 rounded-full" />

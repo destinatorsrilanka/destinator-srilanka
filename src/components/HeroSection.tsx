@@ -5,6 +5,7 @@ import { ArrowRight, ChevronLeft, ChevronRight, Compass } from "lucide-react";
 
 const carouselImages = [
   {
+    id: "s1",
     src: "/image/sildenew.png",
     enTitle: "ISLAND BLISS",
     frTitle: "Vivez l’expérience Sri lankaise",
@@ -12,6 +13,7 @@ const carouselImages = [
       "Discover a unique island where diverse climates coexist 365 days a year. | Découvrez une île unique aux climats diversifiés.",
   },
   {
+    id: "s2",
     src: "/image/clucture.png",
     enTitle: "Timeless Heritage",
     frTitle: "Héritage Intemporel",
@@ -19,6 +21,7 @@ const carouselImages = [
       "Explore ancient cities and vibrant traditions of our rich history. | Explorez les cités anciennes et les traditions vibrantes.",
   },
   {
+    id: "s3",
     src: "/image/k.png",
     enTitle: "Wild Adventures",
     frTitle: "Des adventures sauvages ",
@@ -26,9 +29,34 @@ const carouselImages = [
       "Encounter majestic wildlife in their pristine natural habitats. | Rencontrez une faune majestueuse dalam son habitat naturel.",
   },
   {
+    id: "s4",
     src: "/image/slidenew1.png",
     enTitle: "Golden Beaches",
     frTitle: "Des plages dorées ",
+    description:
+      "Relax on the sun-kissed shores and crystal clear waters. | Détendez-vous sur les rivages ensoleillés.",
+  },
+  {
+    id: "s5",
+    src: "/image/slidenew1.png",
+    enTitle: "Sunkissed Shores",
+    frTitle: "Eaux Cristallines",
+    description:
+      "Relax on the sun-kissed shores and crystal clear waters. | Détendez-vous sur les rivages ensoleillés.",
+  },
+  {
+    id: "s6",
+    src: "/image/slidenew1.png",
+    enTitle: "Crystal Waters",
+    frTitle: "Plages Tropicales",
+    description:
+      "Relax on the sun-kissed shores and crystal clear waters. | Détendez-vous sur les rivages ensoleillés.",
+  },
+  {
+    id: "s7",
+    src: "/image/slidenew1.png",
+    enTitle: "Tropical Paradise",
+    frTitle: "Horizons Dorés",
     description:
       "Relax on the sun-kissed shores and crystal clear waters. | Détendez-vous sur les rivages ensoleillés.",
   },
@@ -42,7 +70,7 @@ export default function HeroSection() {
     setIsLoaded(true);
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % carouselImages.length);
-    }, 8000);
+    }, 5000);
     return () => clearInterval(timer);
   }, []);
 
@@ -60,47 +88,45 @@ export default function HeroSection() {
           __html: `
         @keyframes rotate-compass { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         @keyframes border-top-new { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
-        @keyframes border-right-new { 0% { transform: translateY(-100%); } 100% { transform: translateY(100%); } }
         @keyframes border-bottom-new { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-        @keyframes border-left-new { 0% { transform: translateY(100%); } 100% { transform: translateY(-100%); } }
         @keyframes slide-up { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         .animate-rotate-now { animation: rotate-compass 10s infinite linear !important; }
         .animate-border-top-new { animation: border-top-new 3s infinite linear; }
-        .animate-border-right-new { animation: border-right-new 3s infinite linear 0.75s; }
         .animate-border-bottom-new { animation: border-bottom-new 3s infinite linear 1.5s; }
-        .animate-border-left-new { animation: border-left-new 3s infinite linear 2.25s; }
         .animate-slide-up { animation: slide-up 0.8s forwards; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
       `,
         }}
       />
 
-      {/* Background Slider */}
+      {/* Background Images */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         {carouselImages.map((item, index) => (
           <div
-            key={index}
-            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentIndex ? "opacity-100 scale-110" : "opacity-0 scale-100"}`}
+            key={item.id}
+            className={`absolute inset-0 transition-opacity duration-[1500ms] ease-in-out ${index === currentIndex ? "opacity-100 scale-110" : "opacity-0 scale-100"}`}
             style={{
-              transition: "opacity 1.5s ease-in-out, transform 10s linear",
+              transform: index === currentIndex ? "scale(1.1)" : "scale(1)",
+              transition: "opacity 1.5s ease-in-out, transform 8s linear",
             }}
           >
             <Image
               src={item.src}
-              alt="Travel"
+              alt={item.enTitle}
               fill
               className="object-cover brightness-[0.45]"
-              priority
+              priority={index === 0}
             />
           </div>
         ))}
       </div>
 
-      {/* Main Container */}
       <div className="relative z-30 flex-grow w-full flex items-center px-6 md:px-12 lg:px-24">
-        {/* Flex-row මගින් වම සහ දකුණ එකම මට්ටමේ තබා, items-end මගින් ස්ලයිඩර් එක පාලනය කළා */}
-        <div className="flex flex-col lg:flex-row items-center lg:items-center justify-between w-full max-w-7xl mx-auto">
-          {/* Left Content (Center Alignment) */}
-          <div className="animate-slide-up flex flex-col items-start w-full lg:w-2/3">
+        {/* Changed justify-center (mobile) to justify-between (lg) */}
+        <div className="flex flex-col justify-center lg:justify-between h-full w-full max-w-7xl mx-auto pt-12 pb-6">
+          {/* Top Content Area - Centered on mobile, bottom-aligned on lg */}
+          <div className="animate-slide-up flex flex-col items-start w-full lg:w-3/4 lg:mt-20">
             <div className="flex flex-col items-start gap-3 mb-6">
               <div className="relative w-fit">
                 <div className="relative px-5 py-3 md:px-8 md:py-4 bg-white/5 backdrop-blur-md border border-white/10 overflow-hidden rounded-2xl flex flex-col items-center">
@@ -132,13 +158,13 @@ export default function HeroSection() {
 
             <div className="mb-8 w-full">
               <h2 className="text-orange-500 text-lg md:text-xl font-bold italic mb-2 uppercase tracking-wide">
-                {carouselImages[currentIndex]?.frTitle}
+                {carouselImages[currentIndex].frTitle}
               </h2>
-              <h1 className="text-white text-[2.5rem] sm:text-[3.5rem] md:text-6xl lg:text-7xl xl:text-8xl font-black uppercase leading-[1.1] mb-4 whitespace-nowrap">
-                {carouselImages[currentIndex]?.enTitle}
+              <h1 className="text-white text-[2.2rem] sm:text-[3rem] md:text-5xl lg:text-6xl xl:text-7xl font-black uppercase leading-tight mb-4 whitespace-nowrap">
+                {carouselImages[currentIndex].enTitle}
               </h1>
-              <p className="text-gray-300 text-sm md:text-lg max-w-xl leading-relaxed opacity-90">
-                {carouselImages[currentIndex]?.description}
+              <p className="text-gray-300 text-sm md:text-lg max-w-2xl leading-relaxed opacity-90">
+                {carouselImages[currentIndex].description}
               </p>
             </div>
 
@@ -148,7 +174,7 @@ export default function HeroSection() {
                   .getElementById("heritage")
                   ?.scrollIntoView({ behavior: "smooth" })
               }
-              className="bg-orange-500 hover:bg-white text-white hover:text-black px-10 py-4 rounded-full font-black transition-all flex items-center gap-2 text-lg shadow-2xl"
+              className="bg-orange-500 hover:bg-white text-white hover:text-black px-10 py-4 rounded-full font-black transition-all flex items-center gap-2 text-lg shadow-2xl group"
             >
               EXPLORE NOW{" "}
               <ArrowRight
@@ -158,14 +184,14 @@ export default function HeroSection() {
             </button>
           </div>
 
-          {/* Right Slider (මෙහි self-end සහ mt-24 මගින් පරතරය සියුම්ව සකස් කළා) */}
-          <div className="hidden lg:flex flex-col items-center gap-4 shrink-0 self-center lg:self-end lg:mb-[-40px]">
-            <div className="flex gap-2 p-2 bg-black/40 backdrop-blur-xl rounded-[2rem] border border-white/20">
+          {/* Bottom Right Slider & Nav - Hidden on mobile, flex on lg */}
+          <div className="hidden lg:flex flex-col items-center gap-4 mt-auto self-end w-fit">
+            <div className="flex items-center gap-3 p-3 bg-black/40 backdrop-blur-xl rounded-[2rem] border border-white/10 shadow-2xl max-w-full overflow-x-auto no-scrollbar">
               {carouselImages.map((item, index) => (
                 <button
-                  key={index}
+                  key={`thumb-${item.id}`}
                   onClick={() => setCurrentIndex(index)}
-                  className={`relative w-14 h-9 xl:w-20 xl:h-12 rounded-xl overflow-hidden border-2 transition-all duration-500 ${index === currentIndex ? "border-orange-500 scale-105" : "border-transparent opacity-40 hover:opacity-100"}`}
+                  className={`relative flex-shrink-0 w-16 h-10 md:w-20 md:h-12 lg:w-24 lg:h-14 rounded-xl overflow-hidden border-2 transition-all duration-500 shadow-md ${index === currentIndex ? "border-orange-500 scale-105 ring-4 ring-orange-500/20" : "border-transparent opacity-50 hover:opacity-100"}`}
                 >
                   <Image
                     src={item.src}
@@ -173,6 +199,9 @@ export default function HeroSection() {
                     fill
                     className="object-cover"
                   />
+                  {index === currentIndex && (
+                    <div className="absolute inset-0 bg-orange-500/10 animate-pulse" />
+                  )}
                 </button>
               ))}
             </div>
@@ -180,15 +209,21 @@ export default function HeroSection() {
             <div className="flex gap-4">
               <button
                 onClick={handlePrev}
-                className="p-3 rounded-full border border-white/20 bg-black/50 hover:bg-orange-500 text-white transition-all shadow-lg"
+                className="p-3 rounded-full border border-white/10 bg-black/50 hover:bg-orange-500 text-white transition-all shadow-xl backdrop-blur-md active:scale-95 group"
               >
-                <ChevronLeft size={24} />
+                <ChevronLeft
+                  size={20}
+                  className="group-hover:-translate-x-1 transition-transform"
+                />
               </button>
               <button
                 onClick={handleNext}
-                className="p-3 rounded-full border border-white/20 bg-black/50 hover:bg-orange-500 text-white transition-all shadow-lg"
+                className="p-3 rounded-full border border-white/10 bg-black/50 hover:bg-orange-500 text-white transition-all shadow-xl backdrop-blur-md active:scale-95 group"
               >
-                <ChevronRight size={24} />
+                <ChevronRight
+                  size={20}
+                  className="group-hover:translate-x-1 transition-transform"
+                />
               </button>
             </div>
           </div>
