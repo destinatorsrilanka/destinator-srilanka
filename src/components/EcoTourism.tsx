@@ -6,13 +6,13 @@ import { Leaf, Footprints } from "lucide-react";
 import Image from "next/image";
 
 const EcoTourism: React.FC = () => {
+  // පින්තූර 7ක් පමණක් ඇතුළත් කර ඇත
   const ecoImages = [
-    { id: 1, src: "/image/ga1.PNG", title: "Strict Nature Reserve" },
+    { id: 6, src: "/image/ga6.PNG", title: "Sanctuaries" },
+    { id: 5, src: "/image/ga5.PNG", title: "Gardens" },
+    { id: 4, src: "/image/ga4.PNG", title: "Plains" },
     { id: 2, src: "/image/ga2.PNG", title: "Conservation Forests" },
     { id: 3, src: "/image/ga3.PNG", title: "Rainforests" },
-    { id: 4, src: "/image/ga4.PNG", title: "Plains" },
-    { id: 5, src: "/image/ga5.PNG", title: "Gardens" },
-    { id: 6, src: "/image/ga6.PNG", title: "Sanctuaries" },
     { id: 7, src: "/image/ga7.PNG", title: "National Parks" },
     { id: 8, src: "/image/ga8.PNG", title: "Biodiversity" },
   ];
@@ -32,7 +32,6 @@ const EcoTourism: React.FC = () => {
       <div className="max-w-[1600px] mx-auto px-6 relative">
         {/* --- HEADER CONTENT OVERLAY --- */}
         <div className="absolute inset-0 z-20 pointer-events-none flex flex-col justify-center items-center px-6 text-center">
-          {/* Subtitle */}
           <motion.div
             initial={{ opacity: 0, y: 5 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -45,7 +44,6 @@ const EcoTourism: React.FC = () => {
             </span>
           </motion.div>
 
-          {/* Main Title */}
           <motion.h2
             initial={{ opacity: 0, y: 5 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -81,7 +79,6 @@ const EcoTourism: React.FC = () => {
             </span>
           </motion.h2>
 
-          {/* Categories List - (කළු පසුබිම ඉවත් කළා) */}
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -119,7 +116,7 @@ const EcoTourism: React.FC = () => {
               >
                 <Footprints
                   size={18}
-                  className="text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)] rotate-[-20deg]"
+                  className="text-emerald-400 rotate-[-20deg]"
                 />
               </motion.div>
               <motion.div
@@ -133,7 +130,7 @@ const EcoTourism: React.FC = () => {
               >
                 <Footprints
                   size={18}
-                  className="text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)] rotate-[20deg]"
+                  className="text-emerald-400 rotate-[20deg]"
                 />
               </motion.div>
             </div>
@@ -143,8 +140,9 @@ const EcoTourism: React.FC = () => {
           </motion.div>
         </div>
 
-        {/* --- OPTIMIZED IMAGE GRID --- */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-0 border border-white/5 relative z-10">
+        {/* --- ADJUSTED IMAGE GRID FOR 7 ITEMS --- */}
+        {/* පින්තූර 7ක් තිබෙන විට එය හරියටම screen එක පුරා විහිදෙන ලෙස මෙහි සකසා ඇත */}
+        <div className="flex flex-wrap lg:flex-nowrap justify-center w-full border border-white/5 relative z-10">
           {ecoImages.map((img, index) => (
             <motion.div
               key={img.id}
@@ -152,7 +150,7 @@ const EcoTourism: React.FC = () => {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.05 }}
-              className="relative h-32 md:h-44 overflow-hidden border-r border-white/5 group"
+              className="relative h-32 md:h-44 w-1/2 sm:w-1/4 lg:w-[14.28%] overflow-hidden border-r border-white/5 group"
             >
               <Image
                 src={img.src}

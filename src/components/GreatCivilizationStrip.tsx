@@ -12,14 +12,15 @@ const greatCivilization = [
   { src: "/image/m6.jpeg" },
   { src: "/image/m7.jpeg" },
   { src: "/image/m8.jpeg" },
+  { src: "/image/m14.jpeg" },
   { src: "/image/m9.jpeg" },
   { src: "/image/m10.jpeg" },
   { src: "/image/m11.jpeg" },
   { src: "/image/m12.jpeg" },
   { src: "/image/m13.jpeg" },
-  { src: "/image/m14.jpeg" },
+
   { src: "/image/m15.jpeg" },
-  { src: "/image/m16.jpeg" },
+
   { src: "/image/m17.jpeg" },
   { src: "/image/m18.jpeg" },
   { src: "/image/m19.jpeg" },
@@ -29,9 +30,9 @@ const greatCivilization = [
   { src: "/image/m23.jpeg" },
   { src: "/image/m24.jpeg" },
 
-  { src: "/image/m26.jpeg" },
   { src: "/image/m27.jpeg" },
   { src: "/image/m28.jpeg" },
+  { src: "/image/m16.jpeg" },
   { src: "/image/m29.jpeg" },
   { src: "/image/m30.jpeg" },
   { src: "/image/m31.jpeg" },
