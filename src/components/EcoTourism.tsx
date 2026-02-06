@@ -8,11 +8,7 @@ import Image from "next/image";
 const EcoTourism: React.FC = () => {
   const ecoImages = [
     { id: 1, src: "/image/ga1.PNG", title: "Strict Nature Reserve" },
-    {
-      id: 2,
-      src: "/image/ga2.PNG",
-      title: "Conservation Forests",
-    },
+    { id: 2, src: "/image/ga2.PNG", title: "Conservation Forests" },
     { id: 3, src: "/image/ga3.PNG", title: "Rainforests" },
     { id: 4, src: "/image/ga4.PNG", title: "Plains" },
     { id: 5, src: "/image/ga5.PNG", title: "Gardens" },
@@ -43,8 +39,10 @@ const EcoTourism: React.FC = () => {
             viewport={{ once: true }}
             className="flex items-center gap-2 text-emerald-400 font-bold uppercase tracking-[0.3em] text-[10px] md:text-[11px] mb-1 drop-shadow-[0_2px_4px_rgba(0,0,0,1)]"
           >
-            <Leaf size={12} />
-            Sustainable Exploration
+            <span className="flex items-center gap-2 drop-shadow-lg">
+              <Leaf size={12} />
+              Sustainable Exploration
+            </span>
           </motion.div>
 
           {/* Main Title */}
@@ -83,17 +81,17 @@ const EcoTourism: React.FC = () => {
             </span>
           </motion.h2>
 
-          {/* Categories List */}
+          {/* Categories List - (කළු පසුබිම ඉවත් කළා) */}
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="max-w-4xl flex flex-wrap justify-center gap-x-2 gap-y-1 mt-3 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/10"
+            className="max-w-4xl flex flex-wrap justify-center gap-x-2 gap-y-1 mt-3 px-3 py-1.5"
           >
             {categories.map((cat, i) => (
               <span
                 key={i}
-                className="text-[8px] md:text-[10px] text-emerald-50 font-semibold tracking-[0.1em] uppercase flex items-center"
+                className="text-[8px] md:text-[10px] text-emerald-50 font-semibold tracking-[0.1em] uppercase flex items-center drop-shadow-[0_2px_4px_rgba(0,0,0,1)]"
               >
                 {cat}
                 {i !== categories.length - 1 && (

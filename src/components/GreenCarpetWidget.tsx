@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { motion, AnimatePresence, Transition } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Sprout,
   ShieldCheck,
@@ -12,198 +12,190 @@ import {
   CheckCircle2,
   Ban,
   TreeDeciduous,
-  LeafyGreen,
 } from "lucide-react";
 
 export default function GreenRibbonPremiumStrip() {
-  const [isHovered, setIsHovered] = useState(false);
-  const [isInvestHovered, setIsInvestHovered] = useState(false);
+  const [hoveredCard, setHoveredCard] = useState<"green" | "invest" | null>(
+    null,
+  );
   const [showAlert, setShowAlert] = useState(false);
 
   const trees = [
-    { name: "Kumbuk", img: "/image/kubuk.webp" },
-    { name: "Mee", img: "/image/mee.jpg" },
+    {
+      name: "Kumbuk",
+      scientific: "Terminalia arjuna",
+      img: "/image/kubuk.webp",
+    },
+    {
+      name: "Mee",
+      scientific: "Madhuca longifolia",
+      img: "/image/mee.jpg",
+    },
   ];
 
   const handleAction = (type: "Planting" | "Investment") => {
     const url = new URL(window.location.href);
-    if (type === "Planting") {
-      url.searchParams.set("plant", "true");
-    } else {
-      url.searchParams.set("invest", "true");
-    }
+    url.searchParams.set(type === "Planting" ? "plant" : "invest", "true");
     window.history.replaceState({}, "", url.toString());
-
-    const inquirySection = document.getElementById("contact");
-    if (inquirySection) {
-      inquirySection.scrollIntoView({ behavior: "smooth" });
-    }
-
+    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
     setShowAlert(true);
     setTimeout(() => setShowAlert(false), 3000);
   };
 
-  const smoothTransition: Transition = {
+  const smoothTransition = {
     type: "spring",
-    stiffness: 200,
-    damping: 25,
-    mass: 0.5,
+    stiffness: 250,
+    damping: 30,
+    mass: 0.8,
   };
 
   return (
-    <div className="relative w-full py-12 flex flex-col lg:flex-row justify-center items-center gap-8 bg-transparent px-4 font-sans box-border">
-      {/* Success Alert */}
+    <div className="relative w-full py-12 flex flex-col lg:flex-row justify-center items-center gap-8 bg-transparent px-4 overflow-hidden">
+      {/* Alert Notification */}
       <AnimatePresence>
         {showAlert && (
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 50 }}
-            className="fixed top-5 right-5 z-[999] flex items-center gap-3 bg-[#064e3b] text-white px-6 py-4 rounded-2xl shadow-2xl border border-green-400/30"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="fixed top-10 right-1/2 translate-x-1/2 lg:right-10 lg:translate-x-0 z-[1000] flex items-center gap-3 bg-[#064e3b] text-white px-6 py-3 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-green-400/30 backdrop-blur-md"
           >
-            <CheckCircle2 className="text-green-400 w-6 h-6" />
-            <div className="flex flex-col">
-              <span className="font-bold text-sm">Selection Saved!</span>
-              <span className="text-[11px] text-green-200">
-                Inquiry options updated below.
-              </span>
-            </div>
+            <CheckCircle2 className="text-green-400 w-5 h-5" />
+            <span className="font-bold text-sm tracking-tight">
+              Selection Registered!
+            </span>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* 1. GREEN CARPET (HIGHLIGHTED ANTI-INVASIVE FOCUS) */}
+      {/* 1. GREEN CARPET CARD */}
       <motion.div
         layout
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
+        onMouseEnter={() => setHoveredCard("green")}
+        onMouseLeave={() => setHoveredCard(null)}
         transition={smoothTransition}
-        className="relative flex flex-col bg-[#064e3b] rounded-[2.5rem] lg:rounded-[6rem] shadow-2xl border border-green-400/20 cursor-pointer overflow-hidden"
+        className="relative flex flex-col bg-[#064e3b] rounded-[3rem] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] border border-white/10 cursor-pointer overflow-hidden group"
         style={{
-          width: isHovered ? "100%" : "320px",
-          maxWidth: isHovered ? "1100px" : "320px",
+          width: hoveredCard === "green" ? "100%" : "340px",
+          maxWidth: hoveredCard === "green" ? "900px" : "340px",
+          minHeight: "95px",
         }}
       >
         <AnimatePresence>
-          {isHovered && (
+          {hoveredCard === "green" && (
             <motion.div
               initial={{ opacity: 0 }}
-              animate={{ opacity: 0.4 }}
+              animate={{ opacity: 0.25 }}
               exit={{ opacity: 0 }}
               className="absolute inset-0 z-0"
             >
-              <div
-                style={{
-                  backgroundImage: "url('/image/Like_plant.jpeg')",
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }}
-                className="absolute inset-0 w-full h-full"
+              <img
+                src="/image/Like_plant.jpeg"
+                className="w-full h-full object-cover scale-105"
+                alt="bg"
               />
-              <div className="absolute inset-0 bg-gradient-to-b from-[#064e3b]/90 via-transparent to-[#064e3b]/95" />
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#064e3b]" />
             </motion.div>
           )}
         </AnimatePresence>
 
         <div className="relative z-10 w-full">
-          <motion.div
-            layout="position"
-            className="flex items-center px-8 h-[85px] gap-4 shrink-0"
-          >
-            <div className="p-3 bg-green-400/20 rounded-2xl backdrop-blur-md border border-green-400/30">
-              <Sprout className="text-green-400 w-6 h-6" />
+          {/* Header */}
+          <div className="flex items-center px-8 h-[95px] gap-5">
+            <div
+              className={`p-3.5 rounded-2xl border transition-all duration-500 shadow-inner ${hoveredCard === "green" ? "bg-green-500 border-green-300 text-white scale-110" : "bg-white/5 border-white/10 text-green-400"}`}
+            >
+              <Sprout className="w-7 h-7" />
             </div>
-            <div className="flex flex-col">
-              <span className="text-white font-black uppercase tracking-widest text-sm leading-none">
+            <div className="flex flex-col text-left">
+              <span className="text-white font-black uppercase tracking-[0.2em] text-[13px]">
                 Green Carpet
               </span>
-              <span className="text-green-400/60 text-[9px] uppercase font-bold tracking-widest mt-1">
-                Heritage Forest
+              <span className="text-green-400/60 text-[9px] uppercase font-bold tracking-[0.25em] mt-1">
+                Heritage Forest Reserve
               </span>
             </div>
-            {!isHovered && (
-              <motion.div
-                layout
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="ml-auto"
-              >
-                <ChevronRight className="text-green-400 w-5 h-5" />
-              </motion.div>
+            {hoveredCard !== "green" && (
+              <ChevronRight className="ml-auto text-white/10 w-6 h-6 group-hover:text-white group-hover:translate-x-1 transition-all" />
             )}
-          </motion.div>
+          </div>
 
           <AnimatePresence mode="wait">
-            {isHovered && (
+            {hoveredCard === "green" && (
               <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, height: 0 }}
-                transition={smoothTransition}
-                className="w-full overflow-hidden"
+                transition={{ duration: 0.4 }}
               >
-                <div className="flex flex-col items-center justify-center px-8 pb-7 gap-5 w-full text-center">
-                  {/* Environmental Protection Highlight */}
-                  <div className="flex flex-wrap justify-center items-center gap-6 w-full">
+                <div className="px-10 pb-10 flex flex-col items-center gap-8">
+                  <div className="w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+
+                  {/* Enhanced Trees Section */}
+                  <div className="flex flex-wrap justify-center gap-14">
                     <div className="flex flex-col items-center">
-                      <span className="text-[8px] text-green-400/60 uppercase font-black mb-2 tracking-widest">
-                        Endemic Only
+                      <span className="text-[8px] text-green-400/40 uppercase font-black mb-5 tracking-[0.3em]">
+                        Signature Endemics
                       </span>
-                      <div className="flex gap-4">
+                      <div className="flex gap-10">
                         {trees.map((tree, idx) => (
                           <div
                             key={idx}
-                            className="flex flex-col items-center group"
+                            className="flex flex-col items-center group/tree"
                           >
-                            <div className="w-14 h-14 rounded-full border-2 border-green-400/40 p-1 bg-black/40">
+                            <div className="relative w-24 h-24 lg:w-28 lg:h-28 rounded-full border-2 border-white/10 p-1.5 bg-black/40 backdrop-blur-sm transition-all duration-500 group-hover/tree:border-green-400 group-hover/tree:scale-110 shadow-2xl">
                               <img
                                 src={tree.img}
-                                className="w-full h-full object-cover rounded-full"
+                                className="w-full h-full object-cover rounded-full shadow-inner"
                                 alt={tree.name}
                               />
                             </div>
-                            <span className="text-[9px] text-green-300 font-bold uppercase mt-1">
+                            <span className="text-[12px] text-white font-black uppercase mt-4 tracking-wider">
                               {tree.name}
+                            </span>
+                            <span className="text-[9px] text-green-400/70 italic font-medium mt-0.5 tracking-tight">
+                              {tree.scientific}
                             </span>
                           </div>
                         ))}
                       </div>
                     </div>
 
-                    {/* Highlighted Ban Section */}
-                    <div className="flex flex-col items-center">
-                      <span className="text-[8px] text-red-400 uppercase font-black mb-2 tracking-widest">
-                        Environmental Ban
+                    {/* Ban Section */}
+                    <div className="flex flex-col items-center justify-center">
+                      <span className="text-[8px] text-red-400/40 uppercase font-black mb-5 tracking-[0.3em]">
+                        Strict Guidelines
                       </span>
-                      <div className="bg-red-500/10 border border-red-500/30 px-5 py-3 rounded-[2rem] backdrop-blur-md flex items-center gap-4 shadow-[0_0_20px_rgba(239,68,68,0.1)]">
-                        <div className="relative flex items-center justify-center">
+                      <div className="bg-red-500/5 border border-red-500/20 px-6 py-4 rounded-[2rem] flex items-center gap-5 backdrop-blur-md">
+                        <div className="relative">
                           <TreeDeciduous
                             size={22}
-                            className="text-red-500/20"
+                            className="text-red-500/10"
                           />
-                          <Ban size={28} className="text-red-500 absolute" />
+                          <Ban
+                            size={36}
+                            className="text-red-500 absolute -top-1.5 -left-1.5 opacity-80"
+                          />
                         </div>
-                        <div className="flex flex-col text-left border-l border-red-500/20 pl-4">
-                          <span className="text-red-400 font-black text-[10px] uppercase leading-none">
-                            Anti-Invasive Policy
+                        <div className="flex flex-col text-left border-l border-red-500/20 pl-5">
+                          <span className="text-red-400 font-black text-[11px] uppercase tracking-tighter">
+                            Anti-Invasive Protocol
                           </span>
-                          <span className="text-red-200/60 text-[8px] font-bold uppercase mt-1 leading-none tracking-tight">
-                            Opposing Non-Native Cultivation
+                          <span className="text-white/30 text-[7px] font-bold uppercase tracking-widest mt-0.5">
+                            Protecting Groundwater
                           </span>
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  <p className="text-white/90 font-medium italic text-[13px] max-w-[650px] leading-relaxed">
-                    "Join Kubuk, mee tree plantation in the Island. Help to
-                    protect our pristine world heritage geography of Central
-                    highlands.
-                    <span className="text-green-400 font-bold ml-1">
-                      We strictly oppose invasive monocultures that destroy our
-                      groundwater and damage our unique Sri Lankan ecosystem.
+                  <p className="text-white/60 italic text-[14px] max-w-[550px] leading-relaxed text-center font-medium">
+                    "Join our mission to restore the{" "}
+                    <span className="text-green-400 not-italic font-bold">
+                      Central Highlands
                     </span>
-                    "
+                    . We strictly prohibit invasive species to safeguard our
+                    natural heritage."
                   </p>
 
                   <button
@@ -211,9 +203,9 @@ export default function GreenRibbonPremiumStrip() {
                       e.stopPropagation();
                       handleAction("Planting");
                     }}
-                    className="px-10 py-3 bg-green-500 text-[#022c22] font-black uppercase text-[11px] rounded-full mt-2 hover:bg-white transition-all shadow-xl flex items-center gap-2"
+                    className="px-12 py-4 bg-white text-[#064e3b] font-black uppercase text-[11px] rounded-2xl hover:bg-green-500 hover:text-white transition-all shadow-[0_15px_30px_rgba(0,0,0,0.3)] flex items-center gap-3 active:scale-95"
                   >
-                    Like to Plant <ExternalLink size={15} />
+                    Request to Plant <ExternalLink size={16} />
                   </button>
                 </div>
               </motion.div>
@@ -222,102 +214,95 @@ export default function GreenRibbonPremiumStrip() {
         </div>
       </motion.div>
 
-      {/* 2. ENHANCED INVEST RIBBON (UNCHANGED) */}
+      {/* 2. INVEST RIBBON CARD */}
       <motion.div
         layout
-        onMouseEnter={() => setIsInvestHovered(true)}
-        onMouseLeave={() => setIsInvestHovered(false)}
+        onMouseEnter={() => setHoveredCard("invest")}
+        onMouseLeave={() => setHoveredCard(null)}
         transition={smoothTransition}
-        className="relative flex flex-col bg-gradient-to-br from-[#facc15] via-[#eab308] to-[#ca8a04] rounded-[2.5rem] lg:rounded-[6rem] shadow-[0_20px_50px_rgba(234,179,8,0.3)] border border-white/30 cursor-pointer overflow-hidden"
+        className="relative flex flex-col bg-gradient-to-br from-[#facc15] to-[#ca8a04] rounded-[3rem] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.4)] border border-white/20 cursor-pointer overflow-hidden group"
         style={{
-          width: isInvestHovered ? "100%" : "320px",
-          maxWidth: isInvestHovered ? "1100px" : "320px",
+          width: hoveredCard === "invest" ? "100%" : "340px",
+          maxWidth: hoveredCard === "invest" ? "900px" : "340px",
+          minHeight: "95px",
         }}
       >
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black/10 to-transparent pointer-events-none" />
-        <motion.div
-          layout="position"
-          className="flex items-center px-8 h-[85px] gap-4 shrink-0 relative z-10"
-        >
-          <div className="relative w-12 h-12 bg-[#111] rounded-2xl flex items-center justify-center border border-white/20 shadow-xl">
-            <MessageCircle className="text-yellow-500 w-6 h-6 fill-yellow-500" />
-            <motion.div
-              animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
-              transition={{ repeat: Infinity, duration: 2 }}
-              className="absolute inset-0 bg-yellow-400/20 rounded-2xl blur-md"
-            />
+        <div className="relative z-10 w-full">
+          <div className="flex items-center px-8 h-[95px] gap-5">
+            <div className="w-14 h-14 bg-black rounded-2xl flex items-center justify-center shadow-2xl transition-all duration-500 group-hover:rotate-6">
+              <MessageCircle className="text-yellow-500 w-7 h-7 fill-yellow-500" />
+            </div>
+            <div className="flex flex-col text-left">
+              <span className="text-black font-black uppercase text-[13px] tracking-tight">
+                Partner in Sri Lanka
+              </span>
+              <span className="text-black/50 text-[9px] uppercase font-black tracking-[0.2em] mt-1">
+                Sustainable Growth
+              </span>
+            </div>
+            {hoveredCard !== "invest" && (
+              <ArrowRight className="ml-auto text-black/20 w-6 h-6 group-hover:text-black group-hover:translate-x-1 transition-all" />
+            )}
           </div>
-          <div className="flex flex-col">
-            <span className="text-black font-black uppercase text-sm leading-none tracking-tight">
-              your partner in sri lanka
-            </span>
-            <span className="text-black/70 text-[9px] uppercase font-black tracking-[0.2em] mt-1">
-              Partnership Programs
-            </span>
-          </div>
-          {!isInvestHovered && (
-            <motion.div layout className="ml-auto bg-black/10 p-2 rounded-full">
-              <ArrowRight className="text-black w-5 h-5" />
-            </motion.div>
-          )}
-        </motion.div>
 
-        <AnimatePresence mode="wait">
-          {isInvestHovered && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={smoothTransition}
-              className="w-full overflow-hidden relative z-10"
-            >
-              <div className="flex flex-col items-center justify-center px-8 pb-6 gap-3 w-full text-center">
-                <div className="flex gap-4 mb-2">
-                  <div className="bg-black/10 backdrop-blur-md px-6 py-3 rounded-2xl border border-black/10 flex flex-col items-center shadow-inner group hover:bg-black/20 transition-colors">
-                    <TrendingUp
-                      size={22}
-                      className="text-black mb-1 group-hover:scale-110 transition-transform"
-                    />
-                    <span className="text-black font-black text-[10px] uppercase">
-                      ROI
-                    </span>
+          <AnimatePresence mode="wait">
+            {hoveredCard === "invest" && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.4 }}
+              >
+                <div className="px-10 pb-10 flex flex-col items-center gap-8">
+                  <div className="w-full h-px bg-black/5" />
+
+                  <div className="flex gap-6">
+                    {[
+                      {
+                        icon: <TrendingUp size={22} />,
+                        title: "High Yield",
+                        sub: "Annual ROI",
+                      },
+                      {
+                        icon: <ShieldCheck size={22} />,
+                        title: "Escrowed",
+                        sub: "100% Secure",
+                      },
+                    ].map((item, i) => (
+                      <div
+                        key={i}
+                        className="bg-black/5 border border-black/5 px-8 py-4 rounded-[1.5rem] flex flex-col items-center min-w-[130px] backdrop-blur-sm"
+                      >
+                        <div className="text-black/80 mb-2">{item.icon}</div>
+                        <span className="text-black font-black text-[10px] uppercase">
+                          {item.title}
+                        </span>
+                        <span className="text-black/40 text-[7px] font-bold uppercase mt-0.5">
+                          {item.sub}
+                        </span>
+                      </div>
+                    ))}
                   </div>
-                  <div className="bg-black/10 backdrop-blur-md px-6 py-3 rounded-2xl border border-black/10 flex flex-col items-center shadow-inner group hover:bg-black/20 transition-colors">
-                    <ShieldCheck
-                      size={22}
-                      className="text-black mb-1 group-hover:scale-110 transition-transform"
-                    />
-                    <span className="text-black font-black text-[10px] uppercase">
-                      Secure
-                    </span>
-                  </div>
+
+                  <p className="text-black font-extrabold italic text-base max-w-[480px] leading-relaxed text-center">
+                    "Secure your legacy with professional guidance on
+                    sustainable heritage investments."
+                  </p>
+
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleAction("Investment");
+                    }}
+                    className="px-12 py-4 bg-black text-yellow-500 font-black uppercase text-[11px] rounded-2xl shadow-2xl flex items-center gap-3 hover:scale-105 active:scale-95 transition-all"
+                  >
+                    Inquire for Investment <ArrowRight size={16} />
+                  </button>
                 </div>
-                <p className="text-black font-extrabold italic text-[14px] max-w-[550px] leading-relaxed drop-shadow-sm">
-                  "Get professional advice on sustainable heritage investments.
-                  Grow your capital while protecting the environment."
-                </p>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleAction("Investment");
-                  }}
-                  className="group relative px-10 py-3 bg-[#111] text-yellow-500 font-black uppercase text-[11px] rounded-full mt-2 shadow-2xl transition-all"
-                >
-                  <span className="relative z-10 flex items-center gap-2">
-                    Like to Invest?{" "}
-                    <ArrowRight
-                      size={16}
-                      className="group-hover:translate-x-1 transition-transform"
-                    />
-                  </span>
-                  <div className="absolute inset-0 rounded-full bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </motion.button>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </motion.div>
     </div>
   );

@@ -28,9 +28,9 @@ export default function Home() {
       <section id="heritage">
         <MapSection />
       </section>
-
-      <HighlightSection />
       <HighlandWaters />
+      <HighlightSection />
+
       <section id="climate">
         <ClimateMap />
       </section>
