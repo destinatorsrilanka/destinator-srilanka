@@ -6,7 +6,6 @@ import {
   ShieldCheck,
   ChevronRight,
   ExternalLink,
-  MessageCircle,
   ArrowRight,
   TrendingUp,
   CheckCircle2,
@@ -46,310 +45,301 @@ export default function GreenRibbonPremiumStrip() {
     setTimeout(() => setShowAlert(false), 3000);
   };
 
-  const smoothTransition = {
-    type: "spring",
-    stiffness: 300,
-    damping: 30,
-    mass: 0.8,
-  } as const;
+  const cardData = [
+    {
+      id: "green",
+      title: "Green Carpet",
+      sub: "Heritage Forest Reserve",
+      icon: <Sprout className="w-5 h-5" />,
+      bg: "/image/greencarpet.jpeg",
+      popupBg: "/image/Plant-Trees.jpg",
+      freeLabel: "FREE",
+    },
+    {
+      id: "invest",
+      title: "Partner in Sri Lanka",
+      sub: "Sustainable Growth",
+      icon: <TrendingUp className="w-5 h-5" />,
+      bg: "/image/invest.jpeg",
+      popupBg: "/image/invest2.jpeg",
+      freeLabel: "FREE",
+    },
+    {
+      id: "media",
+      title: "Free Media Coverage",
+      sub: "Photo & Video Services",
+      icon: <Camera className="w-5 h-5" />,
+      bg: "/image/freePoto.jpeg",
+      popupBg: "/image/freePoto2.jpeg",
+      freeLabel: "FREE",
+    },
+  ];
 
   return (
-    <div className="relative w-full py-6 flex flex-col lg:flex-row justify-center items-center gap-4 bg-transparent px-4 overflow-hidden">
-      {/* Alert Notification */}
+    <div className="relative w-full py-24 flex flex-col lg:flex-row justify-center items-center gap-5 bg-transparent px-4">
+      {/* Alert */}
       <AnimatePresence>
         {showAlert && (
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed top-10 right-1/2 translate-x-1/2 lg:right-10 lg:translate-x-0 z-[1000] flex items-center gap-3 bg-[#064e3b] text-white px-6 py-3 rounded-2xl shadow-2xl border border-green-400/30 backdrop-blur-md"
+            className="fixed top-10 right-1/2 translate-x-1/2 z-[1000] flex items-center gap-3 bg-[#064e3b] text-white px-6 py-3 border border-green-400 shadow-2xl font-bold uppercase text-[10px] tracking-widest"
           >
             <CheckCircle2 className="text-green-400 w-5 h-5" />
-            <span className="font-bold text-sm tracking-tight">
-              Selection Registered!
-            </span>
+            Selection Registered!
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* 1. GREEN CARPET CARD */}
-      <motion.div
-        layout
-        onMouseEnter={() => setHoveredCard("green")}
-        onMouseLeave={() => setHoveredCard(null)}
-        transition={smoothTransition}
-        className="relative flex flex-col bg-[#064e3b] rounded-[2rem] shadow-xl border border-white/10 cursor-pointer overflow-hidden group"
-        style={{
-          width: hoveredCard === "green" ? "100%" : "300px",
-          maxWidth: hoveredCard === "green" ? "400px" : "300px",
-          minHeight: "80px",
-          height: "auto",
-        }}
-      >
-        <AnimatePresence>
-          {hoveredCard === "green" && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.8 }}
-              exit={{ opacity: 0 }}
-              className="absolute inset-0 z-0"
-            >
-              <img
-                src="/image/Like_plant.jpeg"
-                className="w-full h-full object-cover"
-                alt="bg"
-              />
-              <div className="absolute inset-0 bg-black/10 shadow-inner" />
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        <div className="relative z-10 w-full">
-          <div className="flex items-center px-6 h-[80px] gap-4">
-            <div
-              className={`p-2 rounded-xl border transition-all duration-500 ${hoveredCard === "green" ? "bg-green-500 border-green-300 text-white" : "bg-white/5 border-white/10 text-green-400"}`}
-            >
-              <Sprout className="w-5 h-5" />
-            </div>
-            <div className="flex flex-col text-left">
-              <span className="text-white font-black uppercase tracking-[0.15em] text-[11px] drop-shadow-md">
-                Green Carpet
-              </span>
-              <span className="text-green-400/80 text-[7px] uppercase font-bold tracking-[0.2em] mt-0.5 drop-shadow-sm">
-                Heritage Forest Reserve
-              </span>
-            </div>
-            {!hoveredCard && (
-              <ChevronRight className="ml-auto text-white/10 w-5 h-5 group-hover:text-white" />
-            )}
-          </div>
-
+      {cardData.map((card) => (
+        <div
+          key={card.id}
+          className="relative group"
+          onMouseEnter={() => setHoveredCard(card.id as any)}
+          onMouseLeave={() => setHoveredCard(null)}
+        >
+          {/* POPUP AREA */}
           <AnimatePresence>
-            {hoveredCard === "green" && (
+            {hoveredCard === card.id && (
               <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.25 }}
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: -12 }}
+                exit={{ opacity: 0, y: 15 }}
+                className="absolute bottom-full left-1/2 -translate-x-1/2 lg:left-0 lg:translate-x-0 w-[350px] lg:w-[400px] mb-6 z-50 overflow-hidden border-4 border-white shadow-[0_30px_60px_rgba(0,0,0,0.7)] rounded-none bg-white"
               >
-                <div className="px-6 pb-5 flex flex-col items-center gap-4">
-                  <div className="w-full h-px bg-white/30" />
-                  <div className="flex flex-wrap justify-center gap-6">
-                    <div className="flex flex-col items-center">
-                      <span className="text-[7px] text-green-300 uppercase font-black mb-2 tracking-[0.2em] drop-shadow-sm">
-                        Signature Endemics
+                {/* 3. MEDIA POPUP (MAGAZINE STYLE - COMPACT HEIGHT) */}
+                {card.id === "media" ? (
+                  <div className="relative p-3 flex flex-col items-center">
+                    {/* Magazine Header Bar (Narrower) */}
+                    <div className="w-full flex justify-between items-center border border-gray-300 px-3 py-0.5 mb-3">
+                      <span className="text-[6px] font-bold text-gray-500 uppercase tracking-tighter">
+                        March 2025
                       </span>
-                      <div className="flex gap-3">
-                        {trees.map((tree, idx) => (
-                          <div key={idx} className="flex flex-col items-center">
-                            <div className="relative w-14 h-14 rounded-xl overflow-hidden border border-white/50 bg-black/40">
-                              <img
-                                src={tree.img}
-                                className="w-full h-full object-cover"
-                                alt={tree.name}
-                              />
-                            </div>
-                            <span className="text-[9px] text-white font-black uppercase mt-1.5 drop-shadow-md">
-                              {tree.name}
+                      <span className="text-[6px] font-bold text-gray-500 lowercase tracking-tighter">
+                        www.destinator.com
+                      </span>
+                      <span className="text-[6px] font-bold text-gray-500 uppercase tracking-tighter">
+                        Vol - 01
+                      </span>
+                    </div>
+
+                    {/* Magazine Title (Smaller Margin) */}
+                    <div className="text-center mb-3 leading-none">
+                      <h2 className="text-4xl font-black tracking-tighter text-black flex items-start justify-center">
+                        T<span className="text-[#eab308]">r</span>avel
+                      </h2>
+                      <p className="text-[10px] font-bold tracking-[0.4em] uppercase text-black -mt-1">
+                        Magazine
+                      </p>
+                    </div>
+
+                    {/* Magazine Cover Image (Reduced Height: 130px) */}
+                    <div className="w-full h-[130px] overflow-hidden shadow-inner mb-3">
+                      <img
+                        src={card.popupBg}
+                        alt="magazine-cover"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+
+                    {/* Magazine Quote (Smaller Font/Margin) */}
+                    <div className="text-center px-4 mb-3">
+                      <p className="text-[8px] font-black uppercase tracking-widest text-gray-800 leading-tight">
+                        "TRAVEL FAR ENOUGH, YOU MEET YOURSELF."
+                      </p>
+                    </div>
+
+                    {/* Buttons & Features (Compact Layout) */}
+                    <div className="w-full space-y-2 z-10 bg-white/80 backdrop-blur-sm p-1">
+                      <div className="grid grid-cols-2 gap-1.5">
+                        {[
+                          "Drone Coverage",
+                          "Social Reels",
+                          "Post-Production",
+                          "4K RAW Clips",
+                        ].map((feature, idx) => (
+                          <div
+                            key={idx}
+                            className="flex items-center gap-1.5 bg-gray-50 p-1.5 border border-gray-100"
+                          >
+                            <CheckCircle2
+                              size={10}
+                              className="text-green-600"
+                            />
+                            <span className="text-black text-[7px] font-black uppercase">
+                              {feature}
                             </span>
                           </div>
                         ))}
                       </div>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleAction("Media");
+                        }}
+                        className="w-full px-4 py-1.5 bg-black text-white font-black uppercase text-[8px] rounded-none shadow-lg flex items-center justify-center gap-2 hover:bg-yellow-500 hover:text-black transition-all"
+                      >
+                        Request Coverage <ArrowRight size={10} />
+                      </button>
                     </div>
-                    <div className="flex flex-col items-center justify-center">
-                      <span className="text-[7px] text-red-400 uppercase font-black mb-2 tracking-[0.2em] drop-shadow-sm">
-                        Strict Guidelines
-                      </span>
-                      <div className="bg-black/60 border border-red-500/30 px-3 py-2 rounded-xl flex flex-col items-center gap-1 backdrop-blur-sm">
-                        <div className="flex items-center gap-1.5">
-                          <Ban size={14} className="text-red-500" />
-                          <span className="text-red-500 font-black text-[9px] uppercase tracking-tighter">
-                            Say NO ❌ Pine 🌲 and Turpentine
-                          </span>
+                  </div>
+                ) : (
+                  /* ORIGINAL POPUPS FOR GREEN & INVEST (No Changes) */
+                  <div className="relative z-10 p-6">
+                    <div className="absolute inset-0 z-0">
+                      <img
+                        src={card.popupBg}
+                        alt="popup-bg"
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
+                    </div>
+
+                    <div className="relative z-10">
+                      {card.id === "green" && (
+                        <div className="flex flex-col items-center gap-4">
+                          <div className="flex flex-wrap justify-center gap-6">
+                            <div className="flex flex-col items-center">
+                              <span className="text-[7px] text-green-300 uppercase font-black mb-2 tracking-[0.2em] bg-black/40 px-2">
+                                Signature Endemics
+                              </span>
+                              <div className="flex gap-3">
+                                {trees.map((tree, idx) => (
+                                  <div
+                                    key={idx}
+                                    className="flex flex-col items-center"
+                                  >
+                                    <div className="w-14 h-14 border-2 border-white overflow-hidden rounded-none shadow-xl">
+                                      <img
+                                        src={tree.img}
+                                        className="w-full h-full object-cover"
+                                        alt={tree.name}
+                                      />
+                                    </div>
+                                    <span className="text-[9px] text-white font-black uppercase mt-1.5 drop-shadow-md">
+                                      {tree.name}
+                                    </span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                            <div className="flex flex-col items-center justify-center">
+                              <span className="text-[7px] text-red-400 uppercase font-black mb-2 tracking-[0.2em] bg-black/40 px-2">
+                                Strict Guidelines
+                              </span>
+                              <div className="bg-black/80 border border-red-500/50 px-3 py-2 flex flex-col items-center gap-1">
+                                <span className="text-red-500 font-black text-[9px] uppercase tracking-tighter">
+                                  <Ban size={14} className="inline mr-1" /> Say
+                                  NO ❌ Pine 🌲
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                          <p className="text-white italic text-[11px] leading-tight text-center font-bold drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">
+                            "Join us in making an exemplary contribution to the
+                            world by planting a valuable sapling that we provide
+                            FREE OF CHARGE."
+                          </p>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleAction("Planting");
+                            }}
+                            className="px-6 py-2 bg-white text-[#064e3b] font-black uppercase text-[8px] rounded-none hover:bg-green-600 hover:text-white transition-all shadow-2xl flex items-center gap-2"
+                          >
+                            Like to Plant <ExternalLink size={10} />
+                          </button>
                         </div>
-                        <span className="text-white/80 text-[5px] font-bold uppercase">
-                          trees Cultivation in High altitude lands!
-                        </span>
-                      </div>
+                      )}
+
+                      {card.id === "invest" && (
+                        <div className="flex flex-col items-center gap-4">
+                          <div className="flex gap-2">
+                            {[
+                              {
+                                icon: <TrendingUp size={16} />,
+                                title: "High Yield",
+                              },
+                              {
+                                icon: <ShieldCheck size={16} />,
+                                title: "Escrowed",
+                              },
+                            ].map((item, i) => (
+                              <div
+                                key={i}
+                                className="bg-black/70 border border-white/20 px-4 py-1.5 flex flex-col items-center min-w-[100px]"
+                              >
+                                <div className="text-yellow-500 mb-0.5">
+                                  {item.icon}
+                                </div>
+                                <span className="text-white font-black text-[8px] uppercase">
+                                  {item.title}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                          <p className="text-white font-extrabold italic text-[12px] leading-tight text-center drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">
+                            "Secure your legacy with sustainable heritage
+                            investments."
+                          </p>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleAction("Investment");
+                            }}
+                            className="px-6 py-2 bg-yellow-500 text-black font-black uppercase text-[8px] rounded-none shadow-lg flex items-center gap-2 hover:bg-white transition-all"
+                          >
+                            Inquire for Investment <ArrowRight size={10} />
+                          </button>
+                        </div>
+                      )}
                     </div>
                   </div>
-                  <p className="text-white italic text-[11px] max-w-[400px] leading-tight text-center font-bold drop-shadow-lg">
-                    "Join our mission to restore the{" "}
-                    <span className="text-green-400 not-italic font-black">
-                      Central Highlands
-                    </span>
-                    . We strictly prohibit invasive species."
-                  </p>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleAction("Planting");
-                    }}
-                    className="px-6 py-2 bg-white text-[#064e3b] font-black uppercase text-[8px] rounded-lg hover:bg-green-600 hover:text-white transition-all shadow-2xl flex items-center gap-2 active:scale-95"
-                  >
-                    Request to Plant <ExternalLink size={10} />
-                  </button>
-                </div>
+                )}
               </motion.div>
             )}
           </AnimatePresence>
-        </div>
-      </motion.div>
 
-      {/* 2. INVEST RIBBON CARD */}
-      <motion.div
-        layout
-        onMouseEnter={() => setHoveredCard("invest")}
-        onMouseLeave={() => setHoveredCard(null)}
-        transition={smoothTransition}
-        className="relative flex flex-col bg-gradient-to-br from-[#facc15] to-[#ca8a04] rounded-[2rem] shadow-xl border border-white/20 cursor-pointer overflow-hidden group"
-        style={{
-          width: hoveredCard === "invest" ? "100%" : "300px",
-          maxWidth: hoveredCard === "invest" ? "400px" : "300px",
-          minHeight: "80px",
-          height: "auto",
-        }}
-      >
-        <div className="relative z-10 w-full">
-          <div className="flex items-center px-6 h-[80px] gap-4">
-            <div className="w-10 h-10 bg-black rounded-xl flex items-center justify-center shadow-lg transition-transform group-hover:rotate-3">
-              <MessageCircle className="text-yellow-500 w-5 h-5 fill-yellow-500" />
+          {/* MAIN CARD STRIP (No changes) */}
+          <div
+            className="relative w-[300px] h-[85px] overflow-hidden border border-white/20 cursor-pointer group rounded-none"
+            onClick={() => {
+              if (card.id === "media") handleAction("Media");
+              if (card.id === "invest") handleAction("Investment");
+              if (card.id === "green") handleAction("Planting");
+            }}
+          >
+            <div className="absolute inset-0 z-0 transition-transform duration-700 group-hover:scale-110">
+              <img
+                src={card.bg}
+                alt="bg"
+                className="w-full h-full object-cover opacity-85 group-hover:opacity-100 transition-opacity"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/40 to-transparent" />
             </div>
-            <div className="flex flex-col text-left">
-              <span className="text-black font-black uppercase text-[11px] tracking-tight">
-                Partner in Sri Lanka
-              </span>
-              <span className="text-black/50 text-[7px] uppercase font-black tracking-[0.15em] mt-0.5">
-                Sustainable Growth
-              </span>
+            <div className="absolute top-0 right-0 z-20">
+              <div className="bg-yellow-500 text-black font-black text-[8px] px-3 py-1 flex items-center gap-1 shadow-lg">
+                <Sparkles size={10} className="fill-black" /> {card.freeLabel}
+              </div>
             </div>
-            {!hoveredCard && (
-              <ArrowRight className="ml-auto text-black/20 w-5 h-5" />
-            )}
+            <div className="relative z-10 flex items-center h-full px-6 gap-4">
+              <div className="p-2 bg-white/10 border border-white/30 text-white rounded-none group-hover:bg-white group-hover:text-black transition-all duration-300">
+                {card.icon}
+              </div>
+              <div className="flex flex-col">
+                <span className="text-white font-black uppercase tracking-[0.15em] text-[12px]">
+                  {card.title}
+                </span>
+                <span className="text-white/80 text-[7px] uppercase font-bold tracking-[0.2em] mt-0.5">
+                  {card.sub}
+                </span>
+              </div>
+              <ChevronRight className="ml-auto text-white group-hover:translate-x-1 transition-all" />
+            </div>
           </div>
-
-          <AnimatePresence>
-            {hoveredCard === "invest" && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.25 }}
-              >
-                <div className="px-6 pb-5 flex flex-col items-center gap-4">
-                  <div className="w-full h-px bg-black/10" />
-                  <div className="flex gap-2">
-                    {[
-                      { icon: <TrendingUp size={16} />, title: "High Yield" },
-                      { icon: <ShieldCheck size={16} />, title: "Escrowed" },
-                    ].map((item, i) => (
-                      <div
-                        key={i}
-                        className="bg-black/5 border border-black/5 px-4 py-1.5 rounded-xl flex flex-col items-center min-w-[100px] backdrop-blur-sm"
-                      >
-                        <div className="text-black/80 mb-0.5">{item.icon}</div>
-                        <span className="text-black font-black text-[8px] uppercase">
-                          {item.title}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                  <p className="text-black font-extrabold italic text-[12px] max-w-[350px] leading-tight text-center">
-                    "Secure your legacy with sustainable heritage investments."
-                  </p>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleAction("Investment");
-                    }}
-                    className="px-6 py-2 bg-black text-yellow-500 font-black uppercase text-[8px] rounded-lg shadow-lg flex items-center gap-2 hover:scale-105 active:scale-95 transition-all"
-                  >
-                    Inquire for Investment <ArrowRight size={10} />
-                  </button>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
         </div>
-      </motion.div>
-
-      {/* 3. FREE MEDIA CARD (NEWLY ADDED) */}
-      <motion.div
-        layout
-        onMouseEnter={() => setHoveredCard("media")}
-        onMouseLeave={() => setHoveredCard(null)}
-        transition={smoothTransition}
-        className="relative flex flex-col bg-gradient-to-br from-[#4f46e5] to-[#7c3aed] rounded-[2rem] shadow-xl border border-white/20 cursor-pointer overflow-hidden group"
-        style={{
-          width: hoveredCard === "media" ? "100%" : "300px",
-          maxWidth: hoveredCard === "media" ? "400px" : "300px",
-          minHeight: "80px",
-          height: "auto",
-        }}
-      >
-        <div className="relative z-10 w-full">
-          <div className="flex items-center px-6 h-[80px] gap-4">
-            <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center shadow-lg border border-white/20 backdrop-blur-sm group-hover:scale-110 transition-transform">
-              <Camera className="text-white w-5 h-5" />
-            </div>
-            <div className="flex flex-col text-left">
-              <span className="text-white font-black uppercase text-[11px] tracking-widest">
-                Free Media Coverage
-              </span>
-              <span className="text-white/60 text-[7px] uppercase font-black tracking-[0.15em] mt-0.5">
-                Photo & Video Services
-              </span>
-            </div>
-            {!hoveredCard && (
-              <Sparkles className="ml-auto text-white/30 w-4 h-4 animate-pulse" />
-            )}
-          </div>
-
-          <AnimatePresence>
-            {hoveredCard === "media" && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.25 }}
-              >
-                <div className="px-6 pb-5 flex flex-col items-center gap-4">
-                  <div className="w-full h-px bg-white/20" />
-                  <div className="flex gap-2">
-                    {[
-                      { icon: <Camera size={16} />, title: "Pro Photos" },
-                      { icon: <Video size={16} />, title: "4K Filming" },
-                    ].map((item, i) => (
-                      <div
-                        key={i}
-                        className="bg-white/10 border border-white/10 px-4 py-1.5 rounded-xl flex flex-col items-center min-w-[100px] backdrop-blur-md"
-                      >
-                        <div className="text-white mb-0.5">{item.icon}</div>
-                        <span className="text-white font-black text-[8px] uppercase">
-                          {item.title}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                  <p className="text-white font-extrabold italic text-[12px] max-w-[350px] leading-tight text-center drop-shadow-sm">
-                    "We capture your environmental impact for free. Professional
-                    media for your noble cause."
-                  </p>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleAction("Media");
-                    }}
-                    className="px-6 py-2 bg-white text-[#4f46e5] font-black uppercase text-[8px] rounded-lg shadow-lg flex items-center gap-2 hover:bg-yellow-400 hover:text-black active:scale-95 transition-all"
-                  >
-                    Book Free Session <ArrowRight size={10} />
-                  </button>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      </motion.div>
+      ))}
     </div>
   );
 }

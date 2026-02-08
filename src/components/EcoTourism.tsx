@@ -13,7 +13,7 @@ const EcoTourism: React.FC = () => {
     { id: 2, src: "/image/ga2.PNG", title: "Conservation Forests" },
     { id: 3, src: "/image/ga3.PNG", title: "Rainforests" },
     { id: 7, src: "/image/ga7.PNG", title: "National Parks" },
-    { id: 8, src: "/image/ga8.PNG", title: "Biodiversity" },
+    { id: 8, src: "/image/ga9.PNG", title: "Biodiversity" },
     { id: 9, src: "/image/ga8.PNG", title: "Biodiversity" },
   ];
 
@@ -22,7 +22,7 @@ const EcoTourism: React.FC = () => {
     "Conservation Forests",
     "Rainforests",
     "Plains",
-    "Botenicak Gardens",
+    "Botenical Gardens",
     "Sanctuaries",
     "National Parks",
   ];

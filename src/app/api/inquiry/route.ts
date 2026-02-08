@@ -16,21 +16,22 @@ export async function POST(req: Request) {
       transport,
       interest_plant,
       interest_invest,
+      interest_media, // නව අගය ලබා ගැනීම
     } = body;
 
-    // 1. Transporter එක සැකසීම (Gmail භාවිතා කරන්නේ නම්)
+    // 1. Transporter එක සැකසීම
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: process.env.EMAIL_USER, // ඔබේ Gmail ලිපිනය
-        pass: process.env.EMAIL_PASS, // ඔබේ App Password එක
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
       },
     });
 
     // 2. ඔබට ලැබෙන Email එක (Admin Notification)
     const adminMailOptions = {
       from: process.env.EMAIL_USER,
-      to: process.env.EMAIL_USER, // විස්තර ලැබිය යුතු ඊමේල් එක
+      to: process.env.EMAIL_USER,
       subject: `New Inquiry from ${name}`,
       html: `
         <div style="font-family: sans-serif; padding: 20px; border: 1px solid #eee;">
@@ -50,6 +51,9 @@ export async function POST(req: Request) {
           <p style="color: ${interest_invest === "Yes" ? "#ca8a04" : "#666"};">
             <strong>Investment Interest:</strong> ${interest_invest}
           </p>
+          <p style="color: ${interest_media === "Yes" ? "#2563eb" : "#666"};">
+            <strong>Media Coverage Interest:</strong> ${interest_media}
+          </p>
         </div>
       `,
     };
@@ -67,9 +71,11 @@ export async function POST(req: Request) {
           <p>Our team will review your details and get back to you within 24 hours.</p>
           <br />
           <div style="background: #f0fdf4; padding: 15px; border-radius: 10px; display: inline-block;">
-            <p style="margin: 0; font-size: 14px;">Selected Interests: 
-              ${interest_plant === "Yes" ? "🌳 Planting" : ""} 
-              ${interest_invest === "Yes" ? "🤝 Investment" : ""}
+            <p style="margin: 0; font-size: 14px; font-weight: bold;">Selected Interests:</p>
+            <p style="margin: 5px 0 0 0; font-size: 13px;">
+              ${interest_plant === "Yes" ? "🌳 Planting " : ""} 
+              ${interest_invest === "Yes" ? "🤝 Investment " : ""}
+              ${interest_media === "Yes" ? "📸 Media Coverage" : ""}
             </p>
           </div>
           <p style="margin-top: 20px; font-size: 12px; color: #666;">This is an automated response, please do not reply to this email.</p>

@@ -233,7 +233,7 @@ export default function SriLankaInteractiveMap() {
       setCurrentBgIndex((prev) => (prev + 1) % destinations.length);
     }, 4000);
     return () => clearInterval(timer);
-  }, [active, destinations.length]);
+  }, [active]);
 
   const mapRef = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
@@ -306,13 +306,13 @@ export default function SriLankaInteractiveMap() {
     <div className="min-h-screen w-full bg-[#f0f4f8] flex items-center justify-center p-0 sm:p-4 lg:p-10 overflow-hidden select-none font-sans">
       <motion.section
         animate={{ backgroundColor: active ? "#050505" : "#ffffff" }}
-        style={{ height: "800px" }}
-        className="relative w-full max-w-[1400px] overflow-hidden sm:rounded-[4rem] border shadow-2xl flex flex-col items-center justify-center transition-colors duration-1000"
+        className="relative w-full max-w-[1400px] h-[85vh] sm:h-[800px] overflow-hidden sm:rounded-[4rem] border shadow-2xl flex flex-col items-center justify-center transition-colors duration-1000"
         onClick={() => {
           if (isMobile) setHoveredId(null);
         }}
       >
-        <div className="absolute top-10 sm:top-12 left-8 lg:left-16 z-40 pointer-events-none">
+        {/* LOGO SECTION */}
+        <div className="absolute top-10 left-8 lg:left-16 z-40 pointer-events-none">
           <AnimatePresence>
             {!active && (
               <motion.div
@@ -323,20 +323,16 @@ export default function SriLankaInteractiveMap() {
                 <h3 className="text-[10px] font-bold tracking-[0.5em] uppercase mb-2 text-gray-400">
                   Sri Lanka Expedition
                 </h3>
-                <h1 className="text-4xl lg:text-6xl font-black tracking-tighter leading-none text-black">
+                <h1 className="text-3xl lg:text-6xl font-black tracking-tighter leading-none text-black">
                   THE CEYLON <br /> CHRONICLES
                 </h1>
-                <div className="relative h-[4px] lg:h-[6px] mt-2 w-full max-w-[300px] overflow-hidden">
+                <div className="relative h-[4px] mt-2 w-full max-w-[200px] lg:max-w-[300px] overflow-hidden">
                   <motion.div
                     initial={{ width: 0 }}
                     whileInView={{ width: "100%" }}
-                    transition={{
-                      delay: 0.7,
-                      duration: 1.5,
-                      ease: [0.22, 1, 0.36, 1],
-                    }}
-                    className="rounded-full"
-                    style={{ backgroundColor: LOGO_COLOR, height: "100%" }}
+                    transition={{ delay: 0.7, duration: 1.5 }}
+                    className="rounded-full h-full"
+                    style={{ backgroundColor: LOGO_COLOR }}
                   />
                 </div>
               </motion.div>
@@ -344,15 +340,12 @@ export default function SriLankaInteractiveMap() {
           </AnimatePresence>
         </div>
 
+        {/* BACKGROUND IMAGES */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           <AnimatePresence mode="popLayout">
             <motion.div
               key={active ? active.id : `slide-${currentBgIndex}`}
-              initial={{
-                opacity: 0,
-                scale: 1.15,
-                filter: "blur(10px) saturate(0)",
-              }}
+              initial={{ opacity: 0, scale: 1.1, filter: "blur(10px)" }}
               animate={{
                 opacity: active ? 0.75 : 0.4,
                 scale: 1,
@@ -360,8 +353,8 @@ export default function SriLankaInteractiveMap() {
                   ? "blur(0px) saturate(1.4)"
                   : "blur(2px) saturate(0.8)",
               }}
-              exit={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
-              transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 1.5 }}
               className="absolute inset-0"
             >
               <Image
@@ -373,23 +366,23 @@ export default function SriLankaInteractiveMap() {
                 alt="Background"
                 fill
                 priority
-                className="object-cover contrast-[1.1] brightness-[0.8]"
-                style={{ objectPosition: "center" }}
+                className="object-cover brightness-[0.7]"
               />
               <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/90" />
             </motion.div>
           </AnimatePresence>
         </div>
 
+        {/* MAP & INFO CONTAINER */}
         <motion.div
           ref={mapRef}
           onMouseMove={handleMouseMove}
           onMouseLeave={() => setHoveredId(null)}
           style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
           animate={{
-            x: active ? (isMobile ? 0 : "22%") : "0%",
-            scale: isMobile ? (active ? 0.75 : 1.35) : 1,
-            y: isMobile ? (active ? -40 : 40) : 0,
+            x: active ? (isMobile ? "-15%" : "22%") : "0%",
+            scale: isMobile ? (active ? 0.7 : 1.2) : 1,
+            y: isMobile ? (active ? -120 : 20) : 0,
           }}
           transition={SLOW_TRANSITION}
           className="relative w-full max-w-[310px] sm:max-w-[480px] lg:max-w-[650px] aspect-[4/5] z-10 flex items-center justify-center cursor-crosshair"
@@ -418,7 +411,6 @@ export default function SriLankaInteractiveMap() {
                     e.stopPropagation();
                     setHoveredId(loc.id);
                   }}
-                  onMouseEnter={() => !isMobile && setHoveredId(loc.id)}
                 >
                   <AnimatePresence>
                     {(hoveredId === loc.id || !active) && (
@@ -427,7 +419,7 @@ export default function SriLankaInteractiveMap() {
                         animate={{ scale: 2.2, opacity: 0 }}
                         transition={{ repeat: Infinity, duration: 2 }}
                         style={{ borderColor: loc.color }}
-                        className="absolute inset-0 rounded-full border-2 opacity-50"
+                        className="absolute inset-0 rounded-full border-2"
                       />
                     )}
                   </AnimatePresence>
@@ -439,7 +431,7 @@ export default function SriLankaInteractiveMap() {
                         hoveredId === loc.id ? loc.color : "#FFFFFF",
                       opacity: active && hoveredId !== loc.id ? 0.2 : 1,
                     }}
-                    className={`flex items-center justify-center border shadow-md transition-all ${hoveredId === loc.id ? "w-8 h-8 sm:w-9 sm:h-9 rounded-lg" : "w-4 h-4 sm:w-6 sm:h-6 rounded-md"}`}
+                    className={`flex items-center justify-center border shadow-md ${hoveredId === loc.id ? "w-8 h-8 rounded-lg" : "w-4 h-4 rounded-md"}`}
                   >
                     {renderIcon(loc.iconType, hoveredId === loc.id, loc.color)}
                   </motion.div>
@@ -448,18 +440,19 @@ export default function SriLankaInteractiveMap() {
             ))}
           </div>
 
+          {/* DESTINATION INFO CARD */}
           <AnimatePresence>
             {active && (
               <motion.div
                 key={active.id}
-                initial={{ opacity: 0, x: isMobile ? 0 : -350 }}
+                initial={{ opacity: 0, x: isMobile ? 50 : -350 }}
                 animate={{
                   opacity: 1,
-                  x: isMobile ? 0 : -450,
-                  y: isMobile ? 260 : 0,
+                  x: isMobile ? "20%" : -450,
+                  y: isMobile ? 240 : 0,
                 }}
-                exit={{ opacity: 0, x: isMobile ? 0 : -350 }}
-                className="absolute z-[1000] pointer-events-none w-[85vw] max-w-[340px] bg-white/10 backdrop-blur-3xl border border-white/20 p-5 rounded-[2rem] text-white shadow-2xl"
+                exit={{ opacity: 0, x: isMobile ? 50 : -350 }}
+                className="absolute z-[1000] pointer-events-none w-[80vw] max-w-[320px] bg-white/10 backdrop-blur-3xl border border-white/20 p-5 rounded-[2rem] text-white shadow-2xl"
               >
                 <div className="space-y-3">
                   <div className="flex items-center gap-2">
@@ -504,69 +497,64 @@ export default function SriLankaInteractiveMap() {
           </AnimatePresence>
         </motion.div>
 
-        {!isMobile && (
-          <div
-            className="absolute right-12 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-1 text-right pointer-events-auto max-h-[650px] overflow-y-auto pr-6"
-            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-          >
-            <style jsx>{`
-              div::-webkit-scrollbar {
-                display: none;
-              }
-            `}</style>
-            <p
-              className={`text-[9px] font-black tracking-[0.5em] uppercase mb-6 transition-opacity duration-500 ${active ? "text-white/40" : "text-black/30"}`}
-            >
-              Directory
-            </p>
-            {destinations.map((loc) => (
-              <motion.button
-                key={`nav-${loc.id}`}
-                onMouseEnter={() => setHoveredId(loc.id)}
-                onMouseLeave={() => setHoveredId(null)}
-                animate={{
-                  x: hoveredId === loc.id ? -8 : 0,
-                  color:
-                    hoveredId === loc.id
-                      ? active
-                        ? "#fff"
-                        : loc.color
-                      : active
-                        ? "rgba(255,255,255,0.4)"
-                        : "rgba(0,0,0,0.5)",
-                  scale: hoveredId === loc.id ? 1.05 : 1,
-                }}
-                className="group relative text-[10px] font-bold tracking-wider uppercase flex items-center justify-end py-1.5 transition-all outline-none"
-              >
-                <span className="mr-3 overflow-hidden">
-                  {hoveredId === loc.id && (
-                    <motion.span
-                      initial={{ x: 20 }}
-                      animate={{ x: 0 }}
-                      className="inline-block mr-2 opacity-50"
-                    >
-                      —
-                    </motion.span>
-                  )}
-                  {loc.name}
-                </span>
-                <motion.div
-                  animate={{
-                    scale: hoveredId === loc.id ? 1.5 : 1,
-                    backgroundColor:
-                      hoveredId === loc.id
-                        ? loc.color
-                        : active
-                          ? "rgba(255,255,255,0.2)"
-                          : "rgba(0,0,0,0.1)",
-                  }}
-                  className="w-1.5 h-1.5 rounded-full transition-colors"
-                />
-              </motion.button>
-            ))}
-          </div>
-        )}
+        {/* SIDE DIRECTORY (Fixed Vertical structure for all screens) */}
+        <div
+          className="absolute z-50 flex pointer-events-auto transition-all duration-700 right-4 sm:right-12 top-1/2 -translate-y-1/2 flex-col gap-1 text-right max-h-[70vh] sm:max-h-[650px] overflow-y-auto pr-4 sm:pr-6"
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        >
+          <style jsx>{`
+            div::-webkit-scrollbar {
+              display: none;
+            }
+          `}</style>
 
+          <p
+            className={`text-[9px] font-black tracking-[0.5em] uppercase mb-4 transition-opacity duration-500 ${active ? "text-white/40" : "text-black/30"}`}
+          >
+            Directory
+          </p>
+
+          {destinations.map((loc) => (
+            <motion.button
+              key={`nav-${loc.id}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                setHoveredId(loc.id);
+              }}
+              onMouseEnter={() => !isMobile && setHoveredId(loc.id)}
+              onMouseLeave={() => !isMobile && setHoveredId(null)}
+              animate={{
+                x: hoveredId === loc.id ? -8 : 0,
+                color:
+                  hoveredId === loc.id
+                    ? active
+                      ? "#fff"
+                      : loc.color
+                    : active
+                      ? "rgba(255,255,255,0.4)"
+                      : "rgba(0,0,0,0.5)",
+                scale: hoveredId === loc.id ? 1.05 : 1,
+              }}
+              className="group relative font-bold tracking-wider uppercase flex items-center justify-end transition-all outline-none whitespace-nowrap text-[10px] py-1.5"
+            >
+              <span className="mr-3">{loc.name}</span>
+              <motion.div
+                animate={{
+                  scale: hoveredId === loc.id ? 1.5 : 1,
+                  backgroundColor:
+                    hoveredId === loc.id
+                      ? loc.color
+                      : active
+                        ? "rgba(255,255,255,0.2)"
+                        : "rgba(0,0,0,0.1)",
+                }}
+                className="w-1.5 h-1.5 rounded-full shrink-0"
+              />
+            </motion.button>
+          ))}
+        </div>
+
+        {/* FOOTER */}
         <div className="absolute bottom-6 left-8 z-[100] flex items-center gap-3">
           <div
             className={`w-7 h-7 rounded-lg flex items-center justify-center font-black text-[10px] transition-colors duration-500 ${active ? "text-black" : "bg-black text-white"}`}

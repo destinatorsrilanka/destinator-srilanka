@@ -36,7 +36,7 @@ export default function TravelKeysStrip() {
         <div className="max-w-[1400px] mx-auto px-6 mb-5">
           <div className="flex flex-col border-l-4 border-yellow-500 pl-4 py-1">
             <h2 className="text-yellow-500 text-xl md:text-2xl font-black uppercase tracking-[0.25em] drop-shadow-[0_0_10px_rgba(234,179,8,0.5)] leading-none">
-              Travel Key visuals
+              Things to do | Bucket list visuals
             </h2>
             <div className="flex items-center gap-2 mt-1.5">
               <span className="h-[1px] w-4 bg-white/30"></span>

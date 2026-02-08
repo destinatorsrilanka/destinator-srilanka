@@ -5,14 +5,11 @@ import {
   Send,
   CheckCircle2,
   AlertCircle,
-  Facebook,
-  Instagram,
-  MessageCircle,
-  Music2,
-  TreePine,
-  Landmark,
   Camera,
   Check,
+  TreePine,
+  Landmark,
+  Zap,
 } from "lucide-react";
 
 export default function InquiryForm() {
@@ -21,6 +18,7 @@ export default function InquiryForm() {
 
   const [plantInterest, setPlantInterest] = useState(false);
   const [investInterest, setInvestInterest] = useState(false);
+  const [mediaInterest, setMediaInterest] = useState(false);
 
   const [arrivalDate, setArrivalDate] = useState("");
   const [departureDate, setDepartureDate] = useState("");
@@ -30,11 +28,13 @@ export default function InquiryForm() {
       const params = new URLSearchParams(window.location.search);
       const hasPlant = params.get("plant") === "true";
       const hasInvest = params.get("invest") === "true";
+      const hasMedia = params.get("media") === "true";
 
       if (hasPlant) setPlantInterest(true);
       if (hasInvest) setInvestInterest(true);
+      if (hasMedia) setMediaInterest(true);
 
-      if (hasPlant || hasInvest) {
+      if (hasPlant || hasInvest || hasMedia) {
         const newUrl = window.location.pathname;
         window.history.replaceState({}, "", newUrl);
       }
@@ -64,6 +64,7 @@ export default function InquiryForm() {
       location: formData.get("location"),
       interest_plant: plantInterest ? "Yes" : "No",
       interest_invest: investInterest ? "Yes" : "No",
+      interest_media: mediaInterest ? "Yes" : "No",
     };
 
     try {
@@ -82,6 +83,7 @@ export default function InquiryForm() {
         (e.target as HTMLFormElement).reset();
         setPlantInterest(false);
         setInvestInterest(false);
+        setMediaInterest(false);
         setArrivalDate("");
         setDepartureDate("");
       } else {
@@ -99,26 +101,19 @@ export default function InquiryForm() {
     {
       imgSrc: "/image/fb.webp",
       href: "https://www.facebook.com/share/17dR9DX9c8/?mibextid=wwXIfr",
-      color: "hover:scale-110",
-      isLarge: false,
     },
     {
       imgSrc: "/image/intergram.webp",
       href: "https://www.instagram.com/destinatorlk?igsh=aGxwbzNpaHF3NmNo&utm_source=qr",
-      color: "hover:scale-110",
-      isLarge: false,
     },
     {
       imgSrc: "/image/tiktok.png",
-      href: "https://www.tiktok.com/@destinator.lk?_r=1&_d=e24e5bdfi66221&sec_uid=MS4wLjABAAAAo9HUtOwWSVfoVyLRj5S81Y6BLz8JCUKou37P27o0QsuU7oq2RBDAUHNXUPqlMEpt&share_author_id=7104740320396018693&sharer_language=en&source=h5_m&u_code=e24e5mj67a47gl&item_author_type=1&utm_source=copy&tt_from=copy&enable_checksum=1&utm_medium=ios&share_link_id=EA2DD9F4-683C-40ED-976D-0D24E3020AFE&user_id=7104740320396018693&sec_user_id=MS4wLjABAAAAo9HUtOwWSVfoVyLRj5S81Y6BLz8JCUKou37P27o0QsuU7oq2RBDAUHNXUPqlMEpt&social_share_type=4&ug_btm=b8727,b0&utm_campaign=client_share&share_app_id=1233",
-      color: "hover:scale-110",
-      isLarge: false,
+      href: "https://www.tiktok.com/@destinator.lk?_r=1&_d=e24e5bdfi66221&sec_uid=...",
     },
     {
       imgSrc: "/image/whatsapp.png",
       href: "https://wa.me/message/L7DQU2A2QGEMJ1",
-      color: "hover:scale-110",
-      isLarge: true, // වට්සැප් එක විශාලව පෙන්වීමට
+      isLarge: true,
     },
   ];
 
@@ -139,73 +134,99 @@ export default function InquiryForm() {
                   Get in Touch
                 </h3>
               </div>
-              <h2 className="text-4xl md:text-5xl font-black text-black leading-tight mb-8 uppercase">
-                PLAN YOUR <br />{" "}
+              <h2 className="text-4xl md:text-5xl font-black text-black leading-tight mb-2 uppercase">
+                PLAN YOUR <br />
                 <span className="text-gray-300">DREAM JOURNEY.</span>
               </h2>
 
-              {/* INTEREST SELECTORS */}
-              <div className="space-y-4 mb-10">
-                <div
-                  onClick={() => setPlantInterest(!plantInterest)}
-                  className={`p-4 rounded-2xl border-2 cursor-pointer flex items-center gap-4 transition-all ${plantInterest ? "border-green-500 bg-green-50" : "border-gray-100 bg-gray-50"}`}
-                >
-                  <div
-                    className={`w-10 h-10 rounded-xl flex items-center justify-center ${plantInterest ? "bg-green-500 text-white" : "bg-white text-gray-400 border"}`}
-                  >
-                    <TreePine size={20} />
+              {/* RESPONSIVE INBOX & SOCIALS SECTION */}
+              <div className="mb-8 mt-6 p-6 bg-gray-50 rounded-[2rem] border border-gray-100">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="flex items-center justify-center w-6 h-6 bg-green-500 rounded-full">
+                    <Zap size={12} className="text-white fill-white" />
                   </div>
-                  <div className="flex-1 text-black font-bold text-xs uppercase">
-                    Heritage Forest
-                  </div>
-                  <div
-                    className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center ${plantInterest ? "bg-green-500 border-green-500" : "border-gray-200"}`}
-                  >
-                    {plantInterest && (
-                      <Check size={14} className="text-white" />
-                    )}
-                  </div>
+                  <span className="text-black font-black text-[10px] uppercase tracking-widest">
+                    Very Responsive Inbox
+                  </span>
                 </div>
 
-                <div
-                  onClick={() => setInvestInterest(!investInterest)}
-                  className={`p-4 rounded-2xl border-2 cursor-pointer flex items-center gap-4 transition-all ${investInterest ? "border-yellow-500 bg-yellow-50" : "border-gray-100 bg-gray-50"}`}
-                >
-                  <div
-                    className={`w-10 h-10 rounded-xl flex items-center justify-center ${investInterest ? "bg-yellow-500 text-white" : "bg-white text-gray-400 border"}`}
-                  >
-                    <Landmark size={20} />
-                  </div>
-                  <div className="flex-1 text-black font-bold text-xs uppercase">
-                    Investment
-                  </div>
-                  <div
-                    className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center ${investInterest ? "bg-yellow-500 border-yellow-500" : "border-gray-200"}`}
-                  >
-                    {investInterest && (
-                      <Check size={14} className="text-white" />
-                    )}
-                  </div>
+                <div className="flex gap-3">
+                  {socials.map((social, i) => (
+                    <a
+                      key={i}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center overflow-hidden transition-all hover:scale-110 border border-gray-100"
+                    >
+                      <img
+                        src={social.imgSrc}
+                        alt="social icon"
+                        className={`w-full h-full object-contain ${social.isLarge ? "scale-125" : "p-[6px]"}`}
+                      />
+                    </a>
+                  ))}
                 </div>
               </div>
 
-              {/* Social Media Images */}
-              <div className="flex gap-4">
-                {socials.map((social, i) => (
-                  <a
-                    key={i}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center overflow-hidden transition-all ${social.color}`}
-                  >
-                    <img
-                      src={social.imgSrc}
-                      alt="social icon"
-                      className={`w-full h-full object-contain ${social.isLarge ? "scale-125" : "p-[4px]"}`}
-                    />
-                  </a>
-                ))}
+              {/* INTEREST SELECTORS (IMAGE ONLY WITH OVERLAY CHECK) */}
+              <div className="flex gap-4 mb-10">
+                {/* Heritage Forest */}
+                <div
+                  onClick={() => setPlantInterest(!plantInterest)}
+                  className={`relative w-24 h-24 rounded-2xl overflow-hidden cursor-pointer border-2 transition-all ${plantInterest ? "border-green-500 scale-105 shadow-md" : "border-transparent hover:border-gray-200"}`}
+                >
+                  <img
+                    src="/image/form-plant.jpeg"
+                    alt="Forest"
+                    className="w-full h-full object-cover"
+                  />
+                  {plantInterest && (
+                    <div className="absolute inset-0 bg-green-500/20 flex items-center justify-center">
+                      <div className="bg-green-500 rounded-full p-1 shadow-lg">
+                        <Check size={18} className="text-white" />
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Investment */}
+                <div
+                  onClick={() => setInvestInterest(!investInterest)}
+                  className={`relative w-24 h-24 rounded-2xl overflow-hidden cursor-pointer border-2 transition-all ${investInterest ? "border-yellow-500 scale-105 shadow-md" : "border-transparent hover:border-gray-200"}`}
+                >
+                  <img
+                    src="/image/form-invest.jpeg"
+                    alt="Investment"
+                    className="w-full h-full object-cover"
+                  />
+                  {investInterest && (
+                    <div className="absolute inset-0 bg-yellow-500/20 flex items-center justify-center">
+                      <div className="bg-yellow-500 rounded-full p-1 shadow-lg">
+                        <Check size={18} className="text-white" />
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Free Media Coverage */}
+                <div
+                  onClick={() => setMediaInterest(!mediaInterest)}
+                  className={`relative w-24 h-24 rounded-2xl overflow-hidden cursor-pointer border-2 transition-all ${mediaInterest ? "border-blue-500 scale-105 shadow-md" : "border-transparent hover:border-gray-200"}`}
+                >
+                  <img
+                    src="/image/form-Photo.jpeg"
+                    alt="Media"
+                    className="w-full h-full object-cover"
+                  />
+                  {mediaInterest && (
+                    <div className="absolute inset-0 bg-blue-500/20 flex items-center justify-center">
+                      <div className="bg-blue-500 rounded-full p-1 shadow-lg">
+                        <Check size={18} className="text-white" />
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             </motion.div>
           </div>
@@ -222,7 +243,7 @@ export default function InquiryForm() {
                     <input
                       name="name"
                       required
-                      className="p-4 rounded-xl bg-gray-50 border outline-none text-sm text-black"
+                      className="p-4 rounded-xl bg-gray-50 border outline-none text-sm text-black focus:border-yellow-500 transition-colors"
                     />
                   </div>
                   <div className="flex flex-col">
@@ -233,7 +254,7 @@ export default function InquiryForm() {
                       name="email"
                       type="email"
                       required
-                      className="p-4 rounded-xl bg-gray-50 border outline-none text-sm text-black"
+                      className="p-4 rounded-xl bg-gray-50 border outline-none text-sm text-black focus:border-yellow-500 transition-colors"
                     />
                   </div>
                 </div>
@@ -248,7 +269,7 @@ export default function InquiryForm() {
                       value={arrivalDate}
                       onChange={(e) => setArrivalDate(e.target.value)}
                       required
-                      className="p-4 rounded-xl bg-gray-50 border outline-none text-sm text-black"
+                      className="p-4 rounded-xl bg-gray-50 border outline-none text-sm text-black focus:border-yellow-500"
                     />
                   </div>
                   <div className="flex flex-col">
@@ -261,7 +282,7 @@ export default function InquiryForm() {
                       value={departureDate}
                       onChange={(e) => setDepartureDate(e.target.value)}
                       required
-                      className="p-4 rounded-xl bg-gray-50 border outline-none text-sm text-black"
+                      className="p-4 rounded-xl bg-gray-50 border outline-none text-sm text-black focus:border-yellow-500"
                     />
                   </div>
                 </div>
@@ -274,7 +295,7 @@ export default function InquiryForm() {
                       name="guests"
                       type="number"
                       required
-                      className="p-4 rounded-xl bg-gray-50 border outline-none text-sm text-black"
+                      className="p-4 rounded-xl bg-gray-50 border outline-none text-sm text-black focus:border-yellow-500"
                     />
                   </div>
                   <div className="flex flex-col">
@@ -284,7 +305,7 @@ export default function InquiryForm() {
                     <input
                       name="kids"
                       type="number"
-                      className="p-4 rounded-xl bg-gray-50 border outline-none text-sm text-black"
+                      className="p-4 rounded-xl bg-gray-50 border outline-none text-sm text-black focus:border-yellow-500"
                     />
                   </div>
                   <div className="flex flex-col">
@@ -294,7 +315,7 @@ export default function InquiryForm() {
                     <input
                       name="country"
                       required
-                      className="p-4 rounded-xl bg-gray-50 border outline-none text-sm text-black"
+                      className="p-4 rounded-xl bg-gray-50 border outline-none text-sm text-black focus:border-yellow-500"
                     />
                   </div>
                 </div>
@@ -306,7 +327,7 @@ export default function InquiryForm() {
                     {["Car", "Van", "Bus"].map((mode) => (
                       <label
                         key={mode}
-                        className="flex items-center gap-2 text-xs font-bold text-gray-600"
+                        className="flex items-center gap-2 text-xs font-bold text-gray-600 cursor-pointer"
                       >
                         <input
                           type="radio"
@@ -327,7 +348,7 @@ export default function InquiryForm() {
                   <input
                     name="location"
                     required
-                    className="p-4 rounded-xl bg-gray-50 border outline-none text-sm text-black"
+                    className="p-4 rounded-xl bg-gray-50 border outline-none text-sm text-black focus:border-yellow-500"
                   />
                 </div>
 
@@ -347,7 +368,7 @@ export default function InquiryForm() {
               </form>
               {status.message && (
                 <div
-                  className={`mt-6 p-4 rounded-xl text-xs font-bold uppercase ${status.type === "success" ? "text-green-600" : "text-red-600"}`}
+                  className={`mt-6 p-4 rounded-xl text-xs font-bold uppercase ${status.type === "success" ? "text-green-600 bg-green-50" : "text-red-600 bg-red-50"}`}
                 >
                   {status.message}
                 </div>

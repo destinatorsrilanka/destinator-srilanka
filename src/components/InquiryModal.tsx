@@ -13,19 +13,21 @@ import {
   X,
 } from "lucide-react";
 
-// 1. Interface එකට අලුත් Props දෙක එකතු කළා
+// 1. Interface එකට initialMedia එකතු කළා
 interface InquiryModalProps {
   isOpen: boolean;
   onClose: () => void;
-  initialPlant?: boolean; // මෙතන '?' දැම්මේ මේවා optional නිසා
+  initialPlant?: boolean;
   initialInvest?: boolean;
+  initialMedia?: boolean; // අලුතින් එකතු කළා
 }
 
 export default function InquiryModal({
   isOpen,
   onClose,
-  initialPlant = false, // Default value එක false ලෙස ගත්තා
+  initialPlant = false,
   initialInvest = false,
+  initialMedia = false, // Default value එක false ලෙස ගත්තා
 }: InquiryModalProps) {
   const searchParams = useSearchParams();
   const [status, setStatus] = useState({ type: "", message: "" });
@@ -34,24 +36,25 @@ export default function InquiryModal({
   // Checkbox States
   const [plantChecked, setPlantChecked] = useState(false);
   const [investChecked, setInvestChecked] = useState(false);
+  const [mediaChecked, setMediaChecked] = useState(false); // නව State එක
 
-  // 2. Props වලින් එන අගයන් අනුව ටික් එක වැටෙන ලොජික් එක
+  // 2. Props සහ URL අනුව ටික් එක වැටෙන ලොජික් එක
   useEffect(() => {
     if (isOpen) {
-      // Navbar එකෙන් එවන props හෝ URL එකෙන් එන දත්ත පරීක්ෂා කිරීම
       const plant = initialPlant || searchParams.get("plant") === "true";
       const invest = initialInvest || searchParams.get("invest") === "true";
+      const media = initialMedia || searchParams.get("media") === "true"; // URL එකෙන් media බලයි
 
       setPlantChecked(plant);
       setInvestChecked(invest);
+      setMediaChecked(media);
 
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
-      // Modal එක වහද්දී status reset කරන්න (Optional)
       setStatus({ type: "", message: "" });
     }
-  }, [isOpen, searchParams, initialPlant, initialInvest]);
+  }, [isOpen, searchParams, initialPlant, initialInvest, initialMedia]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -70,6 +73,7 @@ export default function InquiryModal({
       location: formData.get("location"),
       interest_plant: plantChecked ? "Yes" : "No",
       interest_invest: investChecked ? "Yes" : "No",
+      interest_media: mediaChecked ? "Yes" : "No", // Data එකට එකතු කළා
     };
 
     try {
@@ -85,6 +89,7 @@ export default function InquiryModal({
           onClose();
           setPlantChecked(false);
           setInvestChecked(false);
+          setMediaChecked(false);
         }, 2000);
       } else {
         setStatus({ type: "error", message: "Server Error" });
@@ -173,6 +178,15 @@ export default function InquiryModal({
                     {investChecked
                       ? "✓ INTERESTED IN INVESTMENT"
                       : "INVESTMENT NOT SELECTED"}
+                  </div>
+                  {/* FREE MEDIA SELECTOR (NEW) */}
+                  <div
+                    onClick={() => setMediaChecked(!mediaChecked)}
+                    className={`text-[10px] font-bold p-2 rounded-lg border transition-all cursor-pointer select-none ${mediaChecked ? "bg-blue-50 border-blue-200 text-blue-700" : "bg-gray-50 border-gray-100 text-gray-400"}`}
+                  >
+                    {mediaChecked
+                      ? "✓ INTERESTED IN FREE MEDIA COVERAGE"
+                      : "MEDIA COVERAGE NOT SELECTED"}
                   </div>
                 </div>
 

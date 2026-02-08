@@ -38,7 +38,7 @@ const carouselImages = [
   },
   {
     id: "s5",
-    src: "/image/slidenew1.png",
+    src: "/image/hero-slide.jpeg",
     enTitle: "Sunkissed Shores",
     frTitle: "Eaux Cristallines",
     description:
@@ -46,7 +46,7 @@ const carouselImages = [
   },
   {
     id: "s6",
-    src: "/image/slidenew1.png",
+    src: "/image/hero-slide2.png",
     enTitle: "Crystal Waters",
     frTitle: "Plages Tropicales",
     description:
@@ -54,7 +54,7 @@ const carouselImages = [
   },
   {
     id: "s7",
-    src: "/image/slidenew1.png",
+    src: "/image/hero-slide3.png",
     enTitle: "Tropical Paradise",
     frTitle: "Horizons Dorés",
     description:
