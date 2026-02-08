@@ -11,7 +11,6 @@ import {
   CheckCircle2,
   Ban,
   Camera,
-  Video,
   Sparkles,
 } from "lucide-react";
 
@@ -42,6 +41,7 @@ export default function GreenRibbonPremiumStrip() {
     window.history.replaceState({}, "", url.toString());
     document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
     setShowAlert(true);
+    setHoveredCard(null); // Action එකෙන් පසු popup එක වසා දමයි
     setTimeout(() => setShowAlert(false), 3000);
   };
 
@@ -84,7 +84,7 @@ export default function GreenRibbonPremiumStrip() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed top-10 right-1/2 translate-x-1/2 z-[1000] flex items-center gap-3 bg-[#064e3b] text-white px-6 py-3 border border-green-400 shadow-2xl font-bold uppercase text-[10px] tracking-widest"
+            className="fixed top-10 left-1/2 -translate-x-1/2 z-[1000] flex items-center gap-3 bg-[#064e3b] text-white px-6 py-3 border border-green-400 shadow-2xl font-bold uppercase text-[10px] tracking-widest whitespace-nowrap"
           >
             <CheckCircle2 className="text-green-400 w-5 h-5" />
             Selection Registered!
@@ -103,15 +103,14 @@ export default function GreenRibbonPremiumStrip() {
           <AnimatePresence>
             {hoveredCard === card.id && (
               <motion.div
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: -12 }}
-                exit={{ opacity: 0, y: 15 }}
-                className="absolute bottom-full left-1/2 -translate-x-1/2 lg:left-0 lg:translate-x-0 w-[350px] lg:w-[400px] mb-6 z-50 overflow-hidden border-4 border-white shadow-[0_30px_60px_rgba(0,0,0,0.7)] rounded-none bg-white"
+                initial={{ opacity: 0, y: 15, x: "-50%" }}
+                animate={{ opacity: 1, y: -12, x: "-50%" }}
+                exit={{ opacity: 0, y: 15, x: "-50%" }}
+                // Responsive positioning: Mobile වලදී මැදට, Desktop වලදී කාඩ් එකට සාපේක්ෂව
+                className="fixed lg:absolute bottom-[20%] lg:bottom-full left-1/2 w-[90vw] max-w-[350px] lg:w-[400px] mb-6 z-[60] overflow-hidden border-4 border-white shadow-[0_30px_60px_rgba(0,0,0,0.7)] rounded-none bg-white"
               >
-                {/* 3. MEDIA POPUP (MAGAZINE STYLE - COMPACT HEIGHT) */}
                 {card.id === "media" ? (
                   <div className="relative p-3 flex flex-col items-center">
-                    {/* Magazine Header Bar (Narrower) */}
                     <div className="w-full flex justify-between items-center border border-gray-300 px-3 py-0.5 mb-3">
                       <span className="text-[6px] font-bold text-gray-500 uppercase tracking-tighter">
                         March 2025
@@ -124,7 +123,6 @@ export default function GreenRibbonPremiumStrip() {
                       </span>
                     </div>
 
-                    {/* Magazine Title (Smaller Margin) */}
                     <div className="text-center mb-3 leading-none">
                       <h2 className="text-4xl font-black tracking-tighter text-black flex items-start justify-center">
                         T<span className="text-[#eab308]">r</span>avel
@@ -134,7 +132,6 @@ export default function GreenRibbonPremiumStrip() {
                       </p>
                     </div>
 
-                    {/* Magazine Cover Image (Reduced Height: 130px) */}
                     <div className="w-full h-[130px] overflow-hidden shadow-inner mb-3">
                       <img
                         src={card.popupBg}
@@ -143,14 +140,12 @@ export default function GreenRibbonPremiumStrip() {
                       />
                     </div>
 
-                    {/* Magazine Quote (Smaller Font/Margin) */}
                     <div className="text-center px-4 mb-3">
                       <p className="text-[8px] font-black uppercase tracking-widest text-gray-800 leading-tight">
                         "TRAVEL FAR ENOUGH, YOU MEET YOURSELF."
                       </p>
                     </div>
 
-                    {/* Buttons & Features (Compact Layout) */}
                     <div className="w-full space-y-2 z-10 bg-white/80 backdrop-blur-sm p-1">
                       <div className="grid grid-cols-2 gap-1.5">
                         {[
@@ -185,7 +180,6 @@ export default function GreenRibbonPremiumStrip() {
                     </div>
                   </div>
                 ) : (
-                  /* ORIGINAL POPUPS FOR GREEN & INVEST (No Changes) */
                   <div className="relative z-10 p-6">
                     <div className="absolute inset-0 z-0">
                       <img
@@ -301,13 +295,13 @@ export default function GreenRibbonPremiumStrip() {
             )}
           </AnimatePresence>
 
-          {/* MAIN CARD STRIP (No changes) */}
+          {/* MAIN CARD STRIP */}
           <div
             className="relative w-[300px] h-[85px] overflow-hidden border border-white/20 cursor-pointer group rounded-none"
-            onClick={() => {
-              if (card.id === "media") handleAction("Media");
-              if (card.id === "invest") handleAction("Investment");
-              if (card.id === "green") handleAction("Planting");
+            onClick={(e) => {
+              // Card එක click කළ විට form එක update නොවී, popup එක පමණක් පෙන්වීමට
+              e.stopPropagation();
+              setHoveredCard(card.id as any);
             }}
           >
             <div className="absolute inset-0 z-0 transition-transform duration-700 group-hover:scale-110">
