@@ -5,36 +5,12 @@ import { ArrowRight, ChevronLeft, ChevronRight, Compass } from "lucide-react";
 
 const carouselImages = [
   {
-    id: "s1",
-    src: "/image/sildenew.png",
-    enTitle: "ISLAND BLISS",
-    frTitle: "Vivez l’expérience Sri lankaise",
-    description:
-      "Discover a unique island where diverse climates coexist 365 days a year. | Découvrez une île unique aux climats diversifiés.",
-  },
-  {
     id: "s2",
     src: "/image/clucture.png",
     enTitle: "Timeless Heritage",
     frTitle: "Héritage Intemporel",
     description:
       "Explore ancient cities and vibrant traditions of our rich history. | Explorez les cités anciennes et les traditions vibrantes.",
-  },
-  {
-    id: "s3",
-    src: "/image/k.png",
-    enTitle: "Wild Adventures",
-    frTitle: "Des adventures sauvages ",
-    description:
-      "Encounter majestic wildlife in their pristine natural habitats. | Rencontrez une faune majestueuse dalam son habitat naturel.",
-  },
-  {
-    id: "s4",
-    src: "/image/slidenew1.png",
-    enTitle: "Golden Beaches",
-    frTitle: "Des plages dorées ",
-    description:
-      "Relax on the sun-kissed shores and crystal clear waters. | Détendez-vous sur les rivages ensoleillés.",
   },
   {
     id: "s5",
@@ -52,6 +28,32 @@ const carouselImages = [
     description:
       "Relax on the sun-kissed shores and crystal clear waters. | Détendez-vous sur les rivages ensoleillés.",
   },
+  {
+    id: "s1",
+    src: "/image/sildenew.png",
+    enTitle: "ISLAND BLISS",
+    frTitle: "Vivez l’expérience Sri lankaise",
+    description:
+      "Discover a unique island where diverse climates coexist 365 days a year. | Découvrez une île unique aux climats diversifiés.",
+  },
+
+  {
+    id: "s4",
+    src: "/image/slidenew1.png",
+    enTitle: "Golden Beaches",
+    frTitle: "Des plages dorées ",
+    description:
+      "Relax on the sun-kissed shores and crystal clear waters. | Détendez-vous sur les rivages ensoleillés.",
+  },
+  {
+    id: "s3",
+    src: "/image/k.png",
+    enTitle: "Wild Adventures",
+    frTitle: "Des adventures sauvages ",
+    description:
+      "Encounter majestic wildlife in their pristine natural habitats. | Rencontrez une faune majestueuse dalam son habitat naturel.",
+  },
+
   {
     id: "s7",
     src: "/image/hero-slide3.png",

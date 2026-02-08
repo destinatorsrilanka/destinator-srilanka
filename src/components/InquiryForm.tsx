@@ -1,16 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  Send,
-  CheckCircle2,
-  AlertCircle,
-  Camera,
-  Check,
-  TreePine,
-  Landmark,
-  Zap,
-} from "lucide-react";
+import { motion } from "framer-motion";
+import { Send, Check, Zap } from "lucide-react";
 
 export default function InquiryForm() {
   const [status, setStatus] = useState({ type: "", message: "" });
@@ -139,39 +130,9 @@ export default function InquiryForm() {
                 <span className="text-gray-300">DREAM JOURNEY.</span>
               </h2>
 
-              {/* RESPONSIVE INBOX & SOCIALS SECTION */}
-              <div className="mb-8 mt-6 p-6 bg-gray-50 rounded-[2rem] border border-gray-100">
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="flex items-center justify-center w-6 h-6 bg-green-500 rounded-full">
-                    <Zap size={12} className="text-white fill-white" />
-                  </div>
-                  <span className="text-black font-black text-[10px] uppercase tracking-widest">
-                    Very Responsive Inbox
-                  </span>
-                </div>
-
-                <div className="flex gap-3">
-                  {socials.map((social, i) => (
-                    <a
-                      key={i}
-                      href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center overflow-hidden transition-all hover:scale-110 border border-gray-100"
-                    >
-                      <img
-                        src={social.imgSrc}
-                        alt="social icon"
-                        className={`w-full h-full object-contain ${social.isLarge ? "scale-125" : "p-[6px]"}`}
-                      />
-                    </a>
-                  ))}
-                </div>
-              </div>
-
-              {/* INTEREST SELECTORS (IMAGE ONLY WITH OVERLAY CHECK) */}
-              <div className="flex gap-4 mb-10">
-                {/* Heritage Forest */}
+              {/* 1. INTEREST SELECTORS */}
+              <div className="flex gap-4 mb-6 mt-8">
+                {/* Plant Interest */}
                 <div
                   onClick={() => setPlantInterest(!plantInterest)}
                   className={`relative w-24 h-24 rounded-2xl overflow-hidden cursor-pointer border-2 transition-all ${plantInterest ? "border-green-500 scale-105 shadow-md" : "border-transparent hover:border-gray-200"}`}
@@ -190,7 +151,7 @@ export default function InquiryForm() {
                   )}
                 </div>
 
-                {/* Investment */}
+                {/* Invest Interest */}
                 <div
                   onClick={() => setInvestInterest(!investInterest)}
                   className={`relative w-24 h-24 rounded-2xl overflow-hidden cursor-pointer border-2 transition-all ${investInterest ? "border-yellow-500 scale-105 shadow-md" : "border-transparent hover:border-gray-200"}`}
@@ -209,7 +170,7 @@ export default function InquiryForm() {
                   )}
                 </div>
 
-                {/* Free Media Coverage */}
+                {/* Media Interest */}
                 <div
                   onClick={() => setMediaInterest(!mediaInterest)}
                   className={`relative w-24 h-24 rounded-2xl overflow-hidden cursor-pointer border-2 transition-all ${mediaInterest ? "border-blue-500 scale-105 shadow-md" : "border-transparent hover:border-gray-200"}`}
@@ -226,6 +187,37 @@ export default function InquiryForm() {
                       </div>
                     </div>
                   )}
+                </div>
+              </div>
+
+              {/* 2. RESPONSIVE INBOX CARD */}
+              <div className="mb-8 p-6 bg-gray-50 rounded-[2rem] border border-gray-100">
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="flex items-center justify-center w-7 h-7 bg-green-500 rounded-full">
+                    <Zap size={14} className="text-white fill-white" />
+                  </div>
+                  <span className="text-black font-black text-[18px] uppercase tracking-widest">
+                    Very Responsive Inbox
+                  </span>
+                </div>
+
+                {/* SOCIAL ICONS (Circles Removed) */}
+                <div className="flex gap-6">
+                  {socials.map((social, i) => (
+                    <a
+                      key={i}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-8 h-8 flex items-center justify-center transition-all hover:scale-125"
+                    >
+                      <img
+                        src={social.imgSrc}
+                        alt="social icon"
+                        className={`w-full h-full object-contain ${social.isLarge ? "scale-110" : ""}`}
+                      />
+                    </a>
+                  ))}
                 </div>
               </div>
             </motion.div>

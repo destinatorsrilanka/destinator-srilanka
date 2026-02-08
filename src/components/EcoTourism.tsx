@@ -22,7 +22,7 @@ const EcoTourism: React.FC = () => {
     "Conservation Forests",
     "Rainforests",
     "Plains",
-    "Botenical Gardens",
+    "Botanical Gardens",
     "Sanctuaries",
     "National Parks",
   ];
@@ -32,18 +32,7 @@ const EcoTourism: React.FC = () => {
       <div className="max-w-[1600px] mx-auto px-6 relative">
         {/* --- HEADER CONTENT OVERLAY --- */}
         <div className="absolute inset-0 z-20 pointer-events-none flex flex-col justify-center items-center px-6 text-center">
-          {/* ඉහළම ඇති කුඩා පෙළ - Mobile size increased to 12px */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="flex items-center gap-1.5 text-emerald-400 font-bold uppercase tracking-[0.2em] text-[12px] md:text-[10px] drop-shadow-lg"
-          >
-            <Leaf size={12} className="md:w-[10px] md:h-[10px]" />
-            Sustainable Exploration
-          </motion.div>
-
-          {/* මාතෘකාව - Mobile size increased to 3xl */}
+          {/* මාතෘකාව */}
           <motion.h2
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -79,7 +68,7 @@ const EcoTourism: React.FC = () => {
             </span>
           </motion.h2>
 
-          {/* Categories පෙළ - Mobile size increased to 10px */}
+          {/* Categories පෙළ */}
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -98,10 +87,17 @@ const EcoTourism: React.FC = () => {
             ))}
           </motion.div>
 
-          {/* --- INTEGRATED BADGE --- */}
+          {/* --- ANIMATED BADGE (LEAVE ONLY FOOTPRINTS) --- */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            animate={{
+              scale: [1.8, 1, 1, 1.8], // ලොකුවට පෙනී, පසුව සාමාන්‍ය ප්‍රමාණයට පැමිණේ
+              opacity: [0, 1, 1, 0],
+            }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              times: [0, 0.2, 0.8, 1], // Animation එකේ timing පාලනය
+            }}
             className="relative w-14 h-14 md:w-16 md:h-16 flex items-center justify-center mt-3"
           >
             <div className="absolute inset-0 bg-black/30 rounded-full blur-sm" />
