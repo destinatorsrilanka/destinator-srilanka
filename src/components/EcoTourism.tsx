@@ -148,7 +148,7 @@ const EcoTourism: React.FC = () => {
             </div>
           </div>
 
-          {/* --- IMAGE GRID --- */}
+          {/* --- IMAGE GRID (MODIFIED FOR BETTER VISIBILITY) --- */}
           <div className="flex flex-wrap lg:flex-nowrap justify-center w-full relative z-10">
             {ecoImages.map((img, index) => (
               <motion.div
@@ -163,9 +163,10 @@ const EcoTourism: React.FC = () => {
                   src={img.src}
                   alt={img.title}
                   fill
-                  className="object-cover opacity-50"
+                  className="object-cover opacity-90 transition-opacity duration-500" // Opacity වැඩි කළා (50 සිට 90 දක්වා)
                 />
-                <div className="absolute inset-0 bg-black/40" />
+                {/* අකුරු පෙනීම සඳහා තිබූ අඳුරු Overlay එක අඩු කළා */}
+                <div className="absolute inset-0 bg-black/20" />
               </motion.div>
             ))}
           </div>

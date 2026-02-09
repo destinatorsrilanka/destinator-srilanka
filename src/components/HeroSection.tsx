@@ -23,7 +23,7 @@ const carouselImages = [
   {
     id: "s6",
     src: "/image/hero-slide2.png",
-    enTitle: "Devine chapter Atlantis",
+    enTitle: "Divine chapter Atlantis",
     frTitle: "Chapitre divin Atlantide",
     description:
       " Lost city,Geography,First Civilization inhabitants,City of Gods. | Cité perdue, Géographie, Premiers habitants de la civilisation, Cité des dieux.",

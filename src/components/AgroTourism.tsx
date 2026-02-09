@@ -10,11 +10,12 @@ const AgroTourism: React.FC = () => {
   const infoRef = useRef<HTMLDivElement>(null); // පැනලය හඳුනා ගැනීමට ref එකක්
 
   const agroImages = [
-    { id: 1, src: "/image/k1.jpeg", title: "Tea Estates" },
     { id: 2, src: "/image/k2.jpeg", title: "Paddy Fields" },
+    { id: 5, src: "/image/k6.jpeg", title: "Coconut" },
     { id: 3, src: "/image/k4.jpeg", title: "Cinnamon" },
     { id: 4, src: "/image/k5.jpeg", title: "Spice Garden" },
-    { id: 5, src: "/image/k6.jpeg", title: "Coconut" },
+    { id: 1, src: "/image/k1.jpeg", title: "Tea Estates" },
+
     { id: 6, src: "/image/k7.jpeg", title: "Organic" },
     { id: 7, src: "/image/k8.jpeg", title: "Orchards" },
     { id: 8, src: "/image/k9.WEBP", title: "Vegetable" },
