@@ -7,7 +7,7 @@ import Image from "next/image";
 
 const AgroTourism: React.FC = () => {
   const [showInfo, setShowInfo] = useState(false);
-  const infoRef = useRef<HTMLDivElement>(null); // පැනලය හඳුනා ගැනීමට ref එකක්
+  const infoRef = useRef<HTMLDivElement>(null);
 
   const agroImages = [
     { id: 2, src: "/image/k2.jpeg", title: "Paddy Fields" },
@@ -21,7 +21,6 @@ const AgroTourism: React.FC = () => {
     { id: 8, src: "/image/k9.WEBP", title: "Vegetable" },
   ];
 
-  // පිටත ක්ලික් කිරීම් හඳුනාගැනීම සඳහා useEffect
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
