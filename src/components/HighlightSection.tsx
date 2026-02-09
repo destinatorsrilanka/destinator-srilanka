@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Droplets, Trees, X } from "lucide-react";
 
@@ -35,6 +35,10 @@ export default function CompactHighlight() {
   const [showWInfo, setShowWInfo] = useState(false);
   const [showEInfo, setShowEInfo] = useState(false);
 
+  // පැනල් හඳුනා ගැනීමට Ref භාවිතය
+  const wInfoRef = useRef<HTMLDivElement>(null);
+  const eInfoRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     const timer = setInterval(() => {
       setWIndex((prev) => (prev + 1) % WATERFALL_MAIN.length);
@@ -42,6 +46,31 @@ export default function CompactHighlight() {
     }, 5000);
     return () => clearInterval(timer);
   }, []);
+
+  // පිටත ක්ලික් කිරීම් හඳුනාගැනීම සඳහා useEffect
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      // Waterfall පැනලය සඳහා
+      if (
+        showWInfo &&
+        wInfoRef.current &&
+        !wInfoRef.current.contains(event.target as Node)
+      ) {
+        setShowWInfo(false);
+      }
+      // Elephant පැනලය සඳහා
+      if (
+        showEInfo &&
+        eInfoRef.current &&
+        !eInfoRef.current.contains(event.target as Node)
+      ) {
+        setShowEInfo(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [showWInfo, showEInfo]);
 
   return (
     <section className="w-full h-auto md:h-[30vh] min-h-[450px] md:min-h-[300px] flex flex-col md:flex-row bg-[#020202] overflow-hidden translate-z-0 px-4 md:px-8 py-6 gap-4">
@@ -91,7 +120,10 @@ export default function CompactHighlight() {
             </p>
 
             <button
-              onClick={() => setShowWInfo(true)}
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowWInfo(true);
+              }}
               className="mt-4 text-[10px] font-bold text-white border border-white/30 px-3 py-1 hover:bg-white hover:text-black transition-all"
             >
               READ MORE
@@ -99,10 +131,10 @@ export default function CompactHighlight() {
           </div>
         </div>
 
-        {/* විස්තරය - මාර්ජින් සහ පැඩින් නිවැරදි කළා */}
         <AnimatePresence>
           {showWInfo && (
             <motion.div
+              ref={wInfoRef}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -192,7 +224,10 @@ export default function CompactHighlight() {
             </p>
 
             <button
-              onClick={() => setShowEInfo(true)}
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowEInfo(true);
+              }}
               className="mt-4 text-[10px] font-bold text-white border border-white/30 px-3 py-1 hover:bg-white hover:text-black transition-all"
             >
               READ MORE
@@ -200,10 +235,10 @@ export default function CompactHighlight() {
           </div>
         </div>
 
-        {/* විස්තරය - මාර්ජින් සහ පැඩින් නිවැරදි කළා */}
         <AnimatePresence>
           {showEInfo && (
             <motion.div
+              ref={eInfoRef}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}

@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Footprints, X } from "lucide-react";
 import Image from "next/image";
 
 const EcoTourism: React.FC = () => {
   const [showInfo, setShowInfo] = useState(false);
+  const infoRef = useRef<HTMLDivElement>(null); // පැනලය හඳුනා ගැනීමට ref එකක්
 
   const ecoImages = [
     { id: 6, src: "/image/ga6.PNG", title: "Sanctuaries" },
@@ -28,6 +29,32 @@ const EcoTourism: React.FC = () => {
     "Sanctuaries",
     "National Parks",
   ];
+
+  // පිටත ක්ලික් කිරීම් හඳුනාගැනීම සඳහා useEffect
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        showInfo &&
+        infoRef.current &&
+        !infoRef.current.contains(event.target as Node)
+      ) {
+        setShowInfo(false);
+      }
+    }
+
+    if (showInfo) {
+      // Button එක ක්ලික් කළ සැනින් වැසීම වැළැක්වීමට සුළු ප්‍රමාවකින් listener එක add කරයි
+      setTimeout(() => {
+        document.addEventListener("mousedown", handleClickOutside);
+      }, 0);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showInfo]);
 
   return (
     <section className="w-full bg-[#050805] py-4 overflow-hidden relative">
@@ -93,7 +120,10 @@ const EcoTourism: React.FC = () => {
             {/* READ MORE BUTTON (ටැග් වලට යටින්) */}
             <div className="pointer-events-auto mb-4">
               <button
-                onClick={() => setShowInfo(true)}
+                onClick={(e) => {
+                  e.stopPropagation(); // Button එක ක්ලික් කිරීම පිටත ක්ලික් කිරීමක් ලෙස සලකන්නේ නැත
+                  setShowInfo(true);
+                }}
                 className="text-[9px] font-bold text-white border border-emerald-500/40 px-5 py-1.5 hover:bg-emerald-500 hover:text-black transition-all uppercase tracking-widest backdrop-blur-md bg-black/20"
               >
                 READ MORE
@@ -134,7 +164,7 @@ const EcoTourism: React.FC = () => {
             </motion.div>
           </div>
 
-          {/* --- IMAGE GRID (උස එජස් කරන ලදී) --- */}
+          {/* --- IMAGE GRID --- */}
           <div className="flex flex-wrap lg:flex-nowrap justify-center w-full relative z-10">
             {ecoImages.map((img, index) => (
               <motion.div
@@ -161,6 +191,7 @@ const EcoTourism: React.FC = () => {
           <AnimatePresence>
             {showInfo && (
               <motion.div
+                ref={infoRef} // මෙතැනට ref එක සම්බන්ධ කළා
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}

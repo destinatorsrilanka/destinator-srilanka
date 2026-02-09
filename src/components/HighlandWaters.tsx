@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import Image from "next/image";
 
 export default function HighlandWaterLine() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const infoRef = useRef<HTMLDivElement>(null); // පැනලය හඳුනා ගැනීමට ref එකක්
   const [showInfo, setShowInfo] = useState(false);
 
   const images = [
@@ -23,6 +24,28 @@ export default function HighlandWaterLine() {
     "image/lake3.jpeg",
     "image/lake4.jpeg",
   ];
+
+  // සයිට් එකේ වෙන කොහේ හෝ ක්ලික් කළ විට වැසීමට අවශ්‍ය logic එක
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (infoRef.current && !infoRef.current.contains(event.target as Node)) {
+        setShowInfo(false);
+      }
+    }
+
+    if (showInfo) {
+      // delay එකක් සහිතව listener එක add කරන්නේ Read More button එක ක්ලික් කළ සැනින් නැවත වැසීම වැළැක්වීමටයි
+      setTimeout(() => {
+        document.addEventListener("mousedown", handleClickOutside);
+      }, 0);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showInfo]);
 
   return (
     <section className="py-12 bg-[#050505] overflow-hidden relative border-y border-white/5">
@@ -44,10 +67,14 @@ export default function HighlandWaterLine() {
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="relative border border-white/5 overflow-hidden p-2 md:p-4 bg-white/5 rounded-sm">
-          {/* READ MORE BUTTON (දකුණු පැත්තේ උඩට ගෙන ආවා) */}
+          {/* READ MORE BUTTON */}
           <div className="absolute top-4 right-4 z-20">
             <button
-              onClick={() => setShowInfo(true)}
+              id="read-more-btn"
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowInfo(true);
+              }}
               className="text-[10px] font-bold text-white border border-yellow-500/50 px-4 py-1.5 hover:bg-yellow-500 hover:text-black transition-all backdrop-blur-sm shadow-lg shadow-yellow-900/20"
             >
               READ MORE
@@ -56,7 +83,6 @@ export default function HighlandWaterLine() {
 
           {/* Main Grid: Video Left, Text Right */}
           <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12 relative z-10">
-            {/* 1. Video Container */}
             <div className="relative w-full lg:w-[45%] h-[180px] md:h-[230px] overflow-hidden rounded-sm border border-white/10 shadow-2xl bg-black shrink-0">
               <div className="absolute inset-0 z-0">
                 <video
@@ -73,7 +99,6 @@ export default function HighlandWaterLine() {
               </div>
             </div>
 
-            {/* 2. Text Content */}
             <div className="w-full lg:w-[55%] text-center lg:text-left flex flex-col justify-center">
               <motion.h2
                 initial={{ opacity: 0, x: 20 }}
@@ -96,7 +121,6 @@ export default function HighlandWaterLine() {
                 & Lakes | Four (4) Rivers to Four directions to the Ocean.
               </motion.p>
 
-              {/* Slider Container */}
               <div className="w-full overflow-hidden border border-white/10 bg-black/20 backdrop-blur-sm rounded-sm">
                 <motion.div
                   animate={{ x: ["0%", "-50%"] }}
@@ -129,6 +153,7 @@ export default function HighlandWaterLine() {
           <AnimatePresence>
             {showInfo && (
               <motion.div
+                ref={infoRef} // මෙතැනට ref එක සම්බන්ධ කළා
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 20 }}

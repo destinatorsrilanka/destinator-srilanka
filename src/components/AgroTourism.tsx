@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sprout, X } from "lucide-react";
 import Image from "next/image";
 
 const AgroTourism: React.FC = () => {
   const [showInfo, setShowInfo] = useState(false);
+  const infoRef = useRef<HTMLDivElement>(null); // පැනලය හඳුනා ගැනීමට ref එකක්
 
   const agroImages = [
     { id: 1, src: "/image/k1.jpeg", title: "Tea Estates" },
@@ -18,6 +19,32 @@ const AgroTourism: React.FC = () => {
     { id: 7, src: "/image/k8.jpeg", title: "Orchards" },
     { id: 8, src: "/image/k9.WEBP", title: "Vegetable" },
   ];
+
+  // පිටත ක්ලික් කිරීම් හඳුනාගැනීම සඳහා useEffect
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        showInfo &&
+        infoRef.current &&
+        !infoRef.current.contains(event.target as Node)
+      ) {
+        setShowInfo(false);
+      }
+    }
+
+    if (showInfo) {
+      // Button එක ක්ලික් කළ සැනින් වැසීම වැළැක්වීමට සුළු ප්‍රමාවකින් listener එක add කරයි
+      setTimeout(() => {
+        document.addEventListener("mousedown", handleClickOutside);
+      }, 0);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showInfo]);
 
   return (
     <section className="w-full bg-[#0a0a0a] py-12 overflow-hidden relative">
@@ -88,14 +115,17 @@ const AgroTourism: React.FC = () => {
             </motion.h2>
 
             <button
-              onClick={() => setShowInfo(true)}
+              onClick={(e) => {
+                e.stopPropagation(); // Button එක ක්ලික් කිරීම පිටත ක්ලික් කිරීමක් ලෙස සලකන්නේ නැත
+                setShowInfo(true);
+              }}
               className="mt-6 pointer-events-auto text-[10px] font-bold text-white border border-emerald-500/50 px-4 py-1.5 hover:bg-emerald-500 hover:text-black transition-all backdrop-blur-sm shadow-lg shadow-emerald-900/20"
             >
               READ MORE
             </button>
           </div>
 
-          {/* --- IMAGE GRID (විස්තරය පේන්න අවශ්‍ය ලස්සන උසක් ලබා දුන්නා) --- */}
+          {/* --- IMAGE GRID --- */}
           <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-0 relative z-10">
             {agroImages.map((img, index) => (
               <motion.div
@@ -121,6 +151,7 @@ const AgroTourism: React.FC = () => {
           <AnimatePresence>
             {showInfo && (
               <motion.div
+                ref={infoRef} // මෙතැනට ref එක සම්බන්ධ කළා
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}

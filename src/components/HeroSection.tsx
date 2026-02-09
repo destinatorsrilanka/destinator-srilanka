@@ -40,7 +40,7 @@ const carouselImages = [
   {
     id: "s4",
     src: "/image/slidenew1.png",
-    enTitle: "Sunkissed Shores.",
+    enTitle: "Sunkissed Shores",
     frTitle: " Eaux Cristallines ",
     description:
       "Relax on the sun-kissed shores and crystal clear waters. | Détendez-vous sur les rivages ensoleillés.",
@@ -57,8 +57,8 @@ const carouselImages = [
   {
     id: "s7",
     src: "/image/hero-slide3.png",
-    enTitle: "Kingdom of Lanka | RAVANA",
-    frTitle: "Royaume du Lanka | RAVANA",
+    enTitle: "Kingdom of RAVANA",
+    frTitle: "Royaume du RAVANA",
     description:
       "A legendary, high-tech golden kingdom; modern Sri Lanka. |Un royaume doré légendaire et de haute technologie ; le Sri Lanka moderne",
   },

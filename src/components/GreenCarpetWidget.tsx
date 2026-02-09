@@ -1,19 +1,13 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Sprout,
-  ShieldCheck,
   ChevronRight,
   ExternalLink,
   ArrowRight,
-  TrendingUp,
   CheckCircle2,
   Ban,
-  Camera,
-  Sparkles,
   CheckSquare,
-  X,
 } from "lucide-react";
 
 export default function GreenRibbonPremiumStrip() {
@@ -21,6 +15,7 @@ export default function GreenRibbonPremiumStrip() {
     "green" | "invest" | "media" | null
   >(null);
   const [showAlert, setShowAlert] = useState(false);
+  const popupRef = useRef<HTMLDivElement>(null);
 
   const trees = [
     {
@@ -30,6 +25,24 @@ export default function GreenRibbonPremiumStrip() {
     },
     { name: "Mee", scientific: "Madhuca longifolia", img: "/image/mee.PNG" },
   ];
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        hoveredCard &&
+        popupRef.current &&
+        !popupRef.current.contains(event.target as Node)
+      ) {
+        setHoveredCard(null);
+      }
+    }
+    if (hoveredCard) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [hoveredCard]);
 
   const handleAction = (type: "Planting" | "Investment" | "Media") => {
     const url = new URL(window.location.href);
@@ -89,11 +102,11 @@ export default function GreenRibbonPremiumStrip() {
           key={card.id}
           className="relative group"
           onMouseEnter={() => setHoveredCard(card.id as any)}
-          onMouseLeave={() => setHoveredCard(null)}
         >
           <AnimatePresence>
             {hoveredCard === card.id && (
               <motion.div
+                ref={popupRef}
                 initial={{ opacity: 0, y: 15, x: "-50%" }}
                 animate={{ opacity: 1, y: -12, x: "-50%" }}
                 exit={{ opacity: 0, y: 15, x: "-50%" }}
@@ -103,8 +116,8 @@ export default function GreenRibbonPremiumStrip() {
                     : "w-[90vw] max-w-[350px] lg:w-[400px]"
                 }`}
               >
-                {/* 1. INVESTMENT POPUP (Content Intact) */}
                 {card.id === "invest" ? (
+                  /* 1. INVESTMENT POPUP */
                   <div className="relative w-full h-[220px] overflow-hidden bg-slate-900">
                     <img
                       src={card.popupBg}
@@ -153,7 +166,7 @@ export default function GreenRibbonPremiumStrip() {
                     </div>
                   </div>
                 ) : card.id === "media" ? (
-                  /* 2. MEDIA POPUP (All original content + Reduced Height) */
+                  /* 2. MEDIA POPUP (With "SOFT COPY ONLY" Highlight) */
                   <div className="relative p-3 flex flex-col items-center">
                     <div className="text-center mb-2 leading-none">
                       <h2 className="text-3xl font-black tracking-tighter text-black flex items-start justify-center">
@@ -163,38 +176,21 @@ export default function GreenRibbonPremiumStrip() {
                         Album
                       </p>
                     </div>
-                    <div className="w-full h-[120px] overflow-hidden shadow-inner mb-2">
+                    <div className="relative w-full h-[120px] overflow-hidden shadow-inner mb-2">
                       <img
                         src={card.popupBg}
                         alt="magazine"
                         className="w-full h-full object-cover"
                       />
+                      {/* Soft Copy Only Tag - කැපී පෙනෙන ලෙස */}
+                      <div className="absolute top-2 right-2 bg-yellow-400 text-black text-[7px] font-black px-2 py-0.5 tracking-tighter shadow-lg">
+                        SOFT COPY ONLY
+                      </div>
                     </div>
                     <div className="text-center px-4 mb-2 italic font-bold text-[8px] tracking-widest text-black">
                       "TRAVEL FAR ENOUGH, YOU MEET YOURSELF."
                     </div>
                     <div className="w-full space-y-2 z-10 bg-white/80 backdrop-blur-sm p-1">
-                      <div className="grid grid-cols-2 gap-1.5">
-                        {[
-                          "Drone Coverage",
-                          "Social Reels",
-                          "Post-Production",
-                          "4K RAW Clips",
-                        ].map((f, i) => (
-                          <div
-                            key={i}
-                            className="flex items-center gap-1.5 bg-gray-50 p-1.5 border border-gray-100"
-                          >
-                            <CheckCircle2
-                              size={10}
-                              className="text-green-600"
-                            />
-                            <span className="text-black text-[7px] font-black uppercase">
-                              {f}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
                       <button
                         onClick={() => handleAction("Media")}
                         className="w-full px-4 py-1.5 bg-black text-white font-black uppercase text-[8px] flex items-center justify-center gap-2 hover:bg-yellow-500 transition-all"
@@ -204,7 +200,7 @@ export default function GreenRibbonPremiumStrip() {
                     </div>
                   </div>
                 ) : (
-                  /* 3. GREEN CARPET POPUP (Content Intact) */
+                  /* 3. GREEN CARPET POPUP */
                   <div className="relative z-10 p-6">
                     <div className="absolute inset-0 z-0">
                       <img
@@ -273,7 +269,10 @@ export default function GreenRibbonPremiumStrip() {
           {/* MAIN CARD STRIP */}
           <div
             className="relative w-[300px] h-[85px] overflow-hidden border border-white/10 cursor-pointer group bg-black"
-            onClick={() => setHoveredCard(card.id as any)}
+            onClick={(e) => {
+              e.stopPropagation();
+              setHoveredCard(card.id as any);
+            }}
           >
             <div className="absolute inset-0 z-0 transition-transform duration-700 group-hover:scale-105">
               <img
@@ -284,9 +283,9 @@ export default function GreenRibbonPremiumStrip() {
               <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/20 to-transparent" />
             </div>
 
-            {/* Icon එක තිබූ තැනට "FREE" ලේබලය සුදු පාටින් */}
             <div className="relative z-10 flex items-center h-full px-8">
-              <div className="px-5 py-2 bg-white text-black font-black text-[12px] tracking-widest shadow-xl">
+              {/* GLASS FREE TAG - High Highlighted */}
+              <div className="px-5 py-2 bg-white/10 backdrop-blur-md border border-white/30 text-white font-black text-[14px] tracking-[0.3em] shadow-[0_0_20px_rgba(255,255,255,0.2)] group-hover:bg-white group-hover:text-black transition-all duration-300">
                 {card.freeLabel}
               </div>
 
@@ -296,7 +295,6 @@ export default function GreenRibbonPremiumStrip() {
               </div>
               <ChevronRight className="ml-auto text-white group-hover:translate-x-1 group-hover:text-yellow-400 transition-all" />
             </div>
-
             <div className="absolute bottom-0 left-0 h-[3px] w-full bg-yellow-400 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 shadow-[0_0_15px_#facc15]" />
           </div>
         </div>
