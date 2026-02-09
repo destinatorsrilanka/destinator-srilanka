@@ -13,6 +13,7 @@ import {
   Camera,
   Sparkles,
   CheckSquare,
+  X,
 } from "lucide-react";
 
 export default function GreenRibbonPremiumStrip() {
@@ -49,21 +50,18 @@ export default function GreenRibbonPremiumStrip() {
   const cardData = [
     {
       id: "green",
-      icon: <Sprout className="w-6 h-6" />,
       bg: "/image/greencarpet.jpeg",
       popupBg: "/image/Plant-Trees.jpg",
       freeLabel: "FREE",
     },
     {
       id: "invest",
-      icon: <TrendingUp className="w-6 h-6" />,
       bg: "/image/invest.jpeg",
       popupBg: "/image/invest2.jpeg",
       freeLabel: "FREE",
     },
     {
       id: "media",
-      icon: <Camera className="w-6 h-6" />,
       bg: "/image/freePoto.jpeg",
       popupBg: "/image/freePoto2.jpeg",
       freeLabel: "FREE",
@@ -105,7 +103,7 @@ export default function GreenRibbonPremiumStrip() {
                     : "w-[90vw] max-w-[350px] lg:w-[400px]"
                 }`}
               >
-                {/* 1. INVESTMENT POPUP */}
+                {/* 1. INVESTMENT POPUP (Content Intact) */}
                 {card.id === "invest" ? (
                   <div className="relative w-full h-[220px] overflow-hidden bg-slate-900">
                     <img
@@ -121,7 +119,7 @@ export default function GreenRibbonPremiumStrip() {
                           </h2>
                           <p className="text-[10px] font-medium opacity-80 max-w-[200px] leading-tight">
                             Start your business in sri lanka with trusted
-                            partnerships{" "}
+                            partnerships
                           </p>
                         </div>
                         <div className="bg-white p-1.5 w-14 h-14 flex items-center justify-center shadow-xl">
@@ -155,24 +153,24 @@ export default function GreenRibbonPremiumStrip() {
                     </div>
                   </div>
                 ) : card.id === "media" ? (
-                  /* 2. MEDIA POPUP */
+                  /* 2. MEDIA POPUP (All original content + Reduced Height) */
                   <div className="relative p-3 flex flex-col items-center">
-                    <div className="text-center mb-3 leading-none">
-                      <h2 className="text-4xl font-black tracking-tighter text-black flex items-start justify-center">
+                    <div className="text-center mb-2 leading-none">
+                      <h2 className="text-3xl font-black tracking-tighter text-black flex items-start justify-center">
                         T<span className="text-[#eab308]">r</span>avel
                       </h2>
-                      <p className="text-[10px] font-bold tracking-[0.4em] uppercase text-black -mt-1">
+                      <p className="text-[9px] font-bold tracking-[0.4em] uppercase text-black -mt-1">
                         Album
                       </p>
                     </div>
-                    <div className="w-full h-[130px] overflow-hidden shadow-inner mb-3">
+                    <div className="w-full h-[120px] overflow-hidden shadow-inner mb-2">
                       <img
                         src={card.popupBg}
                         alt="magazine"
                         className="w-full h-full object-cover"
                       />
                     </div>
-                    <div className="text-center px-4 mb-3 italic font-bold text-[8px] tracking-widest text-black">
+                    <div className="text-center px-4 mb-2 italic font-bold text-[8px] tracking-widest text-black">
                       "TRAVEL FAR ENOUGH, YOU MEET YOURSELF."
                     </div>
                     <div className="w-full space-y-2 z-10 bg-white/80 backdrop-blur-sm p-1">
@@ -199,14 +197,14 @@ export default function GreenRibbonPremiumStrip() {
                       </div>
                       <button
                         onClick={() => handleAction("Media")}
-                        className="w-full px-4 py-1.5 bg-black text-white font-black uppercase text-[8px] rounded-none flex items-center justify-center gap-2 hover:bg-yellow-500 transition-all"
+                        className="w-full px-4 py-1.5 bg-black text-white font-black uppercase text-[8px] flex items-center justify-center gap-2 hover:bg-yellow-500 transition-all"
                       >
                         Request Coverage <ArrowRight size={10} />
                       </button>
                     </div>
                   </div>
                 ) : (
-                  /* 3. GREEN CARPET POPUP (With Updated Detailed Content) */
+                  /* 3. GREEN CARPET POPUP (Content Intact) */
                   <div className="relative z-10 p-6">
                     <div className="absolute inset-0 z-0">
                       <img
@@ -261,7 +259,7 @@ export default function GreenRibbonPremiumStrip() {
                       </p>
                       <button
                         onClick={() => handleAction("Planting")}
-                        className="px-6 py-2 bg-white text-[#064e3b] font-black uppercase text-[8px] rounded-none hover:bg-yellow-500 hover:text-black transition-all shadow-2xl flex items-center gap-2"
+                        className="px-6 py-2 bg-white text-[#064e3b] font-black uppercase text-[8px] hover:bg-yellow-500 hover:text-black transition-all shadow-2xl flex items-center gap-2"
                       >
                         Like to Plant <ExternalLink size={10} />
                       </button>
@@ -285,27 +283,20 @@ export default function GreenRibbonPremiumStrip() {
               />
               <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/20 to-transparent" />
             </div>
-            <motion.div
-              animate={{ scale: [1, 1.05, 1] }}
-              transition={{ repeat: Infinity, duration: 1.5 }}
-              className="absolute top-0 right-0 z-30"
-            >
-              <div className="bg-yellow-400 text-black font-[900] text-[14px] px-5 py-2 flex items-center gap-2 shadow-[0_4px_15px_rgba(0,0,0,0.5)]">
-                <Sparkles size={14} className="fill-black animate-pulse" />
-                <span>{card.freeLabel}</span>
-              </div>
-              <div className="absolute top-0 right-full w-0 h-0 border-t-[37px] border-t-yellow-400 border-l-[20px] border-l-transparent" />
-            </motion.div>
+
+            {/* Icon එක තිබූ තැනට "FREE" ලේබලය සුදු පාටින් */}
             <div className="relative z-10 flex items-center h-full px-8">
-              <div className="p-3 bg-white/10 backdrop-blur-md border border-white/30 text-white group-hover:bg-yellow-400 group-hover:text-black transition-all">
-                {card.icon}
+              <div className="px-5 py-2 bg-white text-black font-black text-[12px] tracking-widest shadow-xl">
+                {card.freeLabel}
               </div>
+
               <div className="ml-6 flex flex-col gap-1.5 opacity-30 group-hover:opacity-100 transition-opacity duration-500">
                 <div className="h-1 w-20 bg-white rounded-full" />
                 <div className="h-1 w-12 bg-yellow-400 rounded-full" />
               </div>
               <ChevronRight className="ml-auto text-white group-hover:translate-x-1 group-hover:text-yellow-400 transition-all" />
             </div>
+
             <div className="absolute bottom-0 left-0 h-[3px] w-full bg-yellow-400 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 shadow-[0_0_15px_#facc15]" />
           </div>
         </div>

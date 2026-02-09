@@ -7,26 +7,26 @@ const carouselImages = [
   {
     id: "s2",
     src: "/image/clucture.png",
-    enTitle: "Timeless Heritage",
-    frTitle: "Héritage Intemporel",
+    enTitle: "Lost Royalty Kandy",
+    frTitle: "Bonbons de la royauté perdue",
     description:
-      "Explore ancient cities and vibrant traditions of our rich history. | Explorez les cités anciennes et les traditions vibrantes.",
+      "Sri Lanka's final monarchy; fell to the British in 1815. | Dernière monarchie du Sri Lanka ; elle est tombée aux mains des Britanniques en 1815.",
   },
   {
     id: "s5",
     src: "/image/hero-slide.jpeg",
-    enTitle: "Sunkissed Shores",
-    frTitle: "Eaux Cristallines",
+    enTitle: "Timeless Heritage",
+    frTitle: "Héritage Intemporel",
     description:
-      "Relax on the sun-kissed shores and crystal clear waters. | Détendez-vous sur les rivages ensoleillés.",
+      "Explore ancient cities and vibrant traditions of our rich history. | Explorez les cités anciennes et les traditions vibrantes. ",
   },
   {
     id: "s6",
     src: "/image/hero-slide2.png",
-    enTitle: "Crystal Waters",
-    frTitle: "Plages Tropicales",
+    enTitle: "Devine chapter Atlantis",
+    frTitle: "Chapitre divin Atlantide",
     description:
-      "Relax on the sun-kissed shores and crystal clear waters. | Détendez-vous sur les rivages ensoleillés.",
+      " Lost city,Geography,First Civilization inhabitants,City of Gods. | Cité perdue, Géographie, Premiers habitants de la civilisation, Cité des dieux.",
   },
   {
     id: "s1",
@@ -40,8 +40,8 @@ const carouselImages = [
   {
     id: "s4",
     src: "/image/slidenew1.png",
-    enTitle: "Golden Beaches",
-    frTitle: "Des plages dorées ",
+    enTitle: "Sunkissed Shores.",
+    frTitle: " Eaux Cristallines ",
     description:
       "Relax on the sun-kissed shores and crystal clear waters. | Détendez-vous sur les rivages ensoleillés.",
   },
@@ -57,10 +57,10 @@ const carouselImages = [
   {
     id: "s7",
     src: "/image/hero-slide3.png",
-    enTitle: "Tropical Paradise",
-    frTitle: "Horizons Dorés",
+    enTitle: "Kingdom of Lanka | RAVANA",
+    frTitle: "Royaume du Lanka | RAVANA",
     description:
-      "Relax on the sun-kissed shores and crystal clear waters. | Détendez-vous sur les rivages ensoleillés.",
+      "A legendary, high-tech golden kingdom; modern Sri Lanka. |Un royaume doré légendaire et de haute technologie ; le Sri Lanka moderne",
   },
 ];
 

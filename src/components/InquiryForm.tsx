@@ -176,7 +176,7 @@ export default function InquiryForm() {
                   className={`relative w-24 h-24 rounded-2xl overflow-hidden cursor-pointer border-2 transition-all ${mediaInterest ? "border-blue-500 scale-105 shadow-md" : "border-transparent hover:border-gray-200"}`}
                 >
                   <img
-                    src="/image/form-Photo.jpeg"
+                    src="/image/form-Photo.png"
                     alt="Media"
                     className="w-full h-full object-cover"
                   />

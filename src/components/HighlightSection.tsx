@@ -1,9 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Droplets, Trees } from "lucide-react";
+import { Droplets, Trees, X } from "lucide-react";
 
-// --- Photo Lists ---
 const WATERFALL_MAIN = [
   "image/r1.jpeg",
   "image/r2.jpeg",
@@ -33,6 +32,9 @@ export default function CompactHighlight() {
   const [wIndex, setWIndex] = useState(0);
   const [eIndex, setEIndex] = useState(0);
 
+  const [showWInfo, setShowWInfo] = useState(false);
+  const [showEInfo, setShowEInfo] = useState(false);
+
   useEffect(() => {
     const timer = setInterval(() => {
       setWIndex((prev) => (prev + 1) % WATERFALL_MAIN.length);
@@ -57,7 +59,6 @@ export default function CompactHighlight() {
             alt="Waterfalls"
           />
         </AnimatePresence>
-        {/* Overlay එක මදක් අඩු කළා පින්තූරය හොඳින් පෙනෙන්න */}
         <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#020202]/80 via-transparent to-black/20" />
 
         <div className="relative z-20 h-full flex flex-col items-center justify-center py-10 px-2 text-center">
@@ -72,24 +73,77 @@ export default function CompactHighlight() {
 
             <div className="flex flex-col items-center w-full overflow-hidden px-1">
               <h2
-                className="text-white font-black uppercase tracking-tighter leading-none drop-shadow-2xl"
+                className="text-white font-black uppercase tracking-tighter leading-none"
                 style={{ fontSize: "clamp(1.1rem, 5vw, 2.5rem)" }}
               >
                 LAND OF
               </h2>
               <h2
-                className="text-blue-400 font-black uppercase tracking-tighter leading-none whitespace-nowrap mt-1 flex items-center justify-center gap-1 w-full drop-shadow-2xl"
+                className="text-blue-400 font-black uppercase tracking-tighter leading-none whitespace-nowrap mt-1 flex items-center justify-center gap-1 w-full"
                 style={{ fontSize: "clamp(0.65rem, 3.8vw, 2.2rem)" }}
               >
                 WATERFALLS <span className="text-white/40">|</span> LAKES
               </h2>
             </div>
 
-            <p className="text-[10px] md:text-[12px] font-bold tracking-wide text-white/90 max-w-[220px] italic mt-4 drop-shadow-md">
+            <p className="text-[10px] md:text-[12px] font-bold tracking-wide text-white/90 max-w-[220px] italic mt-4">
               Experience the mist-clad heights and the thunderous beauty.
             </p>
+
+            <button
+              onClick={() => setShowWInfo(true)}
+              className="mt-4 text-[10px] font-bold text-white border border-white/30 px-3 py-1 hover:bg-white hover:text-black transition-all"
+            >
+              READ MORE
+            </button>
           </div>
         </div>
+
+        {/* විස්තරය - මාර්ජින් සහ පැඩින් නිවැරදි කළා */}
+        <AnimatePresence>
+          {showWInfo && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 z-50 bg-white p-8 overflow-y-auto flex flex-col items-start text-left"
+            >
+              <button
+                onClick={() => setShowWInfo(false)}
+                className="sticky top-0 self-end mb-4 text-black bg-gray-100 p-2 rounded-full hover:bg-black hover:text-white transition-colors"
+              >
+                <X size={18} />
+              </button>
+
+              <div className="w-full pr-2">
+                <h3 className="text-black font-black text-2xl mb-3 tracking-tighter uppercase border-b-2 border-blue-500 inline-block">
+                  Land of waterfalls
+                </h3>
+                <p className="text-gray-800 text-sm leading-relaxed mb-6 font-medium">
+                  Sri Lanka, often called the "Land of Waterfalls," holds the
+                  world's highest waterfall density with over 400 to 500
+                  recorded waterfalls. Primarily located in the central
+                  highlands, these cascades, ranging from the 263m tall
+                  Bambarakanda Falls to the wide Bomburu Ella, are fed by heavy
+                  monsoons and lush forests, with the highest concentration in
+                  the Ratnapura district.
+                </p>
+
+                <h3 className="text-black font-black text-2xl mb-3 tracking-tighter uppercase border-b-2 border-blue-500 inline-block">
+                  Land of Lakes
+                </h3>
+                <p className="text-gray-800 text-sm leading-relaxed mb-4 font-medium">
+                  Sri Lanka, often called a "land of lakes," features an
+                  extensive network of ancient man-made reservoirs ("tanks") and
+                  natural lakes crucial for irrigation, biodiversity, and
+                  tourism. Key water bodies include the massive Parakrama
+                  Samudraya, Kalawewa Lake (largest), and Bolgoda Lake, which
+                  support wildlife like crocodiles and diverse bird species.
+                </p>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* --- Section: Elephants --- */}
@@ -120,24 +174,75 @@ export default function CompactHighlight() {
 
             <div className="flex flex-col items-center w-full overflow-hidden px-1">
               <h2
-                className="text-white font-black uppercase tracking-tighter leading-none drop-shadow-2xl"
+                className="text-white font-black uppercase tracking-tighter leading-none"
                 style={{ fontSize: "clamp(1.1rem, 5vw, 2.5rem)" }}
               >
                 LAND OF
               </h2>
               <h2
-                className="text-amber-500 font-black uppercase tracking-tighter leading-none whitespace-nowrap mt-1 flex items-center justify-center gap-1 w-full drop-shadow-2xl"
+                className="text-amber-500 font-black uppercase tracking-tighter leading-none whitespace-nowrap mt-1 flex items-center justify-center gap-1 w-full"
                 style={{ fontSize: "clamp(0.65rem, 3.8vw, 2.2rem)" }}
               >
                 ELEPHANTS <span className="text-white/40">|</span> LEOPARDS
               </h2>
             </div>
 
-            <p className="text-[10px] md:text-[12px] font-bold tracking-wide text-white/90 max-w-[220px] italic mt-4 drop-shadow-md">
+            <p className="text-[10px] md:text-[12px] font-bold tracking-wide text-white/90 max-w-[220px] italic mt-4">
               Venture into the wild heartlands to witness the gentle giants.
             </p>
+
+            <button
+              onClick={() => setShowEInfo(true)}
+              className="mt-4 text-[10px] font-bold text-white border border-white/30 px-3 py-1 hover:bg-white hover:text-black transition-all"
+            >
+              READ MORE
+            </button>
           </div>
         </div>
+
+        {/* විස්තරය - මාර්ජින් සහ පැඩින් නිවැරදි කළා */}
+        <AnimatePresence>
+          {showEInfo && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 z-50 bg-white p-8 overflow-y-auto flex flex-col items-start text-left"
+            >
+              <button
+                onClick={() => setShowEInfo(false)}
+                className="sticky top-0 self-end mb-4 text-black bg-gray-100 p-2 rounded-full hover:bg-black hover:text-white transition-colors"
+              >
+                <X size={18} />
+              </button>
+
+              <div className="w-full pr-2">
+                <h3 className="text-black font-black text-2xl mb-3 tracking-tighter uppercase border-b-2 border-amber-500 inline-block">
+                  Land of leopards
+                </h3>
+                <p className="text-gray-800 text-sm leading-relaxed mb-6 font-medium">
+                  Sri Lanka is considered one of the best places in the world to
+                  view leopards (Panthera pardus kotiya), with Yala National
+                  Park holding one of the highest leopard densities globally.
+                  These apex predators thrive across the island, particularly in
+                  the dry zone's scrublands and, uniquely, in the wet zone and
+                  highland forest patches.
+                </p>
+
+                <h3 className="text-black font-black text-2xl mb-3 tracking-tighter uppercase border-b-2 border-amber-500 inline-block">
+                  Land of Elephants
+                </h3>
+                <p className="text-gray-800 text-sm leading-relaxed mb-4 font-medium">
+                  Sri Lanka is often celebrated as a "land of elephants" due to
+                  its remarkably high density of wild Asian elephants (Elephas
+                  maximus maximus). The island is home to an estimated 5,000 to
+                  6,000 wild elephants, predominantly found in the dry zones of
+                  the north, east, and southeast
+                </p>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );
