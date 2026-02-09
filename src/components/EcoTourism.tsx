@@ -2,12 +2,12 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Footprints, X } from "lucide-react";
+import { X } from "lucide-react";
 import Image from "next/image";
 
 const EcoTourism: React.FC = () => {
   const [showInfo, setShowInfo] = useState(false);
-  const infoRef = useRef<HTMLDivElement>(null); // පැනලය හඳුනා ගැනීමට ref එකක්
+  const infoRef = useRef<HTMLDivElement>(null);
 
   const ecoImages = [
     { id: 6, src: "/image/ga6.PNG", title: "Sanctuaries" },
@@ -20,17 +20,19 @@ const EcoTourism: React.FC = () => {
     { id: 9, src: "/image/ga8.PNG", title: "Biodiversity" },
   ];
 
-  const categories = [
+  const categoriesLine1 = [
     "Strict Nature Reserve",
     "Conservation Forests",
     "Rainforests",
     "Plains",
+  ];
+
+  const categoriesLine2 = [
     "Botanical Gardens",
     "Sanctuaries",
     "National Parks",
   ];
 
-  // පිටත ක්ලික් කිරීම් හඳුනාගැනීම සඳහා useEffect
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -43,7 +45,6 @@ const EcoTourism: React.FC = () => {
     }
 
     if (showInfo) {
-      // Button එක ක්ලික් කළ සැනින් වැසීම වැළැක්වීමට සුළු ප්‍රමාවකින් listener එක add කරයි
       setTimeout(() => {
         document.addEventListener("mousedown", handleClickOutside);
       }, 0);
@@ -67,7 +68,7 @@ const EcoTourism: React.FC = () => {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              className="flex items-center justify-center gap-2 text-3xl md:text-4xl font-black tracking-tighter text-white drop-shadow-2xl mb-2"
+              className="flex items-center justify-center gap-2 text-3xl md:text-5xl font-black tracking-tighter text-white drop-shadow-2xl mb-4"
             >
               <span
                 style={{
@@ -98,70 +99,53 @@ const EcoTourism: React.FC = () => {
               </span>
             </motion.h2>
 
-            {/* Tags / Categories */}
+            {/* Tags / Categories in Two Lines */}
             <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              className="max-w-4xl flex flex-wrap justify-center gap-x-2 gap-y-1 px-3 mb-4"
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              className="flex flex-col items-center gap-2 mb-6"
             >
-              {categories.map((cat, i) => (
-                <span
-                  key={i}
-                  className="text-[10px] md:text-[9px] text-emerald-50/90 font-medium tracking-wider uppercase flex items-center drop-shadow-md"
-                >
-                  {cat}
-                  {i !== categories.length - 1 && (
-                    <span className="ml-2 text-emerald-400/30">/</span>
-                  )}
-                </span>
-              ))}
+              <div className="flex flex-wrap justify-center gap-x-3 gap-y-1">
+                {categoriesLine1.map((cat, i) => (
+                  <span
+                    key={i}
+                    className="text-[10px] md:text-[11px] text-emerald-50/90 font-bold tracking-[0.15em] uppercase flex items-center drop-shadow-lg"
+                  >
+                    {cat}
+                    {i !== categoriesLine1.length - 1 && (
+                      <span className="ml-3 text-emerald-400/40">•</span>
+                    )}
+                  </span>
+                ))}
+              </div>
+
+              <div className="flex flex-wrap justify-center gap-x-3 gap-y-1">
+                {categoriesLine2.map((cat, i) => (
+                  <span
+                    key={i}
+                    className="text-[10px] md:text-[11px] text-emerald-50/90 font-bold tracking-[0.15em] uppercase flex items-center drop-shadow-lg"
+                  >
+                    {cat}
+                    {i !== categoriesLine2.length - 1 && (
+                      <span className="ml-3 text-emerald-400/40">•</span>
+                    )}
+                  </span>
+                ))}
+              </div>
             </motion.div>
 
-            {/* READ MORE BUTTON (ටැග් වලට යටින්) */}
-            <div className="pointer-events-auto mb-4">
+            {/* READ MORE BUTTON */}
+            <div className="pointer-events-auto">
               <button
                 onClick={(e) => {
-                  e.stopPropagation(); // Button එක ක්ලික් කිරීම පිටත ක්ලික් කිරීමක් ලෙස සලකන්නේ නැත
+                  e.stopPropagation();
                   setShowInfo(true);
                 }}
-                className="text-[9px] font-bold text-white border border-emerald-500/40 px-5 py-1.5 hover:bg-emerald-500 hover:text-black transition-all uppercase tracking-widest backdrop-blur-md bg-black/20"
+                className="text-[10px] font-black text-white border-2 border-emerald-500/40 px-8 py-2 hover:bg-emerald-500 hover:border-emerald-500 hover:text-black transition-all uppercase tracking-[0.2em] backdrop-blur-md bg-black/40 shadow-xl"
               >
                 READ MORE
               </button>
             </div>
-
-            {/* Footprint Badge */}
-            <motion.div
-              animate={{
-                scale: [1.6, 1, 1, 1.6],
-                opacity: [0, 1, 1, 0],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                times: [0, 0.2, 0.8, 1],
-              }}
-              className="relative w-12 h-12 md:w-14 md:h-14 flex items-center justify-center"
-            >
-              <div className="absolute inset-0 bg-black/30 rounded-full blur-sm" />
-              <svg
-                className="absolute w-full h-full animate-[spin_15s_linear_infinite]"
-                viewBox="0 0 100 100"
-              >
-                <defs>
-                  <path
-                    id="badgePath"
-                    d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0"
-                  />
-                </defs>
-                <text className="fill-emerald-300/60 text-[10px] font-bold uppercase tracking-[0.3em]">
-                  <textPath xlinkHref="#badgePath">
-                    LEAVE ONLY • LEAVE ONLY •{" "}
-                  </textPath>
-                </text>
-              </svg>
-              <Footprints size={14} className="text-emerald-400 opacity-60" />
-            </motion.div>
           </div>
 
           {/* --- IMAGE GRID --- */}
@@ -173,48 +157,48 @@ const EcoTourism: React.FC = () => {
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.03 }}
-                className="relative h-32 md:h-44 w-1/2 sm:w-1/4 lg:w-[14.28%] overflow-hidden border-r border-white/5"
+                className="relative h-40 md:h-56 w-1/2 sm:w-1/4 lg:w-[14.28%] overflow-hidden border-r border-white/5"
               >
                 <Image
                   src={img.src}
                   alt={img.title}
                   fill
-                  className="object-cover opacity-60"
+                  className="object-cover opacity-50"
                 />
-                <div className="absolute inset-0 bg-black/30" />
-                <div className="absolute bottom-0 left-0 w-full h-[1px] bg-emerald-500/20" />
+                <div className="absolute inset-0 bg-black/40" />
               </motion.div>
             ))}
           </div>
 
-          {/* --- INFO OVERLAY --- */}
+          {/* --- INFO OVERLAY (LEFT ALIGNED & SMALL TEXT) --- */}
           <AnimatePresence>
             {showInfo && (
               <motion.div
-                ref={infoRef} // මෙතැනට ref එක සම්බන්ධ කළා
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="absolute inset-0 z-50 bg-white p-6 md:p-8 overflow-y-auto flex flex-col items-start text-left"
+                ref={infoRef}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                className="absolute inset-0 z-50 bg-white/95 backdrop-blur-md p-6 md:p-12 overflow-y-auto flex flex-col items-start justify-center text-left"
               >
                 <button
                   onClick={() => setShowInfo(false)}
-                  className="sticky top-0 self-end mb-2 text-black bg-gray-100 p-2 rounded-full hover:bg-black hover:text-white transition-colors"
+                  className="absolute top-6 right-6 text-black bg-gray-100 p-2 rounded-full hover:bg-black hover:text-white transition-colors"
                 >
-                  <X size={18} />
+                  <X size={20} />
                 </button>
-                <div className="w-full">
-                  <h3 className="text-black font-black text-xl md:text-2xl mb-3 tracking-tighter uppercase border-b-2 border-emerald-500 inline-block">
+
+                <div className="w-full max-w-[1400px]">
+                  <h3 className="text-black font-black text-xl md:text-2xl mb-4 tracking-tighter uppercase border-b-2 border-emerald-500 inline-block">
                     Eco Tourism
                   </h3>
-                  <p className="text-gray-800 text-xs md:text-sm leading-relaxed mb-4 font-medium">
+                  <p className="text-gray-800 text-xs md:text-sm lg:text-base leading-relaxed font-medium">
                     Eco-tourism in Sri Lanka focuses on sustainable travel,
                     offering intimate experiences with the island's high
                     biodiversity, including wildlife safaris, rainforest treks,
                     and eco-lodges. Key areas include Sinharaja Rainforest, Yala
                     National Park, and the Knuckles Mountain Range, emphasizing
                     conservation, local community benefits, and minimal
-                    environmental impact
+                    environmental impact.
                   </p>
                 </div>
               </motion.div>
