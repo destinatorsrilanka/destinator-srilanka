@@ -61,12 +61,19 @@ export default function GreenRibbonPremiumStrip() {
       id: "green",
       bg: "/image/greencarpet.jpeg",
       popupBg: "/image/Plant-Trees.jpg",
+      position: "left",
     },
-    { id: "invest", bg: "/image/invest.jpeg", popupBg: "/image/invest2.jpeg" },
+    {
+      id: "invest",
+      bg: "/image/invest.jpeg",
+      popupBg: "/image/invest2.jpeg",
+      position: "right",
+    },
     {
       id: "media",
       bg: "/image/freePoto.jpeg",
       popupBg: "/image/freePoto2.jpeg",
+      position: "right",
     },
   ];
 
@@ -79,12 +86,26 @@ export default function GreenRibbonPremiumStrip() {
         className="mb-12 text-center"
       >
         <h2 className="text-white text-3xl md:text-4xl font-black tracking-[0.2em] uppercase">
-          Free <span className="text-yellow-400">Benefits</span> To Our Guests
+          <span className="text-yellow-400">Benefits</span> To Our Guests
         </h2>
         <div className="h-1 w-24 bg-yellow-400 mx-auto mt-4" />
       </motion.div>
 
-      {/* Container spacing adjusted for better mobile stack */}
+      {/* High-End Smooth Blink Animation */}
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+        @keyframes premium-glow {
+          0%, 100% { background-color: #9f1239; box-shadow: 0 0 10px rgba(159, 18, 57, 0.4); }
+          50% { background-color: #ef4444; box-shadow: 0 0 25px rgba(239, 68, 68, 0.7); }
+        }
+        .animate-premium-free {
+          animation: premium-glow 1.8s infinite ease-in-out;
+        }
+      `,
+        }}
+      />
+
       <div className="flex flex-col lg:flex-row justify-center items-center gap-12 lg:gap-5 w-full">
         <AnimatePresence>
           {showAlert && (
@@ -103,10 +124,10 @@ export default function GreenRibbonPremiumStrip() {
         {cardData.map((card) => (
           <div
             key={card.id}
-            className="relative group z-20" // Basic z-index
+            className="relative group z-20"
             onMouseEnter={() => setHoveredCard(card.id as any)}
             onMouseLeave={() => setHoveredCard(null)}
-            onClick={() => setHoveredCard(card.id as any)} // For mobile tap
+            onClick={() => setHoveredCard(card.id as any)}
           >
             <AnimatePresence>
               {hoveredCard === card.id && (
@@ -115,7 +136,6 @@ export default function GreenRibbonPremiumStrip() {
                   initial={{ opacity: 0, y: 15, x: "-50%" }}
                   animate={{ opacity: 1, y: -10, x: "-50%" }}
                   exit={{ opacity: 0, y: 15, x: "-50%" }}
-                  // Adjusted z-index and bottom positioning for mobile vs desktop
                   className={`absolute bottom-full left-1/2 z-[100] overflow-hidden border-4 border-white shadow-[0_30px_60px_rgba(0,0,0,0.7)] rounded-none bg-white mb-4 ${
                     card.id === "invest"
                       ? "w-[90vw] max-w-[450px] lg:w-[500px]"
@@ -137,7 +157,7 @@ export default function GreenRibbonPremiumStrip() {
                               Free Consultation
                             </h2>
                             <p className="text-[10px] font-medium opacity-80 max-w-[200px] leading-tight">
-                              Start your business in sri lanka with trusted
+                              Start your business in sri lanka with trusted 刻
                               partnerships
                             </p>
                           </div>
@@ -289,10 +309,16 @@ export default function GreenRibbonPremiumStrip() {
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-500" />
               </div>
 
-              <div className="absolute inset-0 flex items-center justify-center group-hover:opacity-0 transition-opacity duration-300">
-                <span className="text-white text-[10px] font-black uppercase tracking-[0.3em] drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] border-b border-white/40 pb-1">
-                  Explore Benefit
-                </span>
+              {/* FREE Badge - Responsive Positioning */}
+              <div
+                className={`absolute top-0 z-20 ${card.position === "left" ? "left-0" : "right-0"}`}
+              >
+                <div
+                  className={`animate-premium-free text-white text-[12px] lg:text-[14px] font-black px-4 py-1.5 shadow-xl tracking-[0.2em] uppercase 
+                  ${card.position === "left" ? "rounded-br-lg" : "rounded-bl-lg"}`}
+                >
+                  FREE
+                </div>
               </div>
 
               <div className="relative z-10 flex items-center justify-end h-full px-8 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-x-4 group-hover:translate-x-0">

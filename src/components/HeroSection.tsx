@@ -36,7 +36,6 @@ const carouselImages = [
     description:
       "Discover a unique island where diverse climates coexist 365 days a year. | Découvrez une île unique aux climats diversifiés.",
   },
-
   {
     id: "s4",
     src: "/image/slidenew1.png",
@@ -53,14 +52,13 @@ const carouselImages = [
     description:
       "Encounter majestic wildlife in their pristine natural habitats. | Rencontrez une faune majestueuse dalam son habitat naturel.",
   },
-
   {
     id: "s7",
     src: "/image/hero-slide3.png",
     enTitle: "Kingdom of RAVANA",
     frTitle: "Royaume du RAVANA",
     description:
-      "A legendary, high-tech golden kingdom; modern Sri Lanka. |Un royaume doré légendaire et de haute technologie ; le Sri Lanka moderne",
+      "A legendary, high-tech golden kingdom; modern Sri Lanka. |Un royaume doré légendaire et de haute technologie ; le Sri Lanka moderne",
   },
 ];
 
@@ -125,9 +123,7 @@ export default function HeroSection() {
       </div>
 
       <div className="relative z-30 flex-grow w-full flex items-center px-6 md:px-12 lg:px-24">
-        {/* Changed justify-center (mobile) to justify-between (lg) */}
         <div className="flex flex-col justify-center lg:justify-between h-full w-full max-w-7xl mx-auto pt-12 pb-6">
-          {/* Top Content Area - Centered on mobile, bottom-aligned on lg */}
           <div className="animate-slide-up flex flex-col items-start w-full lg:w-3/4 lg:mt-20">
             <div className="flex flex-col items-start gap-3 mb-6">
               <div className="relative w-fit">
@@ -162,7 +158,8 @@ export default function HeroSection() {
               <h2 className="text-orange-500 text-lg md:text-xl font-bold italic mb-2 uppercase tracking-wide">
                 {carouselImages[currentIndex].frTitle}
               </h2>
-              <h1 className="text-white text-[2.2rem] sm:text-[3rem] md:text-5xl lg:text-6xl xl:text-7xl font-black uppercase leading-tight mb-4 whitespace-nowrap">
+              {/* lg (Desktop) වලදී පමණක් whitespace-nowrap තබා ගත්තා */}
+              <h1 className="text-white text-[2.2rem] sm:text-[3rem] md:text-5xl lg:text-6xl xl:text-7xl font-black uppercase leading-tight mb-4 lg:whitespace-nowrap">
                 {carouselImages[currentIndex].enTitle}
               </h1>
               <p className="text-gray-300 text-sm md:text-lg max-w-2xl leading-relaxed opacity-90">
@@ -186,7 +183,6 @@ export default function HeroSection() {
             </button>
           </div>
 
-          {/* Bottom Right Slider & Nav - Hidden on mobile, flex on lg */}
           <div className="hidden lg:flex flex-col items-center gap-4 mt-auto self-end w-fit">
             <div className="flex items-center gap-3 p-3 bg-black/40 backdrop-blur-xl rounded-[2rem] border border-white/10 shadow-2xl max-w-full overflow-x-auto no-scrollbar">
               {carouselImages.map((item, index) => (
