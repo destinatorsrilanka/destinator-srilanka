@@ -3,24 +3,21 @@ import { motion, AnimatePresence, Variants } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Compass } from "lucide-react";
 
-// සම්පූර්ණ ලංකාවම ඇඳී යන animation එක සහිත SVG Component එක
 const SriLankaMap = () => {
   const pathVariants: Variants = {
     hidden: { pathLength: 0, opacity: 0 },
     visible: {
       pathLength: 1,
       opacity: 1,
-      transition: {
-        duration: 2.5, // Logo border animation කාලයට සමාන කරන ලදී
-        ease: "easeInOut",
-      },
+      transition: { duration: 2.5, ease: "easeInOut" },
     },
   };
 
   return (
     <motion.svg
       viewBox="0 0 1000 1000"
-      className="absolute inset-0 w-full h-full opacity-30 pointer-events-none p-10"
+      // සිතියම තවත් ටිකක් උඩට කර ඇත
+      className="absolute inset-0 w-full h-full opacity-30 pointer-events-none p-10 -translate-y-16 "
       initial="hidden"
       animate="visible"
       fill="none"
@@ -167,13 +164,10 @@ export default function PreLoader() {
   useEffect(() => {
     setIsLoaded(true);
     const handleLoad = () => {
-      // Animation එක සම්පූර්ණ වීමට තත්පර 4.5ක් ලබා දී ඇත
       setTimeout(() => setLoading(false), 4500);
     };
-
-    if (document.readyState === "complete") {
-      handleLoad();
-    } else {
+    if (document.readyState === "complete") handleLoad();
+    else {
       window.addEventListener("load", handleLoad);
       return () => window.removeEventListener("load", handleLoad);
     }
@@ -191,7 +185,6 @@ export default function PreLoader() {
           }}
           className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#050505] overflow-hidden"
         >
-          {/* සිතියම පසුබිමෙන් පෙනෙන ලෙස */}
           <div className="absolute inset-0 flex items-center justify-center">
             <SriLankaMap />
           </div>
@@ -204,11 +197,11 @@ export default function PreLoader() {
                 filter: "blur(0px)",
                 transition: { duration: 1.5, ease: "easeOut" },
               }}
-              className="text-center"
+              className="text-center flex flex-col items-center"
             >
-              <div className="relative w-fit">
-                <div className="relative px-5 py-3 md:px-8 md:py-4 bg-white/5 backdrop-blur-md border border-white/10 overflow-hidden rounded-2xl flex flex-col items-center">
-                  {/* Border Animations */}
+              {/* Logo Box */}
+              <div className="relative inline-block">
+                <div className="relative px-6 py-3 md:px-10 md:py-4 bg-white/5 backdrop-blur-md border border-white/10 overflow-hidden rounded-2xl">
                   <span className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-orange-500 to-transparent -translate-x-full animate-border-top-new"></span>
                   <span className="absolute bottom-0 right-0 w-full h-[2px] bg-gradient-to-l from-transparent via-orange-500 to-transparent translate-x-full animate-border-bottom-new"></span>
 
@@ -223,24 +216,19 @@ export default function PreLoader() {
                     R
                   </h3>
                 </div>
+
+                {/* Slogan - මෙහි tracking-tighter/widest මගින් ලොගෝ එකේ දිගටම ඇදෙන සේ සකසා ඇත */}
+                <motion.p
+                  initial={{ opacity: 0, y: 5 }}
+                  animate={{ opacity: 1, y: 0, transition: { delay: 0.8 } }}
+                  className="w-full mt-3 text-white/70 text-[10px] md:text-[11px] uppercase font-bold text-center tracking-[0.16em] md:tracking-[0.30em] whitespace-nowrap"
+                >
+                  taking you to all destinations
+                </motion.p>
               </div>
 
-              {/* Slogan added below the logo */}
-              <motion.p
-                initial={{ opacity: 0, y: 10, filter: "blur(5px)" }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                  filter: "blur(0px)",
-                  transition: { delay: 0.8, duration: 1, ease: "easeOut" },
-                }}
-                className="text-white/70 text-[10px] md:text-xs uppercase tracking-[0.3em] mt-4 font-medium"
-              >
-                taking you to all destinations!
-              </motion.p>
-
               {/* Progress Line */}
-              <div className="w-48 h-[1px] bg-white/5 relative overflow-hidden mx-auto mb-8 mt-6">
+              <div className="w-48 h-[1px] bg-white/5 relative overflow-hidden mx-auto mb-8 mt-12">
                 <motion.div
                   initial={{ x: "-100%" }}
                   animate={{ x: "100%" }}
@@ -262,7 +250,6 @@ export default function PreLoader() {
             </motion.div>
           </div>
 
-          {/* Background Glow */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-[#f97316]/10 rounded-full blur-[100px] pointer-events-none" />
         </motion.div>
       )}
