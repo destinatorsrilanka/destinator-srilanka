@@ -4,8 +4,11 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import Image from "next/image";
+import { useTranslation } from "react-i18next";
+import "../i18n";
 
 const EcoTourism: React.FC = () => {
+  const { t } = useTranslation();
   const [showInfo, setShowInfo] = useState(false);
   const infoRef = useRef<HTMLDivElement>(null);
 
@@ -20,17 +23,18 @@ const EcoTourism: React.FC = () => {
     { id: 9, src: "/image/ga8.PNG", title: "Biodiversity" },
   ];
 
+  // පේළි දෙකකට කාණ්ඩ බෙදා ගැනීම (JSON එකේ ඇති අනුපිළිවෙලට)
   const categoriesLine1 = [
-    "Strict Nature Reserve",
-    "Conservation Forests",
-    "Rainforests",
-    "Plains",
+    t("eco.categories.nature_reserve"),
+    t("eco.categories.conservation"),
+    t("eco.categories.rainforests"),
+    t("eco.categories.plains"),
   ];
 
   const categoriesLine2 = [
-    "Botanical Gardens",
-    "Sanctuaries",
-    "National Parks",
+    t("eco.categories.botanical"),
+    t("eco.categories.sanctuaries"),
+    t("eco.categories.national_parks"),
   ];
 
   useEffect(() => {
@@ -43,7 +47,6 @@ const EcoTourism: React.FC = () => {
         setShowInfo(false);
       }
     }
-
     if (showInfo) {
       setTimeout(() => {
         document.addEventListener("mousedown", handleClickOutside);
@@ -51,10 +54,7 @@ const EcoTourism: React.FC = () => {
     } else {
       document.removeEventListener("mousedown", handleClickOutside);
     }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [showInfo]);
 
   return (
@@ -78,7 +78,7 @@ const EcoTourism: React.FC = () => {
                 }}
                 className="text-transparent inline-block"
               >
-                ECO
+                {t("eco.title_main")}
               </span>
               <span className="relative inline-block overflow-hidden">
                 <motion.span
@@ -94,12 +94,12 @@ const EcoTourism: React.FC = () => {
                     lineHeight: "0.9",
                   }}
                 >
-                  TOURISM
+                  {t("eco.title_sub")}
                 </motion.span>
               </span>
             </motion.h2>
 
-            {/* Tags / Categories in Two Lines */}
+            {/* Tags / Categories */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -143,12 +143,12 @@ const EcoTourism: React.FC = () => {
                 }}
                 className="text-[10px] font-black text-white border-2 border-emerald-500/40 px-8 py-2 hover:bg-emerald-500 hover:border-emerald-500 hover:text-black transition-all uppercase tracking-[0.2em] backdrop-blur-md bg-black/40 shadow-xl"
               >
-                READ MORE
+                {t("eco.read_more")}
               </button>
             </div>
           </div>
 
-          {/* --- IMAGE GRID (MODIFIED FOR BETTER VISIBILITY) --- */}
+          {/* --- IMAGE GRID --- */}
           <div className="flex flex-wrap lg:flex-nowrap justify-center w-full relative z-10">
             {ecoImages.map((img, index) => (
               <motion.div
@@ -163,15 +163,15 @@ const EcoTourism: React.FC = () => {
                   src={img.src}
                   alt={img.title}
                   fill
-                  className="object-cover opacity-90 transition-opacity duration-500" // Opacity වැඩි කළා (50 සිට 90 දක්වා)
+                  className="object-cover opacity-90 transition-opacity duration-500"
+                  sizes="(max-width: 768px) 50vw, 15vw"
                 />
-                {/* අකුරු පෙනීම සඳහා තිබූ අඳුරු Overlay එක අඩු කළා */}
                 <div className="absolute inset-0 bg-black/20" />
               </motion.div>
             ))}
           </div>
 
-          {/* --- INFO OVERLAY (LEFT ALIGNED & SMALL TEXT) --- */}
+          {/* --- INFO OVERLAY --- */}
           <AnimatePresence>
             {showInfo && (
               <motion.div
@@ -190,16 +190,10 @@ const EcoTourism: React.FC = () => {
 
                 <div className="w-full max-w-[1400px]">
                   <h3 className="text-black font-black text-xl md:text-2xl mb-4 tracking-tighter uppercase border-b-2 border-emerald-500 inline-block">
-                    Eco Tourism
+                    {t("eco.modal_title")}
                   </h3>
                   <p className="text-gray-800 text-xs md:text-sm lg:text-base leading-relaxed font-medium">
-                    Eco-tourism in Sri Lanka focuses on sustainable travel,
-                    offering intimate experiences with the island's high
-                    biodiversity, including wildlife safaris, rainforest treks,
-                    and eco-lodges. Key areas include Sinharaja Rainforest, Yala
-                    National Park, and the Knuckles Mountain Range, emphasizing
-                    conservation, local community benefits, and minimal
-                    environmental impact.
+                    {t("eco.modal_desc")}
                   </p>
                 </div>
               </motion.div>

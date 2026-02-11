@@ -1,0 +1,392 @@
+{
+  "hero": {
+    "specialist_tag": "法语导游专家",
+    "cta_button": "立即探索",
+    "slides": {
+      "s2": {
+        "title": "康提：失落的皇权",
+        "description": "斯里兰卡最后的封建王朝；1815年沦为英国殖民地。"
+      },
+      "s5": {
+        "title": "永恒的遗产",
+        "description": "探索古老的城市和我们丰富历史中充满活力的传统。"
+      },
+      "s6": {
+        "title": "神圣篇章：亚特兰蒂斯",
+        "description": "失落之城、地理、第一文明居民、众神之城。"
+      },
+      "s1": {
+        "title": "海岛乐土",
+        "description": "探索一个独特的岛屿，一年365天多种气候并存。"
+      },
+      "s4": {
+        "title": "阳光海岸",
+        "description": "在阳光明媚的海滩和清澈见底的海水中放松身心。"
+      },
+      "s3": {
+        "title": "荒野冒险",
+        "description": "在原始的自然栖息地邂逅雄伟的野生动物。"
+      },
+      "s7": {
+        "title": "罗波那王国",
+        "description": "传说中的高科技黄金王国；现代斯里兰卡的前身。"
+      }
+    }
+  },
+
+  "map": {
+    "title": "锡兰纪事",
+    "subtitle": "斯里兰卡探险之旅",
+    "directory": "目录",
+    "destinations": {
+      "jaffna": {
+        "name": "贾夫纳 (城堡与文化)",
+        "tagline": "北部王国",
+        "description": "北部的文化中心，以历史悠久的城堡和独特的泰米尔遗产闻名。",
+        "climate": "干燥/炎热",
+        "altitude": "5米",
+        "period": "古代"
+      },
+      "trincomalee": {
+        "name": "亭可马里 (索伯岛)",
+        "tagline": "深海港湾",
+        "description": "索伯岛所在地，拥有世界上最深的天然良港之一。",
+        "climate": "炎热",
+        "altitude": "2米",
+        "period": "公元前"
+      },
+      "anuradhapura": {
+        "name": "阿努拉德普勒",
+        "tagline": "第一座圣城",
+        "description": "斯里兰卡古老的第一代首都，宏伟舍利塔的故乡。",
+        "climate": "干燥",
+        "altitude": "81米",
+        "period": "公元前4世纪"
+      },
+      "polonnaruwa": {
+        "name": "波隆纳鲁沃",
+        "tagline": "中世纪首都",
+        "description": "斯里兰卡第二代首都，展示了宏伟的遗迹和石雕像。",
+        "climate": "干燥",
+        "altitude": "55米",
+        "period": "11世纪"
+      },
+      "sigiriya": {
+        "name": "狮子岩 (锡吉里耶)",
+        "tagline": "狮子岩堡垒",
+        "description": "一座从丛林中拔地而起200米的古老岩石堡垒。",
+        "climate": "潮湿",
+        "altitude": "349米",
+        "period": "5世纪"
+      },
+      "dambulla": {
+        "name": "丹布勒",
+        "tagline": "黄金石窟寺",
+        "description": "斯里兰卡最大的石窟寺庙群。",
+        "climate": "炎热",
+        "altitude": "340米",
+        "period": "公元前1世纪"
+      },
+      "knuckles": {
+        "name": "指关节山脉",
+        "tagline": "云雾山峦",
+        "description": "生物多样性热点地区，拥有独特的云雾森林。",
+        "climate": "雾气缭绕",
+        "altitude": "1863米",
+        "period": "自然形成"
+      },
+      "kandy": {
+        "name": "康提",
+        "tagline": "圣山之都",
+        "description": "斯里兰卡最后一个封建王朝首都，佛牙寺所在地。",
+        "climate": "凉爽",
+        "altitude": "500米",
+        "period": "15世纪"
+      },
+      "horton": {
+        "name": "霍顿平原云雾森林",
+        "tagline": "云雾森林",
+        "description": "高海拔平原。马哈威利河、凯拉尼河和瓦拉韦河的发源地。",
+        "climate": "寒冷",
+        "altitude": "2100米",
+        "period": "自然形成"
+      },
+      "peak-wilderness": {
+        "name": "峰顶荒野保护区",
+        "tagline": "荒野保护区",
+        "description": "神圣的亚当峰所在，凯拉尼河与卡鲁河的源头。",
+        "climate": "多雨",
+        "altitude": "2243米",
+        "period": "远古时期"
+      },
+      "ratnapura": {
+        "name": "宝石城拉特纳普勒",
+        "tagline": "宝石之城",
+        "description": "以蓝宝石和宝石开采而闻名于世。",
+        "climate": "湿润",
+        "altitude": "130米",
+        "period": "历史悠久"
+      },
+      "sinharaja": {
+        "name": "辛哈拉贾雨林",
+        "tagline": "雨林遗产",
+        "description": "原始热带雨林，联合国教科文组织世界遗产。",
+        "climate": "多雨",
+        "altitude": "1170米",
+        "period": "自然形成"
+      },
+      "galle": {
+        "name": "加勒",
+        "tagline": "古城与城堡",
+        "description": "拥有殖民时期建筑风格的海滨城堡小镇。",
+        "climate": "潮湿",
+        "altitude": "0米",
+        "period": "16世纪"
+      },
+      "kataragama": {
+        "name": "神圣卡特勒格默",
+        "tagline": "庆典之城",
+        "description": "多宗教圣地，鲁忽奴马哈卡特勒格默神庙所在地。",
+        "climate": "干燥",
+        "altitude": "40米",
+        "period": "古代"
+      },
+      "devundara": {
+        "name": "众神之城 - 德温德拉",
+        "tagline": "南部大门",
+        "description": "斯里兰卡最南端，毗湿奴神庙所在地。",
+        "climate": "海滨气候",
+        "altitude": "1米",
+        "period": "古代"
+      },
+      "ruhuna": {
+        "name": "鲁忽奴王国",
+        "tagline": "荒野王国",
+        "description": "古代王国，现为闻名世界的金钱豹保护区。",
+        "climate": "干燥",
+        "altitude": "30米",
+        "period": "公元前2世纪"
+      }
+    }
+  },
+  "nav": {
+    "home": "首页",
+    "heritage_map": "遗产地图",
+    "climate": "海岛气候",
+    "legacy": "我们的传承",
+    "contact": "联系我们",
+    "book_now": "立即预订"
+  },
+  "highland": {
+    "title": "高海拔湖泊",
+    "lake_name": "Mahaeliyathenna",
+    "location": "霍顿平原",
+    "subtitle": "中部高地的伟大湖泊 | 山地地理与湖泊 | 四条河流流向海洋的四个方向。",
+    "read_more": "阅读更多",
+    "overlay_title": "高海拔湖泊 | Anotatta",
+    "overlay_desc": "霍顿平原（国家公园）是斯里兰卡中部高地海拔2100-2300米的高原，是至关重要的水源地。其雾气缭绕的山地森林和草原是马哈韦利河、凯拉尼河和瓦拉韦河等主要河流的发源地。"
+  },
+  "highlights": {
+    "water": {
+      "title_1": "万水之源",
+      "title_2": "瀑布与湖泊",
+      "subtitle": "体验云雾缭绕的高地和雷鸣般的美景。",
+      "read_more": "阅读更多",
+      "info_title_1": "瀑布之乡",
+      "info_desc_1": "斯里兰卡拥有世界上最高的瀑布密度，记录在案的瀑布超过400到500个，主要分布在中部高地。",
+      "info_title_2": "万湖之国",
+      "info_desc_2": "拥有庞大的古代人工水库（“储水池”）和自然湖泊网络，对灌溉、生物多样性和旅游业至关重要。"
+    },
+    "wildlife": {
+      "title_1": "荒野之地",
+      "title_2": "大象与豹",
+      "subtitle": "深入荒野腹地，见证陆地巨兽。",
+      "read_more": "阅读更多",
+      "info_title_1": "豹之领地",
+      "info_desc_1": "全球观赏豹子的最佳地点之一。雅拉国家公园是这些顶级掠食者全球密度最高的地区之一。",
+      "info_title_2": "大象之乡",
+      "info_desc_2": "以极高密度的野生亚洲象而闻名。岛上约有5000至6000头野生大象。"
+    }
+  },
+  "climate": {
+    "badge": "气候智能",
+    "title_main": "气候",
+    "title_sub": "条件",
+    "route_planner": "行程规划",
+    "start_placeholder": "出发点",
+    "dest_placeholder": "目的地",
+    "btn_start": "开启旅程",
+    "empty_profile": "选择目的地以查看气候概况",
+    "footer_text": "斯里兰卡是世界上唯一一个全年都存在各种气候条件的国家。您可以在几小时内穿梭于不同的气候带。",
+    "zones": {
+      "wet": {
+        "name": "潮湿区",
+        "desc": "西南部。高湿度和强劲的季风降雨。",
+        "transport": "豪华轿车、SUV"
+      },
+      "intermediate": {
+        "name": "过渡区",
+        "desc": "中部山区。温和宜人的热带气候。",
+        "transport": "标准轿车、面包车"
+      },
+      "dry": {
+        "name": "干燥区",
+        "desc": "北部和东部。金色的平原和明媚的阳光。",
+        "transport": "4x4越野车、SUV"
+      },
+      "arid_north": {
+        "name": "干旱区（北）",
+        "desc": "马纳尔/贾夫纳。酷热且降雨极少。",
+        "transport": "专业4x4越野车"
+      },
+      "arid_south": {
+        "name": "干旱区（南）",
+        "desc": "汉班托塔/雅拉。灌木丛和游猎体验。",
+        "transport": "游猎吉普车"
+      }
+    }
+  },
+  "agro": {
+    "badge": "耕耘旅程",
+    "title_main": "农业",
+    "title_sub": "旅游",
+    "read_more": "阅读更多",
+    "modal_title": "农业旅游",
+    "modal_desc": "斯里兰卡的农业旅游提供沉浸式的农场住宿和体验，让游客参与采茶、香料采摘和有机耕作等传统活动。主要亮点包括探索香料园、茶园和稻田。"
+  },
+  "civilization": {
+    "title": "伟大的文明",
+    "subtitle": "亮点 / 遗迹 / 考古旅游"
+  },
+  "benefits": {
+    "title_main": "宾客",
+    "title_sub": "专属福利",
+    "free_badge": "免费",
+    "selection_registered": "选择已登记！",
+    "planting": {
+      "title": "亲手植树",
+      "guidelines": "严格准则",
+      "no_pine": "拒绝松树",
+      "desc": "加入我们，通过种植一棵我们免费提供的珍贵树苗，为世界做出典范贡献。",
+      "button": "我想植树"
+    },
+    "invest": {
+      "title": "免费咨询",
+      "subtitle": "通过值得信赖的合作伙伴在斯里兰卡开启业务",
+      "tags": "购买土地 | 拥有酒店 | 建造第二家园",
+      "button": "我有兴趣"
+    },
+    "media": {
+      "title": "旅行相册",
+      "soft_copy": "仅限电子版",
+      "quote": "旅途足够遥远，终将遇见自己。",
+      "button": "申请拍摄"
+    }
+  },
+  "eco": {
+    "title_main": "生态",
+    "title_sub": "旅游",
+    "categories": {
+      "nature_reserve": "严格自然保护区",
+      "conservation": "保育林",
+      "rainforests": "热带雨林",
+      "plains": "平原",
+      "botanical": "植物园",
+      "sanctuaries": "保护区",
+      "national_parks": "国家公园"
+    },
+    "read_more": "阅读更多",
+    "modal_title": "生态旅游",
+    "modal_desc": "斯里兰卡的生态旅游侧重于可持续旅行，提供与岛上高度生物多样性的亲密接触，包括荒野游猎、雨林探险和生态旅馆。"
+  },
+  "about": {
+    "vision_tag": "我们的愿景与故事",
+    "title_main": "打造高端",
+    "title_sub": "体验",
+    "desc_1": "我们的旅程始于一个简单的初衷：向世界揭示斯里兰卡不为人知的故事和隐藏的乐土。我们不只是组织旅游，我们策划的是连接岛屿灵魂的沉浸式旅程。",
+    "quote": "我们服务的核心是“Atithi Devo Bhava”——即视客人为神灵的古老信仰。",
+    "desc_2": "凭借15年以上的深厚专业知识，我们专注于豪华、可持续和私人定制旅行。您的安全和惊喜是我们的首要任务。",
+    "stats": {
+      "travelers": "游客人数",
+      "destinations": "目的地",
+      "heritage": "文化遗产",
+      "safe_trips": "安全旅程"
+    },
+    "guidance": "官方授权指导",
+    "support": "咨询与支持",
+    "specialist": "中部历史高地专家"
+  },
+  "travel_keys": {
+    "title": "必做清单 | 视觉盛宴",
+    "subtitle_prefix": "您的心愿",
+    "subtitle_suffix": "由我们实现"
+  },
+  "form": {
+    "tag": "联系我们",
+    "title_main": "开启您的",
+    "title_sub": "梦想之旅",
+    "responsive_inbox": "极速响应收件箱",
+    "labels": {
+      "name": "全名",
+      "email": "邮箱地址",
+      "arrival": "到达日期",
+      "departure": "出发日期",
+      "guests": "成人数",
+      "kids": "儿童数",
+      "country": "国籍",
+      "transport": "首选交通方式",
+      "locations": "计划访问地点"
+    },
+    "transport_modes": {
+      "car": "轿车",
+      "van": "面包车",
+      "bus": "大巴"
+    },
+    "submit": "提交咨询",
+    "processing": "处理中...",
+    "success": "您的咨询已发送！请检查您的邮箱进行确认。",
+    "error": "无法连接到服务器。"
+  },
+  "modal": {
+    "interests": {
+      "plant_true": "✓ 对植树感兴趣",
+      "plant_false": "未选择植树",
+      "invest_true": "✓ 对投资感兴趣",
+      "invest_false": "未选择投资",
+      "media_true": "✓ 申请免费影像拍摄",
+      "media_false": "未选择影像拍摄"
+    },
+    "placeholders": {
+      "name": "全名",
+      "email": "邮箱地址",
+      "guests": "人数",
+      "kids": "儿童人数",
+      "country": "国家",
+      "location": "访问地点"
+    },
+    "messages": {
+      "success": "咨询发送成功！",
+      "error": "服务器错误",
+      "connection": "连接失败。"
+    }
+  },
+  "footer": {
+    "description": "您探索斯里兰卡奇观的首选门户。我们打造终生难忘的回忆。",
+    "guide_label": "法语导游",
+    "sections": {
+      "links": "快速链接",
+      "contact": "联系方式"
+    },
+    "nav": {
+      "home": "首页",
+      "packages": "旅游套餐",
+      "destinations": "目的地",
+      "inquiry": "在线咨询"
+    },
+    "legal": {
+      "rights": "保留所有权利。",
+      "privacy": "隐私政策",
+      "terms": "服务条款"
+    }
+  }
+}

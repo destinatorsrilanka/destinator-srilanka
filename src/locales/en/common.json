@@ -1,0 +1,393 @@
+{
+  "hero": {
+    "specialist_tag": "Spécialiste des Circuits Francophones",
+    "cta_button": "EXPLORE NOW",
+    "slides": {
+      "s2": {
+        "title": "Lost Royalty Kandy",
+        "description": "Sri Lanka's final monarchy; fell to the British in 1815."
+      },
+      "s5": {
+        "title": "Timeless Heritage",
+        "description": "Explore ancient cities and vibrant traditions of our rich history."
+      },
+      "s6": {
+        "title": "Divine chapter Atlantis",
+        "description": "Lost city, Geography, First Civilization inhabitants, City of Gods."
+      },
+      "s1": {
+        "title": "ISLAND BLISS",
+        "description": "Discover a unique island where diverse climates coexist 365 days a year."
+      },
+      "s4": {
+        "title": "Sunkissed Shores",
+        "description": "Relax on the sun-kissed shores and crystal clear waters."
+      },
+      "s3": {
+        "title": "Wild Adventures",
+        "description": "Encounter majestic wildlife in their pristine natural habitats."
+      },
+      "s7": {
+        "title": "Kingdom of RAVANA",
+        "description": "A legendary, high-tech golden kingdom; modern Sri Lanka."
+      }
+    }
+  },
+
+  "map": {
+    "title": "THE CEYLON CHRONICLES",
+    "subtitle": "Sri Lanka Expedition",
+    "directory": "Directory",
+    "destinations": {
+      "jaffna": {
+        "name": "JAFFNA (FORT/CULTURE)",
+        "tagline": "Northern Kingdom",
+        "description": "The cultural hub of the North, famous for its historic fort and unique Tamil heritage.",
+        "climate": "Dry/Hot",
+        "altitude": "5m",
+        "period": "Ancient Era"
+      },
+      "trincomalee": {
+        "name": "TRINCOMALEE (SOBER ISLAND)",
+        "tagline": "The Deep Harbor",
+        "description": "Home to Sober Island and the world's deepest natural harbor.",
+        "climate": "Hot",
+        "altitude": "2m",
+        "period": "Pre-Christian"
+      },
+      "anuradhapura": {
+        "name": "ANURADHAPURA",
+        "tagline": "First Sacred Capital",
+        "description": "The first capital of ancient Sri Lanka, home to grand stupas.",
+        "climate": "Dry",
+        "altitude": "81m",
+        "period": "4th Century BC"
+      },
+      "polonnaruwa": {
+        "name": "POLONNARUWA",
+        "tagline": "Medieval Capital",
+        "description": "The second capital, showcasing grand ruins and rock statues.",
+        "climate": "Dry",
+        "altitude": "55m",
+        "period": "11th Century"
+      },
+      "sigiriya": {
+        "name": "SIGIRIYA",
+        "tagline": "The Lion Rock",
+        "description": "An ancient rock fortress rising 200m from the jungle.",
+        "climate": "Humid",
+        "altitude": "349m",
+        "period": "5th Century"
+      },
+      "dambulla": {
+        "name": "DAMBULLA",
+        "tagline": "Golden Cave Temple",
+        "description": "The largest cave temple complex in Sri Lanka.",
+        "climate": "Hot",
+        "altitude": "340m",
+        "period": "1st Century BC"
+      },
+      "knuckles": {
+        "name": "KNUCKLES MOUNTAIN RANGE",
+        "tagline": "Mountain Mist",
+        "description": "A biodiversity hotspot with unique cloud forests.",
+        "climate": "Mist",
+        "altitude": "1863m",
+        "period": "Natural"
+      },
+      "kandy": {
+        "name": "KANDY",
+        "tagline": "Sacred Hill Capital",
+        "description": "The last royal stronghold and home to the Tooth Relic.",
+        "climate": "Cool",
+        "altitude": "500m",
+        "period": "15th Century"
+      },
+      "horton": {
+        "name": "HORTON PLAINS CLOUD FOREST",
+        "tagline": "Cloud Forest",
+        "description": "High plateau. Source of Mahaweli, Kelani, and Walawe rivers.",
+        "climate": "Cold",
+        "altitude": "2100m",
+        "period": "Natural"
+      },
+      "peak-wilderness": {
+        "name": "PEAK WILDERNESS SANCTUARY",
+        "tagline": "Wilderness Sanctuary",
+        "description": "Sacred Sri Pada mountain, the source of Kelani and Kalu rivers.",
+        "climate": "Rainy",
+        "altitude": "2243m",
+        "period": "Ancient"
+      },
+      "ratnapura": {
+        "name": "GEM CITY RATNAPURA",
+        "tagline": "Gem City",
+        "description": "World-famous for blue sapphires and gem mining.",
+        "climate": "Wet",
+        "altitude": "130m",
+        "period": "History"
+      },
+      "sinharaja": {
+        "name": "SINHARAJAYA RAIN FOREST",
+        "tagline": "Rain Forest Heritage",
+        "description": "A primary tropical rainforest and UNESCO site.",
+        "climate": "Rainy",
+        "altitude": "1170m",
+        "period": "Natural"
+      },
+      "galle": {
+        "name": "GALLE",
+        "tagline": "Old Town & Fort",
+        "description": "A coastal fortress town with colonial architecture.",
+        "climate": "Humid",
+        "altitude": "0m",
+        "period": "16th Century"
+      },
+      "kataragama": {
+        "name": "SACRED KATARAGAMA",
+        "tagline": "City of Festivals",
+        "description": "A multi-religious sacred city and home to the Ruhunu Maha Kataragama Devalaya.",
+        "climate": "Dry",
+        "altitude": "40m",
+        "period": "Ancient"
+      },
+      "devundara": {
+        "name": "CITY OF GODS - DEVUNDARA",
+        "tagline": "Southern Gateway",
+        "description": "The southernmost point of Sri Lanka, home to the Vishnu Devalaya.",
+        "climate": "Coastal",
+        "altitude": "1m",
+        "period": "Ancient"
+      },
+      "ruhuna": {
+        "name": "KINGDOM OF RUHUNA",
+        "tagline": "Kingdom of Wild",
+        "description": "Ancient kingdom, now a world-renowned leopard sanctuary.",
+        "climate": "Dry",
+        "altitude": "30m",
+        "period": "2nd Century BC"
+      }
+    }
+  },
+
+  "nav": {
+    "home": "HOME",
+    "heritage_map": "HERITAGE MAP",
+    "climate": "SL CLIMATE",
+    "legacy": "OUR LEGACY",
+    "contact": "CONTACT US",
+    "book_now": "BOOK NOW"
+  },
+  "highland": {
+    "title": "High Altitude Lake",
+    "lake_name": "Mahaeliyathenna",
+    "location": "Horton Plains",
+    "subtitle": "The Great Lake in the Central Highlands | Mountainous Geography & Lakes | Four (4) Rivers to Four directions to the Ocean.",
+    "read_more": "READ MORE",
+    "overlay_title": "High Altitude lake | Anotatta",
+    "overlay_desc": "Horton Plains (National Park), a 2,100–2,300m high-altitude plateau (lake in dry mode) in Sri Lanka's central highlands, acts as a crucial watershed, with its misty montane forests and grasslands serving as the source of major rivers, including the Mahaweli, Kelani, and Walawe, as well as tributaries like Belihul Oya and Agra Oya & Uma Oya."
+  },
+  "highlights": {
+    "water": {
+      "title_1": "LAND OF",
+      "title_2": "WATERFALLS | LAKES",
+      "subtitle": "Experience the mist-clad heights and the thunderous beauty.",
+      "read_more": "READ MORE",
+      "info_title_1": "Land of waterfalls",
+      "info_desc_1": "Sri Lanka, often called the 'Land of Waterfalls,'' holds the world's highest waterfall density with over 400 to 500 recorded waterfalls. Primarily located in the central highlands, these cascades, ranging from the 263m tall Bambarakanda Falls to the wide Bomburu Ella, are fed by heavy monsoons and lush forests, with the highest concentration in the Ratnapura district.",
+      "info_title_2": "Land of Lakes",
+      "info_desc_2": "Sri Lanka, often called a 'land of lakes', features an extensive network of ancient man-made reservoirs ('tanks') and natural lakes crucial for irrigation, biodiversity, and tourism. Key water bodies include the massive Parakrama Samudraya, Kalawewa Lake (largest), and Bolgoda Lake, which support wildlife like crocodiles and diverse bird species."
+    },
+    "wildlife": {
+      "title_1": "LAND OF",
+      "title_2": "ELEPHANTS | LEOPARDS",
+      "subtitle": "Venture into the wild heartlands to witness the gentle giants.",
+      "read_more": "READ MORE",
+      "info_title_1": "Land of leopards",
+      "info_desc_1": "Sri Lanka is considered one of the best places in the world to view leopards (Panthera pardus kotiya), with Yala National Park holding one of the highest leopard densities globally. These apex predators thrive across the island, particularly in the dry zone's scrublands and, uniquely, in the wet zone and highland forest patches.",
+      "info_title_2": "Land of Elephants",
+      "info_desc_2": "Sri Lanka is often celebrated as a 'land of elephants' due to its remarkably high density of wild Asian elephants (Elephas maximus maximus). The island is home to an estimated 5,000 to 6,000 wild elephants, predominantly found in the dry zones of the north, east, and southeast"
+    }
+  },
+  "climate": {
+    "badge": "Climate Intelligence",
+    "title_main": "Climatic",
+    "title_sub": "Conditions",
+    "route_planner": "Route Planner",
+    "start_placeholder": "Starting Point",
+    "dest_placeholder": "Destination",
+    "btn_start": "Start Journey",
+    "empty_profile": "Select destination to view climate profile",
+    "footer_text": "Sri Lanka is the only country in the world where every climate condition exists throughout the year. One can travel to each climatic zone in a few hours. Cultivation in Sri Lanka is also carried out mainly during two main rainfalls.",
+    "zones": {
+      "wet": {
+        "name": "Wet Zone",
+        "desc": "South-West. High humidity and heavy monsoon rainfall.",
+        "transport": "Luxury Sedans, SUVs"
+      },
+      "intermediate": {
+        "name": "Intermediate Zone",
+        "desc": "Central hills. Mild and pleasant tropical climate.",
+        "transport": "Standard Cars, Vans"
+      },
+      "dry": {
+        "name": "Dry Zone",
+        "desc": "North & East. Golden plains and bright sunshine.",
+        "transport": "4x4 Jeeps, SUVs"
+      },
+      "arid_north": {
+        "name": "Arid Zone (North)",
+        "desc": "Mannar/Jaffna. Intense heat and minimal rainfall.",
+        "transport": "Off-road 4x4"
+      },
+      "arid_south": {
+        "name": "Arid Zone (South)",
+        "desc": "Hambantota/Yala. Scrublands and wildlife safaris.",
+        "transport": "Safari Jeeps"
+      }
+    }
+  },
+  "agro": {
+    "badge": "Cultivating Journeys",
+    "title_main": "AGRO",
+    "title_sub": "TOURISM",
+    "read_more": "READ MORE",
+    "modal_title": "Agro Tourism",
+    "modal_desc": "Agro-tourism in Sri Lanka offers immersive farm stays and experiences, letting visitors engage with traditional practices like tea plucking, spice harvesting, and organic farming, especially in areas like Nuwara Eliya, Kandy, and Sigiriya, blending agricultural education with cultural insights into the island's rich farming heritage. Key attractions include exploring spice gardens, tea estates, paddy fields, and supporting sustainable local practices, with many resorts offering direct involvement in farm activities like milking cows or harvesting crops."
+  },
+  "civilization": {
+    "title": "Great Civilization",
+    "subtitle": "Highlights / Ruins / Archaeological Tourism"
+  },
+  "benefits": {
+    "title_main": "Benefits",
+    "title_sub": "To Our Guests",
+    "free_badge": "FREE",
+    "selection_registered": "Selection Registered!",
+    "planting": {
+      "title": "Signature Endemics",
+      "guidelines": "Strict Guidelines",
+      "no_pine": "Say NO to Pine",
+      "desc": "Join us in making an exemplary contribution to the world by planting a valuable sapling that we provide FREE OF CHARGE.",
+      "button": "Like to Plant"
+    },
+    "invest": {
+      "title": "Free Consultation",
+      "subtitle": "Start your business in Sri Lanka with trusted partnerships",
+      "tags": "Buy a land | Own hotel | Build your second home",
+      "button": "Interesting"
+    },
+    "media": {
+      "title": "Travel Album",
+      "soft_copy": "SOFT COPY ONLY",
+      "quote": "TRAVEL FAR ENOUGH, YOU MEET YOURSELF.",
+      "button": "Request Coverage"
+    }
+  },
+  "eco": {
+    "title_main": "ECO",
+    "title_sub": "TOURISM",
+    "categories": {
+      "nature_reserve": "Strict Nature Reserve",
+      "conservation": "Conservation Forests",
+      "rainforests": "Rainforests",
+      "plains": "Plains",
+      "botanical": "Botanical Gardens",
+      "sanctuaries": "Sanctuaries",
+      "national_parks": "National Parks"
+    },
+    "read_more": "READ MORE",
+    "modal_title": "Eco Tourism",
+    "modal_desc": "Eco-tourism in Sri Lanka focuses on sustainable travel, offering intimate experiences with the island's high biodiversity, including wildlife safaris, rainforest treks, and eco-lodges. Key areas include Sinharaja Rainforest, Yala National Park, and the Knuckles Mountain Range, emphasizing conservation, local community benefits, and minimal environmental impact."
+  },
+  "about": {
+    "vision_tag": "Our Vision & Story",
+    "title_main": "CRAFTING ELITE",
+    "title_sub": "Experiences.",
+    "desc_1": "Our journey began with a simple passion: to unveil the untold stories and hidden paradises of Sri Lanka to the world. We don't just organize tours; we curate immersive journeys that connect you with the soul of our island.",
+    "quote": "At the core of our service is 'Atithi Devo Bhava'—the ancient belief that every guest is a reflection of God.",
+    "desc_2": "With over 15 years of deep-rooted expertise, we specialize in luxury, sustainable, and tailor-made travel. Your safety and wonder are our priority.",
+    "stats": {
+      "travelers": "Travelers",
+      "destinations": "Destinations",
+      "heritage": "Heritage",
+      "safe_trips": "Safe Trips"
+    },
+    "guidance": "Authorized Guidance",
+    "support": "Inquiries & Support",
+    "specialist": "Specialist in historical Central Highlands"
+  },
+  "travel_keys": {
+    "title": "Things to do | Bucket list visuals",
+    "subtitle_prefix": "You Decide",
+    "subtitle_suffix": "We Arrange"
+  },
+  "form": {
+    "tag": "Get in Touch",
+    "title_main": "PLAN YOUR",
+    "title_sub": "DREAM JOURNEY.",
+    "responsive_inbox": "Very Responsive Inbox",
+    "labels": {
+      "name": "Full Name",
+      "email": "Email Address",
+      "arrival": "Arrival Date",
+      "departure": "Departure Date",
+      "guests": "Guests",
+      "kids": "Kids",
+      "country": "Country",
+      "transport": "Preferred Transport",
+      "locations": "Visit Locations"
+    },
+    "transport_modes": {
+      "car": "Car",
+      "van": "Van",
+      "bus": "Bus"
+    },
+    "submit": "Submit Inquiry",
+    "processing": "Processing...",
+    "success": "Your inquiry has been sent! Check your email for confirmation.",
+    "error": "Failed to connect to the server."
+  },
+  "modal": {
+    "interests": {
+      "plant_true": "✓ INTERESTED IN PLANTING",
+      "plant_false": "PLANTING NOT SELECTED",
+      "invest_true": "✓ INTERESTED IN INVESTMENT",
+      "invest_false": "INVESTMENT NOT SELECTED",
+      "media_true": "✓ INTERESTED IN FREE MEDIA COVERAGE",
+      "media_false": "MEDIA COVERAGE NOT SELECTED"
+    },
+    "placeholders": {
+      "name": "Full Name",
+      "email": "Email Address",
+      "guests": "Guests",
+      "kids": "Kids",
+      "country": "Country",
+      "location": "Visit Locations"
+    },
+    "messages": {
+      "success": "Inquiry sent successfully!",
+      "error": "Server Error",
+      "connection": "Connection failed."
+    }
+  },
+  "footer": {
+    "description": "Your premier gateway to the wonders of Sri Lanka. We craft memories that last a lifetime.",
+    "guide_label": "Guide Francophone",
+    "sections": {
+      "links": "Links",
+      "contact": "Contact"
+    },
+    "nav": {
+      "home": "Home",
+      "packages": "Packages",
+      "destinations": "Destinations",
+      "inquiry": "Inquiry"
+    },
+    "legal": {
+      "rights": "All Rights Reserved.",
+      "privacy": "Privacy",
+      "terms": "Terms"
+    }
+  }
+}

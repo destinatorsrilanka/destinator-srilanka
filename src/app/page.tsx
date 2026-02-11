@@ -15,6 +15,7 @@ import GreatCivilizationStrip from "@/components/GreatCivilizationStrip";
 import HighlandWaters from "@/components/HighlandWaters";
 import AgroTourism from "@/components/AgroTourism";
 import EcoTourism from "@/components/EcoTourism";
+import "../i18n";
 
 export default function Home() {
   return (

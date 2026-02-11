@@ -9,9 +9,11 @@ import {
   MapPin,
   Instagram,
   Facebook,
-  Music2, // TikTok සඳහා
+  Music2,
   Phone,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import "../i18n";
 
 const LOGO_COLOR = "#EAB308";
 
@@ -43,7 +45,6 @@ const aboutImages = [
     title: "Hunnasgiriya",
     subtitle: "Mist-Clad Knuckles Edge",
   },
-
   { src: "/image/a1.PNG" },
   { src: "/image/a2.PNG" },
   { src: "/image/a3.PNG" },
@@ -58,15 +59,21 @@ const aboutImages = [
   { src: "/image/a12.jpeg" },
 ];
 
-const stats = [
-  { id: 1, label: "Travelers", value: "50K+", icon: Users },
-  { id: 2, label: "Destinations", value: "120+", icon: Globe },
-  { id: 3, label: "Heritage", value: "15+", icon: Award },
-  { id: 4, label: "Safe Trips", value: "100%", icon: ShieldCheck },
-];
-
 export default function CreativeAboutUs() {
+  const { t } = useTranslation();
   const [currentImage, setCurrentImage] = useState(0);
+
+  const stats = [
+    { id: 1, label: t("about.stats.travelers"), value: "50K+", icon: Users },
+    { id: 2, label: t("about.stats.destinations"), value: "120+", icon: Globe },
+    { id: 3, label: t("about.stats.heritage"), value: "15+", icon: Award },
+    {
+      id: 4,
+      label: t("about.stats.safe_trips"),
+      value: "100%",
+      icon: ShieldCheck,
+    },
+  ];
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -107,14 +114,14 @@ export default function CreativeAboutUs() {
               className="flex flex-col items-start"
             >
               <h3 className="text-yellow-500 font-bold text-[9px] tracking-[0.5em] uppercase mb-4 leading-none ml-[-0.5em]">
-                Our Vision & Story
+                {t("about.vision_tag")}
               </h3>
 
               <div className="relative mb-8 text-left w-full">
                 <h2 className="text-4xl lg:text-7xl font-black tracking-tighter leading-[0.9] text-white">
-                  CRAFTING ELITE <br />
+                  {t("about.title_main")} <br />
                   <span className="text-white/30 text-3xl lg:text-6xl uppercase tracking-widest block mt-1">
-                    Experiences.
+                    {t("about.title_sub")}
                   </span>
                 </h2>
 
@@ -134,19 +141,13 @@ export default function CreativeAboutUs() {
 
               <div className="space-y-6 max-w-xl text-left">
                 <p className="text-gray-400 text-sm lg:text-base leading-relaxed">
-                  Our journey began with a simple passion: to unveil the untold
-                  stories and hidden paradises of Sri Lanka to the world. We
-                  don't just organize tours; we curate immersive journeys that
-                  connect you with the soul of our island.
+                  {t("about.desc_1")}
                 </p>
                 <p className="text-gray-500 text-xs lg:text-sm leading-relaxed border-l-2 border-yellow-500/40 pl-5 italic font-medium text-left">
-                  "At the core of our service is 'Atithi Devo Bhava'—the ancient
-                  belief that every guest is a reflection of God."
+                  {t("about.quote")}
                 </p>
                 <p className="text-gray-400 text-sm lg:text-base leading-relaxed">
-                  With over 15 years of deep-rooted expertise, we specialize in
-                  luxury, sustainable, and tailor-made travel. Your safety and
-                  wonder are our priority.
+                  {t("about.desc_2")}
                 </p>
               </div>
 
@@ -166,7 +167,7 @@ export default function CreativeAboutUs() {
                   </div>
                   <div>
                     <p className="text-[10px] uppercase tracking-[0.3em] text-white font-black leading-none mb-1.5">
-                      Authorized Guidence
+                      {t("about.guidance")}
                     </p>
                     <p className="text-[9px] text-gray-500 uppercase tracking-widest font-medium">
                       SLTDA/SLITHM
@@ -176,7 +177,7 @@ export default function CreativeAboutUs() {
 
                 <div className="space-y-3">
                   <p className="text-[9px] uppercase tracking-[0.4em] text-yellow-500/80 font-bold">
-                    Inquiries & Support
+                    {t("about.support")}
                   </p>
                   <div className="flex items-center gap-6">
                     <a
@@ -248,15 +249,14 @@ export default function CreativeAboutUs() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    transition={{ duration: 1.5 }} // Smooth solid transition
+                    transition={{ duration: 1.5 }}
                     className="absolute inset-0"
                   >
                     <img
                       src={aboutImages[currentImage].src}
                       alt={aboutImages[currentImage].title}
-                      className="w-full h-full object-cover brightness-100 transition-transform duration-[5000ms] scale-100" // Solid visual
+                      className="w-full h-full object-cover brightness-100 transition-transform duration-[5000ms] scale-100"
                     />
-                    {/* Gradient overlay එකේ opacity එක අඩු කළා පින්තූරය තවත් solid වීමට */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                     <div className="absolute bottom-5 left-6">
                       <span className="bg-yellow-500 text-black text-[7px] font-black px-2 py-1 rounded uppercase mb-2 inline-block">
@@ -302,10 +302,10 @@ export default function CreativeAboutUs() {
                   </div>
                   <div>
                     <p className="text-[10px] text-yellow-500 font-black uppercase tracking-widest leading-none mb-1">
-                      Specialist in
+                      {t("about.guidance")}
                     </p>
                     <p className="text-xs lg:text-sm text-white font-bold leading-tight">
-                      historical Central Highlands
+                      {t("about.specialist")}
                     </p>
                   </div>
                 </div>

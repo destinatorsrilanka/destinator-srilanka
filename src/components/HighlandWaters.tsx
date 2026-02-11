@@ -4,10 +4,13 @@ import React, { useRef, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import Image from "next/image";
+import { useTranslation } from "react-i18next";
+import "../i18n";
 
 export default function HighlandWaterLine() {
+  const { t } = useTranslation();
   const videoRef = useRef<HTMLVideoElement>(null);
-  const infoRef = useRef<HTMLDivElement>(null); // පැනලය හඳුනා ගැනීමට ref එකක්
+  const infoRef = useRef<HTMLDivElement>(null);
   const [showInfo, setShowInfo] = useState(false);
 
   const images = [
@@ -25,31 +28,25 @@ export default function HighlandWaterLine() {
     "image/lake4.jpeg",
   ];
 
-  // සයිට් එකේ වෙන කොහේ හෝ ක්ලික් කළ විට වැසීමට අවශ්‍ය logic එක
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (infoRef.current && !infoRef.current.contains(event.target as Node)) {
         setShowInfo(false);
       }
     }
-
     if (showInfo) {
-      // delay එකක් සහිතව listener එක add කරන්නේ Read More button එක ක්ලික් කළ සැනින් නැවත වැසීම වැළැක්වීමටයි
       setTimeout(() => {
         document.addEventListener("mousedown", handleClickOutside);
       }, 0);
     } else {
       document.removeEventListener("mousedown", handleClickOutside);
     }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [showInfo]);
 
   return (
     <section className="py-12 bg-[#050505] overflow-hidden relative border-y border-white/5">
-      {/* --- Gold Line Animation --- */}
+      {/* Gold Line Animation */}
       <div className="w-full flex flex-col items-center justify-center mb-12 relative">
         <motion.div
           initial={{ width: 0, opacity: 0 }}
@@ -67,7 +64,7 @@ export default function HighlandWaterLine() {
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="relative border border-white/5 overflow-hidden p-2 md:p-4 bg-white/5 rounded-sm">
-          {/* READ MORE BUTTON */}
+          {/* READ MORE BUTTON - Key: highland.read_more */}
           <div className="absolute top-4 right-4 z-20">
             <button
               id="read-more-btn"
@@ -77,11 +74,10 @@ export default function HighlandWaterLine() {
               }}
               className="text-[10px] font-bold text-white border border-yellow-500/50 px-4 py-1.5 hover:bg-yellow-500 hover:text-black transition-all backdrop-blur-sm shadow-lg shadow-yellow-900/20"
             >
-              READ MORE
+              {t("highland.read_more")}
             </button>
           </div>
 
-          {/* Main Grid: Video Left, Text Right */}
           <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12 relative z-10">
             <div className="relative w-full lg:w-[45%] h-[180px] md:h-[230px] overflow-hidden rounded-sm border border-white/10 shadow-2xl bg-black shrink-0">
               <div className="absolute inset-0 z-0">
@@ -105,10 +101,15 @@ export default function HighlandWaterLine() {
                 whileInView={{ opacity: 1, x: 0 }}
                 className="text-white text-xl md:text-2xl font-black tracking-tighter uppercase mb-4 leading-tight"
               >
-                High Altitude Lake <br className="hidden md:block" />
-                <span className="text-yellow-500">Mahaeliyathenna</span>{" "}
+                {/* Key: highland.title */}
+                {t("highland.title")} <br className="hidden md:block" />
+                {/* Key: highland.lake_name */}
+                <span className="text-yellow-500">
+                  {t("highland.lake_name")}
+                </span>{" "}
+                {/* Key: highland.location */}
                 <span className="text-sm block font-bold tracking-[0.2em] text-white/70 mt-1">
-                  Horton Plains
+                  {t("highland.location")}
                 </span>
               </motion.h2>
 
@@ -117,8 +118,8 @@ export default function HighlandWaterLine() {
                 whileInView={{ opacity: 1 }}
                 className="text-white/80 text-[10px] md:text-xs font-bold tracking-[0.15em] uppercase leading-relaxed max-w-xl lg:mx-0 mx-auto mb-6"
               >
-                The Great Lake in the Central Highlands | Mountainous Geography
-                & Lakes | Four (4) Rivers to Four directions to the Ocean.
+                {/* Key: highland.subtitle */}
+                {t("highland.subtitle")}
               </motion.p>
 
               <div className="w-full overflow-hidden border border-white/10 bg-black/20 backdrop-blur-sm rounded-sm">
@@ -149,11 +150,11 @@ export default function HighlandWaterLine() {
             </div>
           </div>
 
-          {/* --- INFO OVERLAY (Read More Panel) --- */}
+          {/* INFO OVERLAY */}
           <AnimatePresence>
             {showInfo && (
               <motion.div
-                ref={infoRef} // මෙතැනට ref එක සම්බන්ධ කළා
+                ref={infoRef}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 20 }}
@@ -168,16 +169,13 @@ export default function HighlandWaterLine() {
 
                 <div className="w-full">
                   <h3 className="text-black font-black text-xl md:text-2xl mb-3 tracking-tighter uppercase border-b-2 border-yellow-500 inline-block">
-                    High Altitude lake | Anotatta
+                    {/* Key: highland.overlay_title */}
+                    {t("highland.overlay_title")}
                   </h3>
 
                   <p className="text-gray-800 text-xs md:text-sm leading-relaxed mb-6 font-medium">
-                    Horton Plains (National Park), a 2,100–2,300m high-altitude
-                    plateau (lake in dry mode) in Sri Lanka's central highlands,
-                    acts as a crucial watershed, with its misty montane forests
-                    and grasslands serving as the source of major rivers,
-                    including the Mahaweli, Kelani, and Walawe, as well as
-                    tributaries like Belihul Oya and Agra Oya & Uma Oya.
+                    {/* Key: highland.overlay_desc */}
+                    {t("highland.overlay_desc")}
                   </p>
                 </div>
               </motion.div>

@@ -1,13 +1,14 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import Image from "next/image"; // Next.js Image component එක import කිරීම
+import Image from "next/image";
+import { useTranslation } from "react-i18next";
+import "../i18n";
 
 const greatCivilization = [
   { src: "/image/m1.jpeg" },
   { src: "/image/m2.jpeg" },
   { src: "/image/m3.jpeg" },
-
   { src: "/image/m5.jpeg" },
   { src: "/image/m6.jpeg" },
   { src: "/image/m7.jpeg" },
@@ -18,9 +19,7 @@ const greatCivilization = [
   { src: "/image/m11.jpeg" },
   { src: "/image/m12.jpeg" },
   { src: "/image/m13.jpeg" },
-
   { src: "/image/m15.jpeg" },
-
   { src: "/image/m17.jpeg" },
   { src: "/image/m18.jpeg" },
   { src: "/image/m19.jpeg" },
@@ -29,7 +28,6 @@ const greatCivilization = [
   { src: "/image/m22.jpeg" },
   { src: "/image/m23.jpeg" },
   { src: "/image/m24.jpeg" },
-
   { src: "/image/m27.jpeg" },
   { src: "/image/m28.jpeg" },
   { src: "/image/m16.jpeg" },
@@ -123,38 +121,42 @@ const greatCivilization = [
   { src: "/image/m122.jpeg" },
   { src: "/image/m123.jpeg" },
   { src: "/image/m124.jpeg" },
-
   { src: "/image/m126.jpeg" },
   { src: "/image/m127.jpeg" },
   { src: "/image/m128.jpeg" },
 ];
 
 export default function GreatCivilizationStrip() {
+  const { t } = useTranslation();
+
   return (
     <section className="py-6 bg-[#050505] overflow-hidden">
       <div className="relative">
+        {/* --- TEXT SECTION (RIGHT ALIGNED) --- */}
         <div className="max-w-[1400px] mx-auto px-6 mb-5 text-right flex justify-end">
           <div className="flex flex-col border-r-4 border-white pr-4 py-1 items-end">
             <h2 className="text-white text-xl md:text-2xl font-black uppercase tracking-[0.25em] drop-shadow-[0_0_10px_rgba(255,255,255,0.3)] leading-none">
-              Great Civilization
+              {t("civilization.title")}
             </h2>
             <div className="flex items-center gap-2 mt-1.5 justify-end">
               <p className="text-yellow-500 text-[10px] md:text-[12px] uppercase tracking-[0.5em] font-black">
-                Highlights/Ruines/Archeologial tourism
+                {t("civilization.subtitle")}
               </p>
               <span className="h-[1px] w-4 bg-yellow-500/50"></span>
             </div>
           </div>
         </div>
 
+        {/* --- INFINITE SCROLLING STRIP --- */}
         <div className="relative">
+          {/* Fading Gradients */}
           <div className="absolute inset-y-0 left-0 w-24 md:w-40 bg-gradient-to-r from-[#050505] via-[#050505]/80 to-transparent z-10 pointer-events-none" />
           <div className="absolute inset-y-0 right-0 w-24 md:w-40 bg-gradient-to-l from-[#050505] via-[#050505]/80 to-transparent z-10 pointer-events-none" />
 
           <motion.div
             className="flex"
             animate={{ x: ["-50%", "0%"] }}
-            transition={{ duration: 90, ease: "linear", repeat: Infinity }}
+            transition={{ duration: 120, ease: "linear", repeat: Infinity }}
             style={{ width: "max-content" }}
           >
             {[...greatCivilization, ...greatCivilization].map((item, index) => (
@@ -164,11 +166,11 @@ export default function GreatCivilizationStrip() {
               >
                 <Image
                   src={item.src}
-                  alt="History"
+                  alt="Ancient Civilization Ruins Sri Lanka"
                   fill
                   className="!relative !h-full !w-auto object-cover transition-transform duration-700 hover:scale-110"
-                  sizes="(max-width: 768px) 150px, 200px"
-                  priority={index < 10} // මුල් පින්තූර කිහිපය ඉක්මනින් load වීමට
+                  sizes="(max-width: 768px) 150px, 250px"
+                  priority={index < 12}
                 />
               </div>
             ))}

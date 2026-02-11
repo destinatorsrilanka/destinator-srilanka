@@ -2,67 +2,24 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { ArrowRight, ChevronLeft, ChevronRight, Compass } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import "../i18n";
 
+// JSON එකේ ඇති දත්ත පාවිච්චි කරන නිසා මෙතන තිබුණු titles/descriptions ඉවත් කළා
 const carouselImages = [
-  {
-    id: "s2",
-    src: "/image/clucture.png",
-    enTitle: "Lost Royalty Kandy",
-    frTitle: "Bonbons de la royauté perdue",
-    description:
-      "Sri Lanka's final monarchy; fell to the British in 1815. | Dernière monarchie du Sri Lanka ; elle est tombée aux mains des Britanniques en 1815.",
-  },
-  {
-    id: "s5",
-    src: "/image/hero-slide.jpeg",
-    enTitle: "Timeless Heritage",
-    frTitle: "Héritage Intemporel",
-    description:
-      "Explore ancient cities and vibrant traditions of our rich history. | Explorez les cités anciennes et les traditions vibrantes. ",
-  },
-  {
-    id: "s6",
-    src: "/image/hero-slide2.png",
-    enTitle: "Divine chapter Atlantis",
-    frTitle: "Chapitre divin Atlantide",
-    description:
-      " Lost city,Geography,First Civilization inhabitants,City of Gods. | Cité perdue, Géographie, Premiers habitants de la civilisation, Cité des dieux.",
-  },
-  {
-    id: "s1",
-    src: "/image/sildenew.png",
-    enTitle: "ISLAND BLISS",
-    frTitle: "Vivez l’expérience Sri lankaise",
-    description:
-      "Discover a unique island where diverse climates coexist 365 days a year. | Découvrez une île unique aux climats diversifiés.",
-  },
-  {
-    id: "s4",
-    src: "/image/slidenew1.png",
-    enTitle: "Sunkissed Shores",
-    frTitle: " Eaux Cristallines ",
-    description:
-      "Relax on the sun-kissed shores and crystal clear waters. | Détendez-vous sur les rivages ensoleillés.",
-  },
-  {
-    id: "s3",
-    src: "/image/k.png",
-    enTitle: "Wild Adventures",
-    frTitle: "Des adventures sauvages ",
-    description:
-      "Encounter majestic wildlife in their pristine natural habitats. | Rencontrez une faune majestueuse dalam son habitat naturel.",
-  },
-  {
-    id: "s7",
-    src: "/image/hero-slide3.png",
-    enTitle: "Kingdom of RAVANA",
-    frTitle: "Royaume du RAVANA",
-    description:
-      "A legendary, high-tech golden kingdom; modern Sri Lanka. |Un royaume doré légendaire et de haute technologie ; le Sri Lanka moderne",
-  },
+  { id: "s2", src: "/image/clucture.png" },
+  { id: "s5", src: "/image/hero-slide.jpeg" },
+  { id: "s6", src: "/image/hero-slide2.png" },
+  { id: "s1", src: "/image/sildenew.png" },
+  { id: "s4", src: "/image/slidenew1.png" },
+
+  { id: "s3", src: "/image/k.png" },
+
+  { id: "s7", src: "/image/hero-slide3.png" },
 ];
 
 export default function HeroSection() {
+  const { t } = useTranslation(); // Translation hook එක
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -80,6 +37,9 @@ export default function HeroSection() {
     setCurrentIndex(
       (prev) => (prev - 1 + carouselImages.length) % carouselImages.length,
     );
+
+  // දැනට තෝරාගෙන ඇති Slide එකේ ID එක (උදා: "s1")
+  const currentSlideId = carouselImages[currentIndex].id;
 
   return (
     <section className="relative min-h-[700px] h-screen w-full bg-black font-montserrat overflow-hidden flex flex-col">
@@ -107,13 +67,12 @@ export default function HeroSection() {
             key={item.id}
             className={`absolute inset-0 transition-opacity duration-[1500ms] ease-in-out ${index === currentIndex ? "opacity-100 scale-110" : "opacity-0 scale-100"}`}
             style={{
-              transform: index === currentIndex ? "scale(1.1)" : "scale(1)",
               transition: "opacity 1.5s ease-in-out, transform 8s linear",
             }}
           >
             <Image
               src={item.src}
-              alt={item.enTitle}
+              alt="Sri Lanka Travel"
               fill
               className="object-cover brightness-[0.45]"
               priority={index === 0}
@@ -149,21 +108,26 @@ export default function HeroSection() {
                   <span className="w-1 h-3 bg-[#ED2939]"></span>
                 </div>
                 <p className="text-white text-[10px] font-black tracking-widest uppercase italic">
-                  Spécialiste des Circuits Francophones
+                  {/* JSON: hero.specialist_tag */}
+                  {t("hero.specialist_tag")}
                 </p>
               </div>
             </div>
 
             <div className="mb-8 w-full">
               <h2 className="text-orange-500 text-lg md:text-xl font-bold italic mb-2 uppercase tracking-wide">
-                {carouselImages[currentIndex].frTitle}
+                {/* JSON: map.title */}
+                {t("map.title")}
               </h2>
-              {/* lg (Desktop) වලදී පමණක් whitespace-nowrap තබා ගත්තා */}
+
+              {/* Dynamic Title based on current Slide ID - using lowercase keys */}
               <h1 className="text-white text-[2.2rem] sm:text-[3rem] md:text-5xl lg:text-6xl xl:text-7xl font-black uppercase leading-tight mb-4 lg:whitespace-nowrap">
-                {carouselImages[currentIndex].enTitle}
+                {t(`hero.slides.${currentSlideId}.title`)}
               </h1>
+
+              {/* Dynamic Description based on current Slide ID - using lowercase keys */}
               <p className="text-gray-300 text-sm md:text-lg max-w-2xl leading-relaxed opacity-90">
-                {carouselImages[currentIndex].description}
+                {t(`hero.slides.${currentSlideId}.description`)}
               </p>
             </div>
 
@@ -175,7 +139,8 @@ export default function HeroSection() {
               }
               className="bg-orange-500 hover:bg-white text-white hover:text-black px-10 py-4 rounded-full font-black transition-all flex items-center gap-2 text-lg shadow-2xl group"
             >
-              EXPLORE NOW{" "}
+              {/* JSON: hero.cta_button */}
+              {t("hero.cta_button")}
               <ArrowRight
                 size={22}
                 className="group-hover:translate-x-2 transition-transform"
@@ -183,6 +148,7 @@ export default function HeroSection() {
             </button>
           </div>
 
+          {/* Thumbnail Navigation */}
           <div className="hidden lg:flex flex-col items-center gap-4 mt-auto self-end w-fit">
             <div className="flex items-center gap-3 p-3 bg-black/40 backdrop-blur-xl rounded-[2rem] border border-white/10 shadow-2xl max-w-full overflow-x-auto no-scrollbar">
               {carouselImages.map((item, index) => (
@@ -197,9 +163,6 @@ export default function HeroSection() {
                     fill
                     className="object-cover"
                   />
-                  {index === currentIndex && (
-                    <div className="absolute inset-0 bg-orange-500/10 animate-pulse" />
-                  )}
                 </button>
               ))}
             </div>

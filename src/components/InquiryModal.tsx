@@ -12,14 +12,14 @@ import {
   Music2,
   X,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
-// 1. Interface එකට initialMedia එකතු කළා
 interface InquiryModalProps {
   isOpen: boolean;
   onClose: () => void;
   initialPlant?: boolean;
   initialInvest?: boolean;
-  initialMedia?: boolean; // අලුතින් එකතු කළා
+  initialMedia?: boolean;
 }
 
 export default function InquiryModal({
@@ -27,8 +27,9 @@ export default function InquiryModal({
   onClose,
   initialPlant = false,
   initialInvest = false,
-  initialMedia = false, // Default value එක false ලෙස ගත්තා
+  initialMedia = false,
 }: InquiryModalProps) {
+  const { t } = useTranslation();
   const searchParams = useSearchParams();
   const [status, setStatus] = useState({ type: "", message: "" });
   const [loading, setLoading] = useState(false);
@@ -36,14 +37,13 @@ export default function InquiryModal({
   // Checkbox States
   const [plantChecked, setPlantChecked] = useState(false);
   const [investChecked, setInvestChecked] = useState(false);
-  const [mediaChecked, setMediaChecked] = useState(false); // නව State එක
+  const [mediaChecked, setMediaChecked] = useState(false);
 
-  // 2. Props සහ URL අනුව ටික් එක වැටෙන ලොජික් එක
   useEffect(() => {
     if (isOpen) {
       const plant = initialPlant || searchParams.get("plant") === "true";
       const invest = initialInvest || searchParams.get("invest") === "true";
-      const media = initialMedia || searchParams.get("media") === "true"; // URL එකෙන් media බලයි
+      const media = initialMedia || searchParams.get("media") === "true";
 
       setPlantChecked(plant);
       setInvestChecked(invest);
@@ -73,7 +73,7 @@ export default function InquiryModal({
       location: formData.get("location"),
       interest_plant: plantChecked ? "Yes" : "No",
       interest_invest: investChecked ? "Yes" : "No",
-      interest_media: mediaChecked ? "Yes" : "No", // Data එකට එකතු කළා
+      interest_media: mediaChecked ? "Yes" : "No",
     };
 
     try {
@@ -84,7 +84,7 @@ export default function InquiryModal({
       });
 
       if (res.ok) {
-        setStatus({ type: "success", message: "Inquiry sent successfully!" });
+        setStatus({ type: "success", message: t("modal.messages.success") });
         setTimeout(() => {
           onClose();
           setPlantChecked(false);
@@ -92,10 +92,10 @@ export default function InquiryModal({
           setMediaChecked(false);
         }, 2000);
       } else {
-        setStatus({ type: "error", message: "Server Error" });
+        setStatus({ type: "error", message: t("modal.messages.error") });
       }
     } catch (error) {
-      setStatus({ type: "error", message: "Connection failed." });
+      setStatus({ type: "error", message: t("modal.messages.connection") });
     } finally {
       setLoading(false);
     }
@@ -104,22 +104,22 @@ export default function InquiryModal({
   const socials = [
     {
       Icon: Facebook,
-      href: "https://www.facebook.com/share/17dR9DX9c8/?mibextid=wwXIfr",
+      href: "https://www.facebook.com/share/...",
       color: "hover:bg-[#1877F2]",
     },
     {
       Icon: Instagram,
-      href: "https://www.instagram.com/destinatorlk?igsh=aGxwbzNpaHF3NmNo&utm_source=qr",
+      href: "https://www.instagram.com/...",
       color: "hover:bg-[#E4405F]",
     },
     {
       Icon: Music2,
-      href: "https://www.tiktok.com/@destinator.lk",
+      href: "https://www.tiktok.com/...",
       color: "hover:bg-black",
     },
     {
       Icon: MessageCircle,
-      href: "https://wa.me/message/L7DQU2A2QGEMJ1",
+      href: "https://wa.me/...",
       color: "hover:bg-[#25D366]",
     },
   ];
@@ -154,39 +154,43 @@ export default function InquiryModal({
                 <div className="flex items-center gap-3 mb-4">
                   <span className="w-12 h-[2px] bg-yellow-500"></span>
                   <h3 className="text-yellow-500 font-bold text-[10px] uppercase tracking-[0.4em]">
-                    Get in Touch
+                    {t("form.tag")}
                   </h3>
                 </div>
                 <h2 className="text-3xl md:text-4xl font-black text-black mb-4 uppercase leading-tight">
-                  PLAN YOUR <br />{" "}
-                  <span className="text-gray-300">DREAM JOURNEY.</span>
+                  {t("form.title_main")} <br />
+                  <span className="text-gray-300">{t("form.title_sub")}</span>
                 </h2>
 
                 <div className="space-y-2 mb-8">
+                  {/* PLANTING SELECTOR */}
                   <div
                     onClick={() => setPlantChecked(!plantChecked)}
                     className={`text-[10px] font-bold p-2 rounded-lg border transition-all cursor-pointer select-none ${plantChecked ? "bg-green-50 border-green-200 text-green-700" : "bg-gray-50 border-gray-100 text-gray-400"}`}
                   >
                     {plantChecked
-                      ? "✓ INTERESTED IN PLANTING"
-                      : "PLANTING NOT SELECTED"}
+                      ? t("modal.interests.plant_true")
+                      : t("modal.interests.plant_false")}
                   </div>
+
+                  {/* INVESTMENT SELECTOR */}
                   <div
                     onClick={() => setInvestChecked(!investChecked)}
                     className={`text-[10px] font-bold p-2 rounded-lg border transition-all cursor-pointer select-none ${investChecked ? "bg-yellow-50 border-yellow-200 text-yellow-700" : "bg-gray-50 border-gray-100 text-gray-400"}`}
                   >
                     {investChecked
-                      ? "✓ INTERESTED IN INVESTMENT"
-                      : "INVESTMENT NOT SELECTED"}
+                      ? t("modal.interests.invest_true")
+                      : t("modal.interests.invest_false")}
                   </div>
-                  {/* FREE MEDIA SELECTOR (NEW) */}
+
+                  {/* MEDIA SELECTOR */}
                   <div
                     onClick={() => setMediaChecked(!mediaChecked)}
-                    className={`text-[10px] font-bold p-2 rounded-lg border transition-all cursor-pointer select-none ${mediaChecked ? "bg-blue-50 border-blue-200 text-blue-700" : "bg-gray-50 border-gray-100 text-gray-400"}`}
+                    className={`text-[10px] font-bold p-2 rounded-lg border transition-all cursor-pointer select-none ${mediaChecked ? t("modal.interests.media_true") : t("modal.interests.media_false")}`}
                   >
                     {mediaChecked
-                      ? "✓ INTERESTED IN FREE MEDIA COVERAGE"
-                      : "MEDIA COVERAGE NOT SELECTED"}
+                      ? t("modal.interests.media_true")
+                      : t("modal.interests.media_false")}
                   </div>
                 </div>
 
@@ -210,14 +214,14 @@ export default function InquiryModal({
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <input
                       name="name"
-                      placeholder="Full Name"
+                      placeholder={t("modal.placeholders.name")}
                       required
                       className="w-full p-4 rounded-xl bg-gray-50 border border-gray-100 text-black text-sm outline-none focus:border-yellow-500"
                     />
                     <input
                       name="email"
                       type="email"
-                      placeholder="Email Address"
+                      placeholder={t("modal.placeholders.email")}
                       required
                       className="w-full p-4 rounded-xl bg-gray-50 border border-gray-100 text-black text-sm outline-none focus:border-yellow-500"
                     />
@@ -240,26 +244,26 @@ export default function InquiryModal({
                     <input
                       name="guests"
                       type="number"
-                      placeholder="Guests"
+                      placeholder={t("modal.placeholders.guests")}
                       required
                       className="w-full p-4 rounded-xl bg-gray-50 border border-gray-100 text-black text-sm outline-none focus:border-yellow-500"
                     />
                     <input
                       name="kids"
                       type="number"
-                      placeholder="Kids"
+                      placeholder={t("modal.placeholders.kids")}
                       className="w-full p-4 rounded-xl bg-gray-50 border border-gray-100 text-black text-sm outline-none focus:border-yellow-500"
                     />
                     <input
                       name="country"
-                      placeholder="Country"
+                      placeholder={t("modal.placeholders.country")}
                       required
                       className="w-full p-4 rounded-xl bg-gray-50 border border-gray-100 text-black text-sm outline-none focus:border-yellow-500"
                     />
                   </div>
                   <input
                     name="location"
-                    placeholder="Visit Locations"
+                    placeholder={t("modal.placeholders.location")}
                     required
                     className="w-full p-4 rounded-xl bg-gray-50 border border-gray-100 text-black text-sm outline-none focus:border-yellow-500"
                   />
@@ -269,7 +273,7 @@ export default function InquiryModal({
                     disabled={loading}
                     className="w-full bg-black hover:bg-yellow-500 text-white hover:text-black py-4 rounded-xl font-bold text-xs tracking-widest uppercase transition-all flex items-center justify-center gap-2"
                   >
-                    {loading ? "Sending..." : "Submit Inquiry"}{" "}
+                    {loading ? t("form.processing") : t("form.submit")}
                     <Send size={14} />
                   </button>
                 </form>

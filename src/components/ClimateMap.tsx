@@ -11,63 +11,8 @@ import {
   ArrowRight,
   Wind,
 } from "lucide-react";
-
-const climateZones = [
-  {
-    id: "wet-zone",
-    name: "Wet Zone",
-    temp: "25-30°C",
-    color: "#059669",
-    icon: <CloudRain size={24} />,
-    x: 35,
-    y: 75,
-    description: "South-West. High humidity and heavy monsoon rainfall.",
-    transport: "Luxury Sedans, SUVs",
-  },
-  {
-    id: "intermediate-zone",
-    name: "Intermediate Zone",
-    temp: "24-28°C",
-    color: "#10B981",
-    icon: <CloudSun size={24} />,
-    x: 52,
-    y: 58,
-    description: "Central hills. Mild and pleasant tropical climate.",
-    transport: "Standard Cars, Vans",
-  },
-  {
-    id: "dry-zone",
-    name: "Dry Zone",
-    temp: "28-34°C",
-    color: "#F59E0B",
-    icon: <Sun size={24} />,
-    x: 65,
-    y: 35,
-    description: "North & East. Golden plains and bright sunshine.",
-    transport: "4x4 Jeeps, SUVs",
-  },
-  {
-    id: "arid-north",
-    name: "Arid Zone (North)",
-    temp: "32-36°C",
-    color: "#EF4444",
-    icon: <Flame size={24} />,
-    x: 48,
-    y: 18,
-    description: "Mannar/Jaffna. Intense heat and minimal rainfall.",
-    transport: "Off-road 4x4",
-  },
-  {
-    id: "arid-south",
-    name: "Arid Zone (South)",
-    temp: "32-36°C",
-    color: "#EF4444",
-    x: 68,
-    y: 78,
-    description: "Hambantota/Yala. Scrublands and wildlife safaris.",
-    transport: "Safari Jeeps",
-  },
-];
+import { useTranslation } from "react-i18next";
+import "../i18n";
 
 const YellowSeparator = ({ className = "" }: { className?: string }) => (
   <div
@@ -89,9 +34,19 @@ const YellowSeparator = ({ className = "" }: { className?: string }) => (
 );
 
 export default function SriLankaClimateSection() {
+  const { t } = useTranslation();
   const [startPoint, setStartPoint] = useState<string>("");
   const [endPoint, setEndPoint] = useState<string>("");
   const [isAnimating, setIsAnimating] = useState(false);
+
+  // Climate Zones Data Structure using JSON Keys
+  const climateZones = [
+    { id: "wet", x: 35, y: 75, color: "#059669", temp: "25-30°C" },
+    { id: "intermediate", x: 52, y: 58, color: "#10B981", temp: "24-28°C" },
+    { id: "dry", x: 65, y: 35, color: "#F59E0B", temp: "28-34°C" },
+    { id: "arid_north", x: 48, y: 18, color: "#EF4444", temp: "32-36°C" },
+    { id: "arid_south", x: 68, y: 78, color: "#EF4444", temp: "32-36°C" },
+  ];
 
   const startZone = climateZones.find((z) => z.id === startPoint);
   const endZone = climateZones.find((z) => z.id === endPoint);
@@ -120,17 +75,18 @@ export default function SriLankaClimateSection() {
 
       <YellowSeparator className="mb-16" />
 
+      {/* Title Section */}
       <div className="text-center mb-10 z-10">
         <div className="flex items-center justify-center gap-2 mb-1">
           <span className="w-1.5 h-1.5 rounded-full bg-yellow-500" />
           <span className="text-yellow-500 font-bold uppercase tracking-[0.3em] text-[10px]">
-            Climate Intelligence
+            {t("climate.badge")}
           </span>
         </div>
         <h2 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tighter leading-none">
-          Climatic{" "}
+          {t("climate.title_main")}{" "}
           <span className="italic font-light text-yellow-500/80">
-            Conditions
+            {t("climate.title_sub")}
           </span>
         </h2>
       </div>
@@ -140,7 +96,8 @@ export default function SriLankaClimateSection() {
         <div className="w-full max-w-[400px] flex flex-col gap-5">
           <div className="bg-white/[0.03] border border-white/10 p-6 rounded-[2.5rem] backdrop-blur-md shadow-2xl">
             <h4 className="text-white font-bold text-[10px] uppercase mb-5 flex items-center gap-2 tracking-widest">
-              <Navigation size={14} className="text-yellow-500" /> Route Planner
+              <Navigation size={14} className="text-yellow-500" />{" "}
+              {t("climate.route_planner")}
             </h4>
             <div className="space-y-3">
               <select
@@ -151,13 +108,14 @@ export default function SriLankaClimateSection() {
                 }}
                 className="w-full bg-black/60 border border-white/10 text-white p-4 rounded-2xl text-xs outline-none focus:border-yellow-500 appearance-none transition-all cursor-pointer"
               >
-                <option value="">Starting Point</option>
+                <option value="">{t("climate.start_placeholder")}</option>
                 {climateZones.map((z) => (
                   <option key={z.id} value={z.id}>
-                    {z.name}
+                    {t(`climate.zones.${z.id}.name`)}
                   </option>
                 ))}
               </select>
+
               <select
                 value={endPoint}
                 onChange={(e) => {
@@ -166,23 +124,25 @@ export default function SriLankaClimateSection() {
                 }}
                 className="w-full bg-black/60 border border-white/10 text-white p-4 rounded-2xl text-xs outline-none focus:border-yellow-500 appearance-none transition-all cursor-pointer"
               >
-                <option value="">Destination</option>
+                <option value="">{t("climate.dest_placeholder")}</option>
                 {climateZones.map((z) => (
                   <option key={z.id} value={z.id}>
-                    {z.name}
+                    {t(`climate.zones.${z.id}.name`)}
                   </option>
                 ))}
               </select>
+
               <button
                 onClick={handleGo}
                 disabled={!startPoint || !endPoint || startPoint === endPoint}
                 className="w-full bg-yellow-500 hover:bg-yellow-400 disabled:bg-neutral-800 text-black font-black uppercase text-[10px] py-4 rounded-2xl transition-all flex items-center justify-center gap-2 shadow-lg"
               >
-                Start Journey <ArrowRight size={16} />
+                {t("climate.btn_start")} <ArrowRight size={16} />
               </button>
             </div>
           </div>
 
+          {/* Climate Profile Info */}
           <div className="min-h-[180px]">
             <AnimatePresence mode="wait">
               {endZone ? (
@@ -194,10 +154,10 @@ export default function SriLankaClimateSection() {
                   className="bg-white/[0.03] border border-white/10 p-6 rounded-[2.5rem]"
                 >
                   <h3 className="text-white text-xl font-black uppercase mb-2">
-                    {endZone.name}
+                    {t(`climate.zones.${endZone.id}.name`)}
                   </h3>
                   <p className="text-gray-400 text-[11px] leading-relaxed mb-4">
-                    {endZone.description}
+                    {t(`climate.zones.${endZone.id}.desc`)}
                   </p>
                   <div className="grid grid-cols-2 gap-3">
                     <div className="bg-black/40 p-3 rounded-2xl border border-white/5">
@@ -209,14 +169,14 @@ export default function SriLankaClimateSection() {
                     <div className="bg-black/40 p-3 rounded-2xl border border-white/5">
                       <Car size={14} className="text-yellow-500 mb-1" />
                       <p className="text-white text-[9px] font-bold truncate">
-                        {endZone.transport}
+                        {t(`climate.zones.${endZone.id}.transport`)}
                       </p>
                     </div>
                   </div>
                 </motion.div>
               ) : (
                 <div className="h-[180px] border border-dashed border-white/10 rounded-[2.5rem] flex items-center justify-center text-gray-600 text-[10px] uppercase font-bold tracking-widest text-center px-6">
-                  Select destination to view climate profile
+                  {t("climate.empty_profile")}
                 </div>
               )}
             </AnimatePresence>
@@ -272,9 +232,11 @@ export default function SriLankaClimateSection() {
                       </foreignObject>
                       <foreignObject x="-4" y="-4" width="8" height="8">
                         <div className="w-full h-full flex items-center justify-center bg-white rounded-full shadow-lg border-[0.3px] border-black/10">
-                          <div className="text-black">
-                            <Car size={5} strokeWidth={3} />
-                          </div>
+                          <Car
+                            size={5}
+                            strokeWidth={3}
+                            className="text-black"
+                          />
                         </div>
                       </foreignObject>
                     </motion.g>
@@ -282,10 +244,9 @@ export default function SriLankaClimateSection() {
                 )}
               </AnimatePresence>
 
-              {/* POINTS WITH LABELS (NO ANIMATION) */}
+              {/* Climate Zone Points on Map */}
               {climateZones.map((zone) => (
                 <g key={zone.id}>
-                  {/* Fixed points without pulse animation */}
                   <circle cx={zone.x} cy={zone.y} r="1.5" fill={zone.color} />
                   <foreignObject
                     x={zone.x + 3}
@@ -298,7 +259,7 @@ export default function SriLankaClimateSection() {
                       className="text-[2.8px] font-black uppercase tracking-tighter whitespace-nowrap drop-shadow-md"
                       style={{ color: zone.color }}
                     >
-                      {zone.name}
+                      {t(`climate.zones.${zone.id}.name`)}
                     </div>
                   </foreignObject>
                 </g>
@@ -308,7 +269,7 @@ export default function SriLankaClimateSection() {
         </div>
       </div>
 
-      {/* DESCRIPTION SECTION */}
+      {/* FOOTER DESCRIPTION */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -316,11 +277,7 @@ export default function SriLankaClimateSection() {
         className="max-w-3xl mt-20 px-6 text-center z-10"
       >
         <p className="text-white/80 text-sm md:text-lg leading-relaxed font-medium">
-          <span className="text-yellow-500 font-bold">Sri Lanka</span> is the
-          only country in the world where every climate condition exists
-          throughout the year. One can travel to each climatic zone in a few
-          hours. Cultivation in Sri Lanka is also carried out mainly during{" "}
-          <span className="text-yellow-500 italic">two main rainfalls</span>.
+          {t("climate.footer_text")}
         </p>
         <div className="mt-4 flex justify-center gap-1">
           <div className="w-8 h-1 bg-yellow-500/20 rounded-full" />

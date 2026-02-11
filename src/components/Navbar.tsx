@@ -1,17 +1,33 @@
 "use client";
 import Link from "next/link";
-import { useState, useEffect, Suspense } from "react"; // Suspense එකතු කළා
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { Menu, X, Facebook, Instagram, Twitter } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import InquiryModal from "./InquiryModal";
+import { useTranslation } from "react-i18next";
+import "../i18n";
 
-// 1. Search Params කියවන කොටස වෙනම Component එකකට ගත්තා
 function NavbarContent() {
+  const { i18n, t } = useTranslation();
   const searchParams = useSearchParams();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isInquiryOpen, setIsInquiryOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isLangOpen, setIsLangOpen] = useState(false);
+
+  // භාෂා සහ අදාළ රටවල කොඩි වල රූප (SVG URLs)
+  const languages = [
+    { code: "en", name: "English", flag: "https://flagcdn.com/w40/gb.png" },
+    { code: "de", name: "Deutsch", flag: "https://flagcdn.com/w40/de.png" },
+    { code: "fr", name: "Français", flag: "https://flagcdn.com/w40/fr.png" },
+    { code: "it", name: "Italiano", flag: "https://flagcdn.com/w40/it.png" },
+    { code: "ru", name: "Русский", flag: "https://flagcdn.com/w40/ru.png" },
+    { code: "zh", name: "中文", flag: "https://flagcdn.com/w40/cn.png" },
+  ];
+
+  const currentLanguage =
+    languages.find((l) => l.code === i18n.language) || languages[0];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,12 +45,13 @@ function NavbarContent() {
     }
   }, [isMenuOpen, isInquiryOpen]);
 
+  // මෙතනදී JSON එකේ ඇති Keys පාවිච්චි කර ඇත
   const navLinks = [
-    { name: "HOME", href: "#home" },
-    { name: "HERITAGE MAP", href: "#heritage" },
-    { name: "SL CLIMATE", href: "#climate" },
-    { name: "OUR LEGACY", href: "#about" },
-    { name: "CONTACT US", href: "#contact" },
+    { name: t("nav.home"), href: "#home" },
+    { name: t("nav.heritage_map"), href: "#heritage" },
+    { name: t("nav.climate"), href: "#climate" },
+    { name: t("nav.legacy"), href: "#about" },
+    { name: t("nav.contact"), href: "#contact" },
   ];
 
   return (
@@ -79,12 +96,75 @@ function NavbarContent() {
             </nav>
           </div>
 
-          <div className="flex items-center">
+          <div className="flex items-center gap-3 sm:gap-6">
+            {/* Language Switcher Dropdown */}
+            <div className="relative">
+              <button
+                onClick={() => setIsLangOpen(!isLangOpen)}
+                className="flex items-center gap-3 text-white bg-white/5 hover:bg-white/10 border border-white/20 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full transition-all duration-300 backdrop-blur-md"
+              >
+                <img
+                  src={currentLanguage.flag}
+                  alt={currentLanguage.name}
+                  className="w-5 h-auto rounded-sm object-cover"
+                />
+                <span className="text-[10px] font-black tracking-widest uppercase hidden md:block">
+                  {currentLanguage.code}
+                </span>
+                <ChevronDown
+                  size={14}
+                  className={`text-[#EAB308] transition-transform duration-300 ${isLangOpen ? "rotate-180" : ""}`}
+                />
+              </button>
+
+              {isLangOpen && (
+                <div className="absolute right-0 mt-3 w-48 bg-[#0a0a0a] border border-white/10 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] py-2 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-300">
+                  <div className="px-4 py-2 text-[9px] font-black text-white/40 tracking-[0.2em] uppercase border-b border-white/5 mb-1">
+                    Select Language
+                  </div>
+                  {languages.map((lang) => (
+                    <button
+                      key={lang.code}
+                      onClick={() => {
+                        i18n.changeLanguage(lang.code);
+                        setIsLangOpen(false);
+                      }}
+                      className={`w-full flex items-center justify-between px-4 py-3 text-left transition-all duration-300 group ${
+                        i18n.language === lang.code
+                          ? "bg-white/5"
+                          : "hover:bg-[#EAB308]"
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <img
+                          src={lang.flag}
+                          alt={lang.name}
+                          className="w-5 h-auto rounded-sm shadow-sm"
+                        />
+                        <span
+                          className={`text-[11px] font-bold tracking-wider uppercase ${
+                            i18n.language === lang.code
+                              ? "text-[#EAB308]"
+                              : "text-white group-hover:text-black"
+                          }`}
+                        >
+                          {lang.name}
+                        </span>
+                      </div>
+                      {i18n.language === lang.code && (
+                        <div className="w-1.5 h-1.5 rounded-full bg-[#EAB308]" />
+                      )}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
             <Button
               onClick={() => setIsInquiryOpen(true)}
               className={`bg-[#EAB308] hover:bg-white hover:text-black text-black font-black text-[10px] sm:text-[11px] px-6 sm:px-8 py-4 sm:py-5 h-9 sm:h-11 rounded-full transition-all duration-500 uppercase tracking-widest shadow-lg ${isMenuOpen ? "opacity-0 invisible translate-x-5" : "opacity-100 visible translate-x-0"}`}
             >
-              BOOK NOW
+              {t("nav.book_now")}
             </Button>
           </div>
         </div>
@@ -101,7 +181,7 @@ function NavbarContent() {
                   <li key={link.name}>
                     <Link
                       href={link.href}
-                      className="text-white text-4xl sm:text-5xl font-black tracking-tighter uppercase block"
+                      className="text-white text-4xl sm:text-5xl font-black tracking-tighter uppercase block hover:text-[#EAB308] transition-colors"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       {link.name}
@@ -124,7 +204,6 @@ function NavbarContent() {
   );
 }
 
-// 2. ප්‍රධාන Component එකෙන් NavbarContent එක Suspense ඇතුළේ රෙන්ඩර් කරනවා
 export default function Navbar() {
   return (
     <Suspense fallback={<div className="h-20 bg-black w-full" />}>

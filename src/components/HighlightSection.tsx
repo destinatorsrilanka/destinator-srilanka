@@ -2,6 +2,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Droplets, Trees, X } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import "../i18n";
 
 const WATERFALL_MAIN = [
   "image/r1.jpeg",
@@ -29,13 +31,13 @@ const ELEPHANT_MAIN = [
 ];
 
 export default function CompactHighlight() {
+  const { t } = useTranslation();
   const [wIndex, setWIndex] = useState(0);
   const [eIndex, setEIndex] = useState(0);
 
   const [showWInfo, setShowWInfo] = useState(false);
   const [showEInfo, setShowEInfo] = useState(false);
 
-  // පැනල් හඳුනා ගැනීමට Ref භාවිතය
   const wInfoRef = useRef<HTMLDivElement>(null);
   const eInfoRef = useRef<HTMLDivElement>(null);
 
@@ -47,10 +49,8 @@ export default function CompactHighlight() {
     return () => clearInterval(timer);
   }, []);
 
-  // පිටත ක්ලික් කිරීම් හඳුනාගැනීම සඳහා useEffect
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      // Waterfall පැනලය සඳහා
       if (
         showWInfo &&
         wInfoRef.current &&
@@ -58,7 +58,6 @@ export default function CompactHighlight() {
       ) {
         setShowWInfo(false);
       }
-      // Elephant පැනලය සඳහා
       if (
         showEInfo &&
         eInfoRef.current &&
@@ -67,7 +66,6 @@ export default function CompactHighlight() {
         setShowEInfo(false);
       }
     }
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [showWInfo, showEInfo]);
@@ -105,18 +103,18 @@ export default function CompactHighlight() {
                 className="text-white font-black uppercase tracking-tighter leading-none"
                 style={{ fontSize: "clamp(1.1rem, 5vw, 2.5rem)" }}
               >
-                LAND OF
+                {t("highlights.water.title_1")}
               </h2>
               <h2
                 className="text-blue-400 font-black uppercase tracking-tighter leading-none whitespace-nowrap mt-1 flex items-center justify-center gap-1 w-full"
                 style={{ fontSize: "clamp(0.65rem, 3.8vw, 2.2rem)" }}
               >
-                WATERFALLS <span className="text-white/40">|</span> LAKES
+                {t("highlights.water.title_2")}
               </h2>
             </div>
 
             <p className="text-[10px] md:text-[12px] font-bold tracking-wide text-white/90 max-w-[220px] italic mt-4">
-              Experience the mist-clad heights and the thunderous beauty.
+              {t("highlights.water.subtitle")}
             </p>
 
             <button
@@ -126,11 +124,12 @@ export default function CompactHighlight() {
               }}
               className="mt-4 text-[10px] font-bold text-white border border-white/30 px-3 py-1 hover:bg-white hover:text-black transition-all"
             >
-              READ MORE
+              {t("highlights.water.read_more")}
             </button>
           </div>
         </div>
 
+        {/* Overlay Panel: Waterfalls */}
         <AnimatePresence>
           {showWInfo && (
             <motion.div
@@ -146,31 +145,18 @@ export default function CompactHighlight() {
               >
                 <X size={18} />
               </button>
-
               <div className="w-full pr-2">
                 <h3 className="text-black font-black text-2xl mb-3 tracking-tighter uppercase border-b-2 border-blue-500 inline-block">
-                  Land of waterfalls
+                  {t("highlights.water.info_title_1")}
                 </h3>
                 <p className="text-gray-800 text-sm leading-relaxed mb-6 font-medium">
-                  Sri Lanka, often called the "Land of Waterfalls," holds the
-                  world's highest waterfall density with over 400 to 500
-                  recorded waterfalls. Primarily located in the central
-                  highlands, these cascades, ranging from the 263m tall
-                  Bambarakanda Falls to the wide Bomburu Ella, are fed by heavy
-                  monsoons and lush forests, with the highest concentration in
-                  the Ratnapura district.
+                  {t("highlights.water.info_desc_1")}
                 </p>
-
                 <h3 className="text-black font-black text-2xl mb-3 tracking-tighter uppercase border-b-2 border-blue-500 inline-block">
-                  Land of Lakes
+                  {t("highlights.water.info_title_2")}
                 </h3>
                 <p className="text-gray-800 text-sm leading-relaxed mb-4 font-medium">
-                  Sri Lanka, often called a "land of lakes," features an
-                  extensive network of ancient man-made reservoirs ("tanks") and
-                  natural lakes crucial for irrigation, biodiversity, and
-                  tourism. Key water bodies include the massive Parakrama
-                  Samudraya, Kalawewa Lake (largest), and Bolgoda Lake, which
-                  support wildlife like crocodiles and diverse bird species.
+                  {t("highlights.water.info_desc_2")}
                 </p>
               </div>
             </motion.div>
@@ -209,18 +195,18 @@ export default function CompactHighlight() {
                 className="text-white font-black uppercase tracking-tighter leading-none"
                 style={{ fontSize: "clamp(1.1rem, 5vw, 2.5rem)" }}
               >
-                LAND OF
+                {t("highlights.wildlife.title_1")}
               </h2>
               <h2
                 className="text-amber-500 font-black uppercase tracking-tighter leading-none whitespace-nowrap mt-1 flex items-center justify-center gap-1 w-full"
                 style={{ fontSize: "clamp(0.65rem, 3.8vw, 2.2rem)" }}
               >
-                ELEPHANTS <span className="text-white/40">|</span> LEOPARDS
+                {t("highlights.wildlife.title_2")}
               </h2>
             </div>
 
             <p className="text-[10px] md:text-[12px] font-bold tracking-wide text-white/90 max-w-[220px] italic mt-4">
-              Venture into the wild heartlands to witness the gentle giants.
+              {t("highlights.wildlife.subtitle")}
             </p>
 
             <button
@@ -230,11 +216,12 @@ export default function CompactHighlight() {
               }}
               className="mt-4 text-[10px] font-bold text-white border border-white/30 px-3 py-1 hover:bg-white hover:text-black transition-all"
             >
-              READ MORE
+              {t("highlights.wildlife.read_more")}
             </button>
           </div>
         </div>
 
+        {/* Overlay Panel: Wildlife */}
         <AnimatePresence>
           {showEInfo && (
             <motion.div
@@ -250,29 +237,18 @@ export default function CompactHighlight() {
               >
                 <X size={18} />
               </button>
-
               <div className="w-full pr-2">
                 <h3 className="text-black font-black text-2xl mb-3 tracking-tighter uppercase border-b-2 border-amber-500 inline-block">
-                  Land of leopards
+                  {t("highlights.wildlife.info_title_1")}
                 </h3>
                 <p className="text-gray-800 text-sm leading-relaxed mb-6 font-medium">
-                  Sri Lanka is considered one of the best places in the world to
-                  view leopards (Panthera pardus kotiya), with Yala National
-                  Park holding one of the highest leopard densities globally.
-                  These apex predators thrive across the island, particularly in
-                  the dry zone's scrublands and, uniquely, in the wet zone and
-                  highland forest patches.
+                  {t("highlights.wildlife.info_desc_1")}
                 </p>
-
                 <h3 className="text-black font-black text-2xl mb-3 tracking-tighter uppercase border-b-2 border-amber-500 inline-block">
-                  Land of Elephants
+                  {t("highlights.wildlife.info_title_2")}
                 </h3>
                 <p className="text-gray-800 text-sm leading-relaxed mb-4 font-medium">
-                  Sri Lanka is often celebrated as a "land of elephants" due to
-                  its remarkably high density of wild Asian elephants (Elephas
-                  maximus maximus). The island is home to an estimated 5,000 to
-                  6,000 wild elephants, predominantly found in the dry zones of
-                  the north, east, and southeast
+                  {t("highlights.wildlife.info_desc_2")}
                 </p>
               </div>
             </motion.div>

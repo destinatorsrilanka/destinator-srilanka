@@ -1,3 +1,4 @@
+import "../i18n";
 import type { Metadata } from "next";
 import "./globals.css";
 import { Montserrat, Lora, Poppins } from "next/font/google";

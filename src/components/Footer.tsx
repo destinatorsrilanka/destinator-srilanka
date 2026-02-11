@@ -13,8 +13,10 @@ import {
   Clock,
   Compass,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export default function Footer() {
+  const { t } = useTranslation();
   const [time, setTime] = useState("");
   const [date, setDate] = useState("");
 
@@ -62,8 +64,8 @@ export default function Footer() {
       Icon: Instagram,
       href: "https://www.instagram.com/destinatorlk?igsh=aGxwbzNpaHF3NmNo&utm_source=qr",
     },
-    { Icon: Music2, href: "#" },
-    { Icon: MessageCircle, href: "#" },
+    { Icon: Music2, href: "https://www.tiktok.com/@destinator.lk" },
+    { Icon: MessageCircle, href: "https://wa.me/message/L7DQU2A2QGEMJ1" },
   ];
 
   return (
@@ -75,7 +77,11 @@ export default function Footer() {
             key={idx}
             className="relative flex-1 overflow-hidden cursor-pointer"
           >
-            <img src={src} alt="trip" className="w-full h-full object-cover" />
+            <img
+              src={src}
+              alt="trip gallery"
+              className="w-full h-full object-cover"
+            />
             <div className="absolute inset-0 bg-black/10 group-hover/gallery:bg-black/5 transition-colors" />
           </div>
         ))}
@@ -101,38 +107,56 @@ export default function Footer() {
                   <span className="w-2 h-3 bg-[#ED2939]"></span>
                 </div>
                 <span className="text-[10px] font-bold uppercase tracking-wider text-gray-300">
-                  Guide Francophone
+                  {t("footer.guide_label")}
                 </span>
               </div>
               <p className="text-gray-400 text-xs leading-relaxed max-w-xs pt-2">
-                Your premier gateway to the wonders of Sri Lanka. We craft
-                memories that last a lifetime.
+                {t("footer.description")}
               </p>
             </div>
 
             {/* --- COLUMN 2: LINKS --- */}
             <div>
               <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-orange-500 mb-4">
-                Links
+                {t("footer.sections.links")}
               </h4>
               <ul className="space-y-2 text-xs text-gray-400">
-                {["Home", "Packages", "Destinations", "Inquiry"].map((link) => (
-                  <li key={link}>
-                    <Link
-                      href="#"
-                      className="hover:text-white transition-colors"
-                    >
-                      {link}
-                    </Link>
-                  </li>
-                ))}
+                <li>
+                  <Link href="/" className="hover:text-white transition-colors">
+                    {t("footer.nav.home")}
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="#packages"
+                    className="hover:text-white transition-colors"
+                  >
+                    {t("footer.nav.packages")}
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="#destinations"
+                    className="hover:text-white transition-colors"
+                  >
+                    {t("footer.nav.destinations")}
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="#contact"
+                    className="hover:text-white transition-colors"
+                  >
+                    {t("footer.nav.inquiry")}
+                  </Link>
+                </li>
               </ul>
             </div>
 
             {/* --- COLUMN 3: CONTACT --- */}
             <div>
               <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-orange-500 mb-4">
-                Contact
+                {t("footer.sections.contact")}
               </h4>
               <ul className="space-y-2 text-xs text-gray-400">
                 <li className="flex items-center gap-2">
@@ -183,15 +207,15 @@ export default function Footer() {
           {/* --- BOTTOM SECTION --- */}
           <div className="pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-[9px] font-bold uppercase tracking-[0.1em] text-gray-500">
             <p>
-              &copy; {new Date().getFullYear()} destinator.lk. All Rights
-              Reserved.
+              &copy; {new Date().getFullYear()} destinator.lk.{" "}
+              {t("footer.legal.rights")}
             </p>
             <div className="flex gap-6">
               <Link href="#" className="hover:text-white transition-colors">
-                Privacy
+                {t("footer.legal.privacy")}
               </Link>
               <Link href="#" className="hover:text-white transition-colors">
-                Terms
+                {t("footer.legal.terms")}
               </Link>
             </div>
           </div>

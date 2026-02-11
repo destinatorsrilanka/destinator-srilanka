@@ -1,0 +1,392 @@
+{
+  "hero": {
+    "specialist_tag": "Spezialist für französischsprachige Touren",
+    "cta_button": "JETZT ERKUNDEN",
+    "slides": {
+      "s2": {
+        "title": "Verlorenes Königstum Kandy",
+        "description": "Sri Lankas letzte Monarchie; fiel 1815 an die Briten."
+      },
+      "s5": {
+        "title": "Zeitloses Erbe",
+        "description": "Erkunden Sie antike Städte und lebendige Traditionen unserer reichen Geschichte."
+      },
+      "s6": {
+        "title": "Göttliches Kapitel Atlantis",
+        "description": "Verlorene Stadt, Geographie, Einwohner der ersten Zivilisation, Stadt der Götter."
+      },
+      "s1": {
+        "title": "INSELGLÜCK",
+        "description": "Entdecken Sie eine einzigartige Insel, auf der 365 Tage im Jahr verschiedene Klimazonen nebeneinander existieren."
+      },
+      "s4": {
+        "title": "Sonnige Küsten",
+        "description": "Entspannen Sie an den sonnenverwöhnten Küsten und dem kristallklaren Wasser."
+      },
+      "s3": {
+        "title": "Wilde Abenteuer",
+        "description": "Begegnen Sie majestätischen Wildtieren in ihren unberührten natürlichen Lebensräumen."
+      },
+      "s7": {
+        "title": "Königreich von RAVANA",
+        "description": "Ein legendäres, hochtechnisiertes goldenes Königreich; das moderne Sri Lanka."
+      }
+    }
+  },
+
+  "map": {
+    "title": "DIE CEYLON-CHRONIKEN",
+    "subtitle": "Sri Lanka Expedition",
+    "directory": "Verzeichnis",
+    "destinations": {
+      "jaffna": {
+        "name": "JAFFNA (FESTUNG/KULTUR)",
+        "tagline": "Nördliches Königreich",
+        "description": "Kulturzentrum des Nordens, berühmt für die historische Festung und das tamilische Erbe.",
+        "climate": "Trocken/Heiß",
+        "altitude": "5m",
+        "period": "Antike Ära"
+      },
+      "trincomalee": {
+        "name": "TRINCOMALEE (SOBER ISLAND)",
+        "tagline": "Der tiefe Hafen",
+        "description": "Heimat von Sober Island und dem tiefsten Naturhafen der Welt.",
+        "climate": "Heiß",
+        "altitude": "2m",
+        "period": "Vorchristlich"
+      },
+      "anuradhapura": {
+        "name": "ANURADHAPURA",
+        "tagline": "Erste heilige Hauptstadt",
+        "description": "Die erste Hauptstadt des alten Sri Lanka, Heimat grandioser Stupas.",
+        "climate": "Trocken",
+        "altitude": "81m",
+        "period": "4. Jh. v. Chr."
+      },
+      "polonnaruwa": {
+        "name": "POLONNARUWA",
+        "tagline": "Mittelalterliche Hauptstadt",
+        "description": "Die zweite Hauptstadt mit prächtigen Ruinen und Felsstatuen.",
+        "climate": "Trocken",
+        "altitude": "55m",
+        "period": "11. Jahrhundert"
+      },
+      "sigiriya": {
+        "name": "SIGIRIYA",
+        "tagline": "Der Löwenfelsen",
+        "description": "Eine antike Felsenfestung, die 200m aus dem Dschungel ragt.",
+        "climate": "Humid",
+        "altitude": "349m",
+        "period": "5. Jahrhundert"
+      },
+      "dambulla": {
+        "name": "DAMBULLA",
+        "tagline": "Goldener Höhlentempel",
+        "description": "Der größte Höhlentempelkomplex in Sri Lanka.",
+        "climate": "Heiß",
+        "altitude": "340m",
+        "period": "1. Jh. v. Chr."
+      },
+      "knuckles": {
+        "name": "KNUCKLES GEBIRGE",
+        "tagline": "Bergnebel",
+        "description": "Biodiversitäts-Hotspot mit einzigartigen Nebelwäldern.",
+        "climate": "Nebel",
+        "altitude": "1863m",
+        "period": "Natürlich"
+      },
+      "kandy": {
+        "name": "KANDY",
+        "tagline": "Heilige Berg-Hauptstadt",
+        "description": "Die letzte königliche Hochburg und Heimat des Zahntempels.",
+        "climate": "Kühl",
+        "altitude": "500m",
+        "period": "15. Jahrhundert"
+      },
+      "horton": {
+        "name": "HORTON-PLAINS-NEBELWALD",
+        "tagline": "Nebelwald",
+        "description": "Hochebene. Quelle der Flüsse Mahaweli, Kelani und Walawe.",
+        "climate": "Kalt",
+        "altitude": "2100m",
+        "period": "Natürlich"
+      },
+      "peak-wilderness": {
+        "name": "PEAK WILDERNESS SCHUTZGEBIET",
+        "tagline": "Wildnis-Schutzgebiet",
+        "description": "Heiliger Berg Sri Pada, Quelle der Flüsse Kelani und Kalu.",
+        "climate": "Regnerisch",
+        "altitude": "2243m",
+        "period": "Antik"
+      },
+      "ratnapura": {
+        "name": "EDELSTEINSTADT RATNAPURA",
+        "tagline": "Stadt der Juwelen",
+        "description": "Weltberühmt für blaue Saphire und Edelsteinminen.",
+        "climate": "Nass",
+        "altitude": "130m",
+        "period": "Historisch"
+      },
+      "sinharaja": {
+        "name": "SINHARAJA REGENWALD",
+        "tagline": "Regenwald-Erbe",
+        "description": "Ein primärer tropischer Regenwald und UNESCO-Welterbe.",
+        "climate": "Regnerisch",
+        "altitude": "1170m",
+        "period": "Natürlich"
+      },
+      "galle": {
+        "name": "GALLE",
+        "tagline": "Altstadt & Festung",
+        "description": "Eine Küstenfestung mit kolonialer Architektur.",
+        "climate": "Humid",
+        "altitude": "0m",
+        "period": "16. Jahrhundert"
+      },
+      "kataragama": {
+        "name": "HEILIGES KATARAGAMA",
+        "tagline": "Stadt der Festivals",
+        "description": "Multireligiöse heilige Stadt, Heimat des Kataragama Devalaya.",
+        "climate": "Trocken",
+        "altitude": "40m",
+        "period": "Antik"
+      },
+      "devundara": {
+        "name": "STADT DER GÖTTER - DEVUNDARA",
+        "tagline": "Südliches Tor",
+        "description": "Südlichster Punkt Sri Lankas, Heimat des Vishnu Devalaya.",
+        "climate": "Küstenklima",
+        "altitude": "1m",
+        "period": "Antik"
+      },
+      "ruhuna": {
+        "name": "KÖNIGREICH RUHUNA",
+        "tagline": "Königreich der Wildnis",
+        "description": "Antikes Königreich, heute ein berühmtes Leopardenschutzgebiet.",
+        "climate": "Trocken",
+        "altitude": "30m",
+        "period": "2. Jh. v. Chr."
+      }
+    }
+  },
+  "nav": {
+    "home": "STARTSEITE",
+    "heritage_map": "KULTURERBE-KARTE",
+    "climate": "SL KLIMA",
+    "legacy": "UNSER ERBE",
+    "contact": "KONTAKT",
+    "book_now": "JETZT BUCHEN"
+  },
+  "highland": {
+    "title": "Hochgelegener See",
+    "lake_name": "Mahaeliyathenna",
+    "location": "Horton Plains",
+    "subtitle": "Der große See im zentralen Hochland | Berggeographie & Seen | Vier (4) Flüsse in vier Richtungen zum Ozean.",
+    "read_more": "WEITERLESEN",
+    "overlay_title": "Hochgelegener See | Anotatta",
+    "overlay_desc": "Horton Plains (National Park), ein 2.100–2.300 m hohes Plateau im zentralen Hochland von Sri Lanka, fungiert als wichtiges Wassereinzugsgebiet. Seine nebligen Bergwälder und Graslandschaften sind die Quelle großer Flüsse wie Mahaweli, Kelani und Walawe."
+  },
+  "highlights": {
+    "water": {
+      "title_1": "LAND DER",
+      "title_2": "WASSERFÄLLE | SEEN",
+      "subtitle": "Erleben Sie die nebelverhangenen Höhen und die donnernde Schönheit.",
+      "read_more": "WEITERLESEN",
+      "info_title_1": "Land der Wasserfälle",
+      "info_desc_1": "Sri Lanka hat die weltweit höchste Dichte an Wasserfällen mit über 400 bis 500 verzeichneten Fällen. Diese Kaskaden werden durch starke Monsune und üppige Wälder gespeist.",
+      "info_title_2": "Land der Seen",
+      "info_desc_2": "Verfügt über ein ausgedehntes Netzwerk alter, von Menschen geschaffener Stauseen ('Tanks') und natürlicher Seen, die für Bewässerung und Artenvielfalt entscheidend sind."
+    },
+    "wildlife": {
+      "title_1": "LAND DER",
+      "title_2": "ELEFANTEN | LEOPARDEN",
+      "subtitle": "Wagen Sie sich in die wilden Herzlande, um die sanften Riesen zu erleben.",
+      "read_more": "WEITERLESEN",
+      "info_title_1": "Land der Leoparden",
+      "info_desc_1": "Einer der besten Orte der Welt, um Leoparden zu beobachten. Der Yala-Nationalpark hat eine der höchsten Leopardendichten weltweit.",
+      "info_title_2": "Land der Elefanten",
+      "info_desc_2": "Gefeiert für seine bemerkenswert hohe Dichte an wilden asiatischen Elefanten. Die Insel beheimatet schätzungsweise 5.000 bis 6.000 wilde Elefanten."
+    }
+  },
+  "climate": {
+    "badge": "Klima-Intelligenz",
+    "title_main": "Klimatische",
+    "title_sub": "Bedingungen",
+    "route_planner": "Routenplaner",
+    "start_placeholder": "Startpunkt",
+    "dest_placeholder": "Zielort",
+    "btn_start": "Reise starten",
+    "empty_profile": "Ziel auswählen, um Klimaprofil anzuzeigen",
+    "footer_text": "Sri Lanka ist das einzige Land der Welt, in dem das ganze Jahr über alle Klimabedingungen existieren. Man kann jede Klimazone in wenigen Stunden erreichen.",
+    "zones": {
+      "wet": {
+        "name": "Feuchtzone",
+        "desc": "Südwesten. Hohe Luftfeuchtigkeit und starke Monsunregen.",
+        "transport": "Luxuslimousinen, SUVs"
+      },
+      "intermediate": {
+        "name": "Zwischenzone",
+        "desc": "Zentrales Hügelland. Mildes und angenehmes tropisches Klima.",
+        "transport": "Standardautos, Vans"
+      },
+      "dry": {
+        "name": "Trockenzone",
+        "desc": "Norden & Osten. Goldene Ebenen und strahlender Sonnenschein.",
+        "transport": "4x4 Jeeps, SUVs"
+      },
+      "arid_north": {
+        "name": "Aride Zone (Nord)",
+        "desc": "Mannar/Jaffna. Intensive Hitze und minimale Niederschläge.",
+        "transport": "Off-Road 4x4"
+      },
+      "arid_south": {
+        "name": "Aride Zone (Süd)",
+        "desc": "Hambantota/Yala. Buschland und Wildtiersafaris.",
+        "transport": "Safari-Jeeps"
+      }
+    }
+  },
+  "agro": {
+    "badge": "Kultivierung von Reisen",
+    "title_main": "AGRAR-",
+    "title_sub": "TOURISMUS",
+    "read_more": "WEITERLESEN",
+    "modal_title": "Agrartourismus",
+    "modal_desc": "Agrartourismus in Sri Lanka bietet Farmaufenthalte, bei denen Besucher traditionelle Praktiken wie Teepflücken, Gewürzernte und ökologischen Landbau kennenlernen können. Zu den Hauptattraktionen gehört das Erkunden von Gewürzgärten, Teeplantagen und Reisfeldern."
+  },
+  "civilization": {
+    "title": "Große Zivilisation",
+    "subtitle": "Highlights / Ruinen / Archäologischer Tourismus"
+  },
+  "benefits": {
+    "title_main": "Vorteile",
+    "title_sub": "Für unsere Gäste",
+    "free_badge": "KOSTENLOS",
+    "selection_registered": "Auswahl registriert!",
+    "planting": {
+      "title": "Signatur-Endemiten",
+      "guidelines": "Strenge Richtlinien",
+      "no_pine": "Sag NEIN zu Kiefern",
+      "desc": "Leisten Sie einen beispielhaften Beitrag zur Welt, indem Sie einen wertvollen Setzling pflanzen, den wir KOSTENLOS zur Verfügung stellen.",
+      "button": "Ich möchte pflanzen"
+    },
+    "invest": {
+      "title": "Kostenlose Beratung",
+      "subtitle": "Starten Sie Ihr Unternehmen in Sri Lanka mit vertrauenswürdigen Partnern",
+      "tags": "Land kaufen | Eigenes Hotel | Zweitwohnsitz bauen",
+      "button": "Interessiert"
+    },
+    "media": {
+      "title": "Reisealbum",
+      "soft_copy": "NUR DIGITALE KOPIE",
+      "quote": "REISE WEIT GENUG, UND DU TRIFFST DICH SELBST.",
+      "button": "Berichterstattung anfordern"
+    }
+  },
+  "eco": {
+    "title_main": "ÖKO-",
+    "title_sub": "TOURISMUS",
+    "categories": {
+      "nature_reserve": "Strenges Naturreservat",
+      "conservation": "Schutzwälder",
+      "rainforests": "Regenwälder",
+      "plains": "Hochebenen",
+      "botanical": "Botanische Gärten",
+      "sanctuaries": "Schutzgebiete",
+      "national_parks": "Nationalparks"
+    },
+    "read_more": "WEITERLESEN",
+    "modal_title": "Ökotourismus",
+    "modal_desc": "Ökotourismus in Sri Lanka konzentriert sich auf nachhaltiges Reisen und bietet intime Erlebnisse mit der hohen Artenvielfalt der Insel, einschließlich Safaris und Regenwaldtreks. Wichtige Gebiete sind der Sinharaja-Regenwald und der Yala-Nationalpark."
+  },
+  "about": {
+    "vision_tag": "Unsere Vision & Geschichte",
+    "title_main": "ELITE-ERLEBNISSE",
+    "title_sub": "GESTALTEN.",
+    "desc_1": "Unsere Reise begann mit einer einfachen Leidenschaft: der Welt die ungehörten Geschichten und verborgenen Paradiese Sri Lankas zu enthüllen. Wir organisieren nicht nur Touren; wir kuratieren Reisen, die Sie mit der Seele unserer Insel verbinden.",
+    "quote": "Im Kern unseres Service steht 'Atithi Devo Bhava' – der alte Glaube, dass jeder Gast ein Spiegelbild Gottes ist.",
+    "desc_2": "Mit über 15 Jahren fundierter Expertise spezialisieren wir uns auf luxuriöse, nachhaltige und maßgeschneiderte Reisen. Ihre Sicherheit und Ihr Staunen sind unsere Priorität.",
+    "stats": {
+      "travelers": "Reisende",
+      "destinations": "Reiseziele",
+      "heritage": "Erbe",
+      "safe_trips": "Sichere Reisen"
+    },
+    "guidance": "Autorisierte Führung",
+    "support": "Anfragen & Support",
+    "specialist": "Spezialist für das historische zentrale Hochland"
+  },
+  "travel_keys": {
+    "title": "Dinge zu tun | Bucket-List-Visuals",
+    "subtitle_prefix": "Sie entscheiden",
+    "subtitle_suffix": "Wir organisieren"
+  },
+  "form": {
+    "tag": "Kontaktieren Sie uns",
+    "title_main": "PLANEN SIE IHRE",
+    "title_sub": "TRAUMREISE.",
+    "responsive_inbox": "Sehr reaktionsschnelles Postfach",
+    "labels": {
+      "name": "Vollständiger Name",
+      "email": "E-Mail-Adresse",
+      "arrival": "Ankunftsdatum",
+      "departure": "Abreisedatum",
+      "guests": "Erwachsene",
+      "kids": "Kinder",
+      "country": "Land",
+      "transport": "Bevorzugter Transport",
+      "locations": "Besuchsorte"
+    },
+    "transport_modes": {
+      "car": "Auto",
+      "van": "Van",
+      "bus": "Bus"
+    },
+    "submit": "Anfrage absenden",
+    "processing": "Wird bearbeitet...",
+    "success": "Ihre Anfrage wurde gesendet! Prüfen Sie Ihre E-Mails zur Bestätigung.",
+    "error": "Verbindung zum Server fehlgeschlagen."
+  },
+  "modal": {
+    "interests": {
+      "plant_true": "✓ AN PFLANZUNG INTERESSIERT",
+      "plant_false": "PFLANZUNG NICHT AUSGEWÄHLT",
+      "invest_true": "✓ AN INVESTITION INTERESSIERT",
+      "invest_false": "INVESTITION NICHT AUSGEWÄHLT",
+      "media_true": "✓ AN KOSTENLOSER MEDIENBERICHTERSTATTUNG INTERESSIERT",
+      "media_false": "MEDIENBERICHTERSTATTUNG NICHT AUSGEWÄHLT"
+    },
+    "placeholders": {
+      "name": "Vollständiger Name",
+      "email": "E-Mail-Adresse",
+      "guests": "Erwachsene",
+      "kids": "Kinder",
+      "country": "Land",
+      "location": "Besuchsorte"
+    },
+    "messages": {
+      "success": "Anfrage erfolgreich gesendet!",
+      "error": "Serverfehler",
+      "connection": "Verbindung fehlgeschlagen."
+    }
+  },
+  "footer": {
+    "description": "Ihr erstklassiges Tor zu den Wundern von Sri Lanka. Wir schaffen Erinnerungen, die ein Leben lang halten.",
+    "guide_label": "Guide Francophone",
+    "sections": {
+      "links": "Links",
+      "contact": "Kontakt"
+    },
+    "nav": {
+      "home": "Startseite",
+      "packages": "Pakete",
+      "destinations": "Reiseziele",
+      "inquiry": "Anfrage"
+    },
+    "legal": {
+      "rights": "Alle Rechte vorbehalten.",
+      "privacy": "Datenschutz",
+      "terms": "Bedingungen"
+    }
+  }
+}

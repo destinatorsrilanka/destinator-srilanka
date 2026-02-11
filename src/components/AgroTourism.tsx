@@ -4,8 +4,11 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sprout, X } from "lucide-react";
 import Image from "next/image";
+import { useTranslation } from "react-i18next";
+import "../i18n";
 
 const AgroTourism: React.FC = () => {
+  const { t } = useTranslation();
   const [showInfo, setShowInfo] = useState(false);
   const infoRef = useRef<HTMLDivElement>(null);
 
@@ -15,7 +18,6 @@ const AgroTourism: React.FC = () => {
     { id: 3, src: "/image/k4.jpeg", title: "Cinnamon" },
     { id: 4, src: "/image/k5.jpeg", title: "Spice Garden" },
     { id: 1, src: "/image/k1.jpeg", title: "Tea Estates" },
-
     { id: 6, src: "/image/k7.jpeg", title: "Organic" },
     { id: 7, src: "/image/k8.jpeg", title: "Orchards" },
     { id: 8, src: "/image/k9.WEBP", title: "Vegetable" },
@@ -33,7 +35,6 @@ const AgroTourism: React.FC = () => {
     }
 
     if (showInfo) {
-      // Button එක ක්ලික් කළ සැනින් වැසීම වැළැක්වීමට සුළු ප්‍රමාවකින් listener එක add කරයි
       setTimeout(() => {
         document.addEventListener("mousedown", handleClickOutside);
       }, 0);
@@ -60,7 +61,7 @@ const AgroTourism: React.FC = () => {
               className="flex items-center gap-2 text-emerald-400 font-bold uppercase tracking-[0.4em] text-[10px] md:text-[12px] mb-2 drop-shadow-[0_2px_4px_rgba(0,0,0,1)]"
             >
               <Sprout size={14} />
-              Cultivating Journeys
+              {t("agro.badge")}
             </motion.div>
 
             <motion.h2
@@ -78,7 +79,7 @@ const AgroTourism: React.FC = () => {
                 }}
                 className="text-transparent inline-block"
               >
-                AGRO
+                {t("agro.title_main")}
               </span>
 
               <span
@@ -109,19 +110,19 @@ const AgroTourism: React.FC = () => {
                     display: "inline-block",
                   }}
                 >
-                  TOURISM
+                  {t("agro.title_sub")}
                 </motion.span>
               </span>
             </motion.h2>
 
             <button
               onClick={(e) => {
-                e.stopPropagation(); // Button එක ක්ලික් කිරීම පිටත ක්ලික් කිරීමක් ලෙස සලකන්නේ නැත
+                e.stopPropagation();
                 setShowInfo(true);
               }}
               className="mt-6 pointer-events-auto text-[10px] font-bold text-white border border-emerald-500/50 px-4 py-1.5 hover:bg-emerald-500 hover:text-black transition-all backdrop-blur-sm shadow-lg shadow-emerald-900/20"
             >
-              READ MORE
+              {t("agro.read_more")}
             </button>
           </div>
 
@@ -151,7 +152,7 @@ const AgroTourism: React.FC = () => {
           <AnimatePresence>
             {showInfo && (
               <motion.div
-                ref={infoRef} // මෙතැනට ref එක සම්බන්ධ කළා
+                ref={infoRef}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -166,20 +167,11 @@ const AgroTourism: React.FC = () => {
 
                 <div className="w-full">
                   <h3 className="text-black font-black text-xl md:text-2xl mb-3 tracking-tighter uppercase border-b-2 border-emerald-500 inline-block">
-                    Agro Tourism
+                    {t("agro.modal_title")}
                   </h3>
 
                   <p className="text-gray-800 text-xs md:text-sm leading-relaxed mb-4 font-medium">
-                    Agro-tourism in Sri Lanka offers immersive farm stays and
-                    experiences, letting visitors engage with traditional
-                    practices like tea plucking, spice harvesting, and organic
-                    farming, especially in areas like Nuwara Eliya, Kandy, and
-                    Sigiriya, blending agricultural education with cultural
-                    insights into the island's rich farming heritage. Key
-                    attractions include exploring spice gardens, tea estates,
-                    paddy fields, and supporting sustainable local practices,
-                    with many resorts offering direct involvement in farm
-                    activities like milking cows or harvesting crops.
+                    {t("agro.modal_desc")}
                   </p>
                 </div>
               </motion.div>

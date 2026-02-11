@@ -2,8 +2,11 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Send, Check, Zap } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import "../i18n";
 
 export default function InquiryForm() {
+  const { t } = useTranslation();
   const [status, setStatus] = useState({ type: "", message: "" });
   const [loading, setLoading] = useState(false);
 
@@ -68,8 +71,7 @@ export default function InquiryForm() {
       if (res.ok) {
         setStatus({
           type: "success",
-          message:
-            "Your inquiry has been sent! Check your email for confirmation.",
+          message: t("form.success"),
         });
         (e.target as HTMLFormElement).reset();
         setPlantInterest(false);
@@ -79,33 +81,23 @@ export default function InquiryForm() {
         setDepartureDate("");
       } else {
         const result = await res.json();
-        setStatus({ type: "error", message: result.message || "Server Error" });
+        setStatus({
+          type: "error",
+          message: result.message || t("modal.messages.error"),
+        });
       }
     } catch (error) {
-      setStatus({ type: "error", message: "Failed to connect to the server." });
+      setStatus({ type: "error", message: t("form.error") });
     } finally {
       setLoading(false);
     }
   };
 
   const socials = [
-    {
-      imgSrc: "/image/fb.webp",
-      href: "https://www.facebook.com/share/17dR9DX9c8/?mibextid=wwXIfr",
-    },
-    {
-      imgSrc: "/image/intergram.webp",
-      href: "https://www.instagram.com/destinatorlk?igsh=aGxwbzNpaHF3NmNo&utm_source=qr",
-    },
-    {
-      imgSrc: "/image/tiktok.png",
-      href: "https://www.tiktok.com/@destinator.lk?_r=1&_d=e24e5bdfi66221&sec_uid=...",
-    },
-    {
-      imgSrc: "/image/whatsapp.png",
-      href: "https://wa.me/message/L7DQU2A2QGEMJ1",
-      isLarge: true,
-    },
+    { imgSrc: "/image/fb.webp", href: "https://www.facebook.com/share/..." },
+    { imgSrc: "/image/intergram.webp", href: "https://www.instagram.com/..." },
+    { imgSrc: "/image/tiktok.png", href: "https://www.tiktok.com/..." },
+    { imgSrc: "/image/whatsapp.png", href: "https://wa.me/...", isLarge: true },
   ];
 
   return (
@@ -122,17 +114,16 @@ export default function InquiryForm() {
               <div className="flex items-center gap-3 mb-4">
                 <span className="w-12 h-[2px] bg-yellow-500"></span>
                 <h3 className="text-yellow-500 font-bold text-xs uppercase tracking-[0.4em]">
-                  Get in Touch
+                  {t("form.tag")}
                 </h3>
               </div>
               <h2 className="text-4xl md:text-5xl font-black text-black leading-tight mb-2 uppercase">
-                PLAN YOUR <br />
-                <span className="text-gray-300">DREAM JOURNEY.</span>
+                {t("form.title_main")} <br />
+                <span className="text-gray-300">{t("form.title_sub")}</span>
               </h2>
 
-              {/* 1. INTEREST SELECTORS */}
+              {/* INTEREST SELECTORS */}
               <div className="flex gap-4 mb-6 mt-8">
-                {/* Plant Interest */}
                 <div
                   onClick={() => setPlantInterest(!plantInterest)}
                   className={`relative w-24 h-24 rounded-2xl overflow-hidden cursor-pointer border-2 transition-all ${plantInterest ? "border-green-500 scale-105 shadow-md" : "border-transparent hover:border-gray-200"}`}
@@ -151,7 +142,6 @@ export default function InquiryForm() {
                   )}
                 </div>
 
-                {/* Invest Interest */}
                 <div
                   onClick={() => setInvestInterest(!investInterest)}
                   className={`relative w-24 h-24 rounded-2xl overflow-hidden cursor-pointer border-2 transition-all ${investInterest ? "border-yellow-500 scale-105 shadow-md" : "border-transparent hover:border-gray-200"}`}
@@ -170,7 +160,6 @@ export default function InquiryForm() {
                   )}
                 </div>
 
-                {/* Media Interest */}
                 <div
                   onClick={() => setMediaInterest(!mediaInterest)}
                   className={`relative w-24 h-24 rounded-2xl overflow-hidden cursor-pointer border-2 transition-all ${mediaInterest ? "border-blue-500 scale-105 shadow-md" : "border-transparent hover:border-gray-200"}`}
@@ -190,30 +179,27 @@ export default function InquiryForm() {
                 </div>
               </div>
 
-              {/* 2. RESPONSIVE INBOX CARD */}
+              {/* RESPONSIVE INBOX CARD */}
               <div className="mb-8 p-6 bg-gray-50 rounded-[2rem] border border-gray-100">
                 <div className="flex items-center gap-3 mb-5">
                   <div className="flex items-center justify-center w-7 h-7 bg-green-500 rounded-full">
                     <Zap size={14} className="text-white fill-white" />
                   </div>
                   <span className="text-black font-black text-[18px] uppercase tracking-widest">
-                    Very Responsive Inbox
+                    {t("form.responsive_inbox")}
                   </span>
                 </div>
 
-                {/* SOCIAL ICONS (Circles Removed) */}
                 <div className="flex gap-6">
                   {socials.map((social, i) => (
                     <a
                       key={i}
                       href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-8 h-8 flex items-center justify-center transition-all hover:scale-125"
+                      className="w-8 h-8 transition-all hover:scale-125"
                     >
                       <img
                         src={social.imgSrc}
-                        alt="social icon"
+                        alt="social"
                         className={`w-full h-full object-contain ${social.isLarge ? "scale-110" : ""}`}
                       />
                     </a>
@@ -230,30 +216,31 @@ export default function InquiryForm() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="flex flex-col">
                     <label className="text-black font-bold text-[10px] uppercase mb-2">
-                      Full Name
+                      {t("form.labels.name")}
                     </label>
                     <input
                       name="name"
                       required
-                      className="p-4 rounded-xl bg-gray-50 border outline-none text-sm text-black focus:border-yellow-500 transition-colors"
+                      className="p-4 rounded-xl bg-gray-50 border outline-none text-sm text-black focus:border-yellow-500"
                     />
                   </div>
                   <div className="flex flex-col">
                     <label className="text-black font-bold text-[10px] uppercase mb-2">
-                      Email Address
+                      {t("form.labels.email")}
                     </label>
                     <input
                       name="email"
                       type="email"
                       required
-                      className="p-4 rounded-xl bg-gray-50 border outline-none text-sm text-black focus:border-yellow-500 transition-colors"
+                      className="p-4 rounded-xl bg-gray-50 border outline-none text-sm text-black focus:border-yellow-500"
                     />
                   </div>
                 </div>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="flex flex-col">
                     <label className="text-black font-bold text-[10px] uppercase mb-2">
-                      Arrival Date
+                      {t("form.labels.arrival")}
                     </label>
                     <input
                       name="arrivalDate"
@@ -266,7 +253,7 @@ export default function InquiryForm() {
                   </div>
                   <div className="flex flex-col">
                     <label className="text-black font-bold text-[10px] uppercase mb-2">
-                      Departure Date
+                      {t("form.labels.departure")}
                     </label>
                     <input
                       name="departureDate"
@@ -278,10 +265,11 @@ export default function InquiryForm() {
                     />
                   </div>
                 </div>
+
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="flex flex-col">
                     <label className="text-black font-bold text-[10px] uppercase mb-2">
-                      Guests
+                      {t("form.labels.guests")}
                     </label>
                     <input
                       name="guests"
@@ -292,7 +280,7 @@ export default function InquiryForm() {
                   </div>
                   <div className="flex flex-col">
                     <label className="text-black font-bold text-[10px] uppercase mb-2">
-                      Kids
+                      {t("form.labels.kids")}
                     </label>
                     <input
                       name="kids"
@@ -302,7 +290,7 @@ export default function InquiryForm() {
                   </div>
                   <div className="flex flex-col">
                     <label className="text-black font-bold text-[10px] uppercase mb-2">
-                      Country
+                      {t("form.labels.country")}
                     </label>
                     <input
                       name="country"
@@ -311,31 +299,48 @@ export default function InquiryForm() {
                     />
                   </div>
                 </div>
+
                 <div className="flex flex-col">
                   <label className="text-black font-bold text-[10px] uppercase mb-2">
-                    Preferred Transport
+                    {t("form.labels.transport")}
                   </label>
                   <div className="flex gap-4">
-                    {["Car", "Van", "Bus"].map((mode) => (
-                      <label
-                        key={mode}
-                        className="flex items-center gap-2 text-xs font-bold text-gray-600 cursor-pointer"
-                      >
-                        <input
-                          type="radio"
-                          name="transport"
-                          value={mode}
-                          required
-                          className="accent-yellow-500"
-                        />{" "}
-                        {mode}
-                      </label>
-                    ))}
+                    <label className="flex items-center gap-2 text-xs font-bold text-gray-600 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="transport"
+                        value="Car"
+                        required
+                        className="accent-yellow-500"
+                      />{" "}
+                      {t("form.transport_modes.car")}
+                    </label>
+                    <label className="flex items-center gap-2 text-xs font-bold text-gray-600 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="transport"
+                        value="Van"
+                        required
+                        className="accent-yellow-500"
+                      />{" "}
+                      {t("form.transport_modes.van")}
+                    </label>
+                    <label className="flex items-center gap-2 text-xs font-bold text-gray-600 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="transport"
+                        value="Bus"
+                        required
+                        className="accent-yellow-500"
+                      />{" "}
+                      {t("form.transport_modes.bus")}
+                    </label>
                   </div>
                 </div>
+
                 <div className="flex flex-col">
                   <label className="text-black font-bold text-[10px] uppercase mb-2">
-                    Visit Locations
+                    {t("form.labels.locations")}
                   </label>
                   <input
                     name="location"
@@ -350,14 +355,15 @@ export default function InquiryForm() {
                   className="w-full bg-black hover:bg-yellow-500 text-white hover:text-black py-5 rounded-2xl font-black text-[10px] uppercase tracking-[0.3em] transition-all flex items-center justify-center gap-3"
                 >
                   {loading ? (
-                    "Processing..."
+                    t("form.processing")
                   ) : (
                     <>
-                      Submit Inquiry <Send size={14} />
+                      {t("form.submit")} <Send size={14} />
                     </>
                   )}
                 </button>
               </form>
+
               {status.message && (
                 <div
                   className={`mt-6 p-4 rounded-xl text-xs font-bold uppercase ${status.type === "success" ? "text-green-600 bg-green-50" : "text-red-600 bg-red-50"}`}
