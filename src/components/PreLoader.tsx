@@ -216,15 +216,6 @@ export default function PreLoader() {
                     R
                   </h3>
                 </div>
-
-                {/* Slogan - මෙහි tracking-tighter/widest මගින් ලොගෝ එකේ දිගටම ඇදෙන සේ සකසා ඇත */}
-                <motion.p
-                  initial={{ opacity: 0, y: 5 }}
-                  animate={{ opacity: 1, y: 0, transition: { delay: 0.8 } }}
-                  className="w-full mt-3 text-white/70 text-[10px] md:text-[11px] uppercase font-bold text-center tracking-[0.16em] md:tracking-[0.30em] whitespace-nowrap"
-                >
-                  taking you to all destinations
-                </motion.p>
               </div>
             </motion.div>
           </div>
