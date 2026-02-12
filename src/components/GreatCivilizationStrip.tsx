@@ -156,7 +156,7 @@ export default function GreatCivilizationStrip() {
             className="flex"
             animate={{ x: ["-50%", "0%"] }}
             // වේගය මෙතැනින් වෙනස් කර ඇත (120 සිට 50 දක්වා අඩු කර ඇත)
-            transition={{ duration: 50, ease: "linear", repeat: Infinity }}
+            transition={{ duration: 120, ease: "linear", repeat: Infinity }}
             style={{ width: "max-content" }}
           >
             {[...greatCivilization, ...greatCivilization].map((item, index) => (
