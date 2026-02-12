@@ -5,7 +5,12 @@ import { Compass } from "lucide-react";
 
 const SriLankaMap = () => {
   const pathVariants: Variants = {
-    hidden: { pathLength: 0, opacity: 0 },
+    hidden: {
+      pathLength: 0,
+      opacity: 0,
+      // මෙහි strokeDasharray මගින් තැනි තැනින් ඇඳෙන පෙනුම ලබා දෙයි
+      strokeDasharray: "25 20",
+    },
     visible: {
       pathLength: 1,
       opacity: 1,
@@ -35,13 +40,6 @@ const SriLankaMap = () => {
             <feGaussianBlur stdDeviation="4" result="blur" />
             <feComposite in="SourceGraphic" in2="blur" operator="over" />
           </filter>
-          <filter id="pointGlow">
-            <feGaussianBlur stdDeviation="6" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
         </defs>
 
         <g filter="url(#mapGlow)">
@@ -50,26 +48,9 @@ const SriLankaMap = () => {
           <motion.path
             variants={pathVariants}
             stroke="#f97316"
-            strokeWidth="2"
+            strokeWidth="2.5"
             d={mapPath}
-          />
-
-          <motion.circle
-            r="6"
-            fill="#f97316"
-            filter="url(#pointGlow)"
-            initial={{ offsetDistance: "0%", opacity: 0 }}
-            animate={{
-              offsetDistance: "100%",
-              opacity: [0, 1, 1, 0],
-            }}
-            transition={{
-              duration: 10,
-              ease: "easeInOut",
-            }}
-            style={{
-              offsetPath: `path("${mapPath}")`,
-            }}
+            strokeLinecap="round"
           />
         </g>
       </motion.svg>
@@ -81,7 +62,7 @@ export default function PreLoader() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // සිතියම ඇඳීමට 10s යන නිසා, ලෝඩරය 11s තෙක් රඳවා ගත්තා
+    // සිතියම ඇඳීමට 10s යන නිසා, 11s ට පසුව Loader එක අයින් වේ.
     const timer = setTimeout(() => setLoading(false), 11000);
     return () => clearTimeout(timer);
   }, []);
@@ -98,6 +79,7 @@ export default function PreLoader() {
           }}
           className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#050505] overflow-hidden"
         >
+          {/* සිතියම පසුබිමේ ඇඳේ */}
           <SriLankaMap />
 
           <div className="relative z-10">
@@ -116,7 +98,7 @@ export default function PreLoader() {
                   __html: `
                 @keyframes rotate-compass { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
                 @keyframes glow-slide { 0% { left: -100%; } 100% { left: 100%; } }
-                /* මාලිමාවේ වේගය 0.8s දක්වා වැඩිකරන ලදි */
+                /* මාලිමාවේ වේගය 0.8s (ඉතා වේගවත්) */
                 .animate-rotate-now { animation: rotate-compass 0.8s infinite linear; } 
                 .animate-glow-border { animation: glow-slide 2.5s infinite linear; }
               `,
@@ -124,14 +106,15 @@ export default function PreLoader() {
               />
 
               <div className="relative inline-block group">
-                <div className="relative px-8 py-4 md:px-12 md:py-6 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden">
+                <div className="relative px-8 py-4 md:px-12 md:py-6 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)]">
+                  {/* උඩ සහ යට දිලිසෙන Border Animation */}
                   <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-orange-500 to-transparent animate-glow-border"></div>
                   <div
                     className="absolute bottom-0 right-0 w-full h-[2px] bg-gradient-to-l from-transparent via-orange-500 to-transparent animate-glow-border"
                     style={{ animationDelay: "1.25s" }}
                   ></div>
 
-                  <h3 className="text-orange-500 text-3xl md:text-5xl font-black tracking-widest uppercase italic flex items-center gap-1 leading-none drop-shadow-[0_0_15px_rgba(249,115,22,0.5)]">
+                  <h3 className="text-orange-500 text-3xl md:text-5xl font-black tracking-widest uppercase italic flex items-center gap-1 leading-none drop-shadow-[0_0_15px_rgba(249,115,22,0.6)]">
                     DESTINAT
                     <span className="relative flex items-center justify-center">
                       <span className="opacity-0">O</span>
@@ -144,6 +127,7 @@ export default function PreLoader() {
             </motion.div>
           </div>
 
+          {/* පසුබිමේ ඇති අලංකාර Glow Effect එක */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] md:w-[800px] h-[400px] md:h-[800px] bg-orange-600/10 rounded-full blur-[150px] pointer-events-none" />
         </motion.div>
       )}

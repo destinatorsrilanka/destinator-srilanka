@@ -132,7 +132,7 @@ export default function GreatCivilizationStrip() {
   return (
     <section className="py-6 bg-[#050505] overflow-hidden">
       <div className="relative">
-        {/* --- TEXT SECTION (RIGHT ALIGNED) --- */}
+        {/* --- TEXT SECTION --- */}
         <div className="max-w-[1400px] mx-auto px-6 mb-5 text-right flex justify-end">
           <div className="flex flex-col border-r-4 border-white pr-4 py-1 items-end">
             <h2 className="text-white text-xl md:text-2xl font-black uppercase tracking-[0.25em] drop-shadow-[0_0_10px_rgba(255,255,255,0.3)] leading-none">
@@ -149,14 +149,14 @@ export default function GreatCivilizationStrip() {
 
         {/* --- INFINITE SCROLLING STRIP --- */}
         <div className="relative">
-          {/* Fading Gradients */}
           <div className="absolute inset-y-0 left-0 w-24 md:w-40 bg-gradient-to-r from-[#050505] via-[#050505]/80 to-transparent z-10 pointer-events-none" />
           <div className="absolute inset-y-0 right-0 w-24 md:w-40 bg-gradient-to-l from-[#050505] via-[#050505]/80 to-transparent z-10 pointer-events-none" />
 
           <motion.div
             className="flex"
             animate={{ x: ["-50%", "0%"] }}
-            transition={{ duration: 120, ease: "linear", repeat: Infinity }}
+            // වේගය මෙතැනින් වෙනස් කර ඇත (120 සිට 50 දක්වා අඩු කර ඇත)
+            transition={{ duration: 50, ease: "linear", repeat: Infinity }}
             style={{ width: "max-content" }}
           >
             {[...greatCivilization, ...greatCivilization].map((item, index) => (
@@ -177,7 +177,6 @@ export default function GreatCivilizationStrip() {
           </motion.div>
         </div>
 
-        {/* Bottom Accent Line */}
         <div className="max-w-[1100px] mx-auto w-full px-6 opacity-20 mt-12">
           <div className="h-[1px] bg-gradient-to-r from-transparent via-yellow-500 to-transparent" />
         </div>
