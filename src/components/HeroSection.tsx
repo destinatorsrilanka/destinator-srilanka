@@ -5,25 +5,24 @@ import { ArrowRight, ChevronLeft, ChevronRight, Compass } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import "../i18n";
 
-// JSON එකේ ඇති දත්ත පාවිච්චි කරන නිසා මෙතන තිබුණු titles/descriptions ඉවත් කළා
 const carouselImages = [
   { id: "s2", src: "/image/clucture.png" },
   { id: "s5", src: "/image/hero-slide.jpeg" },
   { id: "s6", src: "/image/hero-slide2.png" },
   { id: "s1", src: "/image/sildenew.png" },
   { id: "s4", src: "/image/slidenew1.png" },
-
   { id: "s3", src: "/image/k.png" },
-
   { id: "s7", src: "/image/hero-slide3.png" },
 ];
 
 export default function HeroSection() {
-  const { t } = useTranslation(); // Translation hook එක
+  const { t } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     setIsLoaded(true);
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % carouselImages.length);
@@ -38,11 +37,16 @@ export default function HeroSection() {
       (prev) => (prev - 1 + carouselImages.length) % carouselImages.length,
     );
 
-  // දැනට තෝරාගෙන ඇති Slide එකේ ID එක (උදා: "s1")
   const currentSlideId = carouselImages[currentIndex].id;
 
+  if (!mounted) {
+    return (
+      <section className="relative min-h-screen w-full bg-black"></section>
+    );
+  }
+
   return (
-    <section className="relative min-h-[700px] h-screen w-full bg-black font-montserrat overflow-hidden flex flex-col">
+    <section className="relative min-h-screen w-full bg-black font-montserrat overflow-hidden flex flex-col">
       <style
         dangerouslySetInnerHTML={{
           __html: `
@@ -81,12 +85,13 @@ export default function HeroSection() {
         ))}
       </div>
 
-      <div className="relative z-30 flex-grow w-full flex items-center px-6 md:px-12 lg:px-24">
-        <div className="flex flex-col justify-center lg:justify-between h-full w-full max-w-7xl mx-auto pt-12 pb-6">
-          <div className="animate-slide-up flex flex-col items-start w-full lg:w-3/4 lg:mt-20">
-            <div className="flex flex-col items-start gap-3 mb-6">
+      <div className="relative z-30 flex-grow w-full flex items-center px-6 md:px-12 lg:px-24 pt-32 pb-16">
+        <div className="flex flex-col justify-between h-full w-full max-w-7xl mx-auto">
+          <div className="animate-slide-up flex flex-col items-start w-full">
+            {/* Logo Section */}
+            <div className="flex flex-col items-start gap-3 mb-8">
               <div className="relative w-fit">
-                <div className="relative px-5 py-3 md:px-8 md:py-4 bg-white/5 backdrop-blur-md border border-white/10 overflow-hidden rounded-2xl flex flex-col items-center">
+                <div className="relative px-6 py-3 md:px-8 md:py-4 bg-white/5 backdrop-blur-md border border-white/10 overflow-hidden rounded-2xl flex flex-col items-center">
                   <span className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-orange-500 to-transparent -translate-x-full animate-border-top-new"></span>
                   <span className="absolute bottom-0 right-0 w-full h-[2px] bg-gradient-to-l from-transparent via-orange-500 to-transparent translate-x-full animate-border-bottom-new"></span>
                   <h3 className="text-orange-500 text-2xl md:text-3xl lg:text-4xl font-black tracking-[0.15em] uppercase italic flex items-center gap-0 leading-none">
@@ -101,6 +106,7 @@ export default function HeroSection() {
                   </h3>
                 </div>
               </div>
+
               <div className="inline-flex items-center gap-2 bg-orange-500/20 backdrop-blur-lg border border-orange-500/30 px-3 py-1.5 rounded-xl">
                 <div className="flex gap-1 shrink-0">
                   <span className="w-1 h-3 bg-[#002395]"></span>
@@ -108,25 +114,27 @@ export default function HeroSection() {
                   <span className="w-1 h-3 bg-[#ED2939]"></span>
                 </div>
                 <p className="text-white text-[10px] font-black tracking-widest uppercase italic">
-                  {/* JSON: hero.specialist_tag */}
                   {t("hero.specialist_tag")}
                 </p>
               </div>
             </div>
 
             <div className="mb-8 w-full">
-              <h2 className="text-orange-500 text-lg md:text-xl font-bold italic mb-2 uppercase tracking-wide">
-                {/* JSON: map.title */}
+              <h2 className="text-orange-500 text-lg md:text-xl font-bold italic mb-3 uppercase tracking-wide">
                 {t("map.title")}
               </h2>
 
-              {/* Dynamic Title based on current Slide ID - using lowercase keys */}
-              <h1 className="text-white text-[2.2rem] sm:text-[3rem] md:text-5xl lg:text-6xl xl:text-7xl font-black uppercase leading-tight mb-4 lg:whitespace-nowrap">
+              {/* Title - "md:whitespace-nowrap" අයින් කරලා, "max-w" එකතු කළා */}
+              <h1
+                className="text-white font-black uppercase leading-[1.1] mb-6 
+                             text-[2rem] sm:text-[2.8rem] 
+                             md:text-[clamp(2.5rem,4.8vw,5.5rem)]
+                             max-w-4xl break-words"
+              >
                 {t(`hero.slides.${currentSlideId}.title`)}
               </h1>
 
-              {/* Dynamic Description based on current Slide ID - using lowercase keys */}
-              <p className="text-gray-300 text-sm md:text-lg max-w-2xl leading-relaxed opacity-90">
+              <p className="text-gray-300 text-sm md:text-lg max-w-2xl leading-relaxed opacity-90 break-words">
                 {t(`hero.slides.${currentSlideId}.description`)}
               </p>
             </div>
@@ -137,9 +145,8 @@ export default function HeroSection() {
                   .getElementById("heritage")
                   ?.scrollIntoView({ behavior: "smooth" })
               }
-              className="bg-orange-500 hover:bg-white text-white hover:text-black px-10 py-4 rounded-full font-black transition-all flex items-center gap-2 text-lg shadow-2xl group"
+              className="bg-orange-500 hover:bg-white text-white hover:text-black px-10 py-4 rounded-full font-black transition-all flex items-center gap-2 text-lg shadow-2xl group active:scale-95"
             >
-              {/* JSON: hero.cta_button */}
               {t("hero.cta_button")}
               <ArrowRight
                 size={22}
@@ -149,7 +156,7 @@ export default function HeroSection() {
           </div>
 
           {/* Thumbnail Navigation */}
-          <div className="hidden lg:flex flex-col items-center gap-4 mt-auto self-end w-fit">
+          <div className="hidden lg:flex flex-col items-center gap-4 mt-auto self-end w-fit pt-8">
             <div className="flex items-center gap-3 p-3 bg-black/40 backdrop-blur-xl rounded-[2rem] border border-white/10 shadow-2xl max-w-full overflow-x-auto no-scrollbar">
               {carouselImages.map((item, index) => (
                 <button

@@ -226,27 +226,6 @@ export default function PreLoader() {
                   taking you to all destinations
                 </motion.p>
               </div>
-
-              {/* Progress Line */}
-              <div className="w-48 h-[1px] bg-white/5 relative overflow-hidden mx-auto mb-8 mt-12">
-                <motion.div
-                  initial={{ x: "-100%" }}
-                  animate={{ x: "100%" }}
-                  transition={{
-                    duration: 2.5,
-                    repeat: Infinity,
-                    ease: "linear",
-                  }}
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-[#f97316] to-transparent w-full"
-                />
-              </div>
-
-              {/* Pulse dots */}
-              <div className="flex justify-center gap-4">
-                <span className="w-1 h-1 bg-[#f97316] rounded-full animate-pulse" />
-                <span className="w-1 h-1 bg-[#f97316]/50 rounded-full animate-pulse delay-75" />
-                <span className="w-1 h-1 bg-[#f97316]/20 rounded-full animate-pulse delay-150" />
-              </div>
             </motion.div>
           </div>
 
