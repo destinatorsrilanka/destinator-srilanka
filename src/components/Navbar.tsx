@@ -21,6 +21,7 @@ function NavbarContent() {
     { code: "en", name: "English", flag: "https://flagcdn.com/w40/gb.png" },
     { code: "de", name: "Deutsch", flag: "https://flagcdn.com/w40/de.png" },
     { code: "fr", name: "Français", flag: "https://flagcdn.com/w40/fr.png" },
+    { code: "sp", name: "Español", flag: "https://flagcdn.com/w40/es.png" }, // ස්පාඤ්ඤ භාෂාව ඇතුළත් කරන ලදී
     { code: "it", name: "Italiano", flag: "https://flagcdn.com/w40/it.png" },
     { code: "ru", name: "Русский", flag: "https://flagcdn.com/w40/ru.png" },
     { code: "zh", name: "中文", flag: "https://flagcdn.com/w40/cn.png" },

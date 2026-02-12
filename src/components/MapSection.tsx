@@ -151,7 +151,7 @@ const SLOW_TRANSITION = { type: "spring", stiffness: 40, damping: 20 } as const;
 const LOGO_COLOR = "#EAB308";
 
 export default function SriLankaInteractiveMap() {
-  const { t } = useTranslation(); // ඔබ Hero Page එකේ පාවිච්චි කළ ආකාරයටම
+  const { t } = useTranslation();
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const [currentBgIndex, setCurrentBgIndex] = useState(0);
@@ -435,10 +435,10 @@ export default function SriLankaInteractiveMap() {
           </AnimatePresence>
         </motion.div>
 
-        {/* SIDE DIRECTORY */}
-        <div className="absolute z-50 flex pointer-events-auto right-4 sm:right-12 top-1/2 -translate-y-1/2 flex-col gap-1 text-right max-h-[70vh] sm:max-h-[650px] overflow-y-auto pr-4 sm:pr-6 no-scrollbar">
+        {/* SIDE DIRECTORY - FIXED WORD WRAPPING/CUTTING */}
+        <div className="absolute z-50 flex pointer-events-auto right-0 top-1/2 -translate-y-1/2 flex-col gap-1 text-right max-h-[70vh] sm:max-h-[650px] overflow-y-auto pr-8 sm:pr-12 no-scrollbar items-end">
           <p
-            className={`text-[9px] font-black tracking-[0.5em] uppercase mb-4 transition-opacity duration-500 ${hoveredId ? "text-white/40" : "text-black/30"}`}
+            className={`text-[9px] font-black tracking-[0.5em] uppercase mb-4 transition-opacity duration-500 mr-2 ${hoveredId ? "text-white/40" : "text-black/30"}`}
           >
             {t("map.directory")}
           </p>
@@ -452,7 +452,7 @@ export default function SriLankaInteractiveMap() {
               onMouseEnter={() => !isMobile && setHoveredId(loc.id)}
               onMouseLeave={() => !isMobile && setHoveredId(null)}
               animate={{
-                x: hoveredId === loc.id ? -8 : 0,
+                // x: -8 ඉවත් කර ඇත, එවිට දිගු වචන කැපී නොයයි
                 color:
                   hoveredId === loc.id
                     ? "#fff"
@@ -461,9 +461,9 @@ export default function SriLankaInteractiveMap() {
                       : "rgba(0,0,0,0.5)",
                 scale: hoveredId === loc.id ? 1.05 : 1,
               }}
-              className="group relative font-bold tracking-wider uppercase flex items-center justify-end outline-none text-[10px] py-1.5"
+              className="group relative font-bold tracking-wider uppercase flex items-center justify-end outline-none text-[10px] py-1.5 whitespace-nowrap"
             >
-              <span className="mr-3">
+              <span className="mr-3 text-right">
                 {t(`map.destinations.${loc.id}.name`)}
               </span>
               <motion.div

@@ -11,6 +11,8 @@ import {
   Facebook,
   Music2,
   Phone,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import "../i18n";
@@ -81,6 +83,16 @@ export default function CreativeAboutUs() {
     }, 5000);
     return () => clearInterval(timer);
   }, []);
+
+  const nextSlide = () => {
+    setCurrentImage((prev) => (prev + 1) % aboutImages.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentImage(
+      (prev) => (prev - 1 + aboutImages.length) % aboutImages.length,
+    );
+  };
 
   const socialLinks = [
     {
@@ -271,12 +283,29 @@ export default function CreativeAboutUs() {
                     </div>
                   </motion.div>
                 </AnimatePresence>
+
+                {/* Navigation Buttons - hover එකක් නැතිව සැමවිටම පෙනෙන සේ සකසා ඇත */}
+                <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-4 z-40">
+                  <button
+                    onClick={prevSlide}
+                    className="p-2 rounded-full bg-black/50 border border-white/10 text-white hover:bg-yellow-500 hover:text-black transition-all backdrop-blur-sm"
+                  >
+                    <ChevronLeft size={20} />
+                  </button>
+                  <button
+                    onClick={nextSlide}
+                    className="p-2 rounded-full bg-black/50 border border-white/10 text-white hover:bg-yellow-500 hover:text-black transition-all backdrop-blur-sm"
+                  >
+                    <ChevronRight size={20} />
+                  </button>
+                </div>
               </div>
 
               <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-30">
                 {aboutImages.map((_, i) => (
-                  <div
+                  <button
                     key={i}
+                    onClick={() => setCurrentImage(i)}
                     className={`h-1 rounded-full transition-all duration-300 ${
                       i === currentImage
                         ? "w-6 bg-yellow-500"

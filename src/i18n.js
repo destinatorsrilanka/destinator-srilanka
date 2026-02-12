@@ -9,6 +9,7 @@ import frTranslation from "./locales/fr/common.json";
 import itTranslation from "./locales/it/common.json";
 import ruTranslation from "./locales/ru/common.json";
 import zhTranslation from "./locales/zh/common.json";
+import spTranslation from "./locales/sp/common.json";
 
 i18n
   .use(LanguageDetector)
@@ -18,6 +19,7 @@ i18n
       en: { translation: { ...enTranslation } },
       de: { translation: { ...deTranslation } },
       fr: { translation: { ...frTranslation } },
+      sp: { translation: { ...spTranslation } },
       it: { translation: { ...itTranslation } },
       ru: { translation: { ...ruTranslation } },
       zh: { translation: { ...zhTranslation } },
