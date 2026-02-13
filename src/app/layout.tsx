@@ -26,7 +26,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Destinator",
+  title: "Destinator Sri Lanka",
   description: "Explore the beauty of Sri Lanka with us.",
   icons: {
     icon: "/image/logo2.png",
