@@ -1,26 +1,9 @@
 "use client";
-import { motion, AnimatePresence, Variants } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Compass } from "lucide-react";
 
 const SriLankaMap = () => {
-  const pathVariants: Variants = {
-    hidden: {
-      pathLength: 0,
-      opacity: 0,
-      // මෙහි strokeDasharray මගින් තැනි තැනින් ඇඳෙන පෙනුම ලබා දෙයි
-      strokeDasharray: "25 20",
-    },
-    visible: {
-      pathLength: 1,
-      opacity: 1,
-      transition: {
-        pathLength: { duration: 10, ease: "easeInOut" },
-        opacity: { duration: 1 },
-      },
-    },
-  };
-
   const mapPath =
     "M754.2 683.5l0.6 3.7 2.4 8.2 0.3 4.8-1.3 9.3-10.6 36.8-0.6 3.8-0.2 5-0.8 4.2-3.3 6.5-0.8 2.9-1.3 4-4.4 7-2.1 3.3 1.5 5.6-2.5 6.7-21.7 34.4-7.2 7.3-13.4 9.5-4.4 1.3-5.8 3.1-42.8 33.7-8.6 4.7-27.8 9.8-0.4-3.3 0-0.2-1.6-1.3-0.1 0-0.3 0.1-1.4 0.4-0.9 1.8-0.5 3.9-1.2 1.5-2 0.6-2.7 1.1-5 3.1-5 2.2-24 5.1-11.7 4-12.7 2.4-5.8 2.2-3.5 4.9-6.3-1.2-3.8 1.5-2.2 0.8-8.9 6.6-8.8 6.6-4.1 4.7-9.5-0.5-3.9 0.5-3.1 1.2-3.2 1.8-5.6 4.2-1.6 0.4-1.6 0.3-3.8-1.4-4.1-2.1-2.3-0.7-1.6-0.5-13.4 1.6-3.8-0.8-1.9-1.9-1.2-2.5-1-1.5-0.7-1.1-3.9 2.3-3.5 0.3-6.2-0.9-1.5-0.3-1.1-0.5-0.8-1-1-1.1-1.8-0.5-1 0.3-0.9 0.8-0.9 0.6-1.2 0-0.4-0.3-0.4-0.4-1.4-2-0.8-0.5-0.1-0.1-1.7-0.6-9.8-3.5-4.1-0.9-2.8-0.6-5-4-1.2-0.5-2.2-1.1-1.7 1.7-4.3-3.5-18.8-19.9-1.5-1.2-0.2-0.2-0.5-0.7-0.3-0.9 0.1-2-0.6-1-0.8-1.1-2.1-2.7-10.6-22.5-0.5-2.1 0.1-2 0-1.9-0.4-1.2-1.9-4-1.9-10.8-4.3-7.6-2.6-10.9-1-4-0.5-0.4-1-0.6-1-0.9-0.6-1.2 0.2-1.4 1.1-0.3 1.2 0.1 0.6 0-1.8-12.2-0.1-1-4.8-12.3-19.8-50.8-3.1-17.5-0.3-1.7 0-16.7 0.3-0.7 2.3-5.5 0.6-2.6-0.1-2.7 0-0.1-11-39.2 1.5-5.8-0.1 3.6 0.9 2.2 1.2 1.7 1.1 2.1 2.2 7.7 1.1 1.9 1.4 0 0.4-2.2 0.6-0.9 0.6-0.2 0.2 0.1-0.1-7.1-0.5-3.1-1.2-2.6-1.1-0.7-3-0.7-1.3-0.9-0.2-0.3-0.8-1.7 0.4-1.9 0.8-1.7 0.5-1.6-11.3-83-1.4-3 0.9-1 0.7-0.1 1.7 1.1 0.4-4 1.1-4.7 0.3-2.2 0.3-2.3-1.3-3.5-1.8-3.2-0.3-2.1-0.3-2.1 0-8.6-5.3-26.1-0.7-3-2.7-5.7-2.3-12.1-3.8-9.5-5.8-26.2 0-7.5 1 0.5 0.1 0.1 0 0.2 0.5 0.8 0.8-4.3-1.2-13.8-1.2-4.1 3.8-2.5 3.6-4.7 2.6-5.3 1-4.4 1.1-2.9 6.8-10.8-0.1 0.2-3.4 8.2-4.4 7.7 1 1.9 0.2 0.4 1.7 1.8 2.2 0.8 2.8 0-2.3 6.4-2.3 4.6-1 0.8-1.1 0.1-0.8 0.7-0.4 2.4 0.2 5.6-0.2 1.7-3.9 12.4 0.2 2.4 0.3 4.6 4 4.8 1.1 1.3-4.6 9.7 7.4 5.4 10.7 0.8 5.4-3.9-1-4.1-1.8-3.2-0.6-1.3-0.9-1-2-2.6-2.3-1.5-0.7-2.5 7.8-14.8-0.3-2.7-1-2-1.2-1.7-0.7-1.7-0.2-2.8 0.3-4.9-0.1-1.9 0-0.1-0.1-0.4-0.6-1.6-0.4-0.4-0.5-0.4-0.4-1 0.4-2.6 1.1-2.2 3-3.9 0.7-2.6 0.5-4.9 2.1-9.7 2.2-22.8 1.4-2.6 1.5-1.3 1.2-1.5 0.5-3.4 0-9.7 1.3-4.8 3.1-3 3.8-2.6 3-3.2 0.3-1.2 2.3-7.1 0.3-0.3 0.2-0.2 0.5-2 2.2-4.7 2-22.7-5.5-14.5 0.4-2.5 0.4-16.5 0-0.2-0.5-5.6-0.7-2.7-1.2-2-1-2.4 2.2-1.1 3.1-0.6 2-0.6 13.4-12.1 7-3.5 2.9-2.5 1.5-5.7 2.8-5.9 1.5-8.1 7.5-19.2 0.2-1.1 0.7-2.8 1.4-5.7 0-13.6 0.5-2-0.4-1.3-2.7-0.5-6.4-3.3-2.4-2.4-1.6-4.4-0.3-0.8-1.1-5.4-0.1-3.1 2.8-3 5.1-2.5 5.6-1.8 4.7-0.7 2.1-1.1 5-6.7 0.6-0.5 0.9-0.7 1.7-1 2.1-0.8 2.6-0.4-2.2-4-1.3-1.8-1.3-1.8-3.4-3.4-4.5-3.4-17-10-3.5-4.3 7.4 0.2 7.1 2.9 13.9 8.1 13.2 3.3 3.5 2.3 5.5 4.8 1.3 2.5-2.8 1.4 0.6 1.6 0.8 1.6-1.4 1.6 4.8 3.3 11.4-2.8 20.8-8.3 5.7 0.5 12.2 3.4 14.5 6.6 11 2.1-15.7-10.8-5.4-2.5-4.8-1.1-0.7-0.3-0.7-0.3-4.1-3.2-1.6-0.9-1.6-0.3-1.9 0.1-2.8 0.2-1.8 0.7-0.3 0.4-0.5 0.8-0.9 0.5-3.1-2.3-1.2-0.2-7.5 0.2-2.1-0.6-16.4-14.3-7-4.6-0.1 0-2.5-1.1-11.8-5.2-4.3-2.5-2.9 0 0.6 5.7 1.6 1.6 2.4 1.9 1.5 2.3-1.5 3-1.7 0.6-1.7-1-1.5-1.3-4.5-2.3-8.6-7.5-4.9-2.1 2.5 2.8 4.5 3.9 2.6 2.8-5.6-1-5.5-2.3-11.1-6.2-8.9-7-5.2-1.9-0.5-0.3-2-1.3-1.9-0.8-0.3 1.7-2.5-1.7-1-2.3-0.4-2.7-0.9-3-1.5-2.6-0.9-1.2-2.4-3.1-1.5-2.7 5-2.5 9.1-8.5 4-1.8 0.1 0 18 1.6 9.4-1.1 3.4 0.4 1.4 3.2-0.3 4.9 0.7 1.7 2 0.6 1.9 0.3 5.5 1.4 1.2 0.7 1 2 2.5-0.1 1.9-0.6 0.8-0.2 1.1-0.2 0.8-0.1 1.8 1.1 0.8 0.4 6.4 7.1 20.3 22.2 7.2 4.5 16.6 7.7 0.6 0.3 0-1.8-8.4-4.2-20.3-16.7-16.6-19.2-8.4-4.6-13.2-3.1-3.5-2.5-0.5-3.6 4.9-2.1 1.5-0.3 4.8-0.8 9.6-0.4 4.6 0.8 3.2 2.3 2.1 7.6 2.1 3.2 30.2 35.7 4.4 3.2 9 5.2 63.7 51.8 0.2 0.4 1.7 2.7 2.5 3.3 5 4.7 3.1 4-2.7 1.5-0.1 0-1.5-0.7-0.2-0.1-0.1 0-2.4-3.1-1.3-0.7-4.2-0.7-1.8 0.5 0.9 1.9 0.3 0.6 11.9 11.2 4.7 2.6-1.8-2.9-1.1-2.7 0.5-1.9 3.2-0.8 1.5 1 2.5 7.3 2.2 4.4 8.8 17.6-1.8-0.6-4.9-1.9-3 0-1.3 3.3 1.8 0.8 3.7 0.7 3.4 2.1 0 0.3 0.5 5 1.6 0 0.7-1.3 0.7-0.6 0.8-0.4 1.1-0.7 1.1 4.6 0.2 0.6 3.2 7.5 4.4 6.7 4.5 2.9 0.3 0.3 0.5 0.4 0 1.7-1.1 1.6-2.1 0.8-0.6-0.7-2.6-4.1-2.7-1.5-6.3-1.6-3.7-1.7 1.7 2.4 0.9 1.3 8.3 7.8 0.1 4.4 2.7 2-2.4 2.3-2.2 2.6 3.6 2.8 3.9-0.3 3.2-2.9 2.4-4.2 1.5-3.9 0.1 0.1 8.3 10.1 7.4 12.7 3 3.1 4.2 1.3 3.4 2.7 5 12.1 1.2 1.3 1.3 1.4 0.1 0 5.6 2.6 2.9 6 3.2 12.2 0.6-2.2 0.7-0.9 1.3 0.3 2.2 1.2-0.6 2.3 6.4 7 2.1 3.5 0 4.2-1.7 1.7-2.4 1.1-2.2 2.5 0.1 0 1.6-0.4 1.8-0.5 0.4-0.2 0.8-0.5 0.1 0.1 5 10.9 0.7 5.6-5.7 1-0.1 0 1.2-3.8-1.5-3-2.6-0.4-1.8 4 0.6 3.1 1.7 2.2 0.9 2.4-1.7 3.6-1.4-1.1-2.5-1.9-4-2.5-4-1-3.9 1.7-3 4 1.1 2.1 3.6-0.5 4.8-4 3.3 3.5 2.9 4.2 3.6 3.5 5.1 1.5 10.6-0.2 3.6-2.3-2.4-5.4 6.1-2.8 2.4-0.8 2.5 0.2 0.1 0 2.8 1.6 2.5 2.8 1.9 3.2 1.7 9.3 3.6 12 0.1 3.1 0.1 3.2-2.9-2.1-3.1-6.2-2.7-1.3-0.1 1.7 1.1 7.6 0.1 0.5 1.3 2.9 1.5 0.8 1.4 0.6 0.1 0 3.1 0 2.4 1.2 1.5 8.9 1.8 6.2 0.3 1 0.5 3.8 0.7 2.4 4.8 16.3 1.8 10.6-4.2 5.8-2.3-9.6-0.3-1.4-3.6-9.7-1.6 0-0.3 7.4 0.3 2.3-0.2-0.1-0.2 0.7 0 1.2 0.4 1.4 0.7 0.9 2 0.6 0.4 0.7 1.9 4.9 4 3 3.9-0.3 1.3-5 1.5 0 1.4 2.6 0.4 0.7 1.9 8.4 1.9 3.3 2.6 2.8 1.7 2.7 2.8 6.6 1.1-1.1 1.5-1.1 0.7-1.1 1 2.2-1 1.1 0.5 0.9 0.5 0.5 0 0.1 0.3 0.5 0.1 1.1 0.1-0.1 1.1-0.9 2.4-1.2 1.2-0.9 0.5 1.3 0.7 1.6-0.5 1.9-0.8 1.9 0 1.4 0.1 1.4 1.6 3.2 2.8 2.2 1.9 1.4 1.7 2.8-1.1 0.1-0.5 0.3-0.7 0.5-0.5 0.3-0.4 0.2-0.7 2.6-0.6 2.5 2.7 7.9 1.4 1.7 3.3 3.8 0.1 0 4.8-0.9 1.6 0 1.6 4.9 1.8 3 0.6 0.9 9.9 10.4 3.2 5.1 0.6 4.5-5.1 1.6-2.4-1.6-5.6-7.3-3-2.5-3.8-1.4-0.1 0-0.4 0-2.7 0.2-2.4 2.5-1.6 5.2 2.7 1.2 2.7 0.4 2.3-0.9 1.7-2.3 2.7 1 2.5 1.2 0.9 1.1 0.6 0.7-0.4 2.5 3.1 2.8 3 2.9 2.4 2.8 2.5 4.2-1.2 1.4-0.3 1.3 0.4 1.6 1.1 2.2 1.5-1.8-0.9-3.1 2.7 0.9 5.4 4 1.3 1.8 4.2 10.9-0.3 0.4-1.3 5.9 0.2 0.7 0 0.1 1.1 2.2 0.3 0.9-0.9 1.6-1.7 1.3-1 1.4 1.2 2.1 1.2 1.5 0.3 1.1 0.1 0.2 0.7 1.3 1.7 1.5-2.5 1.8 0.2 0.9 0.2 0.9 1.9 0.4 1.9-2.4 1.4 0 1.8 9.4-0.1 3.4 1.6 0 0-0.1 0.2-3.2 0.6-3.2 0.9-2.8 1.5-1.9 0-1.6-0.2-0.4-0.5-1.4 0.4-0.8 1.3 0.6 2.1 2 0.7 1.8 0.5 5 3.6 5.6 5.7 19.8-1.1 54.6z";
 
@@ -28,29 +11,59 @@ const SriLankaMap = () => {
     <div className="absolute inset-0 flex items-center justify-center p-10">
       <motion.svg
         viewBox="0 0 1000 1000"
-        className="w-full h-full opacity-60 pointer-events-none"
-        initial="hidden"
-        animate="visible"
-        fill="none"
-        strokeWidth="1.5"
+        className="w-full h-full pointer-events-none"
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
+          {/* තැඹිලි පාට තිත දිලිසීමට Glow filter එක */}
+          <filter id="pointGlow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="8" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+
+          {/* සිතියම වටා ඇති සියුම් එළිය සඳහා */}
           <filter id="mapGlow" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="4" result="blur" />
+            <feGaussianBlur stdDeviation="3" result="blur" />
             <feComposite in="SourceGraphic" in2="blur" operator="over" />
           </filter>
         </defs>
 
         <g filter="url(#mapGlow)">
-          <path d={mapPath} stroke="white" strokeOpacity="0.05" />
-
-          <motion.path
-            variants={pathVariants}
-            stroke="#f97316"
-            strokeWidth="2.5"
+          {/* පසුබිමේ ඇති අඳුරු සිතියම් රේඛාව */}
+          <path
             d={mapPath}
-            strokeLinecap="round"
+            stroke="#f97316"
+            strokeOpacity="0.1"
+            strokeWidth="1"
+            fill="none"
+          />
+
+          {/* ඇඳී යන සජීවී රේඛාව */}
+          <motion.path
+            d={mapPath}
+            stroke="#f97316"
+            strokeWidth="2"
+            fill="none"
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: 1 }}
+            transition={{ duration: 7, ease: "linear" }}
+          />
+
+          {/* වීඩියෝවේ ඇති පරිදි දිලිසෙමින් ගමන් කරන තැඹිලි තිත (Moving Dot) */}
+          <motion.circle
+            r="5"
+            fill="#f97316"
+            filter="url(#pointGlow)"
+            initial={{ offsetDistance: "0%" }}
+            animate={{ offsetDistance: "100%" }}
+            transition={{ duration: 7, ease: "linear" }}
+            style={{
+              offsetPath: `path("${mapPath}")`,
+              offsetRotate: "auto",
+            }}
           />
         </g>
       </motion.svg>
@@ -62,8 +75,8 @@ export default function PreLoader() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // සිතියම ඇඳීමට 10s යන නිසා, 11s ට පසුව Loader එක අයින් වේ.
-    const timer = setTimeout(() => setLoading(false), 11000);
+    // සිතියම ඇඳී අවසන් වූ පසු (තත්පර 7 + ස්වල්පයක්) Loader එක වසා දැමීමට
+    const timer = setTimeout(() => setLoading(false), 8500);
     return () => clearTimeout(timer);
   }, []);
 
@@ -75,21 +88,21 @@ export default function PreLoader() {
           initial={{ opacity: 1 }}
           exit={{
             y: "-100%",
-            transition: { duration: 1.2, ease: [0.7, 0, 0.3, 1] },
+            transition: { duration: 1, ease: [0.7, 0, 0.3, 1] },
           }}
           className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#050505] overflow-hidden"
         >
-          {/* සිතියම පසුබිමේ ඇඳේ */}
+          {/* සිතියම පෙන්වන Component එක */}
           <SriLankaMap />
 
           <div className="relative z-10">
+            {/* DESTINATOR ලාංඡනය - සිතියම ආරම්භ වී තත්පර 2කට පසු මතුවීමට */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.9, filter: "blur(10px)" }}
+              initial={{ opacity: 0, scale: 0.8 }}
               animate={{
                 opacity: 1,
                 scale: 1,
-                filter: "blur(0px)",
-                transition: { duration: 2, ease: "easeOut", delay: 2 },
+                transition: { duration: 1.5, delay: 2 },
               }}
               className="text-center"
             >
@@ -98,20 +111,19 @@ export default function PreLoader() {
                   __html: `
                 @keyframes rotate-compass { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
                 @keyframes glow-slide { 0% { left: -100%; } 100% { left: 100%; } }
-                /* මාලිමාවේ වේගය 0.8s (ඉතා වේගවත්) */
-                .animate-rotate-now { animation: rotate-compass 0.8s infinite linear; } 
-                .animate-glow-border { animation: glow-slide 2.5s infinite linear; }
+                .animate-rotate-now { animation: rotate-compass 4s infinite linear; }
+                .animate-glow-border { animation: glow-slide 3s infinite linear; }
               `,
                 }}
               />
 
               <div className="relative inline-block group">
-                <div className="relative px-8 py-4 md:px-12 md:py-6 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)]">
-                  {/* උඩ සහ යට දිලිසෙන Border Animation */}
-                  <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-orange-500 to-transparent animate-glow-border"></div>
+                <div className="relative px-8 py-4 md:px-12 md:py-6 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden shadow-[0_0_30px_rgba(249,115,22,0.2)]">
+                  {/* වීඩියෝවේ ඇති පරිදි ලෝගෝව වටා යන Glowing රේඛා */}
+                  <div className="absolute top-0 left-0 w-full h-[1.5px] bg-gradient-to-r from-transparent via-orange-500/50 to-transparent animate-glow-border"></div>
                   <div
-                    className="absolute bottom-0 right-0 w-full h-[2px] bg-gradient-to-l from-transparent via-orange-500 to-transparent animate-glow-border"
-                    style={{ animationDelay: "1.25s" }}
+                    className="absolute bottom-0 right-0 w-full h-[1.5px] bg-gradient-to-l from-transparent via-orange-500/50 to-transparent animate-glow-border"
+                    style={{ animationDelay: "1.5s" }}
                   ></div>
 
                   <h3 className="text-orange-500 text-3xl md:text-5xl font-black tracking-widest uppercase italic flex items-center gap-1 leading-none drop-shadow-[0_0_15px_rgba(249,115,22,0.6)]">
@@ -127,8 +139,8 @@ export default function PreLoader() {
             </motion.div>
           </div>
 
-          {/* පසුබිමේ ඇති අලංකාර Glow Effect එක */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] md:w-[800px] h-[400px] md:h-[800px] bg-orange-600/10 rounded-full blur-[150px] pointer-events-none" />
+          {/* පසුබිමේ ඇති තැඹිලි පාට Aura එළිය */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-orange-600/10 rounded-full blur-[120px] pointer-events-none" />
         </motion.div>
       )}
     </AnimatePresence>
