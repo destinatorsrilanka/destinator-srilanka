@@ -310,9 +310,11 @@ export default function SriLankaInteractiveMap() {
           onMouseLeave={() => setHoveredId(null)}
           style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
           animate={{
-            x: hoveredId ? (isMobile ? "-15%" : "22%") : "0%",
-            scale: isMobile ? (hoveredId ? 0.7 : 1.2) : 1,
-            y: isMobile ? (hoveredId ? -120 : 20) : 0,
+            // මොබයිල් වලදී (isMobile) සිතියම වම් පැත්තට 25% ක් Shift කර Directory එකට ඉඩ සලසා ඇත
+            left: isMobile ? "-25%" : "0%",
+            x: hoveredId ? (isMobile ? "5%" : "22%") : "0%",
+            scale: isMobile ? (hoveredId ? 0.55 : 1.1) : 1,
+            y: isMobile ? (hoveredId ? -150 : 20) : 0,
           }}
           transition={SLOW_TRANSITION}
           className="relative w-full max-w-[310px] sm:max-w-[480px] lg:max-w-[650px] aspect-[4/5] z-10 flex items-center justify-center cursor-crosshair"
@@ -377,11 +379,12 @@ export default function SriLankaInteractiveMap() {
                 initial={{ opacity: 0, x: isMobile ? 50 : -350 }}
                 animate={{
                   opacity: 1,
-                  x: isMobile ? "20%" : -450,
-                  y: isMobile ? 240 : 0,
+                  // Info card එක සිතියම වමට ගිය පසු පෙනෙන සේ සකස් කර ඇත
+                  x: isMobile ? "55%" : -450,
+                  y: isMobile ? 280 : 0,
                 }}
                 exit={{ opacity: 0, x: isMobile ? 50 : -350 }}
-                className="absolute z-[1000] pointer-events-none w-[80vw] max-w-[320px] bg-white/10 backdrop-blur-3xl border border-white/20 p-5 rounded-[2rem] text-white shadow-2xl text-left"
+                className="absolute z-[1000] pointer-events-none w-[80vw] max-w-[300px] bg-white/10 backdrop-blur-3xl border border-white/20 p-5 rounded-[2rem] text-white shadow-2xl text-left"
               >
                 <div className="space-y-3">
                   <div className="flex items-center gap-2">
@@ -435,7 +438,7 @@ export default function SriLankaInteractiveMap() {
           </AnimatePresence>
         </motion.div>
 
-        {/* SIDE DIRECTORY - FIXED WORD WRAPPING/CUTTING */}
+        {/* SIDE DIRECTORY */}
         <div className="absolute z-50 flex pointer-events-auto right-0 top-1/2 -translate-y-1/2 flex-col gap-1 text-right max-h-[70vh] sm:max-h-[650px] overflow-y-auto pr-8 sm:pr-12 no-scrollbar items-end">
           <p
             className={`text-[9px] font-black tracking-[0.5em] uppercase mb-4 transition-opacity duration-500 mr-2 ${hoveredId ? "text-white/40" : "text-black/30"}`}
@@ -452,7 +455,6 @@ export default function SriLankaInteractiveMap() {
               onMouseEnter={() => !isMobile && setHoveredId(loc.id)}
               onMouseLeave={() => !isMobile && setHoveredId(null)}
               animate={{
-                // x: -8 ඉවත් කර ඇත, එවිට දිගු වචන කැපී නොයයි
                 color:
                   hoveredId === loc.id
                     ? "#fff"

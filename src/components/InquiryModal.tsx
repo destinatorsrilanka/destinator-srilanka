@@ -8,8 +8,11 @@ import {
   AlertCircle,
   Facebook,
   Instagram,
-  MessageCircle,
-  Music2,
+  MessageCircle, // WhatsApp සඳහා
+  Music2, // TikTok සඳහා
+  Youtube, // YouTube සඳහා
+  SendToBack, // Telegram සඳහා (හෝ Lucide Send භාවිතා කළ හැක)
+  MessageSquare, // WeChat සඳහා
   X,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -101,6 +104,7 @@ export default function InquiryModal({
     }
   };
 
+  // යාවත්කාලීන කරන ලද සමාජ මාධ්‍ය ලැයිස්තුව
   const socials = [
     {
       Icon: Facebook,
@@ -116,6 +120,21 @@ export default function InquiryModal({
       Icon: Music2,
       href: "https://www.tiktok.com/...",
       color: "hover:bg-black",
+    },
+    {
+      Icon: Youtube,
+      href: "https://www.youtube.com/...",
+      color: "hover:bg-[#FF0000]",
+    },
+    {
+      Icon: Send, // Telegram සඳහා Lucide Send අයිකනය වඩාත් ගැලපේ
+      href: "https://t.me/...",
+      color: "hover:bg-[#26A5E4]",
+    },
+    {
+      Icon: MessageSquare, // WeChat සඳහා
+      href: "#",
+      color: "hover:bg-[#07C160]",
     },
     {
       Icon: MessageCircle,
@@ -163,7 +182,6 @@ export default function InquiryModal({
                 </h2>
 
                 <div className="space-y-2 mb-8">
-                  {/* PLANTING SELECTOR */}
                   <div
                     onClick={() => setPlantChecked(!plantChecked)}
                     className={`text-[10px] font-bold p-2 rounded-lg border transition-all cursor-pointer select-none ${plantChecked ? "bg-green-50 border-green-200 text-green-700" : "bg-gray-50 border-gray-100 text-gray-400"}`}
@@ -173,7 +191,6 @@ export default function InquiryModal({
                       : t("modal.interests.plant_false")}
                   </div>
 
-                  {/* INVESTMENT SELECTOR */}
                   <div
                     onClick={() => setInvestChecked(!investChecked)}
                     className={`text-[10px] font-bold p-2 rounded-lg border transition-all cursor-pointer select-none ${investChecked ? "bg-yellow-50 border-yellow-200 text-yellow-700" : "bg-gray-50 border-gray-100 text-gray-400"}`}
@@ -183,10 +200,9 @@ export default function InquiryModal({
                       : t("modal.interests.invest_false")}
                   </div>
 
-                  {/* MEDIA SELECTOR */}
                   <div
                     onClick={() => setMediaChecked(!mediaChecked)}
-                    className={`text-[10px] font-bold p-2 rounded-lg border transition-all cursor-pointer select-none ${mediaChecked ? t("modal.interests.media_true") : t("modal.interests.media_false")}`}
+                    className={`text-[10px] font-bold p-2 rounded-lg border transition-all cursor-pointer select-none ${mediaChecked ? "bg-blue-50 border-blue-200 text-blue-700" : "bg-gray-50 border-gray-100 text-gray-400"}`}
                   >
                     {mediaChecked
                       ? t("modal.interests.media_true")
@@ -194,7 +210,8 @@ export default function InquiryModal({
                   </div>
                 </div>
 
-                <div className="flex gap-4 mb-8">
+                {/* Social Icons Container - Flex Wrap added for better layout */}
+                <div className="flex flex-wrap gap-4 mb-8">
                   {socials.map(({ Icon, href, color }, i) => (
                     <a
                       key={i}

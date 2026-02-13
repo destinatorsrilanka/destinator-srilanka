@@ -93,10 +93,14 @@ export default function InquiryForm() {
     }
   };
 
+  // මෙතනට YouTube, Telegram සහ WeChat එක් කර ඇත
   const socials = [
     { imgSrc: "/image/fb.webp", href: "https://www.facebook.com/share/..." },
     { imgSrc: "/image/intergram.webp", href: "https://www.instagram.com/..." },
     { imgSrc: "/image/tiktok.png", href: "https://www.tiktok.com/..." },
+    { imgSrc: "/image/youtube-icon.png", href: "https://www.youtube.com/..." }, // YouTube
+    { imgSrc: "/image/telegram-icon.png", href: "https://t.me/..." }, // Telegram
+    { imgSrc: "/image/wechat-icon.png", href: "#" }, // WeChat (සාමාන්‍යයෙන් QR එකක් හෝ id එකක් භාවිතා වේ)
     { imgSrc: "/image/whatsapp.png", href: "https://wa.me/...", isLarge: true },
   ];
 
@@ -190,11 +194,13 @@ export default function InquiryForm() {
                   </span>
                 </div>
 
-                <div className="flex gap-6">
+                <div className="flex flex-wrap gap-6">
                   {socials.map((social, i) => (
                     <a
                       key={i}
                       href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="w-8 h-8 transition-all hover:scale-125"
                     >
                       <img
