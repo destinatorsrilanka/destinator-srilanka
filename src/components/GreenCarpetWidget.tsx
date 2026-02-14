@@ -90,18 +90,6 @@ export default function GreenRibbonPremiumStrip() {
         <div className="h-1 w-24 bg-yellow-400 mx-auto mt-4" />
       </motion.div>
 
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `
-        @keyframes premium-glow {
-          0%, 100% { background-color: #9f1239; box-shadow: 0 0 10px rgba(159, 18, 57, 0.4); }
-          50% { background-color: #ef4444; box-shadow: 0 0 25px rgba(239, 68, 68, 0.7); }
-        }
-        .animate-premium-free { animation: premium-glow 1.8s infinite ease-in-out; }
-      `,
-        }}
-      />
-
       <div className="flex flex-col lg:flex-row justify-center items-center gap-12 lg:gap-5 w-full">
         {/* Success Alert */}
         <AnimatePresence>
@@ -307,19 +295,8 @@ export default function GreenRibbonPremiumStrip() {
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-500" />
               </div>
 
-              {/* FREE Badge */}
-              <div
-                className={`absolute top-0 z-20 ${card.position === "left" ? "left-0" : "right-0"}`}
-              >
-                <div
-                  className={`animate-premium-free text-white text-[12px] lg:text-[14px] font-black px-4 py-1.5 shadow-xl tracking-[0.2em] uppercase 
-                  ${card.position === "left" ? "rounded-br-lg" : "rounded-bl-lg"}`}
-                >
-                  {t("benefits.free_badge")}
-                </div>
-              </div>
-
-              <div className="relative z-10 flex items-center justify-end h-full px-8 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-x-4 group-hover:translate-x-0">
+              {/* ARROW & LINES (Always Visible) */}
+              <div className="relative z-10 flex items-center justify-end h-full px-8 transition-all duration-500">
                 <div className="flex flex-col items-end gap-1.5 mr-4">
                   <div className="h-0.5 w-16 bg-white/70 rounded-full" />
                   <div className="h-0.5 w-10 bg-yellow-400 rounded-full" />
