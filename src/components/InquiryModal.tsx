@@ -11,9 +11,9 @@ import {
   MessageCircle, // WhatsApp සඳහා
   Music2, // TikTok සඳහා
   Youtube, // YouTube සඳහා
-  SendToBack, // Telegram සඳහා (හෝ Lucide Send භාවිතා කළ හැක)
   MessageSquare, // WeChat සඳහා
   X,
+  Check, // Copy success අයිකනය සඳහා
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
@@ -36,11 +36,15 @@ export default function InquiryModal({
   const searchParams = useSearchParams();
   const [status, setStatus] = useState({ type: "", message: "" });
   const [loading, setLoading] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   // Checkbox States
   const [plantChecked, setPlantChecked] = useState(false);
   const [investChecked, setInvestChecked] = useState(false);
   const [mediaChecked, setMediaChecked] = useState(false);
+
+  // --- ඔබේ WeChat ID එක මෙතනට ඇතුළත් කරන්න ---
+  const weChatId = "Destinatorsrilanka84";
 
   useEffect(() => {
     if (isOpen) {
@@ -104,41 +108,54 @@ export default function InquiryModal({
     }
   };
 
-  // යාවත්කාලීන කරන ලද සමාජ මාධ්‍ය ලැයිස්තුව
+  // WeChat Copy Function
+  const handleCopyWeChat = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigator.clipboard.writeText(weChatId);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   const socials = [
     {
       Icon: Facebook,
-      href: "https://www.facebook.com/share/...",
+      href: "https://www.facebook.com/share/18PzZ2dQdw/?mibextid=wwXIfr",
       color: "hover:bg-[#1877F2]",
     },
     {
       Icon: Instagram,
-      href: "https://www.instagram.com/...",
+      href: "https://www.instagram.com/destinator_sri_lanka?igsh=aGxwbzNpaHF3NmNo&utm_source=qr",
       color: "hover:bg-[#E4405F]",
     },
     {
       Icon: Music2,
-      href: "https://www.tiktok.com/...",
+      href: "https://www.tiktok.com/@destinator.lk?_r=1&_d=e24e5bdfi66221&sec_uid=MS4wLjABAAAAo9HUtOwWSVfoVyLRj5S81Y6BLz8JCUKou37P27o0QsuU7oq2RBDAUHNXUPqlMEpt&share_author_id=7104740320396018693&sharer_language=en&source=h5_m&u_code=e24e5mj67a47gl&item_author_type=1&utm_source=copy&tt_from=copy&enable_checksum=1&utm_medium=ios&share_link_id=EA2DD9F4-683C-40ED-976D-0D24E3020AFE&user_id=7104740320396018693&sec_user_id=MS4wLjABAAAAo9HUtOwWSVfoVyLRj5S81Y6BLz8JCUKou37P27o0QsuU7oq2RBDAUHNXUPqlMEpt&social_share_type=4&ug_btm=b8727,b0&utm_campaign=client_share&share_app_id=1233",
       color: "hover:bg-black",
     },
     {
       Icon: Youtube,
-      href: "https://www.youtube.com/...",
+      href: "https://youtube.com/@destinatorsrilanka?si=yz0cy9CkzUYb8azt",
       color: "hover:bg-[#FF0000]",
     },
     {
-      Icon: Send, // Telegram සඳහා Lucide Send අයිකනය වඩාත් ගැලපේ
-      href: "https://t.me/...",
+      Icon: Send,
+      href: "https://t.me/Destinator_Sri_Lanka",
       color: "hover:bg-[#26A5E4]",
     },
     {
-      Icon: MessageSquare, // WeChat සඳහා
+      Icon: X,
+      href: "https://x.com/destinator_?s=21&t=XpGmiFGYxwlYe26tu6QfAA",
+      color: "hover:bg-black",
+    },
+    {
+      Icon: MessageSquare,
       href: "#",
       color: "hover:bg-[#07C160]",
+      isCopy: true,
     },
     {
       Icon: MessageCircle,
-      href: "https://wa.me/...",
+      href: "https://wa.me/message/L7DQU2A2QGEMJ1",
       color: "hover:bg-[#25D366]",
     },
   ];
@@ -147,6 +164,20 @@ export default function InquiryModal({
     <AnimatePresence>
       {isOpen && (
         <div className="fixed inset-0 z-[999] flex items-center justify-center p-4 md:p-6">
+          {/* Copy Alert Popup */}
+          <AnimatePresence>
+            {copied && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                className="fixed bottom-10 left-1/2 -translate-x-1/2 z-[2000] bg-green-600 text-white px-6 py-3 rounded-2xl text-xs font-bold shadow-2xl flex items-center gap-2"
+              >
+                <Check size={16} /> WeChat ID Copied: {weChatId}
+              </motion.div>
+            )}
+          </AnimatePresence>
+
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -210,19 +241,29 @@ export default function InquiryModal({
                   </div>
                 </div>
 
-                {/* Social Icons Container - Flex Wrap added for better layout */}
                 <div className="flex flex-wrap gap-4 mb-8">
-                  {socials.map(({ Icon, href, color }, i) => (
-                    <a
-                      key={i}
-                      href={href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 ${color} hover:text-white transition-all cursor-pointer`}
-                    >
-                      <Icon size={18} />
-                    </a>
-                  ))}
+                  {socials.map(({ Icon, href, color, isCopy }, i) =>
+                    isCopy ? (
+                      <button
+                        key={i}
+                        onClick={handleCopyWeChat}
+                        className={`w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 ${color} hover:text-white transition-all cursor-pointer border-none outline-none`}
+                        title="Copy WeChat ID"
+                      >
+                        <Icon size={18} />
+                      </button>
+                    ) : (
+                      <a
+                        key={i}
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 ${color} hover:text-white transition-all cursor-pointer`}
+                      >
+                        <Icon size={18} />
+                      </a>
+                    ),
+                  )}
                 </div>
               </div>
 

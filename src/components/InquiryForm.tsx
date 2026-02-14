@@ -1,14 +1,16 @@
 "use client";
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Send, Check, Zap } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import "../i18n";
+import Image from "next/image";
 
 export default function InquiryForm() {
   const { t } = useTranslation();
   const [status, setStatus] = useState({ type: "", message: "" });
   const [loading, setLoading] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const [plantInterest, setPlantInterest] = useState(false);
   const [investInterest, setInvestInterest] = useState(false);
@@ -16,6 +18,9 @@ export default function InquiryForm() {
 
   const [arrivalDate, setArrivalDate] = useState("");
   const [departureDate, setDepartureDate] = useState("");
+
+  // --- ඔබේ WeChat ID එක මෙතනට ඇතුළත් කරන්න ---
+  const weChatId = "Destinatorsrilanka84";
 
   useEffect(() => {
     const checkUrl = () => {
@@ -93,18 +98,63 @@ export default function InquiryForm() {
     }
   };
 
+  // WeChat Copy Function
+  const handleCopyWeChat = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigator.clipboard.writeText(weChatId);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   const socials = [
-    { imgSrc: "/image/fb.webp", href: "https://www.facebook.com/share/..." },
-    { imgSrc: "/image/intergram.webp", href: "https://www.instagram.com/..." },
-    { imgSrc: "/image/tiktok.png", href: "https://www.tiktok.com/..." },
-    { imgSrc: "/image/youtube-icon.png", href: "https://www.youtube.com/..." },
-    { imgSrc: "/image/telegram.webp", href: "https://t.me/..." },
-    { imgSrc: "/image/wechat-icon.png", href: "#" },
-    { imgSrc: "/image/whatsapp.png", href: "https://wa.me/...", isLarge: true },
+    {
+      imgSrc: "/image/fb.webp",
+      href: "https://www.facebook.com/share/18PzZ2dQdw/?mibextid=wwXIfr",
+    },
+    {
+      imgSrc: "/image/intergram.webp",
+      href: "https://www.instagram.com/destinator_sri_lanka?igsh=aGxwbzNpaHF3NmNo&utm_source=qr",
+    },
+    {
+      imgSrc: "/image/tiktok.png",
+      href: "https://www.tiktok.com/@destinator.lk?_r=1&_d=e24e5bdfi66221&sec_uid=MS4wLjABAAAAo9HUtOwWSVfoVyLRj5S81Y6BLz8JCUKou37P27o0QsuU7oq2RBDAUHNXUPqlMEpt&share_author_id=7104740320396018693&sharer_language=en&source=h5_m&u_code=e24e5mj67a47gl&item_author_type=1&utm_source=copy&tt_from=copy&enable_checksum=1&utm_medium=ios&share_link_id=EA2DD9F4-683C-40ED-976D-0D24E3020AFE&user_id=7104740320396018693&sec_user_id=MS4wLjABAAAAo9HUtOwWSVfoVyLRj5S81Y6BLz8JCUKou37P27o0QsuU7oq2RBDAUHNXUPqlMEpt&social_share_type=4&ug_btm=b8727,b0&utm_campaign=client_share&share_app_id=1233",
+    },
+    {
+      imgSrc: "/image/youtube-icon.png",
+      href: "https://youtube.com/@destinatorsrilanka?si=yz0cy9CkzUYb8azt",
+    },
+    {
+      imgSrc: "/image/Telegram.webp",
+      href: "https://t.me/Destinator_Sri_Lanka",
+    },
+    { imgSrc: "/image/wechat-icon.png", href: "#", isCopy: true },
+    {
+      imgSrc: "/image/whatsapp.png",
+      href: "https://wa.me/message/L7DQU2A2QGEMJ1",
+      isLarge: true,
+    },
+    {
+      imgSrc: "/image/X-ICON.png",
+      href: "https://x.com/destinator_?s=21&t=XpGmiFGYxwlYe26tu6QfAA",
+    },
   ];
 
   return (
     <section id="contact" className="py-24 bg-white px-6">
+      {/* Copy Alert Popup */}
+      <AnimatePresence>
+        {copied && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            className="fixed bottom-10 right-10 z-[2000] bg-green-600 text-white px-6 py-3 rounded-2xl text-xs font-bold shadow-2xl flex items-center gap-2"
+          >
+            <Check size={16} /> WeChat ID Copied: {weChatId}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
           {/* LEFT SIDE (INFO) */}
@@ -127,14 +177,16 @@ export default function InquiryForm() {
 
               {/* INTEREST SELECTORS */}
               <div className="flex gap-4 mb-6 mt-8">
+                {/* Plant Interest */}
                 <div
                   onClick={() => setPlantInterest(!plantInterest)}
                   className={`relative w-24 h-24 rounded-2xl overflow-hidden cursor-pointer border-2 transition-all ${plantInterest ? "border-green-500 scale-105 shadow-md" : "border-transparent hover:border-gray-200"}`}
                 >
-                  <img
+                  <Image
                     src="/image/form-plant.jpeg"
                     alt="Forest"
-                    className="w-full h-full object-cover"
+                    fill
+                    className="object-cover"
                   />
                   {plantInterest && (
                     <div className="absolute inset-0 bg-green-500/20 flex items-center justify-center">
@@ -145,14 +197,16 @@ export default function InquiryForm() {
                   )}
                 </div>
 
+                {/* Invest Interest */}
                 <div
                   onClick={() => setInvestInterest(!investInterest)}
                   className={`relative w-24 h-24 rounded-2xl overflow-hidden cursor-pointer border-2 transition-all ${investInterest ? "border-yellow-500 scale-105 shadow-md" : "border-transparent hover:border-gray-200"}`}
                 >
-                  <img
+                  <Image
                     src="/image/form-invest.jpeg"
                     alt="Investment"
-                    className="w-full h-full object-cover"
+                    fill
+                    className="object-cover"
                   />
                   {investInterest && (
                     <div className="absolute inset-0 bg-yellow-500/20 flex items-center justify-center">
@@ -163,14 +217,16 @@ export default function InquiryForm() {
                   )}
                 </div>
 
+                {/* Media Interest */}
                 <div
                   onClick={() => setMediaInterest(!mediaInterest)}
                   className={`relative w-24 h-24 rounded-2xl overflow-hidden cursor-pointer border-2 transition-all ${mediaInterest ? "border-blue-500 scale-105 shadow-md" : "border-transparent hover:border-gray-200"}`}
                 >
-                  <img
+                  <Image
                     src="/image/digital-camera.jpg"
                     alt="Media"
-                    className="w-full h-full object-cover"
+                    fill
+                    className="object-cover"
                   />
                   {mediaInterest && (
                     <div className="absolute inset-0 bg-blue-500/20 flex items-center justify-center">
@@ -193,25 +249,37 @@ export default function InquiryForm() {
                   </span>
                 </div>
 
-                {/* අයිකන් පේළිය මෙහි සකසා ඇත */}
                 <div className="flex flex-wrap items-center gap-6">
-                  {socials.map((social, i) => (
-                    <a
-                      key={i}
-                      href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-8 h-8 flex items-center justify-center transition-all hover:scale-125"
-                    >
-                      <img
-                        src={social.imgSrc}
-                        alt="social"
-                        className={`w-full h-full object-contain ${
-                          social.isLarge ? "scale-125" : "scale-100"
-                        }`}
-                      />
-                    </a>
-                  ))}
+                  {socials.map((social, i) =>
+                    social.isCopy ? (
+                      <button
+                        key={i}
+                        onClick={handleCopyWeChat}
+                        className="w-8 h-8 flex items-center justify-center transition-all hover:scale-125 bg-transparent border-none outline-none cursor-pointer"
+                        title="Copy WeChat ID"
+                      >
+                        <img
+                          src={social.imgSrc}
+                          alt="wechat"
+                          className="w-full h-full object-contain"
+                        />
+                      </button>
+                    ) : (
+                      <a
+                        key={i}
+                        href={social.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-8 h-8 flex items-center justify-center transition-all hover:scale-125"
+                      >
+                        <img
+                          src={social.imgSrc}
+                          alt="social"
+                          className={`w-full h-full object-contain ${social.isLarge ? "scale-125" : "scale-100"}`}
+                        />
+                      </a>
+                    ),
+                  )}
                 </div>
               </div>
             </motion.div>
@@ -221,6 +289,7 @@ export default function InquiryForm() {
           <div className="lg:col-span-7">
             <div className="bg-white p-8 md:p-10 rounded-[2.5rem] shadow-sm border border-gray-50">
               <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Form fields remain exactly same as your code */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="flex flex-col">
                     <label className="text-black font-bold text-[10px] uppercase mb-2">
@@ -313,36 +382,21 @@ export default function InquiryForm() {
                     {t("form.labels.transport")}
                   </label>
                   <div className="flex gap-4">
-                    <label className="flex items-center gap-2 text-xs font-bold text-gray-600 cursor-pointer">
-                      <input
-                        type="radio"
-                        name="transport"
-                        value="Car"
-                        required
-                        className="accent-yellow-500"
-                      />{" "}
-                      {t("form.transport_modes.car")}
-                    </label>
-                    <label className="flex items-center gap-2 text-xs font-bold text-gray-600 cursor-pointer">
-                      <input
-                        type="radio"
-                        name="transport"
-                        value="Van"
-                        required
-                        className="accent-yellow-500"
-                      />{" "}
-                      {t("form.transport_modes.van")}
-                    </label>
-                    <label className="flex items-center gap-2 text-xs font-bold text-gray-600 cursor-pointer">
-                      <input
-                        type="radio"
-                        name="transport"
-                        value="Bus"
-                        required
-                        className="accent-yellow-500"
-                      />{" "}
-                      {t("form.transport_modes.bus")}
-                    </label>
+                    {["Car", "Van", "Bus"].map((mode) => (
+                      <label
+                        key={mode}
+                        className="flex items-center gap-2 text-xs font-bold text-gray-600 cursor-pointer"
+                      >
+                        <input
+                          type="radio"
+                          name="transport"
+                          value={mode}
+                          required
+                          className="accent-yellow-500"
+                        />{" "}
+                        {t(`form.transport_modes.${mode.toLowerCase()}`)}
+                      </label>
+                    ))}
                   </div>
                 </div>
 
