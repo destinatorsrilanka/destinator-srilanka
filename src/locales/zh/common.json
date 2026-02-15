@@ -284,8 +284,8 @@
     }
   },
   "eco": {
-    "title_main": "生态",
-    "title_sub": "旅游",
+    "title_main": "生态旅游",
+    "title_sub": "绿色计划",
     "categories": {
       "nature_reserve": "严格自然保护区",
       "conservation": "保育林",
