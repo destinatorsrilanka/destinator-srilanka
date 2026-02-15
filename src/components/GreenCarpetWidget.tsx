@@ -122,7 +122,11 @@ export default function GreenRibbonPremiumStrip() {
                   animate={{ opacity: 1, y: -10, x: "-50%" }}
                   exit={{ opacity: 0, y: 15, x: "-50%" }}
                   className={`absolute bottom-full left-1/2 z-[100] overflow-hidden border-4 border-white shadow-[0_30px_60px_rgba(0,0,0,0.7)] rounded-none bg-white mb-4 
-                  ${card.id === "invest" ? "w-[90vw] max-w-[450px] lg:w-[500px]" : "w-[85vw] max-w-[350px] lg:w-[400px]"}`}
+                  ${
+                    card.id === "invest"
+                      ? "w-[90vw] max-w-[450px] lg:w-[500px]"
+                      : "w-[85vw] max-w-[350px] lg:w-[400px]"
+                  }`}
                 >
                   {/* INVESTMENT POPUP */}
                   {card.id === "invest" ? (
@@ -295,16 +299,28 @@ export default function GreenRibbonPremiumStrip() {
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-500" />
               </div>
 
-              {/* ARROW & LINES (Always Visible) */}
-              <div className="relative z-10 flex items-center justify-end h-full px-8 transition-all duration-500">
-                <div className="flex flex-col items-end gap-1.5 mr-4">
-                  <div className="h-0.5 w-16 bg-white/70 rounded-full" />
-                  <div className="h-0.5 w-10 bg-yellow-400 rounded-full" />
-                </div>
-                <div className="p-2 bg-yellow-400 rounded-full shadow-[0_0_20px_rgba(250,204,21,0.6)]">
-                  <ChevronRight size={18} className="text-black" />
+              {/* TRIPLE CHEVRON ANIMATION - Adjusted to Right & Resized */}
+              <div className="relative z-10 flex items-center justify-end h-full px-6">
+                <div className="flex items-center justify-center -space-x-3">
+                  {[0, 1, 2].map((i) => (
+                    <motion.div
+                      key={i}
+                      animate={{
+                        opacity: [0.3, 1, 0.3],
+                        x: [0, 6, 0],
+                      }}
+                      transition={{
+                        repeat: Infinity,
+                        duration: 1.2,
+                        delay: i * 0.15,
+                      }}
+                    >
+                      <ChevronRight className="text-white w-8 h-8 stroke-[4px] drop-shadow-[0_0_8px_rgba(255,255,255,0.6)]" />
+                    </motion.div>
+                  ))}
                 </div>
               </div>
+
               <div className="absolute bottom-0 left-0 h-[3px] w-full bg-yellow-400 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 shadow-[0_0_15px_#facc15]" />
             </div>
           </div>

@@ -58,16 +58,15 @@ export default function HighlandWaterLine() {
           initial={{ scale: 0, opacity: 0 }}
           whileInView={{ scale: 1, opacity: 1 }}
           transition={{ delay: 0.6, duration: 0.6 }}
-          className="absolute w-2 h-2 bg-yellow-400 rounded-full shadow-[0_0_15px_#eab308,0_0_30px_#eab308]"
+          className="absolute w-2 h-2 bg-yellow-400 rounded-full shadow-[0_0_15px_#eab308,0_0_30_rgba(234,179,8,1)]"
         />
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="relative border border-white/5 overflow-hidden p-2 md:p-4 bg-white/5 rounded-sm">
-          {/* READ MORE BUTTON - Key: highland.read_more */}
-          <div className="absolute top-4 right-4 z-20">
+          {/* DESKTOP READ MORE BUTTON - Stays in original position */}
+          <div className="hidden lg:block absolute top-4 right-4 z-20">
             <button
-              id="read-more-btn"
               onClick={(e) => {
                 e.stopPropagation();
                 setShowInfo(true);
@@ -79,6 +78,7 @@ export default function HighlandWaterLine() {
           </div>
 
           <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12 relative z-10">
+            {/* VIDEO CONTAINER */}
             <div className="relative w-full lg:w-[45%] h-[180px] md:h-[230px] overflow-hidden rounded-sm border border-white/10 shadow-2xl bg-black shrink-0">
               <div className="absolute inset-0 z-0">
                 <video
@@ -87,11 +87,27 @@ export default function HighlandWaterLine() {
                   muted
                   loop
                   playsInline
+                  webkit-playsinline="true"
+                  disablePictureInPicture
+                  controls={false}
                   className="w-full h-full object-cover opacity-80"
                 >
                   <source src="/image/lake.mp4" type="video/mp4" />
                 </video>
                 <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
+              </div>
+
+              {/* MOBILE READ MORE BUTTON - Centered over video */}
+              <div className="lg:hidden absolute inset-0 flex items-center justify-center z-20">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowInfo(true);
+                  }}
+                  className="text-[10px] font-bold text-white border border-yellow-500/50 px-4 py-1.5 hover:bg-yellow-500 hover:text-black transition-all backdrop-blur-sm shadow-lg shadow-yellow-900/20"
+                >
+                  {t("highland.read_more")}
+                </button>
               </div>
             </div>
 
@@ -101,13 +117,10 @@ export default function HighlandWaterLine() {
                 whileInView={{ opacity: 1, x: 0 }}
                 className="text-white text-xl md:text-2xl font-black tracking-tighter uppercase mb-4 leading-tight"
               >
-                {/* Key: highland.title */}
                 {t("highland.title")} <br className="hidden md:block" />
-                {/* Key: highland.lake_name */}
                 <span className="text-yellow-500">
                   {t("highland.lake_name")}
                 </span>{" "}
-                {/* Key: highland.location */}
                 <span className="text-sm block font-bold tracking-[0.2em] text-white/70 mt-1">
                   {t("highland.location")}
                 </span>
@@ -118,7 +131,6 @@ export default function HighlandWaterLine() {
                 whileInView={{ opacity: 1 }}
                 className="text-white/80 text-[10px] md:text-xs font-bold tracking-[0.15em] uppercase leading-relaxed max-w-xl lg:mx-0 mx-auto mb-6"
               >
-                {/* Key: highland.subtitle */}
                 {t("highland.subtitle")}
               </motion.p>
 
@@ -169,12 +181,10 @@ export default function HighlandWaterLine() {
 
                 <div className="w-full">
                   <h3 className="text-black font-black text-xl md:text-2xl mb-3 tracking-tighter uppercase border-b-2 border-yellow-500 inline-block">
-                    {/* Key: highland.overlay_title */}
                     {t("highland.overlay_title")}
                   </h3>
 
                   <p className="text-gray-800 text-xs md:text-sm leading-relaxed mb-6 font-medium">
-                    {/* Key: highland.overlay_desc */}
                     {t("highland.overlay_desc")}
                   </p>
                 </div>

@@ -61,6 +61,9 @@ const EcoTourism: React.FC = () => {
               loop
               muted
               playsInline
+              webkit-playsinline="true"
+              disablePictureInPicture
+              controls={false}
               className="w-full h-full object-cover opacity-100"
             >
               <source src="/image/eco-bg.MP4" type="video/mp4" />
@@ -75,7 +78,7 @@ const EcoTourism: React.FC = () => {
               viewport={{ once: true }}
               className="flex flex-col items-center"
             >
-              <h2 className="text-white text-2xl md:text-4xl font-black tracking-[0.05em] uppercase leading-tight drop-shadow-2xl italic">
+              <h2 className="text-white text-2xl md:text-4xl font-black tracking-[0.05em] uppercase leading-tight drop-shadow-2xl ">
                 {displayTitleMain} | {displayTitleSub}
               </h2>
 
