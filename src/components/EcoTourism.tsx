@@ -63,7 +63,7 @@ const EcoTourism: React.FC = () => {
               playsInline
               className="w-full h-full object-cover opacity-100"
             >
-              <source src="/image/eco-bg.mp4" type="video/mp4" />
+              <source src="/image/eco-bg.MP4" type="video/mp4" />
             </video>
             <div className="absolute inset-0 bg-black/20" />
           </div>
