@@ -121,7 +121,7 @@ export default function InquiryForm() {
     },
     {
       imgSrc: "/image/youtube-icon.png",
-      href: "https://youtube.com/@destinatorsrilanka?si=yz0cy9CkzUYb8azt",
+      href: "https://youtube.com/@destinator_sri_lanka?si=l0ylz9DC8fIwvCi9",
     },
     {
       imgSrc: "/image/Telegram.webp",

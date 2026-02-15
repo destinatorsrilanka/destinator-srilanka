@@ -102,7 +102,7 @@ export default function Footer() {
     { Icon: MessageSquare, href: "#", isCopy: true }, // WeChat
     {
       Icon: Youtube,
-      href: "https://youtube.com/@destinatorsrilanka?si=yz0cy9CkzUYb8azt",
+      href: "https://youtube.com/@destinator_sri_lanka?si=l0ylz9DC8fIwvCi9",
       isCopy: false,
     },
   ];
