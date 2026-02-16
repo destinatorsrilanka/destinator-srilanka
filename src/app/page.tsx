@@ -15,7 +15,7 @@ import GreatCivilizationStrip from "@/components/GreatCivilizationStrip";
 import HighlandWaters from "@/components/HighlandWaters";
 import AgroTourism from "@/components/AgroTourism";
 import EcoTourism from "@/components/EcoTourism";
-import "../i18n";
+import TripAdvisorReviews from "@/components/TripAdvisorReviews";
 
 export default function Home() {
   return (
@@ -51,6 +51,7 @@ export default function Home() {
       <section id="contact">
         <InquiryForm />
       </section>
+      <TripAdvisorReviews />
 
       <Footer />
     </>
