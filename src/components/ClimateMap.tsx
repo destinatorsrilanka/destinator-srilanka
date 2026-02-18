@@ -218,7 +218,7 @@ export default function SriLankaClimateSection() {
                         x="-15"
                         y="-18"
                         width="30"
-                        height="15"
+                        height="20"
                         className="overflow-visible"
                       >
                         <div className="flex flex-col items-center">
@@ -250,13 +250,13 @@ export default function SriLankaClimateSection() {
                   <circle cx={zone.x} cy={zone.y} r="1.5" fill={zone.color} />
                   <foreignObject
                     x={zone.x + 3}
-                    y={zone.y - 3}
-                    width="40"
-                    height="10"
+                    y={zone.y - 4}
+                    width="60"
+                    height="12"
                     className="overflow-visible"
                   >
                     <div
-                      className="text-[2.8px] font-black uppercase tracking-tighter whitespace-nowrap drop-shadow-md"
+                      className="text-[2.8px] font-black uppercase tracking-tighter whitespace-nowrap drop-shadow-md flex items-center h-full"
                       style={{ color: zone.color }}
                     >
                       {t(`climate.zones.${zone.id}.name`)}
