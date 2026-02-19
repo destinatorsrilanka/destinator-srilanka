@@ -1,16 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  Car,
-  CloudRain,
-  Sun,
-  CloudSun,
-  Flame,
-  Navigation,
-  ArrowRight,
-  Wind,
-} from "lucide-react";
+import { Car, Navigation, ArrowRight, Wind } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import "../i18n";
 
@@ -39,7 +30,6 @@ export default function SriLankaClimateSection() {
   const [endPoint, setEndPoint] = useState<string>("");
   const [isAnimating, setIsAnimating] = useState(false);
 
-  // Climate Zones Data Structure using JSON Keys
   const climateZones = [
     { id: "wet", x: 35, y: 75, color: "#059669", temp: "25-30°C" },
     { id: "intermediate", x: 52, y: 58, color: "#10B981", temp: "24-28°C" },
@@ -67,12 +57,6 @@ export default function SriLankaClimateSection() {
 
   return (
     <section className="bg-[#050505] py-16 px-6 relative overflow-hidden flex flex-col items-center min-h-[750px] justify-center">
-      <motion.div
-        animate={{ x: [0, 40, 0], y: [0, -30, 0], scale: [1, 1.1, 1] }}
-        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-        className="absolute top-10 left-1/4 w-[400px] h-[400px] bg-yellow-500/10 blur-[100px] rounded-full pointer-events-none z-0"
-      />
-
       <YellowSeparator className="mb-16" />
 
       {/* Title Section */}
@@ -106,7 +90,7 @@ export default function SriLankaClimateSection() {
                   setStartPoint(e.target.value);
                   setIsAnimating(false);
                 }}
-                className="w-full bg-black/60 border border-white/10 text-white p-4 rounded-2xl text-xs outline-none focus:border-yellow-500 appearance-none transition-all cursor-pointer"
+                className="w-full bg-black/60 border border-white/10 text-white p-4 rounded-2xl text-xs focus:border-yellow-500 outline-none"
               >
                 <option value="">{t("climate.start_placeholder")}</option>
                 {climateZones.map((z) => (
@@ -115,14 +99,13 @@ export default function SriLankaClimateSection() {
                   </option>
                 ))}
               </select>
-
               <select
                 value={endPoint}
                 onChange={(e) => {
                   setEndPoint(e.target.value);
                   setIsAnimating(false);
                 }}
-                className="w-full bg-black/60 border border-white/10 text-white p-4 rounded-2xl text-xs outline-none focus:border-yellow-500 appearance-none transition-all cursor-pointer"
+                className="w-full bg-black/60 border border-white/10 text-white p-4 rounded-2xl text-xs focus:border-yellow-500 outline-none"
               >
                 <option value="">{t("climate.dest_placeholder")}</option>
                 {climateZones.map((z) => (
@@ -131,11 +114,10 @@ export default function SriLankaClimateSection() {
                   </option>
                 ))}
               </select>
-
               <button
                 onClick={handleGo}
                 disabled={!startPoint || !endPoint || startPoint === endPoint}
-                className="w-full bg-yellow-500 hover:bg-yellow-400 disabled:bg-neutral-800 text-black font-black uppercase text-[10px] py-4 rounded-2xl transition-all flex items-center justify-center gap-2 shadow-lg"
+                className="w-full bg-yellow-500 hover:bg-yellow-400 disabled:bg-neutral-800 text-black font-black uppercase text-[10px] py-4 rounded-2xl transition-all flex items-center justify-center gap-2"
               >
                 {t("climate.btn_start")} <ArrowRight size={16} />
               </button>
@@ -156,7 +138,7 @@ export default function SriLankaClimateSection() {
                   <h3 className="text-white text-xl font-black uppercase mb-2">
                     {t(`climate.zones.${endZone.id}.name`)}
                   </h3>
-                  <p className="text-gray-400 text-[11px] leading-relaxed mb-4">
+                  <p className="text-gray-400 text-[11px] mb-4">
                     {t(`climate.zones.${endZone.id}.desc`)}
                   </p>
                   <div className="grid grid-cols-2 gap-3">
@@ -183,17 +165,20 @@ export default function SriLankaClimateSection() {
           </div>
         </div>
 
-        {/* RIGHT: MAP */}
-        <div className="w-full flex justify-center items-center">
-          <div className="relative w-full max-w-[500px] aspect-square rounded-full border border-white/15 shadow-[0_0_50px_rgba(255,255,255,0.03)] flex items-center justify-center overflow-visible bg-white/[0.01]">
+        {/* RIGHT: MAP SECTION */}
+        <div className="w-full flex justify-center items-center relative">
+          <div className="relative w-full max-w-[500px] aspect-square flex items-center justify-center">
+            {/* Map Image */}
             <img
               src="/image/climet.png"
               alt="Sri Lanka Map"
-              className="w-full h-full scale-[1.15] object-contain opacity-30 pointer-events-none z-10"
+              className="w-[115%] h-[115%] object-contain opacity-30 pointer-events-none absolute z-10"
             />
+
+            {/* SVG Overlay for Lines and Car ONLY */}
             <svg
               viewBox="0 0 100 100"
-              className="absolute inset-0 w-full h-full overflow-visible z-30 pointer-events-none"
+              className="absolute inset-0 w-full h-full overflow-visible z-20 pointer-events-none"
             >
               <AnimatePresence>
                 {isAnimating && startZone && endZone && (
@@ -227,9 +212,10 @@ export default function SriLankaClimateSection() {
                               {calculateDistance()} KM
                             </p>
                           </div>
-                          <div className="w-0 h-0 border-l-[1.5px] border-l-transparent border-r-[1.5px] border-r-transparent border-t-[2.5px] border-t-yellow-500" />
+                          <div className="w-0 h-0 border-l-[1.5px] border-r-[1.5px] border-t-[2.5px] border-t-yellow-500" />
                         </div>
                       </foreignObject>
+                      <circle r="2" fill="white" />
                       <foreignObject x="-4" y="-4" width="8" height="8">
                         <div className="w-full h-full flex items-center justify-center bg-white rounded-full shadow-lg border-[0.3px] border-black/10">
                           <Car
@@ -243,53 +229,32 @@ export default function SriLankaClimateSection() {
                   </g>
                 )}
               </AnimatePresence>
-
-              {/* Climate Zone Points on Map - Updated for iPhone Visibility */}
-              {climateZones.map((zone) => (
-                <g key={zone.id}>
-                  <circle cx={zone.x} cy={zone.y} r="1.5" fill={zone.color} />
-                  <foreignObject
-                    x={zone.x + 2}
-                    y={zone.y - 4}
-                    width="100"
-                    height="20"
-                    className="overflow-visible"
-                  >
-                    <div
-                      className="text-[3px] font-black uppercase tracking-tighter whitespace-nowrap drop-shadow-md flex items-center h-full"
-                      style={{
-                        color: zone.color,
-                        WebkitFontSmoothing: "antialiased",
-                        lineHeight: "1",
-                      }}
-                    >
-                      {t(`climate.zones.${zone.id}.name`)}
-                    </div>
-                  </foreignObject>
-                </g>
-              ))}
             </svg>
+
+            {/* HTML LABELS - iPhone වල ලස්සනට පෙනෙන්න */}
+            <div className="absolute inset-0 w-full h-full z-30 pointer-events-none">
+              {climateZones.map((zone) => (
+                <div
+                  key={zone.id}
+                  className="absolute flex items-center gap-2"
+                  style={{ left: `${zone.x}%`, top: `${zone.y}%` }}
+                >
+                  <div
+                    className="w-2 h-2 rounded-full shadow-[0_0_8px_rgba(0,0,0,0.5)]"
+                    style={{ backgroundColor: zone.color }}
+                  />
+                  <span
+                    className="text-[10px] md:text-[12px] font-black uppercase tracking-tighter whitespace-nowrap drop-shadow-lg"
+                    style={{ color: zone.color }}
+                  >
+                    {t(`climate.zones.${zone.id}.name`)}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
-
-      {/* FOOTER DESCRIPTION */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-        className="max-w-3xl mt-20 px-6 text-center z-10"
-      >
-        <p className="text-white/80 text-sm md:text-lg leading-relaxed font-medium">
-          {t("climate.footer_text")}
-        </p>
-        <div className="mt-4 flex justify-center gap-1">
-          <div className="w-8 h-1 bg-yellow-500/20 rounded-full" />
-          <div className="w-12 h-1 bg-yellow-500 rounded-full" />
-          <div className="w-8 h-1 bg-yellow-500/20 rounded-full" />
-        </div>
-      </motion.div>
-
       <YellowSeparator className="mt-16" />
     </section>
   );
