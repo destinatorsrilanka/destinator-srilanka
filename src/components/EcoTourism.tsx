@@ -75,7 +75,10 @@ const EcoTourism: React.FC = () => {
               loop
               muted
               playsInline
-              {...{ "webkit-playsinline": "true" }} // TypeScript Error එක එන්නේ නැතිවෙන්න මේ විදිහට දාන්න
+              {...{
+                "webkit-playsinline": "true",
+                playsinline: "true",
+              }} // TypeScript error එක මගහැරීමට සහ iPhone browsers වල autoplay ස්ථාවර කිරීමට
               preload="auto"
               disablePictureInPicture
               controls={false}

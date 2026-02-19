@@ -101,10 +101,12 @@ export default function HighlandWaterLine() {
                   muted
                   loop
                   playsInline
-                  {...{ "webkit-playsinline": "true" }} // TypeScript Error එක මගහැරීමට මේ ක්‍රමය භාවිතා කරන්න
+                  {...{
+                    "webkit-playsinline": "true",
+                    playsinline: "true",
+                  }}
                   preload="auto"
                   disablePictureInPicture
-                  controls={false}
                   className="w-full h-full object-cover opacity-80"
                 >
                   <source src="/image/lake.mp4" type="video/mp4" />
