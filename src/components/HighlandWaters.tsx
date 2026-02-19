@@ -28,6 +28,20 @@ export default function HighlandWaterLine() {
     "image/lake4.jpeg",
   ];
 
+  // Instagram/iOS Autoplay Fix
+  useEffect(() => {
+    if (videoRef.current) {
+      // වීඩියෝව Load වූ පසු Force-play කිරීමට උත්සාහ කරයි
+      const playPromise = videoRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // බ්‍රවුසරය මඟින් බ්ලොක් කළහොත් නැවත උත්සාහ කරයි
+          videoRef.current?.play();
+        });
+      }
+    }
+  }, []);
+
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (infoRef.current && !infoRef.current.contains(event.target as Node)) {
@@ -64,7 +78,7 @@ export default function HighlandWaterLine() {
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="relative border border-white/5 overflow-hidden p-2 md:p-4 bg-white/5 rounded-sm">
-          {/* DESKTOP READ MORE BUTTON - Stays in original position */}
+          {/* DESKTOP READ MORE BUTTON */}
           <div className="hidden lg:block absolute top-4 right-4 z-20">
             <button
               onClick={(e) => {
@@ -87,7 +101,8 @@ export default function HighlandWaterLine() {
                   muted
                   loop
                   playsInline
-                  webkit-playsinline="true"
+                  {...{ "webkit-playsinline": "true" }} // TypeScript Error එක මගහැරීමට මේ ක්‍රමය භාවිතා කරන්න
+                  preload="auto"
                   disablePictureInPicture
                   controls={false}
                   className="w-full h-full object-cover opacity-80"
@@ -97,7 +112,7 @@ export default function HighlandWaterLine() {
                 <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
               </div>
 
-              {/* MOBILE READ MORE BUTTON - Centered over video */}
+              {/* MOBILE READ MORE BUTTON */}
               <div className="lg:hidden absolute inset-0 flex items-center justify-center z-20">
                 <button
                   onClick={(e) => {

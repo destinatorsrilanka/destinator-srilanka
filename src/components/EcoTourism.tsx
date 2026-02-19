@@ -10,6 +10,7 @@ const EcoTourism: React.FC = () => {
   const { t } = useTranslation();
   const [showInfo, setShowInfo] = useState(false);
   const infoRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null); // වීඩියෝව සඳහා ref එකක් එක් කළා
 
   // Fallback අගයන් සහිතව මාතෘකා සකසා ගැනීම
   const displayTitleMain =
@@ -30,6 +31,18 @@ const EcoTourism: React.FC = () => {
     t("eco.categories.sanctuaries"),
     t("eco.categories.national_parks"),
   ];
+
+  // Instagram/iOS Autoplay Fix
+  useEffect(() => {
+    if (videoRef.current) {
+      const playPromise = videoRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          videoRef.current?.play();
+        });
+      }
+    }
+  }, []);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -57,11 +70,13 @@ const EcoTourism: React.FC = () => {
         <div className="relative border border-white/10 overflow-hidden flex flex-col min-h-[250px] md:min-h-[300px] rounded-sm">
           <div className="absolute inset-0 z-0">
             <video
+              ref={videoRef}
               autoPlay
               loop
               muted
               playsInline
-              webkit-playsinline="true"
+              {...{ "webkit-playsinline": "true" }} // TypeScript Error එක එන්නේ නැතිවෙන්න මේ විදිහට දාන්න
+              preload="auto"
               disablePictureInPicture
               controls={false}
               className="w-full h-full object-cover opacity-100"
