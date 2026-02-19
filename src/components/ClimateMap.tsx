@@ -244,20 +244,24 @@ export default function SriLankaClimateSection() {
                 )}
               </AnimatePresence>
 
-              {/* Climate Zone Points on Map */}
+              {/* Climate Zone Points on Map - Updated for iPhone Visibility */}
               {climateZones.map((zone) => (
                 <g key={zone.id}>
                   <circle cx={zone.x} cy={zone.y} r="1.5" fill={zone.color} />
                   <foreignObject
-                    x={zone.x + 3}
+                    x={zone.x + 2}
                     y={zone.y - 4}
-                    width="60"
-                    height="12"
+                    width="100"
+                    height="20"
                     className="overflow-visible"
                   >
                     <div
-                      className="text-[2.8px] font-black uppercase tracking-tighter whitespace-nowrap drop-shadow-md flex items-center h-full"
-                      style={{ color: zone.color }}
+                      className="text-[3px] font-black uppercase tracking-tighter whitespace-nowrap drop-shadow-md flex items-center h-full"
+                      style={{
+                        color: zone.color,
+                        WebkitFontSmoothing: "antialiased",
+                        lineHeight: "1",
+                      }}
                     >
                       {t(`climate.zones.${zone.id}.name`)}
                     </div>
