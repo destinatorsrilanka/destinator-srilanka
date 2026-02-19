@@ -59,7 +59,6 @@ export default function SriLankaClimateSection() {
     <section className="bg-[#050505] py-16 px-6 relative overflow-hidden flex flex-col items-center min-h-[750px] justify-center">
       <YellowSeparator className="mb-16" />
 
-      {/* Title Section */}
       <div className="text-center mb-10 z-10">
         <div className="flex items-center justify-center gap-2 mb-1">
           <span className="w-1.5 h-1.5 rounded-full bg-yellow-500" />
@@ -124,7 +123,6 @@ export default function SriLankaClimateSection() {
             </div>
           </div>
 
-          {/* Climate Profile Info */}
           <div className="min-h-[180px]">
             <AnimatePresence mode="wait">
               {endZone ? (
@@ -167,7 +165,7 @@ export default function SriLankaClimateSection() {
 
         {/* RIGHT: MAP SECTION */}
         <div className="w-full flex justify-center items-center relative">
-          <div className="relative w-full max-w-[500px] aspect-square flex items-center justify-center">
+          <div className="relative w-full max-w-[500px] aspect-square flex items-center justify-center overflow-visible">
             {/* Map Image */}
             <img
               src="/image/climet.png"
@@ -175,7 +173,7 @@ export default function SriLankaClimateSection() {
               className="w-[115%] h-[115%] object-contain opacity-30 pointer-events-none absolute z-10"
             />
 
-            {/* SVG Overlay for Lines and Car ONLY */}
+            {/* SVG: Original Smooth Animation for Car & Lines */}
             <svg
               viewBox="0 0 100 100"
               className="absolute inset-0 w-full h-full overflow-visible z-20 pointer-events-none"
@@ -215,7 +213,6 @@ export default function SriLankaClimateSection() {
                           <div className="w-0 h-0 border-l-[1.5px] border-r-[1.5px] border-t-[2.5px] border-t-yellow-500" />
                         </div>
                       </foreignObject>
-                      <circle r="2" fill="white" />
                       <foreignObject x="-4" y="-4" width="8" height="8">
                         <div className="w-full h-full flex items-center justify-center bg-white rounded-full shadow-lg border-[0.3px] border-black/10">
                           <Car
@@ -231,20 +228,24 @@ export default function SriLankaClimateSection() {
               </AnimatePresence>
             </svg>
 
-            {/* HTML LABELS - iPhone වල ලස්සනට පෙනෙන්න */}
+            {/* NEW LABELS: Fixed for iPhone Text Clipping */}
             <div className="absolute inset-0 w-full h-full z-30 pointer-events-none">
               {climateZones.map((zone) => (
                 <div
                   key={zone.id}
-                  className="absolute flex items-center gap-2"
-                  style={{ left: `${zone.x}%`, top: `${zone.y}%` }}
+                  className="absolute flex items-center"
+                  style={{
+                    left: `${zone.x}%`,
+                    top: `${zone.y}%`,
+                    transform: "translate(-4px, -4px)", // Center dot with zone coordinate
+                  }}
                 >
                   <div
-                    className="w-2 h-2 rounded-full shadow-[0_0_8px_rgba(0,0,0,0.5)]"
+                    className="w-2 h-2 rounded-full shadow-[0_0_8px_rgba(0,0,0,0.5)] flex-shrink-0"
                     style={{ backgroundColor: zone.color }}
                   />
                   <span
-                    className="text-[10px] md:text-[12px] font-black uppercase tracking-tighter whitespace-nowrap drop-shadow-lg"
+                    className="ml-2 text-[10px] md:text-[12px] font-black uppercase tracking-tighter whitespace-nowrap drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]"
                     style={{ color: zone.color }}
                   >
                     {t(`climate.zones.${zone.id}.name`)}
